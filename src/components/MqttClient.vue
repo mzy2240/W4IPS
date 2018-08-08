@@ -12,8 +12,13 @@ export default {
     data() {
         return {
             client: mqtt.connect('ws://127.0.0.1:8083/mqtt'),
-            topic: 'data',
             message: 'Initialized'
+        }
+    },
+    props: {
+        topic: {
+            type: String,
+            default: 'data'
         }
     },
     created() {
@@ -25,6 +30,7 @@ export default {
         onConnect() {
             console.log('onConnect')
             this.client.subscribe(this.topic)
+            console.log(this.topic)
         },
         onMessage(topic, message) {
             //console.log('#' + topic.toString() + '# ' + message.toString())

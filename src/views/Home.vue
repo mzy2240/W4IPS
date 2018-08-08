@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <HelloWorld></HelloWorld>
-      <MqttClient style="font-size: 12px"></MqttClient>
+      <MqttClient  style="font-size: 12px"></MqttClient>
   </div>
 </template>
 
