@@ -9,6 +9,7 @@
     "start": "vue-cli-service serve"
   },
   "dependencies": {
+    "fingerprintjs2": "^1.8.1",
     "mqtt": "^2.18.3",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
@@ -47,6 +48,7 @@
         0,
         "tab"
       ],
+      "no-unused-vars": 0,
       "prettier/prettier": [
         "warn",
         {
