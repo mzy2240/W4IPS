@@ -6,15 +6,18 @@ import Vuetify from 'vuetify'
 import './registerServiceWorker'
 import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.css'
+import ECharts from 'vue-echarts'
 
 Vue.use(Vuetify)
+
+Vue.component('chart', ECharts)
 
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  render: h => h(App),
-  components: { App },
-  template: '<App/>'
+    router,
+    store,
+    render: h => h(App),
+    components: { App },
+    template: '<App/>'
 }).$mount('#app')
