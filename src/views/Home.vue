@@ -9,10 +9,10 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import MqttClient from '@/components/MqttClient.vue'
-import ApiClient from '@/components/ApiClient.vue'
-import mapchart from '@/components/map.vue'
+import HelloWorld from '@/components/HelloWorld'
+import MqttClient from '@/components/MqttClient'
+import ApiClient from '@/components/ApiClient'
+import mapchart from '@/components/map'
 
 export default {
     name: 'home',

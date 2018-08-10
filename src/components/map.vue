@@ -12,6 +12,12 @@
 </style>
 
 <script>
+import mapboxgl from 'mapbox-gl'
+import 'echarts-gl/dist/echarts-gl'
+
+mapboxgl.accessToken =
+    'sk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3Z3cjMxMWdxM3FwYjVhNzJxZ2FkIn0.6_Z5oFyQmZOMVwnpwecRWA'
+
 export default {
     data: function() {
         let data = []
@@ -58,6 +64,17 @@ export default {
                 animationDuration: 2000
             }
         }
+    },
+    methods: {
+        loadBMapScript() {
+            let script = document.createElement('script')
+            script.src =
+                'http://api.map.baidu.com/getscript?v=3.0&ak=7orQb6L442IbNk80oQOxkvHGr7ZtWcxg'
+            document.body.appendChild(script)
+        }
+    },
+    mounted() {
+        this.loadBMapScript() //load bmap when need
     }
 }
 </script>

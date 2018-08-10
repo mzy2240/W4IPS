@@ -9,9 +9,7 @@ import '@mdi/font/css/materialdesignicons.css'
 import ECharts from 'vue-echarts'
 
 Vue.use(Vuetify)
-
 Vue.component('chart', ECharts)
-
 Vue.config.productionTip = false
 
 new Vue({
