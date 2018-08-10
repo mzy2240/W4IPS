@@ -65,16 +65,7 @@ export default {
             }
         }
     },
-    methods: {
-        loadBMapScript() {
-            let script = document.createElement('script')
-            script.src =
-                'http://api.map.baidu.com/getscript?v=3.0&ak=7orQb6L442IbNk80oQOxkvHGr7ZtWcxg'
-            document.body.appendChild(script)
-        }
-    },
-    mounted() {
-        this.loadBMapScript() //load bmap when need
-    }
+    methods: {},
+    mounted() {}
 }
 </script>
