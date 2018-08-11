@@ -4,6 +4,7 @@
   <v-app>
       <v-navigation-drawer
               fixed
+              mini-variant
               :clipped="$vuetify.breakpoint.mdAndUp"
               app
               v-model="drawer"
