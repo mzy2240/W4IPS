@@ -1,11 +1,19 @@
 <template>
-  <div class="home">
+  <div>
     <HelloWorld></HelloWorld>
     <mapchart></mapchart>
+   
       <MqttClient  style="font-size: 12px"></MqttClient>
     <ApiClient></ApiClient>
   </div>
 </template>
+
+<style>
+.chart {
+  height: 800px;
+  width: 800px;
+}
+</style>
 
 <script>
 // @ is an alias to /src
