@@ -18,9 +18,13 @@ export default {
         }
     },
     props: {
-        topic: {
+        subtopic: {
+            type: Array || String || Object,
+            default: () => ['data', 'user']
+        },
+        pubtopic: {
             type: String || Array || Object,
-            default: 'data'
+            default: 'cmd'
         },
         address: {
             type: String,
@@ -72,7 +76,7 @@ export default {
         },
         onConnect(connack) {
             console.log('onConnect')
-            this.client.subscribe(this.topic, { qos: this.qos })
+            this.client.subscribe(this.subtopic)
         },
         onMessage(topic, message) {
             //console.log('#' + topic.toString() + '# ' + message.toString())
