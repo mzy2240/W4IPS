@@ -1,8 +1,8 @@
 <template>
   <div>
-    <HelloWorld></HelloWorld>
-    <mapchart></mapchart>
-   
+    <!-- <HelloWorld></HelloWorld> -->
+    <directchart></directchart>
+    <!-- <mapchart></mapchart> -->
       <MqttClient  style="font-size: 12px"></MqttClient>
     <ApiClient></ApiClient>
   </div>
@@ -21,6 +21,7 @@ import HelloWorld from '@/components/HelloWorld'
 import MqttClient from '@/components/MqttClient'
 import ApiClient from '@/components/ApiClient'
 import mapchart from '@/components/map'
+import directchart from '@/components/puremap'
 
 export default {
     name: 'home',
@@ -28,7 +29,8 @@ export default {
         HelloWorld,
         MqttClient,
         ApiClient,
-        mapchart
+        mapchart,
+        directchart
     }
 }
 </script>

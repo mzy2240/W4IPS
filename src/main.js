@@ -11,6 +11,7 @@ import ECharts from 'vue-echarts'
 Vue.use(Vuetify)
 Vue.component('chart', ECharts)
 Vue.config.productionTip = false
+require('echarts/extension/bmap/bmap');
 
 new Vue({
     router,

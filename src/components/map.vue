@@ -12,11 +12,11 @@
 </style>
 
 <script>
-import mapboxgl from "mapbox-gl";
-import "echarts-gl/dist/echarts-gl";
+// import mapboxgl from "mapbox-gl";
+// import "echarts-gl/dist/echarts-gl";
 
-mapboxgl.accessToken =
-  "sk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3Z3cjMxMWdxM3FwYjVhNzJxZ2FkIn0.6_Z5oFyQmZOMVwnpwecRWA";
+// mapboxgl.accessToken =
+//   "sk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3Z3cjMxMWdxM3FwYjVhNzJxZ2FkIn0.6_Z5oFyQmZOMVwnpwecRWA";
 
 export default {
   data: function() {
