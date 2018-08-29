@@ -1,11 +1,15 @@
 /* eslint-disable */
 <template>
-    <div id="main" style="width: 1000px;height: 800px;"></div>
+<div>
+  <popup :visible='showDialog' @close="showDialog=false" />
+  <div id="main" style="width: 1000px;height: 800px;"></div>
+</div>
 </template>
 
 <script>
 import echarts from "echarts";
 import "echarts-gl/dist/echarts-gl";
+import popup from "./popup";
 // import _ from 'lodash';
 mapboxgl.accessToken =
   "pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA";
@@ -16,7 +20,8 @@ export default {
     return {
       chart: "",
       linedata: [],
-      subdata: []
+      subdata: [],
+      showDialog: false
     };
   },
   methods: {
@@ -145,7 +150,12 @@ export default {
           }
         ]
       });
-      this.chart.on('click', function(params) {alert(params)})
+      var self = this;
+      this.chart.on("click", function(params) {
+        console.log(self.showDialog);
+        self.showDialog = true;
+      });
+
     },
     onDrawLines() {
       this.chart.setOption({
@@ -163,7 +173,11 @@ export default {
     this.initdraw("main");
     this.onDrawSub();
     this.onDrawLines();
+  },
+  components: {
+    popup
   }
+
 };
 </script>
 <style scoped>
