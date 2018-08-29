@@ -3,8 +3,8 @@
     <!-- <HelloWorld></HelloWorld> -->
     <directchart></directchart>
     <!-- <mapchart></mapchart> -->
-      <MqttClient  style="font-size: 12px"></MqttClient>
-    <ApiClient></ApiClient>
+      <!-- <MqttClient  style="font-size: 12px"></MqttClient> -->
+    <!-- <ApiClient></ApiClient> -->
   </div>
 </template>
 
