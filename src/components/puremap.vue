@@ -1,7 +1,7 @@
 /* eslint-disable */
 <template>
 <div>
-  <popup :visible='showDialog' @close="showDialog=false" />
+  <popup :visible='showDialog' :type='type' :id='id' :volt='volt' @close="showDialog=false" />
   <div id="main" style="width: 1000px;height: 800px;"></div>
 </div>
 </template>
@@ -21,7 +21,10 @@ export default {
       chart: "",
       linedata: [],
       subdata: [],
-      showDialog: false
+      showDialog: false,
+      type: "",
+      id: "",
+      volt: ""
     };
   },
   methods: {
@@ -70,16 +73,17 @@ export default {
             data: [],
             label: {
               show: false,
-              formatter: (res) => {
-                return res.data.name.split('_')[0]
+              formatter: res => {
+                return res.data.name.split("_")[0];
               }
-              },
+            },
             itemStyle: {
               color: "rgb(200, 40, 0)"
             }
           },
           {
             id: "lines",
+            name: "lines",
             type: "lines",
             coordinateSystem: "bmap",
             silent: false,
@@ -107,6 +111,7 @@ export default {
     },
     getData() {
       const temp = require("../assets/150.json");
+      console.log(temp.content);
       if (temp.content.type == "dsmDictionary") {
         for (var ele in temp.content.Substation) {
           this.subdata.push({
@@ -116,7 +121,7 @@ export default {
               temp.content.Substation[ele]["Double.Latitude"]
             ],
             attributes: {},
-            bus: [],
+            bus: []
           });
         }
         for (let ele in temp.content.Branch) {
@@ -127,11 +132,19 @@ export default {
             this.subdata[temp.content.Bus[toid]["Int.Sub Number"] - 1].value
           ];
           this.linedata.push({
-            name: ele,
+            name:
+              this.subdata[
+                temp.content.Bus[fromid]["Int.Sub Number"] - 1
+              ].name.split("_")[0] +
+              "-" +
+              this.subdata[
+                temp.content.Bus[toid]["Int.Sub Number"] - 1
+              ].name.split("_")[0],
             coords: coords,
             count: 1,
             attributes: {
-              MVALimit: temp.content.Branch[ele]["Single.MVA Limit"]
+              MVALimit: temp.content.Branch[ele]["Single.MVA Limit"],
+              volt: temp.content.Bus[fromid]["Single.Nominal kV"]
             }
           });
         }
@@ -152,10 +165,19 @@ export default {
       });
       var self = this;
       this.chart.on("click", function(params) {
-        console.log(self.showDialog);
-        self.showDialog = true;
+        console.log(params);
+        if (params.seriesName == "sub") {
+          self.type = "Substation";
+          self.id = params.name;
+          self.showDialog = true;
+          self.volt = "";
+        } else if (params.seriesName == "lines") {
+          self.type = "Line";
+          self.id = params.name;
+          self.showDialog = true;
+          self.volt = params.data.attributes.volt.toString();
+        }
       });
-
     },
     onDrawLines() {
       this.chart.setOption({
@@ -177,7 +199,6 @@ export default {
   components: {
     popup
   }
-
 };
 </script>
 <style scoped>
