@@ -1,0 +1,50 @@
+{
+    "data": {
+        "Substation": [
+            "GenMW",
+            "GenMvar",
+            "LoadMW",
+            "LoadMvar",
+            "ShuntMW",
+            "ShuntMvar",
+            "FrequencyAve"
+        ],
+        "Bus": [
+            "Vpu",
+            "Vangle",
+            "FreqHz",
+            "ROCOFHz",
+            "Status",
+            "GenMW",
+            "GenMvar",
+            "LoadMW",
+            "LoadMvar",
+            "ShuntMW",
+            "ShuntMvar",
+            "IslandNumber"
+        ],
+        "Branch": [
+            "Status",
+            "MWFrom",
+            "MvarFrom",
+            "MVAFrom",
+            "AmpsFrom",
+            "MWTo",
+            "MvarTo",
+            "MVATo",
+            "AmpsTo"
+        ]
+    },
+    "command": {
+        "Branch": [
+            "OPEN BOTH",
+            "OPEN NEAR",
+            "OPEN FAR",
+            "CLOSE BOTH",
+            "CLOSE NEAR",
+            "CLOSE FAR",
+            "BYPASS",
+            "NOTBYPASS"
+        ]
+    }
+}

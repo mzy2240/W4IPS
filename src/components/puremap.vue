@@ -44,7 +44,7 @@ export default {
         //   // bearing: -50,
         //   altitudeScale: 100000000,
         //   silent: true,
-        //   // style: "mapbox://styles/mapbox/dark-v9",
+        //   style: "mapbox://styles/mapbox/dark-v9",
         //   postEffect: {
         //     enable: true,
         //     FXAA: {
@@ -89,9 +89,11 @@ export default {
             silent: false,
             effect: {
               show: true,
-              constantSpeed: 5,
+              constantSpeed: 20,
+              symbol: 'arrow',
+              symbolSize: 7,
               trailWidth: 2,
-              trailLength: 0.4,
+              trailLength: 0,
               trailOpacity: 1,
               spotIntensity: 10
             },
@@ -175,7 +177,7 @@ export default {
           self.type = "Line";
           self.id = params.name;
           self.showDialog = true;
-          self.volt = params.data.attributes.volt.toString();
+          self.volt = params.data.attributes.volt.toString() + 'kV';
         }
       });
     },

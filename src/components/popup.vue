@@ -2,7 +2,7 @@
 <v-dialog v-model="show" max-width="500px">
   <v-card>
       <v-card-title>
-          <span>{{id}} {{volt}}kV {{type}}</span>
+          <span>{{id}} {{volt}} {{type}}</span>
         </v-card-title>
     <v-card-actions>
       <v-btn color="primary" flat @click.stop="show=false">Close</v-btn>
