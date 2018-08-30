@@ -1,7 +1,7 @@
 /* eslint-disable */
 <template>
 <div>
-  <popup :visible='showDialog' :type='type' :id='id' :volt='volt' @close="showDialog=false" />
+  <popup :visible='showDialog' :type='type' :id='id' :volt='volt' :config='config' @close="showDialog=false" />
   <div id="main" style="width: 1000px;height: 800px;"></div>
 </div>
 </template>
@@ -24,7 +24,9 @@ export default {
       showDialog: false,
       type: "",
       id: "",
-      volt: ""
+      volt: "",
+      config: null,
+      preload: require("../assets/ds.json")
     };
   },
   methods: {
@@ -90,7 +92,7 @@ export default {
             effect: {
               show: true,
               constantSpeed: 20,
-              symbol: 'arrow',
+              symbol: "arrow",
               symbolSize: 7,
               trailWidth: 2,
               trailLength: 0,
@@ -171,13 +173,15 @@ export default {
         if (params.seriesName == "sub") {
           self.type = "Substation";
           self.id = params.name;
-          self.showDialog = true;
           self.volt = "";
-        } else if (params.seriesName == "lines") {
-          self.type = "Line";
-          self.id = params.name;
+          self.config = self.preload.data[self.type];
           self.showDialog = true;
-          self.volt = params.data.attributes.volt.toString() + 'kV';
+        } else if (params.seriesName == "lines") {
+          self.type = "Branch";
+          self.id = params.name;
+          self.volt = params.data.attributes.volt.toString() + "kV";
+          self.config = self.preload.data[self.type];
+          self.showDialog = true;
         }
       });
     },
