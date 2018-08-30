@@ -1,7 +1,7 @@
 /* eslint-disable */
 <template>
 <div>
-  <popup :visible='showDialog' :type='type' :id='id' :volt='volt' :config='config' @close="showDialog=false" />
+  <popup :visible='showDialog' :type='type' :id='id' :volt='volt' :config='config' :commands='commands' @close="showDialog=false" />
   <div id="main" style="width: 1000px;height: 800px;"></div>
 </div>
 </template>
@@ -26,7 +26,8 @@ export default {
       id: "",
       volt: "",
       config: null,
-      preload: require("../assets/ds.json")
+	  preload: require("../assets/ds.json"),
+	  commands: []
     };
   },
   methods: {
@@ -174,13 +175,15 @@ export default {
           self.type = "Substation";
           self.id = params.name;
           self.volt = "";
-          self.config = self.preload.data[self.type];
+		  self.config = self.preload.data[self.type];
+		  self.commands = self.preload.command[self.type];
           self.showDialog = true;
         } else if (params.seriesName == "lines") {
           self.type = "Branch";
           self.id = params.name;
           self.volt = params.data.attributes.volt.toString() + "kV";
-          self.config = self.preload.data[self.type];
+		  self.config = self.preload.data[self.type];
+		  self.commands = self.preload.command[self.type];
           self.showDialog = true;
         }
       });
