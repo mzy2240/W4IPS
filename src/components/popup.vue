@@ -90,7 +90,11 @@ export default {
 				let jj = j;
 				temp2.push({
 					text: this.commands[j],
-					callback: () => console.log(this.commands[jj])
+					callback: () => {
+						console.log(this.commands[jj]);
+						this.$store.commit('setMessage', this.commands[jj])
+						this.$store.commit('setPublish');
+					}
 				});
 			}
 			this.dropdown = temp2;
