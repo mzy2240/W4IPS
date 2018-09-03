@@ -39,7 +39,24 @@ export default {
 				bmap: {
 					center: [-86.84, 36.44],
 					zoom: 8,
-					roam: true
+					roam: true,
+					mapStyle: {
+						// style: 'grayscale',
+						styleJson: [{
+							'featureType': 'administrative',
+							'elementType': 'all',
+							'stylers': {
+								'color': '#ffffff',
+								'visibility': 'off'
+							}
+						}, {
+							'featureType': 'boundary',
+							'elementType': 'all',
+							'stylers': {
+								'color': '#fefefe'
+							}
+						}]
+					}
 				},
 				// mapbox: {
 				//   center: [-86.84, 36.44],

@@ -56,3 +56,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.anchorBL{
+    display:none;
+}
+</style>
