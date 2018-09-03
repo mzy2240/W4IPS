@@ -9,6 +9,7 @@
 import mqtt from 'mqtt';
 import { mapGetters } from 'vuex';
 import fingerprint from 'fingerprintjs2';
+import { Notification } from 'element-ui';
 
 export default {
 	name: 'MqttClient',
@@ -103,6 +104,10 @@ export default {
 			} else if (topic == 'note') {
 				this.usermessage = message.toString();
 				console.log(this.usermessage)
+				Notification.info({
+					title: 'Notification',
+					message: this.usermessage
+				})
 			}
 		},
 		onClose() {
