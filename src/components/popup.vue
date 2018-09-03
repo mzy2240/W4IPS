@@ -92,7 +92,7 @@ export default {
 					text: this.commands[j],
 					callback: () => {
 						console.log(this.commands[jj]);
-						this.$store.commit('setMessage', this.commands[jj])
+						this.$store.commit('setMessage', [this.type, this.id, this.commands[jj]])
 						this.$store.commit('setPublish');
 					}
 				});

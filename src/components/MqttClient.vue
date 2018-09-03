@@ -60,7 +60,13 @@ export default {
 	},
 	watch: {
 		PubStatus: function(newVal, oldVal) {
-			this.client.publish('user', this.$store.state.message);
+			const temp = {
+				user: this.clientid,
+				type: this.$store.state.message[0],
+				id: this.$store.state.message[1],
+				action: this.$store.state.message[2]
+			};
+			this.client.publish('user', JSON.stringify(temp));
 		}
 	},
 	methods: {
@@ -81,7 +87,8 @@ export default {
 		},
 		onGetUUID() {
 			fingerprint().get((result, components) => {
-				this.clientid = result;
+				this.clientid = result.substring(0,4);
+				this.$store.commit('setUUID', this.clientid);
 			});
 		},
 		onConnect(connack) {

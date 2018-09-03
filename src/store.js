@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     toPublish: 0,
-    message: ''
+    message: '',
+    UUID: ''
   },
   getters: {
     getPubStatus(state) {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
     },
     setMessage (state, payload) {
       state.message = payload
+    },
+    setUUID(state, payload) {
+      state.UUID = payload
     }
   },
   actions: {
