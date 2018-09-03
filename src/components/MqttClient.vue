@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <!-- <div>
         <p>{{ usermessage }}</p>
         <p>{{ datamessage }}</p>
-    </div>
+    </div> -->
 </template>
 
 <script>
@@ -64,7 +64,8 @@ export default {
 				user: this.clientid,
 				type: this.$store.state.message[0],
 				id: this.$store.state.message[1],
-				action: this.$store.state.message[2]
+				name: this.$store.state.message[2],
+				action: this.$store.state.message[3]
 			};
 			this.client.publish('user', JSON.stringify(temp));
 		}
@@ -101,6 +102,7 @@ export default {
 				this.datamessage = message.toString();
 			} else if (topic == 'note') {
 				this.usermessage = message.toString();
+				console.log(this.usermessage)
 			}
 		},
 		onClose() {

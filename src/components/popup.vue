@@ -2,7 +2,7 @@
 	<v-dialog v-model="show" max-width="900px">
 		<v-card>
 			<v-card-title>
-				<span class="headline">{{id}} {{volt}} {{type}}</span>
+				<span class="headline">{{name}} {{volt}} {{type}}</span>
 			</v-card-title>
 			<v-toolbar flat color="white">
 				<v-toolbar-title>Data</v-toolbar-title>
@@ -44,6 +44,9 @@ export default {
 			type: String
 		},
 		id: {
+			type: String
+		},
+		name: {
 			type: String
 		},
 		volt: {
@@ -92,7 +95,7 @@ export default {
 					text: this.commands[j],
 					callback: () => {
 						console.log(this.commands[jj]);
-						this.$store.commit('setMessage', [this.type, this.id, this.commands[jj]])
+						this.$store.commit('setMessage', [this.type, this.id, this.name, this.commands[jj]])
 						this.$store.commit('setPublish');
 					}
 				});
