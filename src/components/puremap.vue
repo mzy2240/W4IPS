@@ -1,9 +1,9 @@
 /* eslint-disable */
 <template>
-<div>
-  <popup :visible='showDialog' :type='type' :id='id' :name='name' :volt='volt' :config='config' :commands='commands' @close="showDialog=false" />
-  <div id="main" style="width: 1000px;height: 800px;"></div>
-</div>
+	<div>
+		<popup :visible='showDialog' :type='type' :id='id' :name='name' :volt='volt' :config='config' :commands='commands' @close="showDialog=false" />
+		<div id="main" style="width: 1000px;height: 800px;"></div>
+	</div>
 </template>
 
 <script>
@@ -11,8 +11,8 @@ import echarts from 'echarts';
 import 'echarts-gl/dist/echarts-gl';
 import popup from './popup';
 // import _ from 'lodash';
-mapboxgl.accessToken =
-	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
+// mapboxgl.accessToken =
+// 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
 
 export default {
 	name: 'TEST',
@@ -42,20 +42,23 @@ export default {
 					roam: true,
 					mapStyle: {
 						// style: 'grayscale',
-						styleJson: [{
-							'featureType': 'administrative',
-							'elementType': 'all',
-							'stylers': {
-								'color': '#ffffff',
-								'visibility': 'off'
+						styleJson: [
+							{
+								featureType: 'administrative',
+								elementType: 'all',
+								stylers: {
+									color: '#ffffff',
+									visibility: 'off'
+								}
+							},
+							{
+								featureType: 'boundary',
+								elementType: 'all',
+								stylers: {
+									color: '#fefefe'
+								}
 							}
-						}, {
-							'featureType': 'boundary',
-							'elementType': 'all',
-							'stylers': {
-								'color': '#fefefe'
-							}
-						}]
+						]
 					}
 				},
 				// mapbox: {
@@ -86,10 +89,11 @@ export default {
 				series: [
 					{
 						id: 'sub',
-						type: 'scatter',
+						type: 'effectScatter',
 						name: 'sub',
 						coordinateSystem: 'bmap',
 						symbol: 'circle',
+						showEffectOn: 'emphasis',
 						// zindex: 2,
 						data: [],
 						label: {
@@ -119,13 +123,18 @@ export default {
 							spotIntensity: 10
 						},
 						blendMode: 'lighter',
-
 						// polyline: true,
-
 						lineStyle: {
 							width: 1,
 							color: 'rgb(200, 40, 0)',
 							opacity: 1
+						},
+						emphasis: {
+							lineStyle: {
+								width: 2,
+								shadowColor: 'rgba(144, 144, 255, 0.5)',
+								shadowBlur: 10
+							}
 						},
 						data: []
 					}

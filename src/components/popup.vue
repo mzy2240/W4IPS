@@ -1,25 +1,23 @@
 <template>
 	<v-dialog v-model="show" max-width="900px">
+		<v-toolbar color="cyan" dark tabs>
+			<v-toolbar-title>{{name}} {{volt}} {{type}}</v-toolbar-title>
+			<v-tabs slot="extension" centered color="cyan" slider-color="yellow">
+				<v-tab v-for="i in 3" :key="i" :href="`#tab-${i}`">
+					Item {{ i }}
+				</v-tab>
+			</v-tabs>
+		</v-toolbar>
 		<v-card>
-			<v-card-title>
-				<span class="headline">{{name}} {{volt}} {{type}}</span>
+			<v-card-title class='headline'>
+				Data
 			</v-card-title>
-			<v-toolbar flat color="white">
-				<v-toolbar-title>Data</v-toolbar-title>
-			</v-toolbar>
 			<v-data-table :headers="headers" :items="data" disable-initial-sort hide-actions class="elevation-1">
 			</v-data-table>
-			<v-toolbar flat color="white">
-				<v-toolbar-title>Control</v-toolbar-title>
-			</v-toolbar>
+			<v-card-title class='headline'>
+				Control
+			</v-card-title>
 			<v-overflow-btn dense :items="dropdown" label="Commands" segmented target="#dropdown-example"></v-overflow-btn>
-			<!-- <v-list dense subheader three-line>
-				<v-list-tile v-for="(field, index) in config" v-bind:key="index">
-					<v-list-tile-content>
-						<v-list-tile-title>{{field}}</v-list-tile-title>
-					</v-list-tile-content>
-				</v-list-tile>
-			</v-list> -->
 			<v-card-actions>
 				<v-btn color="primary" flat @click.stop="show=false">Close</v-btn>
 			</v-card-actions>
@@ -95,7 +93,12 @@ export default {
 					text: this.commands[j],
 					callback: () => {
 						console.log(this.commands[jj]);
-						this.$store.commit('setMessage', [this.type, this.id, this.name, this.commands[jj]])
+						this.$store.commit('setMessage', [
+							this.type,
+							this.id,
+							this.name,
+							this.commands[jj]
+						]);
 						this.$store.commit('setPublish');
 					}
 				});
