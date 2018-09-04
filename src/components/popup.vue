@@ -3,9 +3,10 @@
 		<v-toolbar color="cyan" dark tabs>
 			<v-toolbar-title>{{name}} {{volt}} {{type}}</v-toolbar-title>
 			<v-tabs slot="extension" centered color="cyan" slider-color="yellow">
-				<v-tab v-for="i in 3" :key="i" :href="`#tab-${i}`">
-					Item {{ i }}
+				<v-tab>
+					General
 				</v-tab>
+				<v-tab v-for="tab in tabs" :key=tab>{{tab}}</v-tab>
 			</v-tabs>
 		</v-toolbar>
 		<v-card>
@@ -22,6 +23,7 @@
 				<v-btn color="primary" flat @click.stop="show=false">Close</v-btn>
 			</v-card-actions>
 		</v-card>
+		{{ children }}
 	</v-dialog>
 </template>
 
@@ -62,6 +64,8 @@ export default {
 			default: function() {
 				return [];
 			}
+		},
+		children: {
 		}
 	},
 	computed: {
@@ -74,6 +78,14 @@ export default {
 					this.$emit('close');
 				}
 			}
+		},
+		tabs: function () {
+			let temp = [];
+			for (var ele in this.children) {
+				console.log(this.children[ele]["Int.Bus Number"].toString())
+				temp.push('Bus ' + this.children[ele]["Int.Bus Number"].toString())
+			}
+			return temp;
 		}
 	},
 	watch: {

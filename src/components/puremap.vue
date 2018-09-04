@@ -1,7 +1,7 @@
 /* eslint-disable */
 <template>
 	<div>
-		<popup :visible='showDialog' :type='type' :id='id' :name='name' :volt='volt' :config='config' :commands='commands' @close="showDialog=false" />
+		<popup :visible='showDialog' :children='children' :type='type' :id='id' :name='name' :volt='volt' :config='config' :commands='commands' @close="showDialog=false" />
 		<div id="main" style="width: 1000px;height: 800px;"></div>
 	</div>
 </template>
@@ -21,7 +21,10 @@ export default {
 			chart: '',
 			linedata: [],
 			subdata: [],
+			subdetail: [],
+			busdetail: [],
 			showDialog: false,
+			children: {},
 			type: '',
 			id: '',
 			name: '',
@@ -182,10 +185,23 @@ export default {
 						}
 					});
 				}
-
+				this.subdetail = temp.content.Substation;
+				this.busdetail = temp.content.Bus;
+				for (let ele in this.subdetail) {
+					this.subdetail[ele].Bus = [];
+				}
+				for (let ele in temp.content.Gen) {
+					this.busdetail[ele].Gen = temp.content.Gen[ele];
+				}
+				for (let ele in temp.content.Load) {
+					this.busdetail[ele].Load = temp.content.Load[ele];
+				}
+				for (let ele in temp.content.Shunt) {
+					this.busdetail[ele].Shunt = temp.content.Shunt[ele];
+				}
 				for (let ele in temp.content.Bus) {
-					this.subdata[temp.content.Bus[ele]['Int.Sub Number'] - 1].bus.push(
-						temp.content.Bus[ele]
+					this.subdetail[temp.content.Bus[ele]['Int.Sub Number']].Bus.push(
+						this.busdetail[ele]
 					);
 				}
 			}
@@ -210,6 +226,7 @@ export default {
 					self.volt = '';
 					self.config = self.preload.data[self.type];
 					self.commands = self.preload.command[self.type];
+					self.children = self.subdetail[+params.data.id].Bus;
 					self.showDialog = true;
 				} else if (params.seriesName == 'lines') {
 					self.type = 'Branch';
