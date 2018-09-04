@@ -6,7 +6,6 @@
 				<v-tab>
 					General
 				</v-tab>
-				<v-tab v-for="tab in tabs" :key=tab>{{tab}}</v-tab>
 			</v-tabs>
 		</v-toolbar>
 		<v-card>
@@ -64,8 +63,6 @@ export default {
 			default: function() {
 				return [];
 			}
-		},
-		children: {
 		}
 	},
 	computed: {
@@ -78,14 +75,6 @@ export default {
 					this.$emit('close');
 				}
 			}
-		},
-		tabs: function () {
-			let temp = [];
-			for (var ele in this.children) {
-				console.log(this.children[ele]["Int.Bus Number"].toString())
-				temp.push('Bus ' + this.children[ele]["Int.Bus Number"].toString())
-			}
-			return temp;
 		}
 	},
 	watch: {

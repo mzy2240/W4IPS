@@ -1,7 +1,8 @@
 /* eslint-disable */
 <template>
 	<div>
-		<popup :visible='showDialog' :children='children' :type='type' :id='id' :name='name' :volt='volt' :config='config' :commands='commands' @close="showDialog=false" />
+		<linepop :visible='lineshowDialog' :type='type' :id='id' :name='name' :volt='volt' :config='config' :commands='commands' @close="lineshowDialog=false" />
+		<subpop :visible='subshowDialog' :children='children' :type='type' :id='id' :name='name' :volt='volt' :config='config' :commands='commands' @close="subshowDialog=false" />
 		<div id="main" style="width: 1000px;height: 800px;"></div>
 	</div>
 </template>
@@ -9,7 +10,8 @@
 <script>
 import echarts from 'echarts';
 import 'echarts-gl/dist/echarts-gl';
-import popup from './popup';
+import linepop from './linepop';
+import subpop from './subpop';
 // import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
@@ -23,7 +25,8 @@ export default {
 			subdata: [],
 			subdetail: [],
 			busdetail: [],
-			showDialog: false,
+			subshowDialog: false,
+			lineshowDialog: false,
 			children: {},
 			type: '',
 			id: '',
@@ -227,7 +230,7 @@ export default {
 					self.config = self.preload.data[self.type];
 					self.commands = self.preload.command[self.type];
 					self.children = self.subdetail[+params.data.id].Bus;
-					self.showDialog = true;
+					self.subshowDialog = true;
 				} else if (params.seriesName == 'lines') {
 					self.type = 'Branch';
 					self.name = params.name;
@@ -236,7 +239,7 @@ export default {
 					self.volt = params.data.attributes.volt.toString() + 'kV';
 					self.config = self.preload.data[self.type];
 					self.commands = self.preload.command[self.type];
-					self.showDialog = true;
+					self.lineshowDialog = true;
 				}
 			});
 		},
@@ -258,7 +261,8 @@ export default {
 		this.onDrawLines();
 	},
 	components: {
-		popup
+		linepop,
+		subpop
 	}
 };
 </script>
