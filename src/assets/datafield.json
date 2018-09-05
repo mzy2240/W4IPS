@@ -1,0 +1,166 @@
+{
+	"Sub": [
+		{
+			"text": "GenMW",
+			"value": "MW"
+		},
+		{
+			"text": "GenMvar",
+			"value": "Mvar"
+		},
+		{
+			"text": "LoadMW",
+			"value": "MW"
+		},
+		{
+			"text": "LoadMvar",
+			"value": "Mvar"
+		},
+		{
+			"text": "ShuntMW",
+			"value": "MW"
+		},
+		{
+			"text": "ShuntMvar",
+			"value": "Mvar"
+		},
+		{
+			"text": "FrequencyAve",
+			"value": "Hz"
+		}
+	],
+	"Bus": [
+		{
+			"text": "Vpu",
+			"value": "p.u."
+		},
+		{
+			"text": "Vangle",
+			"value": "degree"
+		},
+		{
+			"text": "FreqHz",
+			"value": "Hz"
+		},
+		{
+			"text": "ROCOFHz",
+			"value": "Hz/sec"
+		},
+		{
+			"text": "Status",
+			"value": ""
+		},
+		{
+			"text": "GenMW",
+			"value": "MW"
+		},
+		{
+			"text": "GenMvar",
+			"value": "Mvar"
+		},
+		{
+			"text": "LoadMW",
+			"value": "MW"
+		},
+		{
+			"text": "LoadMvar",
+			"value": "Mvar"
+		},
+		{
+			"text": "ShuntMW",
+			"value": "MW"
+		},
+		{
+			"text": "ShuntMvar",
+			"value": "Mvar"
+		},
+		{
+			"text": "IslandNumber",
+			"value": "1"
+		}
+	],
+	"Gen": [
+		{
+			"text": "Vpu",
+			"value": "p.u."
+		},
+		{
+			"text": "Vangle",
+			"value": "degree"
+		},
+		{
+			"text": "KV",
+			"value": "kV"
+		},
+		{
+			"text": "FreqHz",
+			"value": "Hz"
+		},
+		{
+			"text": "BusStatus",
+			"value": ""
+		},
+		{
+			"text": "Status",
+			"value": ""
+		},
+		{
+			"text": "MW",
+			"value": "MW"
+		},
+		{
+			"text": "Mvar",
+			"value": "Mvar"
+		},
+		{
+			"text": "MVA",
+			"value": "MVA"
+		},
+		{
+			"text": "VpuSetpoint",
+			"value": "p.u."
+		},
+		{
+			"text": "MWSetpoint",
+			"value": "MW"
+		}
+	],
+	"Load": [
+		{
+			"text": "Vpu",
+			"value": "p.u."
+		},
+		{
+			"text": "Vangle",
+			"value": "degree"
+		},
+		{
+			"text": "KV",
+			"value": "kV"
+		},
+		{
+			"text": "FreqHz",
+			"value": "Hz"
+		},
+		{
+			"text": "BusStatus",
+			"value": ""
+		},
+		{
+			"text": "Status",
+			"value": ""
+		},
+		{
+			"text": "MW",
+			"value": "MW"
+		},
+		{
+			"text": "Mvar",
+			"value": "Mvar"
+		},
+		{
+			"text": "MVA",
+			"value": "MVA"
+		}
+	]
+}

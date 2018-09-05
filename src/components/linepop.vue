@@ -22,7 +22,6 @@
 				<v-btn color="primary" flat @click.stop="show=false">Close</v-btn>
 			</v-card-actions>
 		</v-card>
-		{{ children }}
 	</v-dialog>
 </template>
 
