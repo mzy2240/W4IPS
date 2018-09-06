@@ -1,11 +1,4 @@
 {
-    "message": [
-        {
-            "id": 14,
-            "name": "tcmDictionary",
-            "description": "Send by a client requesting the case dictionary. The PWDS will respond with a dsmDictionary message.  See the Dictionary Format section for a description of what is sent"
-        }
-    ],
     "content": {
         "type": "dsmDictionary",
         "ObjectType Count": 22,

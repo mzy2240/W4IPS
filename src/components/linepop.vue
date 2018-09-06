@@ -12,7 +12,7 @@
 			<v-card-title class='headline'>
 				Data
 			</v-card-title>
-			<v-data-table :headers="headers" :items="data" disable-initial-sort hide-actions class="elevation-1">
+			<v-data-table :headers=$store.state.fieldstore.Branch :items="data" disable-initial-sort hide-actions class="elevation-1">
 			</v-data-table>
 			<v-card-title class='headline'>
 				Control
@@ -28,9 +28,25 @@
 <script>
 export default {
 	data() {
+		let temp = [];
+		for (var j in this.$store.state.tcmcommands.Branch) {
+			let jj = j;
+			temp.push({
+				text: this.$store.state.tcmcommands.Branch[j],
+				callback: () => {
+					console.log(this.type, this.id, this.name);
+					this.$store.commit('setMessage', [
+						this.type,
+						this.id,
+						this.name,
+						this.$store.state.tcmcommands.Branch[jj]
+					]);
+					this.$store.commit('setPublish');
+				}
+			});
+		}
 		return {
-			headers: [],
-			dropdown: []
+			dropdown: temp
 		};
 	},
 	props: {
@@ -50,15 +66,7 @@ export default {
 		volt: {
 			type: String
 		},
-		config: {
-			type: Array
-		},
 		data: {
-			default: function() {
-				return [];
-			}
-		},
-		commands: {
 			default: function() {
 				return [];
 			}
@@ -74,36 +82,6 @@ export default {
 					this.$emit('close');
 				}
 			}
-		}
-	},
-	watch: {
-		config: function() {
-			let temp = [];
-			for (var i in this.config) {
-				temp.push({
-					text: this.config[i],
-					value: this.config[i]
-				});
-			}
-			this.headers = temp;
-			let temp2 = [];
-			for (var j in this.commands) {
-				let jj = j;
-				temp2.push({
-					text: this.commands[j],
-					callback: () => {
-						console.log(this.commands[jj]);
-						this.$store.commit('setMessage', [
-							this.type,
-							this.id,
-							this.name,
-							this.commands[jj]
-						]);
-						this.$store.commit('setPublish');
-					}
-				});
-			}
-			this.dropdown = temp2;
 		}
 	}
 };

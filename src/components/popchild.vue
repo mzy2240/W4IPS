@@ -1,9 +1,20 @@
 <template>
 	<v-card lazy>
-		<el-tabs :tab-position="'left'" style="height: 500px;">
+		<el-tabs :tab-position="'left'" @tab-click="tabclick">
 			<el-tab-pane v-for="item in tabs" :key=item :label=item lazy>
-				<li>{{name}}</li>
-				<li>{{detail}}</li>
+				<v-card>
+					<v-card-title class='headline'>
+						Data
+					</v-card-title>
+					<v-data-table :headers=$store.state.fieldstore[item] :items="data" disable-initial-sort hide-actions class="elevation-1">
+					</v-data-table>
+				</v-card>
+				<v-card v-if="item != 'Bus'">
+					<v-card-title class='headline'>
+						Control
+					</v-card-title>
+					<v-overflow-btn dense :items="dropdown" label="Commands" segmented target="#dropdown-example"></v-overflow-btn>
+				</v-card>
 			</el-tab-pane>
 		</el-tabs>
 	</v-card>
@@ -17,10 +28,17 @@
 export default {
 	props: {
 		name: {},
-		detail: {}
+		detail: {},
+		data: {
+			default: function() {
+				return [];
+			}
+		}
 	},
 	data() {
-		return {};
+		return {
+			dropdown: []
+		};
 	},
 	computed: {
 		tabs: function() {
@@ -34,6 +52,27 @@ export default {
 			return temp;
 		}
 	},
-	watch: {}
+	methods: {
+		tabclick(ele) {
+			let temp = [];
+			for (var j in this.$store.state.tcmcommands[ele.label]) {
+				let jj = j;
+				temp.push({
+					text: this.$store.state.tcmcommands[ele.label][j],
+					callback: () => {
+						const temp = this.$store.state.casedetail.content[ele.label][this.name.split(" ")[1]];
+						this.$store.commit('setMessage', [
+							ele.label,
+							temp["Int.Bus Number"].toString() + "," + temp["String.ID"],
+							ele.label + "#" + temp["String.ID"],
+							this.$store.state.tcmcommands[ele.label][jj]
+						]);
+						this.$store.commit('setPublish');
+					}
+				});
+			}
+			this.dropdown = temp;
+		}
+	}
 };
 </script>

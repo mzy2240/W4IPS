@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import datafield from './assets/datafield.json'
+import tcmcommands from './assets/tcmcommands.json'
+import casedetail from './assets/150.json'
 
 Vue.use(Vuex);
 
@@ -9,7 +11,9 @@ export default new Vuex.Store({
 		toPublish: 0,
 		message: '',
 		UUID: '',
-		fieldstore: datafield
+		fieldstore: datafield,
+		tcmcommands: tcmcommands,
+		casedetail: casedetail
 	},
 	getters: {
 		getPubStatus(state) {

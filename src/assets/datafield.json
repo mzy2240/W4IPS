@@ -162,5 +162,77 @@
 			"text": "MVA",
 			"value": "MVA"
 		}
+	],
+	"Shunt": [
+		{
+			"text": "Vpu",
+			"value": "p.u."
+		},
+		{
+			"text": "Vangle",
+			"value": "degree"
+		},
+		{
+			"text": "KV",
+			"value": "kV"
+		},
+		{
+			"text": "FreqHz",
+			"value": "Hz"
+		},
+		{
+			"text": "BusStatus",
+			"value": ""
+		},
+		{
+			"text": "Status",
+			"value": ""
+		},
+		{
+			"text": "Mvar",
+			"value": "Mvar"
+		},
+		{
+			"text": "MvarNom",
+			"value": "Mvar"
+		}
+	],
+	"Branch": [
+		{
+			"text": "Status",
+			"value": ""
+		},
+		{
+			"text": "MWFrom",
+			"value": "MW"
+		},
+		{
+			"text": "MvarFrom",
+			"value": "Mvar"
+		},
+		{
+			"text": "MVAFrom",
+			"value": "MVA"
+		},
+		{
+			"text": "AmpsFrom",
+			"value": "A"
+		},
+		{
+			"text": "MWTo",
+			"value": "MW"
+		},
+		{
+			"text": "MvarTo",
+			"value": "Mvar"
+		},
+		{
+			"text": "MVATo",
+			"value": "MVA"
+		},
+		{
+			"text": "AmpsTo",
+			"value": "A"
+		}
 	]
 }
