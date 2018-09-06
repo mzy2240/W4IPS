@@ -35,6 +35,9 @@ export default new Vuex.Store({
 		},
 		setUUID(state, payload) {
 			state.UUID = payload;
+		},
+		updateConfig(state, payload){
+			state.casedetail = payload;
 		}
 	},
 	actions: {
