@@ -22,7 +22,6 @@
 					<popchild :name="item" :detail="children[index]" :subname="name"></popchild>
 				</v-tab-item>
 			</v-tabs-items>
-			{{ children }}
 		</v-dialog>
 	</div>
 </template>
