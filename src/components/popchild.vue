@@ -29,6 +29,9 @@ export default {
 	props: {
 		name: {},
 		detail: {},
+		subname: {
+			type: String
+		},
 		data: {
 			default: function() {
 				return [];
@@ -64,7 +67,7 @@ export default {
 						this.$store.commit('setMessage', [
 							ele.label,
 							temp["Int.Bus Number"].toString() + "," + temp["String.ID"],
-							ele.label + "#" + temp["String.ID"],
+							this.subname + " " + this.name + " " + "#" + temp["String.ID"],
 							this.$store.state.tcmcommands[ele.label][jj]
 						]);
 						this.$store.commit('setPublish');

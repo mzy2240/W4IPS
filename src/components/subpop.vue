@@ -19,7 +19,7 @@
 					</v-card>
 				</v-tab-item>
 				<v-tab-item v-for="(item, index) in tabs" :id="'tab-' + item" :key="item" lazy>
-					<popchild :name="item" :detail="children[index]"></popchild>
+					<popchild :name="item" :detail="children[index]" :subname="name"></popchild>
 				</v-tab-item>
 			</v-tabs-items>
 			{{ children }}
