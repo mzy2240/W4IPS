@@ -1,8 +1,8 @@
 <template>
-    <!-- <div>
-        <p>{{ usermessage }}</p>
+    <div>
+        <!-- <p>{{ usermessage }}</p> -->
         <p>{{ datamessage }}</p>
-    </div> -->
+    </div>
 </template>
 
 <script>
