@@ -14,7 +14,7 @@
 						<v-card-title class='headline'>
 							Data
 						</v-card-title>
-						<v-data-table :headers=$store.state.fieldstore.Substation :items="data" disable-initial-sort hide-actions class="elevation-1">
+						<v-data-table :headers=$store.state.fieldstore.Substation :items="display" disable-initial-sort hide-actions class="elevation-1">
 						</v-data-table>
 					</v-card>
 				</v-tab-item>
@@ -33,7 +33,7 @@ export default {
 		return {
 			dropdown: [],
 			currentItem: 'tab-General',
-			data: []
+			display: []
 		};
 	},
 	props: {
@@ -77,17 +77,45 @@ export default {
 	},
 	methods: {
 		getData() {
-			// const temp = JSON.parse(this.$store.state.rawdata)
-			for (let ele in this.$store.state.fieldstore) {
-				console.log(Object.keys(this.$store.state.casedetail.content[ele]).length)
-				console.log(this.$store.state.fieldstore[ele].length)
-			}
+			const temp = JSON.parse(this.$store.state.rawdata).Data;
+			let anchor = 0;
+			var arrlength;
+			var keyarr;
 
-			// console.log(temp)
+			for (let ele in this.$store.state.fieldstore) {
+				arrlength = this.$store.state.fieldstore[ele].length;
+				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				if (ele != this.type) {
+					console.log('222');
+					anchor += arrlength * keyarr.length;
+				} else {
+					console.log('111');
+					anchor += arrlength * keyarr.indexOf(this.id);
+					break;
+				}
+				// console.log(Object.keys(this.$store.state.fieldstore).indexOf(ele))
+				// console.log(Object.keys(this.$store.state.casedetail.content[ele]).length)
+				// console.log(this.$store.state.fieldstore[ele].length)
+			}
+			const spdata = temp.slice(anchor, anchor + arrlength);
+			let container = {
+				value: false,
+				name: "Realtime"
+			};
+			for (let e in spdata) {
+				container[this.$store.state.fieldstore[this.type][e]['value']] =
+					+spdata[e];
+			}
+			console.log(container)
+			this.display = [container];
 		}
 	},
-	mounted() {
-		this.getData();
+	watch: {
+		show: function() {
+			if (this.show) {
+				this.getData();
+			}
+		}
 	},
 	components: {
 		popchild

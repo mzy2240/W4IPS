@@ -2,107 +2,107 @@
 	"Substation": [
 		{
 			"text": "GenMW",
-			"value": "MW"
+			"value": "GenMW"
 		},
 		{
 			"text": "GenMvar",
-			"value": "Mvar"
+			"value": "GenMvar"
 		},
 		{
 			"text": "LoadMW",
-			"value": "MW"
+			"value": "LoadMW"
 		},
 		{
 			"text": "LoadMvar",
-			"value": "Mvar"
+			"value": "LoadMvar"
 		},
 		{
 			"text": "ShuntMW",
-			"value": "MW"
+			"value": "ShuntMW"
 		},
 		{
 			"text": "ShuntMvar",
-			"value": "Mvar"
+			"value": "ShuntMvar"
 		},
 		{
 			"text": "FrequencyAve",
-			"value": "Hz"
+			"value": "FrequencyAve"
 		}
 	],
 	"Bus": [
 		{
 			"text": "Vpu",
-			"value": "p.u."
+			"value": "Vpu"
 		},
 		{
 			"text": "Vangle",
-			"value": "degree"
+			"value": "Vangle"
 		},
 		{
 			"text": "FreqHz",
-			"value": "Hz"
+			"value": "FreqHz"
 		},
 		{
 			"text": "ROCOFHz",
-			"value": "Hz/sec"
+			"value": "ROCOFHz"
 		},
 		{
 			"text": "Status",
-			"value": ""
+			"value": "Status"
 		},
 		{
 			"text": "GenMW",
-			"value": "MW"
+			"value": "GenMW"
 		},
 		{
 			"text": "GenMvar",
-			"value": "Mvar"
+			"value": "GenMvar"
 		},
 		{
 			"text": "LoadMW",
-			"value": "MW"
+			"value": "LoadMW"
 		},
 		{
 			"text": "LoadMvar",
-			"value": "Mvar"
+			"value": "LoadMvar"
 		},
 		{
 			"text": "ShuntMW",
-			"value": "MW"
+			"value": "ShuntMW"
 		},
 		{
 			"text": "ShuntMvar",
-			"value": "Mvar"
+			"value": "ShuntMvar"
 		},
 		{
 			"text": "IslandNumber",
-			"value": "1"
+			"value": "IslandNumber"
 		}
 	],
 	"Gen": [
 		{
 			"text": "Vpu",
-			"value": "p.u."
+			"value": "Vpu"
 		},
 		{
 			"text": "Vangle",
-			"value": "degree"
+			"value": "Vangle"
 		},
 		{
 			"text": "KV",
-			"value": "kV"
+			"value": "KV"
 		},
 		{
 			"text": "FreqHz",
-			"value": "Hz"
+			"value": "FreqHz"
 		},
 		{
 			"text": "BusStatus",
-			"value": ""
+			"value": "BusStatus"
 		},
 		{
 			"text": "Status",
-			"value": ""
+			"value": "Status"
 		},
 		{
 			"text": "MW",
@@ -118,37 +118,37 @@
 		},
 		{
 			"text": "VpuSetpoint",
-			"value": "p.u."
+			"value": "VpuSetpoint"
 		},
 		{
 			"text": "MWSetpoint",
-			"value": "MW"
+			"value": "MWSetpoint"
 		}
 	],
 	"Load": [
 		{
 			"text": "Vpu",
-			"value": "p.u."
+			"value": "Vpu"
 		},
 		{
 			"text": "Vangle",
-			"value": "degree"
+			"value": "Vangle"
 		},
 		{
 			"text": "KV",
-			"value": "kV"
+			"value": "KV"
 		},
 		{
 			"text": "FreqHz",
-			"value": "Hz"
+			"value": "FreqHz"
 		},
 		{
 			"text": "BusStatus",
-			"value": ""
+			"value": "BusStatus"
 		},
 		{
 			"text": "Status",
-			"value": ""
+			"value": "Status"
 		},
 		{
 			"text": "MW",
@@ -166,27 +166,27 @@
 	"Shunt": [
 		{
 			"text": "Vpu",
-			"value": "p.u."
+			"value": "Vpu"
 		},
 		{
 			"text": "Vangle",
-			"value": "degree"
+			"value": "Vangle"
 		},
 		{
 			"text": "KV",
-			"value": "kV"
+			"value": "KV"
 		},
 		{
 			"text": "FreqHz",
-			"value": "Hz"
+			"value": "FreqHz"
 		},
 		{
 			"text": "BusStatus",
-			"value": ""
+			"value": "BusStatus"
 		},
 		{
 			"text": "Status",
-			"value": ""
+			"value": "Status"
 		},
 		{
 			"text": "Mvar",
@@ -194,45 +194,45 @@
 		},
 		{
 			"text": "MvarNom",
-			"value": "Mvar"
+			"value": "MvarNom"
 		}
 	],
 	"Branch": [
 		{
 			"text": "Status",
-			"value": ""
+			"value": "Status"
 		},
 		{
 			"text": "MWFrom",
-			"value": "MW"
+			"value": "MWFrom"
 		},
 		{
 			"text": "MvarFrom",
-			"value": "Mvar"
+			"value": "MvarFrom"
 		},
 		{
 			"text": "MVAFrom",
-			"value": "MVA"
+			"value": "MVAFrom"
 		},
 		{
 			"text": "AmpsFrom",
-			"value": "A"
+			"value": "AmpsFrom"
 		},
 		{
 			"text": "MWTo",
-			"value": "MW"
+			"value": "MWTo"
 		},
 		{
 			"text": "MvarTo",
-			"value": "Mvar"
+			"value": "MvarTo"
 		},
 		{
 			"text": "MVATo",
-			"value": "MVA"
+			"value": "MVATo"
 		},
 		{
 			"text": "AmpsTo",
-			"value": "A"
+			"value": "AmpsTo"
 		}
 	]
 }
