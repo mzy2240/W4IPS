@@ -14,7 +14,7 @@
 						<v-card-title class='headline'>
 							Data
 						</v-card-title>
-						<v-data-table :headers=$store.state.fieldstore.Sub :items="data" disable-initial-sort hide-actions class="elevation-1">
+						<v-data-table :headers=$store.state.fieldstore.Substation :items="data" disable-initial-sort hide-actions class="elevation-1">
 						</v-data-table>
 					</v-card>
 				</v-tab-item>
@@ -32,7 +32,8 @@ export default {
 	data() {
 		return {
 			dropdown: [],
-			currentItem: 'tab-General'
+			currentItem: 'tab-General',
+			data: []
 		};
 	},
 	props: {
@@ -51,11 +52,6 @@ export default {
 		},
 		volt: {
 			type: String
-		},
-		data: {
-			default: function() {
-				return [];
-			}
 		},
 		children: {}
 	},
@@ -78,6 +74,20 @@ export default {
 			}
 			return temp;
 		}
+	},
+	methods: {
+		getData() {
+			// const temp = JSON.parse(this.$store.state.rawdata)
+			for (let ele in this.$store.state.fieldstore) {
+				console.log(Object.keys(this.$store.state.casedetail.content[ele]).length)
+				console.log(this.$store.state.fieldstore[ele].length)
+			}
+
+			// console.log(temp)
+		}
+	},
+	mounted() {
+		this.getData();
 	},
 	components: {
 		popchild

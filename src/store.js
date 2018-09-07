@@ -13,7 +13,8 @@ export default new Vuex.Store({
 		UUID: '',
 		fieldstore: datafield,
 		tcmcommands: tcmcommands,
-		casedetail: casedetail
+		casedetail: casedetail,
+		rawdata: {}
 	},
 	getters: {
 		getPubStatus(state) {
@@ -38,6 +39,9 @@ export default new Vuex.Store({
 		},
 		updateConfig(state, payload){
 			state.casedetail = payload;
+		},
+		updateRawData(state, payload) {
+			state.rawdata = payload;
 		}
 	},
 	actions: {

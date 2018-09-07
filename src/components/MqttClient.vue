@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- <p>{{ usermessage }}</p> -->
-        <p>{{ datamessage }}</p>
+        <!-- <p>{{ datamessage }}</p> -->
     </div>
 </template>
 
@@ -100,7 +100,7 @@ export default {
 		onMessage(topic, message) {
 			//console.log('#' + topic.toString() + '# ' + message.toString())
 			if (topic == 'data') {
-				this.datamessage = message.toString();
+				this.$store.commit('updateRawData', message)
 			} else if (topic == 'note') {
 				this.usermessage = message.toString();
 				console.log(this.usermessage)
