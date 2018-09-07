@@ -37,12 +37,15 @@
 
 <script>
 import popchild from './popchild';
+import { mapGetters } from 'vuex';
+
 export default {
 	data() {
 		return {
 			dropdown: [],
 			currentItem: 'tab-General',
-			display: []
+			display: [],
+			watch_switch: null
 		};
 	},
 	props: {
@@ -65,12 +68,18 @@ export default {
 		children: {}
 	},
 	computed: {
+		...mapGetters(
+			{
+			dataflag: 'getDataUpdate'
+		}
+		),
 		show: {
 			get() {
 				return this.visible;
 			},
 			set(value) {
 				if (!value) {
+					this.display = [];
 					this.$emit('close');
 				}
 			}
@@ -114,7 +123,7 @@ export default {
 		}
 	},
 	watch: {
-		show: function() {
+		dataflag: function() {
 			if (this.show) {
 				this.getData();
 			}

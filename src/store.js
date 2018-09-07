@@ -22,6 +22,9 @@ export default new Vuex.Store({
 		},
 		getMessage(state) {
 			return state.message;
+		},
+		getDataUpdate(state) {
+			return state.rawdata;
 		}
 	},
 	mutations: {
