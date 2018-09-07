@@ -33,7 +33,17 @@ export default {
 		return {
 			dropdown: [],
 			currentItem: 'tab-General',
-			display: []
+			display: [{
+				name: "Realtime",
+				value: false,
+				GenMW: 0,
+				GenMvar: 0,
+				ShuntMW: 0,
+				ShuntMvar: 0,
+				LoadMW: 0,
+				LoadMvar: 0,
+				FrequencyAve: 60
+			}]
 		};
 	},
 	props: {
@@ -107,7 +117,7 @@ export default {
 					+spdata[e];
 			}
 			console.log(container)
-			this.display = [container];
+			// this.display = [container];
 		}
 	},
 	watch: {
