@@ -14,7 +14,16 @@
 						<v-card-title class='headline'>
 							Data
 						</v-card-title>
-						<v-data-table :headers=$store.state.fieldstore.Substation :items="display" disable-initial-sort hide-actions class="elevation-1">
+						<v-data-table :headers=$store.state.fieldstore.Substation :items="display" disable-initial-sort hide-actions class="elevation-1" lazy>
+							<template slot="items" slot-scope="props">
+								<td class="text-xs-right" v-for="item in props.item" :key=item.text>{{ item }}</td>
+								<!-- <td class="text-xs-right">{{ props.item.GenMvar }}</td>
+								<td class="text-xs-right">{{ props.item.LoadMW }}</td>
+								<td class="text-xs-right">{{ props.item.LoadMvar }}</td>
+								<td class="text-xs-right">{{ props.item.ShuntMW }}</td>
+								<td class="text-xs-right">{{ props.item.ShuntMvar }}</td>
+								<td class="text-xs-right">{{ props.item.FrequencyAve }}</td> -->
+							</template>
 						</v-data-table>
 					</v-card>
 				</v-tab-item>
@@ -33,17 +42,7 @@ export default {
 		return {
 			dropdown: [],
 			currentItem: 'tab-General',
-			display: [{
-				name: "Realtime",
-				value: false,
-				GenMW: 0,
-				GenMvar: 0,
-				ShuntMW: 0,
-				ShuntMvar: 0,
-				LoadMW: 0,
-				LoadMvar: 0,
-				FrequencyAve: 60
-			}]
+			display: []
 		};
 	},
 	props: {
@@ -79,7 +78,6 @@ export default {
 		tabs: function() {
 			let temp = [];
 			for (var ele in this.children) {
-				console.log(this.children[ele]['Int.Bus Number'].toString());
 				temp.push('Bus ' + this.children[ele]['Int.Bus Number'].toString());
 			}
 			return temp;
@@ -96,10 +94,8 @@ export default {
 				arrlength = this.$store.state.fieldstore[ele].length;
 				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
 				if (ele != this.type) {
-					console.log('222');
 					anchor += arrlength * keyarr.length;
 				} else {
-					console.log('111');
 					anchor += arrlength * keyarr.indexOf(this.id);
 					break;
 				}
@@ -108,16 +104,13 @@ export default {
 				// console.log(this.$store.state.fieldstore[ele].length)
 			}
 			const spdata = temp.slice(anchor, anchor + arrlength);
-			let container = {
-				value: false,
-				name: "Realtime"
-			};
+			let container = {};
 			for (let e in spdata) {
-				container[this.$store.state.fieldstore[this.type][e]['value']] =
-					+spdata[e];
+				container[
+					this.$store.state.fieldstore[this.type][e]['value']
+				] = +spdata[e];
 			}
-			console.log(container)
-			// this.display = [container];
+			this.display = [container];
 		}
 	},
 	watch: {

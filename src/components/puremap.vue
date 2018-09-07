@@ -219,7 +219,6 @@ export default {
 			});
 			var self = this;
 			this.chart.on('click', function(params) {
-				console.log(params);
 				if (params.seriesName == 'sub') {
 					self.type = 'Substation';
 					self.name = params.name;
