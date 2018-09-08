@@ -39,6 +39,8 @@
 </style>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	props: {
 		name: {},
@@ -50,6 +52,8 @@ export default {
 			default: function() {
 				return [];
 			}
+		},
+		show: {
 		}
 	},
 	data() {
@@ -57,10 +61,14 @@ export default {
 			dropdown: [],
 			showInput: false,
 			InputDisabled: true,
-			value: null
+			value: null,
+			display: []
 		};
 	},
 	computed: {
+		...mapGetters({
+			dataflag: 'getDataUpdate'
+		}),
 		tabs: function() {
 			const controllable = ['Gen', 'Load', 'Shunt'];
 			let temp = ['Bus'];
@@ -121,7 +129,43 @@ export default {
 				});
 			}
 			this.dropdown = temp;
+		},
+		getData() {
+			const temp = JSON.parse(this.$store.state.rawdata).Data;
+			let anchor = 0;
+			var arrlength;
+			var keyarr;
+
+			for (let ele in this.$store.state.fieldstore) {
+				arrlength = this.$store.state.fieldstore[ele].length;
+				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				if (ele != this.type) {
+					anchor += arrlength * keyarr.length;
+				} else {
+					anchor += arrlength * keyarr.indexOf(this.id);
+					break;
+				}
+				// console.log(Object.keys(this.$store.state.fieldstore).indexOf(ele))
+				// console.log(Object.keys(this.$store.state.casedetail.content[ele]).length)
+				// console.log(this.$store.state.fieldstore[ele].length)
+			}
+			const spdata = temp.slice(anchor, anchor + arrlength);
+			let container = {};
+			for (let e in spdata) {
+				container[
+					this.$store.state.fieldstore[this.type][e]['value']
+				] = +spdata[e];
+			}
+			this.display = [container];
+			console.log(this.display);
 		}
-	}
+	},
+	watch: {
+		dataflag: function() {
+			if (this.show.split('-')[1]===this.name) {
+				this.getData();
+			}
+		}
+	},
 };
 </script>

@@ -4,8 +4,8 @@
 			<v-toolbar color="cyan" dark tabs>
 				<v-toolbar-title>{{name}} {{volt}} {{type}}</v-toolbar-title>
 				<v-tabs slot="extension" v-model="currentItem" centered color="cyan" slider-color="yellow">
-					<v-tab :key="'General'" :href="'#tab-General'">General</v-tab>
-					<v-tab v-for="item in tabs" :key=item :href="'#tab-' + item">{{item}}</v-tab>
+					<v-tab :key="'General'" :href="'#tab-General'" @click="childshow=false;atDefault=true;">General</v-tab>
+					<v-tab v-for="item in tabs" :key=item :href="'#tab-' + item" @click="atDefault=false">{{item}}</v-tab>
 				</v-tabs>
 			</v-toolbar>
 			<v-tabs-items v-model="currentItem">
@@ -28,7 +28,7 @@
 					</v-card>
 				</v-tab-item>
 				<v-tab-item v-for="(item, index) in tabs" :id="'tab-' + item" :key="item" lazy>
-					<popchild :name="item" :detail="children[index]" :subname="name"></popchild>
+					<popchild :name="item" :detail="children[index]" :subname="name" :show="currentItem" lazy></popchild>
 				</v-tab-item>
 			</v-tabs-items>
 		</v-dialog>
@@ -45,7 +45,8 @@ export default {
 			dropdown: [],
 			currentItem: 'tab-General',
 			display: [],
-			watch_switch: null
+			atDefault: true,
+			childshow: false
 		};
 	},
 	props: {
@@ -80,6 +81,7 @@ export default {
 			set(value) {
 				if (!value) {
 					this.display = [];
+					this.childshow = false;
 					this.$emit('close');
 				}
 			}
@@ -117,14 +119,14 @@ export default {
 			for (let e in spdata) {
 				container[
 					this.$store.state.fieldstore[this.type][e]['value']
-				] = +spdata[e];
+				] = spdata[e];
 			}
 			this.display = [container];
 		}
 	},
 	watch: {
 		dataflag: function() {
-			if (this.show) {
+			if (this.show && this.atDefault) {
 				this.getData();
 			}
 		}
