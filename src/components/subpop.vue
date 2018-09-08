@@ -28,7 +28,7 @@
 					</v-card>
 				</v-tab-item>
 				<v-tab-item v-for="(item, index) in tabs" :id="'tab-' + item" :key="item" lazy>
-					<popchild :name="item" :detail="children[index]" :subname="name" :show="currentItem" lazy></popchild>
+					<popchild v-if="show" :name="item" :detail="children[index]" :subname="name" :show="currentItem" lazy></popchild>
 				</v-tab-item>
 			</v-tabs-items>
 		</v-dialog>
