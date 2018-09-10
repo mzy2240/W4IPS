@@ -51,22 +51,6 @@
 			"value": "Status"
 		},
 		{
-			"text": "GenMW",
-			"value": "GenMW"
-		},
-		{
-			"text": "GenMvar",
-			"value": "GenMvar"
-		},
-		{
-			"text": "LoadMW",
-			"value": "LoadMW"
-		},
-		{
-			"text": "LoadMvar",
-			"value": "LoadMvar"
-		},
-		{
 			"text": "ShuntMW",
 			"value": "ShuntMW"
 		},
