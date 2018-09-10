@@ -12,7 +12,10 @@
 			<v-card-title class='headline'>
 				Data
 			</v-card-title>
-			<v-data-table :headers=$store.state.fieldstore.Branch :items="data" disable-initial-sort hide-actions class="elevation-1">
+			<v-data-table :headers=$store.state.fieldstore.Branch :items="display" disable-initial-sort hide-actions class="elevation-1">
+			<template slot="items" slot-scope="props">
+				<td class="text-xs-right" v-for="item in props.item" :key=item.text>{{ item }}</td>
+			</template>
 			</v-data-table>
 			<v-card-title class='headline'>
 				Control
@@ -26,6 +29,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	data() {
 		let temp = [];
@@ -46,7 +51,8 @@ export default {
 			});
 		}
 		return {
-			dropdown: temp
+			dropdown: temp,
+			display: []
 		};
 	},
 	props: {
@@ -73,6 +79,9 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters({
+			dataflag: 'getDataUpdate'
+		}),
 		show: {
 			get() {
 				return this.visible;
@@ -83,6 +92,41 @@ export default {
 				}
 			}
 		}
-	}
+	},
+	methods: {
+		getData() {
+			const temp = JSON.parse(this.$store.state.rawdata).Data;
+			let anchor = 0;
+			var arrlength;
+			var keyarr;
+
+			for (let ele in this.$store.state.fieldstore) {
+				arrlength = this.$store.state.fieldstore[ele].length;
+				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				if (ele != this.type) {
+					anchor += arrlength * keyarr.length;
+				} else {
+					anchor += arrlength * keyarr.indexOf(this.id);
+					break;
+				}
+				// console.log(Object.keys(this.$store.state.fieldstore).indexOf(ele))
+				// console.log(Object.keys(this.$store.state.casedetail.content[ele]).length)
+				// console.log(this.$store.state.fieldstore[ele].length)
+			}
+			const spdata = temp.slice(anchor, anchor + arrlength);
+			let container = {};
+			for (let e in spdata) {
+				container[
+					this.$store.state.fieldstore[this.type][e]['value']
+				] = spdata[e];
+			}
+			this.display = [container];
+		}
+	},
+	watch: {
+		dataflag: function() {
+			this.getData()
+		}
+	},
 };
 </script>

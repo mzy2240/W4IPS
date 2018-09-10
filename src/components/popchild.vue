@@ -6,7 +6,10 @@
 					<v-card-title class='headline'>
 						Data
 					</v-card-title>
-					<v-data-table :headers=$store.state.fieldstore[item] :items="data" disable-initial-sort hide-actions class="elevation-1">
+					<v-data-table :headers=$store.state.fieldstore[item] :items="display" disable-initial-sort hide-actions class="elevation-1">
+						<template slot="items" slot-scope="props">
+								<td class="text-xs-right" v-for="item in props.item" :key=item.text>{{ item }}</td>
+						</template>
 					</v-data-table>
 				</v-card>
 				<v-card v-if="item != 'Bus'">
@@ -62,6 +65,7 @@ export default {
 			showInput: false,
 			InputDisabled: true,
 			value: null,
+			type: "Bus",
 			display: []
 		};
 	},
@@ -135,6 +139,7 @@ export default {
 			let anchor = 0;
 			var arrlength;
 			var keyarr;
+			const id = this.detail["Int.Bus Number"].toString();
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
@@ -142,7 +147,7 @@ export default {
 				if (ele != this.type) {
 					anchor += arrlength * keyarr.length;
 				} else {
-					anchor += arrlength * keyarr.indexOf(this.id);
+					anchor += arrlength * keyarr.indexOf(id);
 					break;
 				}
 				// console.log(Object.keys(this.$store.state.fieldstore).indexOf(ele))
@@ -157,7 +162,7 @@ export default {
 				] = +spdata[e];
 			}
 			this.display = [container];
-			console.log(this.display);
+			// console.log(this.display);
 		}
 	},
 	watch: {
