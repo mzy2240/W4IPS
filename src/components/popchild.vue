@@ -66,7 +66,9 @@ export default {
 			InputDisabled: true,
 			value: null,
 			type: "Bus",
-			display: []
+			display: [],
+			activeObj: "Bus",
+			id: this.detail["Int.Bus Number"]
 		};
 	},
 	computed: {
@@ -103,18 +105,24 @@ export default {
 		},
 		tabclick(ele) {
 			let temp = [];
-			if (ele.label == 'Gen') {
+			this.activeObj = ele.label;
+			if (this.activeObj == "Bus") {
+				this.id = this.detail["Int.Bus Number"]
+			} else {
+				this.id = this.detail[this.activeObj]["Int.Bus Number"]
+			}
+			if (this.activeObj == 'Gen') {
 				this.showInput = true;
 			}
-			for (var j in this.$store.state.tcmcommands[ele.label]) {
+			for (var j in this.$store.state.tcmcommands[this.activeObj]) {
 				let jj = j;
 				temp.push({
-					text: this.$store.state.tcmcommands[ele.label][j],
+					text: this.$store.state.tcmcommands[this.activeObj][j],
 					callback: () => {
-						const temp = this.$store.state.casedetail.content[ele.label][
+						const temp = this.$store.state.casedetail.content[this.activeObj][
 							this.name.split(' ')[1]
 						];
-						var command = this.$store.state.tcmcommands[ele.label][jj];
+						var command = this.$store.state.tcmcommands[this.activeObj][jj];
 						if (!this.InputDisabled) {
 							if (this.value == null) {
 								this.value = 0;
@@ -135,11 +143,11 @@ export default {
 			this.dropdown = temp;
 		},
 		getData() {
+			this.type = this.activeObj;
 			const temp = JSON.parse(this.$store.state.rawdata).Data;
 			let anchor = 0;
 			var arrlength;
 			var keyarr;
-			const id = this.detail["Int.Bus Number"].toString();
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
@@ -147,7 +155,7 @@ export default {
 				if (ele != this.type) {
 					anchor += arrlength * keyarr.length;
 				} else {
-					anchor += arrlength * keyarr.indexOf(id);
+					anchor += arrlength * keyarr.indexOf(this.id.toString());
 					break;
 				}
 				// console.log(Object.keys(this.$store.state.fieldstore).indexOf(ele))
@@ -162,7 +170,6 @@ export default {
 				] = +spdata[e];
 			}
 			this.display = [container];
-			// console.log(this.display);
 		}
 	},
 	watch: {
