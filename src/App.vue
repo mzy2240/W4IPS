@@ -2,12 +2,10 @@
 
 <template>
 	<v-app>
-		<v-navigation-drawer fixed mini-variant :clipped="$vuetify.breakpoint.mdAndUp" app v-model="drawer">
+		<v-navigation-drawer fixed mini-variant app clipped v-model="drawer">
 			<v-toolbar flat class="transparent">
 				<v-list class="pa-0">
-				
 					<v-list-tile avatar :key="'chat'" @click="dialog=true">
-							
 						<v-list-tile-avatar>
 							<v-icon>mdi-xbox-controller</v-icon>
 						</v-list-tile-avatar>
@@ -16,7 +14,7 @@
 							<v-list-tile-title>Configure</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
-					
+
 				</v-list>
 			</v-toolbar>
 			<v-list class="pt-0" dense>
@@ -45,7 +43,7 @@
 </template>
 
 <script>
-import chatpop from './components/chatpop'
+import chatpop from './components/chatpop';
 
 export default {
 	data() {

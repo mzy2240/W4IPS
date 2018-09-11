@@ -72,7 +72,7 @@ export default {
 			this.client.subscribe(newVal);
 			Notification.success({
 					title: 'Success',
-					message: "Successfully subscribed to a new topic #" + newVal 
+					message: "Successfully subscribed to a new topic #" + newVal
 				})
 		},
 		getNewPublish: function(newVal, oldVal) {
@@ -112,7 +112,7 @@ export default {
 			} else if (topic == 'note') {
 				this.usermessage = message.toString();
 				// console.log(this.usermessage)
-				Notification.info({
+				Notification.warning({
 					title: 'Notification',
 					message: this.usermessage
 				})
@@ -120,7 +120,8 @@ export default {
 				Notification.success({
 					title: 'User Message',
 					message: message.toString(),
-					duration: 8000
+					iconClass: "el-icon-sort",
+					duration: 5000
 				})
 			}
 		},
