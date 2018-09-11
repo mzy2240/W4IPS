@@ -55,12 +55,10 @@ export default {
 		this.onInitClient();
 	},
 	computed: {
-		...mapGetters({
-			PubStatus: 'getPubStatus'
-		})
+		...mapGetters(['getPubStatus', 'getNewSubscribe', 'getNewPublish'])
 	},
 	watch: {
-		PubStatus: function(newVal, oldVal) {
+		getPubStatus: function(newVal, oldVal) {
 			const temp = {
 				user: this.clientid,
 				type: this.$store.state.message[0],
@@ -69,6 +67,16 @@ export default {
 				action: this.$store.state.message[3]
 			};
 			this.client.publish('user', JSON.stringify(temp));
+		},
+		getNewSubscribe: function(newVal, oldVal) {
+			this.client.subscribe(newVal);
+			Notification.success({
+					title: 'Success',
+					message: "Successfully subscribed to a new topic #" + newVal 
+				})
+		},
+		getNewPublish: function(newVal, oldVal) {
+			this.client.publish(newVal[0], "User #" + this.clientid + ": " + newVal[1]);
 		}
 	},
 	methods: {
@@ -103,10 +111,16 @@ export default {
 				this.$store.commit('updateRawData', message)
 			} else if (topic == 'note') {
 				this.usermessage = message.toString();
-				console.log(this.usermessage)
+				// console.log(this.usermessage)
 				Notification.info({
 					title: 'Notification',
 					message: this.usermessage
+				})
+			} else {
+				Notification.success({
+					title: 'User Message',
+					message: message.toString(),
+					duration: 8000
 				})
 			}
 		},

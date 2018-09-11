@@ -5,15 +5,18 @@
 		<v-navigation-drawer fixed mini-variant :clipped="$vuetify.breakpoint.mdAndUp" app v-model="drawer">
 			<v-toolbar flat class="transparent">
 				<v-list class="pa-0">
-					<v-list-tile avatar>
+				
+					<v-list-tile avatar :key="'chat'" @click="dialog=true">
+							
 						<v-list-tile-avatar>
 							<v-icon>mdi-xbox-controller</v-icon>
-							<!--<img src="https://randomuser.me/api/portraits/men/85.jpg" />-->
 						</v-list-tile-avatar>
+
 						<v-list-tile-content>
 							<v-list-tile-title>Configure</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
+					
 				</v-list>
 			</v-toolbar>
 			<v-list class="pt-0" dense>
@@ -37,15 +40,22 @@
 		<v-content>
 			<router-view/>
 		</v-content>
+		<chatpop v-if="dialog" :visible="dialog" @close="dialog=false"></chatpop>
 	</v-app>
 </template>
 
 <script>
+import chatpop from './components/chatpop'
+
 export default {
 	data() {
 		return {
-			drawer: false
+			drawer: false,
+			dialog: false
 		};
+	},
+	components: {
+		chatpop
 	}
 };
 </script>

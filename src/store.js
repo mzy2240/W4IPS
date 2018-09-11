@@ -14,7 +14,9 @@ export default new Vuex.Store({
 		fieldstore: datafield,
 		tcmcommands: tcmcommands,
 		casedetail: casedetail,
-		rawdata: {}
+		rawdata: {},
+		newsubscribe: [],
+		newpublish: []
 	},
 	getters: {
 		getPubStatus(state) {
@@ -25,6 +27,12 @@ export default new Vuex.Store({
 		},
 		getDataUpdate(state) {
 			return state.rawdata;
+		},
+		getNewSubscribe(state) {
+			return state.newsubscribe;
+		},
+		getNewPublish(state) {
+			return state.newpublish;
 		}
 	},
 	mutations: {
@@ -45,6 +53,12 @@ export default new Vuex.Store({
 		},
 		updateRawData(state, payload) {
 			state.rawdata = payload;
+		},
+		setnewsubscribe(state, payload) {
+			state.newsubscribe = payload;
+		},
+		setnewpublish(state, payload) {
+			state.newpublish = payload;
 		}
 	},
 	actions: {
