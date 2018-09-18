@@ -102,7 +102,8 @@ export default {
 						// zindex: 2,
 						data: [],
 						label: {
-							show: false,
+							show: true,
+							position: 'top',
 							formatter: res => {
 								return res.data.name.split('_')[0];
 							}
@@ -244,6 +245,9 @@ export default {
 					}
 				]
 			});
+		},
+		updateLines() {
+
 		}
 	},
 	mounted() {
