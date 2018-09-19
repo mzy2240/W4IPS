@@ -41,6 +41,10 @@ export default {
 			this.chart = echarts.init(document.getElementById(id));
 			this.chart.setOption({
 				animation: false,
+				tooltip: {
+					show: true,
+					trigger: 'item'
+				},
 				bmap: {
 					center: [-86.84, 36.44],
 					zoom: 8,
@@ -101,11 +105,9 @@ export default {
 						showEffectOn: 'emphasis',
 						// zindex: 2,
 						data: [],
-						label: {
-							show: true,
-							position: 'top',
-							formatter: res => {
-								return res.data.name.split('_')[0];
+						tooltip: {
+							formatter: function(params) {
+								return 'Substation: ' + params.name
 							}
 						},
 						itemStyle: {
@@ -128,12 +130,17 @@ export default {
 							trailOpacity: 1,
 							spotIntensity: 10
 						},
-						blendMode: 'lighter',
+						// blendMode: 'lighter',
 						// polyline: true,
 						lineStyle: {
 							width: 1,
 							color: 'rgb(200, 40, 0)',
 							opacity: 1
+						},
+						tooltip: {
+							formatter: function(params) {
+								return 'Branch: ' + params.name
+							}
 						},
 						emphasis: {
 							lineStyle: {
@@ -149,7 +156,7 @@ export default {
 		},
 		getData() {
 			const temp = require('../assets/150.json');
-			console.log(temp.content);
+			// console.log(temp.content);
 			if (temp.content.type == 'dsmDictionary') {
 				for (let ele in temp.content.Substation) {
 					this.subdata.push({

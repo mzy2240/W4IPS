@@ -16,7 +16,8 @@ export default new Vuex.Store({
 		casedetail: casedetail,
 		rawdata: {},
 		newsubscribe: [],
-		newpublish: []
+		newpublish: [],
+		startsim: 0
 	},
 	getters: {
 		getPubStatus(state) {
@@ -33,6 +34,9 @@ export default new Vuex.Store({
 		},
 		getNewPublish(state) {
 			return state.newpublish;
+		},
+		startsimtrigger(state) {
+			return state.startsim;
 		}
 	},
 	mutations: {
@@ -59,6 +63,9 @@ export default new Vuex.Store({
 		},
 		setnewpublish(state, payload) {
 			state.newpublish = payload;
+		},
+		trigstartsim(state) {
+			state.startsim ++;
 		}
 	},
 	actions: {

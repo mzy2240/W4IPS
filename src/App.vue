@@ -7,14 +7,22 @@
 				<v-list class="pa-0">
 					<v-list-tile avatar :key="'chat'" @click="dialog=true">
 						<v-list-tile-avatar>
-							<v-icon>mdi-xbox-controller</v-icon>
+							<v-icon>chat</v-icon>
 						</v-list-tile-avatar>
 
 						<v-list-tile-content>
 							<v-list-tile-title>Configure</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
+					<v-list-tile avatar :key="'start'" @click="$store.commit('trigstartsim')">
+						<v-list-tile-avatar>
+							<v-icon>mdi-play</v-icon>
+						</v-list-tile-avatar>
 
+						<v-list-tile-content>
+							<v-list-tile-title>Start</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
 				</v-list>
 			</v-toolbar>
 			<v-list class="pt-0" dense>

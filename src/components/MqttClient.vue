@@ -18,17 +18,18 @@ export default {
 			client: null,
 			usermessage: 'Initialized',
 			datamessage: 'Initialized',
-			clientid: null
+			clientid: null,
+			backend_online: null
 		};
 	},
 	props: {
 		subtopic: {
 			type: Array || String || Object,
-			default: () => ['data', 'note']
+			default: () => ['ds/data', 'ds/note', 'ds/system']
 		},
 		pubtopic: {
 			type: String || Array || Object,
-			default: 'user'
+			default: 'user/cmd'
 		},
 		address: {
 			type: String,
@@ -55,7 +56,7 @@ export default {
 		this.onInitClient();
 	},
 	computed: {
-		...mapGetters(['getPubStatus', 'getNewSubscribe', 'getNewPublish'])
+		...mapGetters(['getPubStatus', 'getNewSubscribe', 'getNewPublish', 'startsimtrigger'])
 	},
 	watch: {
 		getPubStatus: function(newVal, oldVal) {
@@ -66,7 +67,7 @@ export default {
 				name: this.$store.state.message[2],
 				action: this.$store.state.message[3]
 			};
-			this.client.publish('user', JSON.stringify(temp));
+			this.client.publish('user/cmd', JSON.stringify(temp));
 		},
 		getNewSubscribe: function(newVal, oldVal) {
 			this.client.subscribe(newVal);
@@ -77,6 +78,17 @@ export default {
 		},
 		getNewPublish: function(newVal, oldVal) {
 			this.client.publish(newVal[0], "User #" + this.clientid + ": " + newVal[1]);
+		},
+		startsimtrigger: function() {
+			this.client.publish('user/system', this.clientid + ":" + "Start");
+		},
+		backend_online: function() {
+			Notification.success({
+					title: 'DS backend is connected',
+					// message: message.toString(),
+					iconClass: "el-icon-circle-check-outline",
+					duration: 4500
+				})
 		}
 	},
 	methods: {
@@ -104,17 +116,31 @@ export default {
 		onConnect(connack) {
 			console.log('onConnect');
 			this.client.subscribe(this.subtopic);
+			Notification.success({
+					title: 'MQTT broker is connected',
+					// message: message.toString(),
+					iconClass: "el-icon-circle-check-outline",
+					duration: 4000
+				})
 		},
 		onMessage(topic, message) {
 			//console.log('#' + topic.toString() + '# ' + message.toString())
-			if (topic == 'data') {
+			if (topic == 'ds/data') {
 				this.$store.commit('updateRawData', message)
-			} else if (topic == 'note') {
+				this.backend_online = true
+			} else if (topic == 'ds/note') {
 				this.usermessage = message.toString();
 				// console.log(this.usermessage)
 				Notification.warning({
 					title: 'Notification',
-					message: this.usermessage
+					message: this.usermessage,
+					duration: 5000
+				})
+			} else if (topic == 'ds/system') {
+				Notification.warning({
+					title: message.toString(),
+					iconClass: "el-icon-setting",
+					duration: 5500
 				})
 			} else {
 				Notification.success({
@@ -130,9 +156,21 @@ export default {
 		},
 		onReconnect() {
 			console.log('onReconnect');
+			Notification.success({
+					title: 'MQTT broker is reconnected',
+					// message: message.toString(),
+					iconClass: "el-icon-circle-check-outline",
+					duration: 3000
+				})
 		},
 		onOffline() {
 			console.log('onOffline');
+			Notification.error({
+					title: 'MQTT broker is disconnected',
+					// message: message.toString(),
+					iconClass: "el-icon-circle-close-outline",
+					duration: 3000
+				})
 		},
 		onError(error) {
 			console.log('onError: ' + error);
