@@ -16,7 +16,7 @@
 					</v-list-tile>
 					<v-list-tile avatar :key="'start'" @click="$store.commit('trigstartsim')">
 						<v-list-tile-avatar>
-							<v-icon>mdi-play</v-icon>
+							<v-icon>play_arrow</v-icon>
 						</v-list-tile-avatar>
 
 						<v-list-tile-content>
@@ -25,14 +25,6 @@
 					</v-list-tile>
 				</v-list>
 			</v-toolbar>
-			<v-list class="pt-0" dense>
-				<v-divider></v-divider>
-				<v-list-tile>
-					<v-list-tile-action>
-						<v-icon></v-icon>
-					</v-list-tile-action>
-				</v-list-tile>
-			</v-list>
 		</v-navigation-drawer>
 		<v-toolbar color="blue darken-3" dark app :clipped-left="$vuetify.breakpoint.mdAndUp" fixed>
 			<v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
