@@ -14,7 +14,7 @@
 							<v-list-tile-title>Configure</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
-					<v-list-tile avatar :key="'start'" @click="$store.commit('trigstartsim')">
+					<v-list-tile avatar :key="'start'" v-if="$store.state.ready4start" @click="$store.commit('trigstartsim')">
 						<v-list-tile-avatar>
 							<v-icon>play_arrow</v-icon>
 						</v-list-tile-avatar>

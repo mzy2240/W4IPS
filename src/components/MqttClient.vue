@@ -142,6 +142,11 @@ export default {
 					iconClass: "el-icon-setting",
 					duration: 5500
 				})
+				if (message.toString() == "The simulation has been aborted") {
+					this.$store.commit('setstartready')
+				} else if (message.toString() == "The simulation is started") {
+					this.$store.commit('setstartdisable')
+				}
 			} else {
 				Notification.success({
 					title: 'User Message',

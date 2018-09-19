@@ -18,7 +18,8 @@ export default new Vuex.Store({
 		rawdata: {},
 		newsubscribe: [],
 		newpublish: [],
-		startsim: 0
+		startsim: 0,
+		ready4start: false
 	},
 	getters: {
 		getPubStatus(state) {
@@ -67,6 +68,12 @@ export default new Vuex.Store({
 		},
 		trigstartsim(state) {
 			state.startsim ++;
+		},
+		setstartready(state) {
+			state.ready4start = true;
+		},
+		setstartdisable(state) {
+			state.ready4start = false;
 		}
 	},
 	actions: {
