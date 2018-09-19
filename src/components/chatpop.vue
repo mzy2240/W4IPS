@@ -12,7 +12,7 @@
 								<v-text-field label="Topic" v-model.lazy="topic" required :rules="[rules.prohibited]"></v-text-field>
 							</v-flex>
 							<v-flex xs12>
-								<v-text-field label="Content" v-model.lazy="content"></v-text-field>
+								<v-text-field label="Content" v-model.lazy="content" @keyup.enter="enterClicked"></v-text-field>
 							</v-flex>
 						</v-layout>
 					</v-container>
@@ -67,6 +67,9 @@ export default {
 		},
 		subscribe() {
 			this.$store.commit('setnewsubscribe', this.topic);
+		},
+		enterClicked() {
+			this.send();
 		}
 	}
 };
