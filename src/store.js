@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import datafield from './assets/datafield.json'
 import tcmcommands from './assets/tcmcommands.json'
 import casedetail from './assets/150.json'
+// import casedetail from './assets/150.json'
 
 Vue.use(Vuex);
 

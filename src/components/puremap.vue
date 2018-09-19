@@ -155,7 +155,8 @@ export default {
 			});
 		},
 		getData() {
-			const temp = require('../assets/150.json');
+			const temp = this.$store.state.casedetail
+			// const temp = require('../assets/150.json');
 			// console.log(temp.content);
 			if (temp.content.type == 'dsmDictionary') {
 				for (let ele in temp.content.Substation) {
