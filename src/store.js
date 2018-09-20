@@ -19,7 +19,8 @@ export default new Vuex.Store({
 		newsubscribe: [],
 		newpublish: [],
 		startsim: 0,
-		ready4start: false
+		ready4start: false,
+		page: 'Home'
 	},
 	getters: {
 		getPubStatus(state) {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
 		},
 		startsimtrigger(state) {
 			return state.startsim;
+		},
+		page (state) {
+			return state.page;
 		}
 	},
 	mutations: {
@@ -74,6 +78,9 @@ export default new Vuex.Store({
 		},
 		setstartdisable(state) {
 			state.ready4start = false;
+		},
+		setpage(state, payload) {
+			state.page = payload;
 		}
 	},
 	actions: {
