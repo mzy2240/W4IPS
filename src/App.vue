@@ -14,6 +14,15 @@
 							<v-list-tile-title>Configure</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
+					<v-list-tile avatar :key="'generator'" @click="$store.commit('setpage', 'generator')">
+						<v-list-tile-avatar>
+							<v-icon>mdi-google-glass</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>Start</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
 					<v-list-tile avatar :key="'start'" v-if="$store.state.ready4start" @click="$store.commit('trigstartsim')">
 						<v-list-tile-avatar>
 							<v-icon>play_arrow</v-icon>
@@ -29,21 +38,26 @@
 		<v-toolbar color="blue darken-3" dark app :clipped-left="$vuetify.breakpoint.mdAndUp" fixed>
 			<v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
 			<v-toolbar-title class="white--text">
-				PowerWeb
+				<button v-on:click="$store.commit('setpage','Home')">PowerWeb</button>
 				<div class="subheading">Powered by PowerWorld Dynamics Studio and EMQ</div>
 			</v-toolbar-title>
 			<v-toolbar-items>
 			</v-toolbar-items>
 		</v-toolbar>
 		<v-content>
-			<router-view/>
+			<component v-bind:is="page"></component>
+			<!-- <router-view/> -->
 		</v-content>
 		<chatpop v-if="dialog" :visible="dialog" @close="dialog=false"></chatpop>
+		<MqttClient style="font-size: 12px"></MqttClient>
 	</v-app>
 </template>
 
 <script>
+import Home from './views/Home';
+import generator from './views/generator-view';
 import chatpop from './components/chatpop';
+import MqttClient from './components/MqttClient'
 
 export default {
 	data() {
@@ -52,8 +66,16 @@ export default {
 			dialog: false
 		};
 	},
+	computed: {
+		page() {
+			return this.$store.getters.page;
+		}
+	},
 	components: {
-		chatpop
+		chatpop,
+		MqttClient,
+		Home: Home,
+		generator: generator
 	}
 };
 </script>
