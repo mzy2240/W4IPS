@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import datafield from './assets/datafield.json'
 import tcmcommands from './assets/tcmcommands.json'
 import casedetail from './assets/150.json'
+import notificationSystem from './assets/notificationsettings'
 // import casedetail from './assets/150.json'
 
 Vue.use(Vuex);
@@ -20,7 +21,8 @@ export default new Vuex.Store({
 		newpublish: [],
 		startsim: 0,
 		ready4start: false,
-		page: 'Home'
+		page: 'Home',
+		notificationSystem
 	},
 	getters: {
 		getPubStatus(state) {

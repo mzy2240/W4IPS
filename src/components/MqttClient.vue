@@ -148,12 +148,13 @@ export default {
 					this.$store.commit('setstartdisable')
 				}
 			} else {
-				Notification.success({
-					title: 'User Message',
-					message: message.toString(),
-					iconClass: "el-icon-sort",
-					duration: 5000
-				})
+				// Notification.success({
+				// 	title: 'User Message',
+				// 	message: message.toString(),
+				// 	iconClass: "el-icon-sort",
+				// 	duration: 5000
+				// })
+				this.$toast.show(message.toString().split(':')[1], message.toString().split(':')[0], this.$store.state.notificationSystem.options.ballon);
 			}
 		},
 		onClose() {
