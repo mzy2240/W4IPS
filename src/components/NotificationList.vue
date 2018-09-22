@@ -7,10 +7,10 @@
 		</v-toolbar>
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
-			<v-list three-line class="pa-0">
-				<template v-for="(item, index) in items">
+			<v-list three-line dense class="pa-0">
+				<template v-for="(item, index) in $store.state.badgelist">
 					<v-subheader v-if="item.header" :key="item.header">{{ item.header }}</v-subheader>
-					<v-list-tile avatar v-else :key="item.title" @click="handleClick">
+					<v-list-tile avatar v-else :key="item.time" @click="handleClick">
 						<v-list-tile-avatar :color="item.color">
 							<v-icon dark>{{item.icon}}</v-icon>
 						</v-list-tile-avatar>
@@ -18,14 +18,14 @@
 							<v-list-tile-sub-title v-html="item.title"></v-list-tile-sub-title>
 						</v-list-tile-content>
 						<v-list-tile-action class="caption">
-							{{item.timeLabel}}
+							{{item.time}}
 						</v-list-tile-action>
 					</v-list-tile>
 					<v-divider :key="index"></v-divider>
 				</template>
 			</v-list>
 			<v-divider></v-divider>
-			<v-btn block flat class="ma-0">All</v-btn>
+			<v-btn block flat class="ma-0" @click="cleanclear">Clear</v-btn>
 			<v-divider></v-divider>
 		</v-card-text>
 	</v-card>
@@ -40,37 +40,18 @@
 
 <script>
 export default {
-	data: () => ({
-		items: [
-			// {
-			// 	title: 'New user registered',
-			// 	color: 'light-green',
-			// 	icon: 'account_circle',
-			// 	timeLabel: 'Just now'
-			// },
-			// {
-			// 	title: 'New order received',
-			// 	color: 'light-blue',
-			// 	icon: 'shopping_cart',
-			// 	timeLabel: '2 min ago'
-			// },
-			// {
-			// 	title: 'New payment made',
-			// 	color: 'cyan',
-			// 	icon: 'payment',
-			// 	timeLabel: '24 min ago'
-			// },
-			// {
-			// 	title: 'New message from Michael blah blah blah blah blahbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-			// 	color: 'red',
-			// 	icon: 'email',
-			// 	timeLabel: '1 hour ago'
-			// }
-		]
-	}),
+	data: function() {
+		return {
+			// items: this.$store.state.badgelist
+		}
+	},
 	methods: {
 		handleClick: e => {
 			console.log(e);
+		},
+		cleanclear: function() {
+			console.log("Yeah");
+			this.$store.commit("resetbadgelist");
 		}
 	}
 };

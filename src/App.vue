@@ -47,7 +47,7 @@
 			<v-btn icon @click="handleFullScreen()">
 				<v-icon>fullscreen</v-icon>
 			</v-btn>
-			<v-menu offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition">
+			<v-menu offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition" v-model="show">
 				<v-btn icon flat slot="activator" @click="$store.commit('resetbadge')">
 					<v-badge color="red" overlap>
 						<span slot="badge"> {{$store.state.badge}} </span>
@@ -78,7 +78,8 @@ export default {
 	data() {
 		return {
 			drawer: false,
-			dialog: false
+			dialog: false,
+			show: false
 		};
 	},
 	computed: {
@@ -96,6 +97,13 @@ export default {
 	methods: {
 		handleFullScreen() {
 			Util.toggleFullScreen();
+		}
+	},
+	watch: {
+		show: function(newVal, Val) {
+			if (newVal == false) {
+				this.$store.commit('resetbadgelist');
+			}
 		}
 	}
 };

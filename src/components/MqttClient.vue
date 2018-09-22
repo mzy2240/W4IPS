@@ -158,6 +158,7 @@ export default {
 				// })
 				this.$toast.show(message.toString().split(':')[1], message.toString().split(':')[0], this.$store.state.notificationSystem.options.ballon);
 				this.$store.commit('updatebadge');
+				this.$store.commit('updatebadgelist', {title: message.toString(), source: 'user', color: 'light-blue', time: new Date().getTime()})
 			}
 		},
 		onClose() {
