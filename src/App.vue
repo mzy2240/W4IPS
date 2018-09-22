@@ -41,8 +41,21 @@
 				<button v-on:click="$store.commit('setpage','Home')">PowerWeb</button>
 				<div class="subheading">Powered by PowerWorld Dynamics Studio and EMQ</div>
 			</v-toolbar-title>
-			<v-toolbar-items>
-			</v-toolbar-items>
+			<!-- <v-toolbar-items>
+			</v-toolbar-items> -->
+			<v-spacer></v-spacer>
+			<v-btn icon @click="handleFullScreen()">
+				<v-icon>fullscreen</v-icon>
+			</v-btn>
+			<v-menu offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition">
+				<v-btn icon flat slot="activator" @click="$store.commit('resetbadge')">
+					<v-badge color="red" overlap>
+						<span slot="badge"> {{$store.state.badge}} </span>
+						<v-icon medium>notifications</v-icon>
+					</v-badge>
+				</v-btn>
+				<NotificationList></NotificationList>
+			</v-menu>
 		</v-toolbar>
 		<v-content>
 			<component v-bind:is="page"></component>
@@ -57,7 +70,9 @@
 import Home from './views/Home';
 import generator from './views/generator-view';
 import chatpop from './components/chatpop';
-import MqttClient from './components/MqttClient'
+import MqttClient from './components/MqttClient';
+import Util from '@/util';
+import NotificationList from './components/NotificationList';
 
 export default {
 	data() {
@@ -75,7 +90,13 @@ export default {
 		chatpop,
 		MqttClient,
 		Home: Home,
-		generator: generator
+		generator: generator,
+		NotificationList
+	},
+	methods: {
+		handleFullScreen() {
+			Util.toggleFullScreen();
+		}
 	}
 };
 </script>

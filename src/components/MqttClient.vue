@@ -136,6 +136,7 @@ export default {
 					message: this.usermessage,
 					duration: 5000
 				})
+				this.$store.commit('updatebadge');
 			} else if (topic == 'ds/system') {
 				Notification.warning({
 					title: message.toString(),
@@ -147,6 +148,7 @@ export default {
 				} else if (message.toString() == "The simulation is started") {
 					this.$store.commit('setstartdisable')
 				}
+				this.$store.commit('updatebadge');
 			} else {
 				// Notification.success({
 				// 	title: 'User Message',
@@ -155,6 +157,7 @@ export default {
 				// 	duration: 5000
 				// })
 				this.$toast.show(message.toString().split(':')[1], message.toString().split(':')[0], this.$store.state.notificationSystem.options.ballon);
+				this.$store.commit('updatebadge');
 			}
 		},
 		onClose() {
