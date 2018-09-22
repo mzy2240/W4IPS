@@ -33,7 +33,7 @@
 
 <style scoped>
 .list_tile_sub_title {
-	max-width: 300px;
+	max-width: 400px;
 }
 
 </style>

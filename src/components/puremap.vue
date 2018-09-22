@@ -1,9 +1,30 @@
 /* eslint-disable */
 <template>
 	<div>
+		<v-container grid-list-md text-xs-center>
+			<v-layout row wrap>
+				<v-flex d-flex xs6 style="height: 800px;">
+					<div id="main"></div>
+				</v-flex>
+				<v-flex d-flex xs6 style="height: 800px;">
+					<v-layout row wrap>
+						<v-flex style="height:50%;" d-flex xs12>
+							<v-card dark color="light-blue">
+								<v-card-text class="px-0">Tool1</v-card-text>
+							</v-card>
+						</v-flex >
+						<v-flex style="height:50%;" d-flex xs12>
+							<v-card dark color="light-blue">
+								<v-card-text class="px-0">Tool2</v-card-text>
+							</v-card>
+						</v-flex >
+					</v-layout>
+				</v-flex>
+			</v-layout>
+		</v-container>
 		<linepop v-if="lineshowDialog" :visible='lineshowDialog' :type='type' :id='id' :name='name' :volt='volt' @close="lineshowDialog=false" />
 		<subpop v-if="subshowDialog" :visible='subshowDialog' :children='children' :type='type' :id='id' :name='name' :volt='volt' @close="subshowDialog=false" />
-		<div id="main" style="width: 1000px;height: 800px;"></div>
+
 	</div>
 </template>
 
@@ -107,7 +128,7 @@ export default {
 						data: [],
 						tooltip: {
 							formatter: function(params) {
-								return 'Substation: ' + params.name
+								return 'Substation: ' + params.name;
 							}
 						},
 						itemStyle: {
@@ -139,7 +160,7 @@ export default {
 						},
 						tooltip: {
 							formatter: function(params) {
-								return 'Branch: ' + params.name
+								return 'Branch: ' + params.name;
 							}
 						},
 						emphasis: {
@@ -155,7 +176,7 @@ export default {
 			});
 		},
 		getData() {
-			const temp = this.$store.state.casedetail
+			const temp = this.$store.state.casedetail;
 			// const temp = require('../assets/150.json');
 			// console.log(temp.content);
 			if (temp.content.type == 'dsmDictionary') {
@@ -254,9 +275,7 @@ export default {
 				]
 			});
 		},
-		updateLines() {
-
-		}
+		updateLines() {}
 	},
 	mounted() {
 		this.getData();

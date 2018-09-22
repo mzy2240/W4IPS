@@ -27,17 +27,19 @@ const notificationSystem = {
         },
         ballon: {
             // balloon: true,
-            theme: "dark",
+			// theme: "light",
+			color: 'yellow',
             position: 'topCenter'
         },
         info: {
             position: 'bottomLeft'
         },
         success: {
-            position: 'bottomRight'
+            position: 'topRight'
         },
         warning: {
-            position: 'topLeft'
+			position: 'topCenter',
+			timeout: 8000
         },
         error: {
             position: 'topRight'
