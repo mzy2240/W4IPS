@@ -24,7 +24,8 @@ export default new Vuex.Store({
 		page: 'Home',
 		notificationSystem,
 		badge: 0,
-		badgelist: []
+		badgelist: [],
+		badgeShow: false
 	},
 	getters: {
 		getPubStatus(state) {
@@ -88,9 +89,11 @@ export default new Vuex.Store({
 		},
 		updatebadge(state) {
 			state.badge ++;
+			state.badgeShow = true;
 		},
 		resetbadge(state) {
 			state.badge = 0;
+			state.badgeShow = false;
 		},
 		updatebadgelist(state, payload) {
 			state.badgelist.push(payload)

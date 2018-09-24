@@ -49,7 +49,7 @@
 			</v-btn>
 			<v-menu offset-y origin="center center" class="elelvation-1" :nudge-bottom="14" transition="scale-transition" v-model="show">
 				<v-btn icon flat slot="activator" @click="$store.commit('resetbadge')">
-					<v-badge color="red" overlap>
+					<v-badge color="red" overlap v-model="$store.state.badgeShow">
 						<span slot="badge"> {{$store.state.badge}} </span>
 						<v-icon medium>notifications</v-icon>
 					</v-badge>
