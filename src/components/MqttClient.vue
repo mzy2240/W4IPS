@@ -141,7 +141,7 @@ export default {
 				// })
 				this.$toast.warning(this.usermessage, 'System', this.$store.state.notificationSystem.options.warning);
 				this.$store.commit('updatebadge');
-				this.$store.commit('updatebadgelist', {title: this.usermessage, source: 'System', color: 'yellow', time: new Date().getTime()})
+				this.$store.commit('updatebadgelist', {title: this.usermessage, source: 'System', color: 'yellow', time: Date.now()})
 			} else if (topic == 'ds/system') {
 				// Notification.warning({
 				// 	title: message.toString(),
@@ -155,7 +155,7 @@ export default {
 					this.$store.commit('setstartdisable')
 				}
 				this.$store.commit('updatebadge');
-				this.$store.commit('updatebadgelist', {title: message.toString(), source: 'System', color: 'red', time: new Date().getTime()})
+				this.$store.commit('updatebadgelist', {title: message.toString(), source: 'System', color: 'red', time: Date.now()})
 			} else {
 				// Notification.success({
 				// 	title: 'User Message',
@@ -165,7 +165,7 @@ export default {
 				// })
 				this.$toast.show(message.toString().split(':')[1], message.toString().split(':')[0], this.$store.state.notificationSystem.options.ballon);
 				this.$store.commit('updatebadge');
-				this.$store.commit('updatebadgelist', {title: message.toString(), source: 'user', color: 'light-blue', time: new Date().getTime()})
+				this.$store.commit('updatebadgelist', {title: message.toString(), source: 'user', color: 'light-blue', time: Date.now()})
 			}
 		},
 		onClose() {

@@ -18,7 +18,7 @@
 							<v-list-tile-sub-title v-html="item.title"></v-list-tile-sub-title>
 						</v-list-tile-content>
 						<v-list-tile-action class="caption">
-							{{item.time}}
+							{{timeAgo.format(item.time, {gradation: canonical})}}
 						</v-list-tile-action>
 					</v-list-tile>
 					<v-divider :key="index"></v-divider>
@@ -35,23 +35,30 @@
 .list_tile_sub_title {
 	max-width: 400px;
 }
-
 </style>
 
 <script>
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+import { canonical } from 'javascript-time-ago/gradation';
+
+TimeAgo.locale(en);
+
 export default {
 	data: function() {
 		return {
 			// items: this.$store.state.badgelist
-		}
+			timeAgo: new TimeAgo('en-US'),
+			canonical: canonical
+		};
 	},
 	methods: {
 		handleClick: e => {
 			console.log(e);
 		},
 		cleanclear: function() {
-			console.log("Yeah");
-			this.$store.commit("resetbadgelist");
+			console.log('Yeah');
+			this.$store.commit('resetbadgelist');
 		}
 	}
 };
