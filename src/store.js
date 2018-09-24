@@ -48,6 +48,9 @@ export default new Vuex.Store({
 		},
 		page (state) {
 			return state.page;
+		},
+		getBadge(state) {
+			return state.badge
 		}
 	},
 	mutations: {

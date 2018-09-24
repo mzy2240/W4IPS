@@ -34,6 +34,7 @@ import 'echarts-gl/dist/echarts-gl';
 import linepop from './linepop';
 import subpop from './subpop';
 import _ from 'lodash';
+import { mapGetters } from 'vuex';
 // import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
@@ -340,45 +341,49 @@ export default {
 			}
 			this.statusArray = Array(keyCaseArr.length).fill(1);
 		},
-		updateLines: function() {
+		updateLinesCycle: function() {
+			// setTimeout(() => {
+			// 	this.updateLines();
+			// }, 1000);
 			setInterval(() => {
-				const temp = JSON.parse(this.$store.state.rawdata).Data;
-				const branchData = temp.slice(
-					this.anchor,
-					this.anchor + this.dataLength
-				);
-				let branchIndex;
-				let statusTemp = [];
-				let branchChanged = false;
-				for (let i = 0; i < branchData.length; i = i + this.branchArrLength) {
-					statusTemp.push(branchData[i]);
-					branchIndex = i / this.branchArrLength;
-					if (this.statusArray[branchIndex] == 1 && branchData[i] == 0) {
-						// Branch opened
-						this.updateLineOpen(branchIndex);
-						branchChanged = true;
-					} else if (this.statusArray[branchIndex] == 0 && branchData[i] == 1) {
-						// Branch closed
-						this.updateLineClose(branchIndex);
-						branchChanged = true;
-					}
+				this.updateLines();
+			}, 1500);
+		},
+		updateLines() {
+			const temp = JSON.parse(this.$store.state.rawdata).Data;
+			const branchData = temp.slice(this.anchor, this.anchor + this.dataLength);
+			let branchIndex;
+			let statusTemp = [];
+			let branchChanged = false;
+			for (let i = 0; i < branchData.length; i = i + this.branchArrLength) {
+				statusTemp.push(branchData[i]);
+				branchIndex = i / this.branchArrLength;
+				if (this.statusArray[branchIndex] == 1 && branchData[i] == 0) {
+					// Branch opened
+					console.log('hoho');
+					this.updateLineOpen(branchIndex);
+					branchChanged = true;
+				} else if (this.statusArray[branchIndex] == 0 && branchData[i] == 1) {
+					// Branch closed
+					this.updateLineClose(branchIndex);
+					branchChanged = true;
 				}
-				if (branchChanged) {
-					this.chart.setOption({
-						series: [
-							{
-								id: 'lines',
-								data: this.linedata
-							},
-							{
-								id: 'openLines',
-								data: this.openLineData
-							}
-						]
-					});
-					this.statusArray = statusTemp;
-				}
-			}, 2000);
+			}
+			if (branchChanged) {
+				this.chart.setOption({
+					series: [
+						{
+							id: 'lines',
+							data: this.linedata
+						},
+						{
+							id: 'openLines',
+							data: this.openLineData
+						}
+					]
+				});
+				this.statusArray = statusTemp;
+			}
 		},
 		updateLineOpen(branchIndex) {
 			const temp = _.cloneDeep(this.linedata[branchIndex]);
@@ -407,8 +412,20 @@ export default {
 		this.initdraw('main');
 		this.onDrawSub();
 		this.onDrawLines();
-		this.updateLines();
+		this.updateLinesCycle();
 	},
+	// computed: {
+	// 	...mapGetters({
+	// 		updateBadge: 'getBadge'
+	// 	})
+	// },
+	// watch: {
+	// 	updateBadge: function() {
+	// 		setTimeout(() => {
+	// 			this.updateLines();
+	// 		}, 1000);
+	// 	}
+	// },
 	components: {
 		linepop,
 		subpop
