@@ -60,6 +60,9 @@ export default {
 			console.log('Yeah');
 			this.$store.commit('resetbadgelist');
 		}
+	},
+	mounted() {
+
 	}
 };
 </script>

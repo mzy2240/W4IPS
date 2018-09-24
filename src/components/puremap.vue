@@ -3,21 +3,21 @@
 	<div>
 		<v-container grid-list-md text-xs-center>
 			<v-layout row wrap>
-				<v-flex d-flex xs6 style="height: 800px;">
+				<v-flex d-flex xs8 style="height: 800px;">
 					<div id="main"></div>
 				</v-flex>
-				<v-flex d-flex xs6 style="height: 800px;">
+				<v-flex d-flex xs4 style="height: 800px;">
 					<v-layout row wrap>
 						<v-flex style="height:50%;" d-flex xs12>
 							<v-card dark color="light-blue">
 								<v-card-text class="px-0">Tool1</v-card-text>
 							</v-card>
-						</v-flex >
+						</v-flex>
 						<v-flex style="height:50%;" d-flex xs12>
 							<v-card dark color="light-blue">
 								<v-card-text class="px-0">Tool2</v-card-text>
 							</v-card>
-						</v-flex >
+						</v-flex>
 					</v-layout>
 				</v-flex>
 			</v-layout>
@@ -33,6 +33,7 @@ import echarts from 'echarts';
 import 'echarts-gl/dist/echarts-gl';
 import linepop from './linepop';
 import subpop from './subpop';
+import _ from 'lodash';
 // import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
@@ -54,7 +55,16 @@ export default {
 			name: '',
 			volt: '',
 			config: null,
-			commands: []
+			commands: [],
+			anchor: 0,
+			dataLength: 0,
+			statusIndex: null,
+			mwfromIndex: null,
+			branchArrLength: null,
+			statusArray: [],
+			mwfromArray: [],
+			openLineData: [],
+			branchToOpenBranch: {}
 		};
 	},
 	methods: {
@@ -171,6 +181,34 @@ export default {
 							}
 						},
 						data: []
+					},
+					{
+						id: 'openLines',
+						name: 'openLines',
+						type: 'lines',
+						coordinateSystem: 'bmap',
+						silent: false,
+						// blendMode: 'lighter',
+						// polyline: true,
+						lineStyle: {
+							width: 1,
+							color: 'rgb(200, 40, 0)',
+							type: 'dashed',
+							opacity: 1
+						},
+						tooltip: {
+							formatter: function(params) {
+								return 'Branch: ' + params.name;
+							}
+						},
+						emphasis: {
+							lineStyle: {
+								width: 2,
+								shadowColor: 'rgba(144, 144, 255, 0.5)',
+								shadowBlur: 10
+							}
+						},
+						data: []
 					}
 				]
 			});
@@ -262,6 +300,12 @@ export default {
 					self.id = params.data.id;
 					self.volt = params.data.attributes.volt.toString() + 'kV';
 					self.lineshowDialog = true;
+				} else if (params.seriesName == 'openLines') {
+					self.type = 'Branch';
+					self.name = params.name;
+					self.id = params.data.id;
+					self.volt = params.data.attributes.volt.toString() + 'kV';
+					self.lineshowDialog = true;
 				}
 			});
 		},
@@ -275,13 +319,95 @@ export default {
 				]
 			});
 		},
-		updateLines() {}
+		initUpdateLines() {
+			var arrlength;
+			var keyCaseArr;
+			var valueFieldArr;
+
+			for (let ele in this.$store.state.fieldstore) {
+				arrlength = this.$store.state.fieldstore[ele].length;
+				keyCaseArr = Object.keys(this.$store.state.casedetail.content[ele]);
+				valueFieldArr = Object.values(this.$store.state.fieldstore[ele]);
+				if (ele != 'Branch') {
+					this.anchor += arrlength * keyCaseArr.length;
+				} else {
+					this.dataLength = arrlength * keyCaseArr.length;
+					this.statusIndex = valueFieldArr.indexOf('Status');
+					this.mwfromIndex = valueFieldArr.indexOf('MWFrom');
+					this.branchArrLength = arrlength;
+					break;
+				}
+			}
+			this.statusArray = Array(keyCaseArr.length).fill(1);
+		},
+		updateLines: function() {
+			setInterval(() => {
+				const temp = JSON.parse(this.$store.state.rawdata).Data;
+				const branchData = temp.slice(
+					this.anchor,
+					this.anchor + this.dataLength
+				);
+				let branchIndex;
+				let statusTemp = [];
+				let branchChanged = false;
+				for (let i = 0; i < branchData.length; i = i + this.branchArrLength) {
+					statusTemp.push(branchData[i]);
+					branchIndex = i / this.branchArrLength;
+					if (this.statusArray[branchIndex] == 1 && branchData[i] == 0) {
+						// Branch opened
+						this.updateLineOpen(branchIndex);
+						branchChanged = true;
+					} else if (this.statusArray[branchIndex] == 0 && branchData[i] == 1) {
+						// Branch closed
+						this.updateLineClose(branchIndex);
+						branchChanged = true;
+					}
+				}
+				if (branchChanged) {
+					this.chart.setOption({
+						series: [
+							{
+								id: 'lines',
+								data: this.linedata
+							},
+							{
+								id: 'openLines',
+								data: this.openLineData
+							}
+						]
+					});
+					this.statusArray = statusTemp;
+				}
+			}, 2000);
+		},
+		updateLineOpen(branchIndex) {
+			const temp = _.cloneDeep(this.linedata[branchIndex]);
+			this.branchToOpenBranch[
+				branchIndex.toString()
+			] = this.openLineData.length;
+			this.openLineData.push(temp);
+			this.linedata[branchIndex]['coords'] = [[], []];
+		},
+		updateLineClose(branchIndex) {
+			const target = this.branchToOpenBranch[branchIndex.toString()];
+			this.linedata[branchIndex] = this.openLineData[target];
+			if (this.openLineData.length > 1) {
+				this.openLineData.splice(target, 1);
+			} else {
+				this.openLineData = [];
+			}
+			// delete this.branchToOpenBranch[branchIndex.toString()];
+		}
+	},
+	created() {
+		this.initUpdateLines();
 	},
 	mounted() {
 		this.getData();
 		this.initdraw('main');
 		this.onDrawSub();
 		this.onDrawLines();
+		this.updateLines();
 	},
 	components: {
 		linepop,

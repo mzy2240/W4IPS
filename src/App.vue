@@ -61,8 +61,8 @@
 			<component v-bind:is="page"></component>
 			<!-- <router-view/> -->
 		</v-content>
-		<chatpop v-if="dialog" :visible="dialog" @close="dialog=false"></chatpop>
 		<MqttClient style="font-size: 12px"></MqttClient>
+		<chatpop v-if="dialog" :visible="dialog" @close="dialog=false"></chatpop>
 	</v-app>
 </template>
 
