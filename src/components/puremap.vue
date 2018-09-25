@@ -358,18 +358,24 @@ export default {
 			for (let i = 0; i < branchData.length; i = i + this.branchArrLength) {
 				statusTemp.push(branchData[i]);
 				branchIndex = i / this.branchArrLength;
-				if (this.statusArray[branchIndex] == 1 && branchData[i] == 0) {
+				if (
+					this.statusArray[branchIndex] == 1 &&
+					[0, 2, 3].includes(branchData[i])
+				) {
 					// Branch opened
-					console.log('hoho');
 					this.updateLineOpen(branchIndex);
 					branchChanged = true;
-				} else if (this.statusArray[branchIndex] == 0 && branchData[i] == 1) {
+				} else if (
+					[0, 2, 3].includes(this.statusArray[branchIndex]) &&
+					branchData[i] == 1
+				) {
 					// Branch closed
 					this.updateLineClose(branchIndex);
 					branchChanged = true;
 				}
 			}
 			if (branchChanged) {
+				// console.log(this.openLineData);
 				this.chart.setOption({
 					series: [
 						{
@@ -387,20 +393,27 @@ export default {
 		},
 		updateLineOpen(branchIndex) {
 			const temp = _.cloneDeep(this.linedata[branchIndex]);
-			this.branchToOpenBranch[
-				branchIndex.toString()
-			] = this.openLineData.length;
+			// this.branchToOpenBranch[
+			// 	branchIndex.toString()
+			// ] = this.openLineData.length;
 			this.openLineData.push(temp);
 			this.linedata[branchIndex]['coords'] = [[], []];
 		},
 		updateLineClose(branchIndex) {
-			const target = this.branchToOpenBranch[branchIndex.toString()];
-			this.linedata[branchIndex] = this.openLineData[target];
-			if (this.openLineData.length > 1) {
-				this.openLineData.splice(target, 1);
-			} else {
-				this.openLineData = [];
+			for (let i in this.openLineData) {
+				if (this.openLineData[i].id == this.linedata[branchIndex].id) {
+					this.linedata[branchIndex].coords = this.openLineData[i].coords;
+					this.openLineData.splice(i, 1);
+					break;
+				}
 			}
+			// const target = this.branchToOpenBranch[branchIndex.toString()];
+			// this.linedata[branchIndex] = _.cloneDeep(this.openLineData[target]);
+			// if (this.openLineData.length > 1) {
+			// 	this.openLineData.splice(target, 1);
+			// } else {
+			// 	this.openLineData = [];
+			// }
 			// delete this.branchToOpenBranch[branchIndex.toString()];
 		}
 	},
