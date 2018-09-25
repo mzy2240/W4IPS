@@ -1,15 +1,18 @@
 <template>
-    <div>
-        <!-- <p>{{ usermessage }}</p> -->
-        <!-- <p>{{ datamessage }}</p> -->
-    </div>
+	<div>
+		<chatpop v-if="chatShow" :visible="chatShow" :topic="chatTopic" @close="chatShow=false"></chatpop>
+		<!-- <p>{{ usermessage }}</p> -->
+		<!-- <p>{{ datamessage }}</p> -->
+	</div>
 </template>
 
 <script>
 import mqtt from 'mqtt';
 import { mapGetters } from 'vuex';
 import fingerprint from 'fingerprintjs2';
-import { Notification } from 'element-ui';
+import iziToast from 'izitoast';
+import chatpop from './chatpop';
+// import { Notification } from 'element-ui';
 
 export default {
 	name: 'MqttClient',
@@ -19,7 +22,9 @@ export default {
 			usermessage: 'Initialized',
 			datamessage: 'Initialized',
 			clientid: null,
-			backend_online: null
+			backend_online: null,
+			chatShow: false,
+			chatTopic:''
 		};
 	},
 	props: {
@@ -56,7 +61,12 @@ export default {
 		this.onInitClient();
 	},
 	computed: {
-		...mapGetters(['getPubStatus', 'getNewSubscribe', 'getNewPublish', 'startsimtrigger'])
+		...mapGetters([
+			'getPubStatus',
+			'getNewSubscribe',
+			'getNewPublish',
+			'startsimtrigger'
+		])
 	},
 	watch: {
 		getPubStatus: function(newVal, oldVal) {
@@ -75,13 +85,20 @@ export default {
 			// 		title: 'Success',
 			// 		message: "Successfully subscribed to a new topic #" + newVal
 			// 	})
-			this.$toast.success("Successfully subscribed to a new topic #" + newVal, 'System', this.$store.state.notificationSystem.options.success);
+			this.$toast.success(
+				'Successfully subscribed to a new topic #' + newVal,
+				'System',
+				this.$store.state.notificationSystem.options.success
+			);
 		},
 		getNewPublish: function(newVal, oldVal) {
-			this.client.publish(newVal[0], "User #" + this.clientid + ": " + newVal[1]);
+			this.client.publish(
+				newVal[0],
+				'User #' + this.clientid + ': ' + newVal[1]
+			);
 		},
 		startsimtrigger: function() {
-			this.client.publish('user/system', this.clientid + ":" + "Start");
+			this.client.publish('user/system', this.clientid + ':' + 'Start');
 		},
 		backend_online: function() {
 			// Notification.success({
@@ -90,7 +107,11 @@ export default {
 			// 		iconClass: "el-icon-circle-check-outline",
 			// 		duration: 4500
 			// 	})
-			this.$toast.success('DS backend is connected', 'System', this.$store.state.notificationSystem.options.success);
+			this.$toast.success(
+				'DS backend is connected',
+				'System',
+				this.$store.state.notificationSystem.options.success
+			);
 		}
 	},
 	methods: {
@@ -111,7 +132,7 @@ export default {
 		},
 		onGetUUID() {
 			fingerprint().get((result, components) => {
-				this.clientid = result.substring(0,4);
+				this.clientid = result.substring(0, 4);
 				this.$store.commit('setUUID', this.clientid);
 			});
 		},
@@ -124,13 +145,17 @@ export default {
 			// 		iconClass: "el-icon-circle-check-outline",
 			// 		duration: 4000
 			// 	})
-			this.$toast.success('MQTT broker is connected', 'System', this.$store.state.notificationSystem.options.success);
+			this.$toast.success(
+				'MQTT broker is connected',
+				'System',
+				this.$store.state.notificationSystem.options.success
+			);
 		},
 		onMessage(topic, message) {
 			//console.log('#' + topic.toString() + '# ' + message.toString())
 			if (topic == 'ds/data') {
-				this.$store.commit('updateRawData', message)
-				this.backend_online = true
+				this.$store.commit('updateRawData', message);
+				this.backend_online = true;
 			} else if (topic == 'ds/note') {
 				this.usermessage = message.toString();
 				// console.log(this.usermessage)
@@ -139,23 +164,41 @@ export default {
 				// 	message: this.usermessage,
 				// 	duration: 5000
 				// })
-				this.$toast.warning(this.usermessage, 'System', this.$store.state.notificationSystem.options.warning);
+				this.$toast.warning(
+					this.usermessage,
+					'System',
+					this.$store.state.notificationSystem.options.warning1
+				);
 				this.$store.commit('updatebadge');
-				this.$store.commit('updatebadgelist', {title: this.usermessage, source: 'System', color: 'yellow', time: Date.now()})
+				this.$store.commit('updatebadgelist', {
+					title: this.usermessage,
+					source: 'System',
+					color: 'yellow',
+					time: Date.now()
+				});
 			} else if (topic == 'ds/system') {
 				// Notification.warning({
 				// 	title: message.toString(),
 				// 	iconClass: "el-icon-setting",
 				// 	duration: 5500
 				// })
-				this.$toast.warning(message.toString(), 'System', this.$store.state.notificationSystem.options.warning);
-				if (message.toString() == "The simulation has been aborted") {
-					this.$store.commit('setstartready')
-				} else if (message.toString() == "The simulation is started") {
-					this.$store.commit('setstartdisable')
+				this.$toast.warning(
+					message.toString(),
+					'System',
+					this.$store.state.notificationSystem.options.warning2
+				);
+				if (message.toString() == 'The simulation has been aborted') {
+					this.$store.commit('setstartready');
+				} else if (message.toString() == 'The simulation is started') {
+					this.$store.commit('setstartdisable');
 				}
 				this.$store.commit('updatebadge');
-				this.$store.commit('updatebadgelist', {title: message.toString(), source: 'System', color: 'red', time: Date.now()})
+				this.$store.commit('updatebadgelist', {
+					title: message.toString(),
+					source: 'System',
+					color: 'red',
+					time: Date.now()
+				});
 			} else {
 				// Notification.success({
 				// 	title: 'User Message',
@@ -163,9 +206,30 @@ export default {
 				// 	iconClass: "el-icon-sort",
 				// 	duration: 5000
 				// })
-				this.$toast.show(message.toString().split(':')[1], message.toString().split(':')[0], this.$store.state.notificationSystem.options.ballon);
+				var self = this;
+				iziToast.show({
+					title: message.toString().split(':')[0],
+					message: message.toString().split(':')[1],
+					color: 'yellow',
+					position: 'topCenter',
+					buttons: [
+						[
+							'<button>Chat</button>',
+							function() {
+								self.chatTopic = topic;
+								self.chatShow = true;
+							}
+						]
+					]
+				});
+				// this.$toast.show(message.toString().split(':')[1], message.toString().split(':')[0], this.$store.state.notificationSystem.options.ballon);
 				this.$store.commit('updatebadge');
-				this.$store.commit('updatebadgelist', {title: message.toString(), source: 'user', color: 'light-blue', time: Date.now()})
+				this.$store.commit('updatebadgelist', {
+					title: message.toString(),
+					source: 'user',
+					color: 'light-blue',
+					time: Date.now()
+				});
 			}
 		},
 		onClose() {
@@ -174,20 +238,20 @@ export default {
 		onReconnect() {
 			console.log('onReconnect');
 			Notification.success({
-					title: 'MQTT broker is being reconnected',
-					// message: message.toString(),
-					iconClass: "el-icon-circle-check-outline",
-					duration: 3000
-				})
+				title: 'MQTT broker is being reconnected',
+				// message: message.toString(),
+				iconClass: 'el-icon-circle-check-outline',
+				duration: 3000
+			});
 		},
 		onOffline() {
 			console.log('onOffline');
 			Notification.error({
-					title: 'MQTT broker is disconnected',
-					// message: message.toString(),
-					iconClass: "el-icon-circle-close-outline",
-					duration: 3000
-				})
+				title: 'MQTT broker is disconnected',
+				// message: message.toString(),
+				iconClass: 'el-icon-circle-close-outline',
+				duration: 3000
+			});
 		},
 		onError(error) {
 			console.log('onError: ' + error);
@@ -195,6 +259,9 @@ export default {
 		onEnd() {
 			console.log('onEnd');
 		}
+	},
+	components: {
+		chatpop
 	}
 };
 </script>

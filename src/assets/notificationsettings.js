@@ -37,7 +37,17 @@ const notificationSystem = {
         success: {
             position: 'topRight'
         },
-        warning: {
+        warning1: {
+			position: 'topCenter',
+			timeout: 8000,
+			buttons: [
+                ['<button>Ok</button>', function (instance, toast) {
+					console.log(instance);
+					console.log(toast);
+				}, true]
+			]
+		},
+		warning2: {
 			position: 'topCenter',
 			timeout: 8000
         },

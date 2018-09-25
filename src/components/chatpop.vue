@@ -9,7 +9,7 @@
 					<v-container grid-list-md>
 						<v-layout wrap>
 							<v-flex xs12>
-								<v-text-field label="Topic" v-model.lazy="topic" required :rules="[rules.prohibited]"></v-text-field>
+								<v-text-field label="Topic" v-model.lazy="displayTopic" required :rules="[rules.prohibited]"></v-text-field>
 							</v-flex>
 							<v-flex xs12>
 								<v-text-field label="Content" v-model.lazy="content" @keyup.enter="enterClicked"></v-text-field>
@@ -33,12 +33,15 @@ export default {
 		visible: {
 			type: Boolean,
 			default: false
+		},
+		topic: {
+			default: ''
 		}
 	},
 	data() {
 		return {
-			topic: '',
 			content: '',
+			displayTopic: this.topic,
 			rules: {
 				prohibited: value =>
 					(value != 'data' && value != 'user' && value != 'note') ||
@@ -62,11 +65,11 @@ export default {
 	},
 	methods: {
 		send() {
-			this.$store.commit('setnewpublish', [this.topic, this.content]);
+			this.$store.commit('setnewpublish', [this.displayTopic, this.content]);
 			// this.show = false;
 		},
 		subscribe() {
-			this.$store.commit('setnewsubscribe', this.topic);
+			this.$store.commit('setnewsubscribe', this.displayTopic);
 		},
 		enterClicked() {
 			this.send();
