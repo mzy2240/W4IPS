@@ -26,7 +26,8 @@ export default new Vuex.Store({
 		badge: 0,
 		badgelist: [],
 		badgeShow: false,
-		subDetail: {}
+		subDetail: {},
+		busDetail: {}
 	},
 	getters: {
 		getPubStatus(state) {
@@ -107,6 +108,9 @@ export default new Vuex.Store({
 		},
 		updateSubDetail(state, payload) {
 			state.subDetail = payload;
+		},
+		updateBusDetail(state, payload) {
+			state.busDetail = payload;
 		}
 	},
 	actions: {

@@ -189,7 +189,9 @@ export default {
 									self.id = temp[1].split(",")[0]
 									self.name = temp[2].split("Bus")[0]
 									self.type = "Substation"
-									self.children = self.$store.state.busDetail[temp[1]]; // id here does not have the substation ID
+									// Base on the bus id, find the substation
+									self.children = [self.$store.state.busDetail[+self.id]];
+									// Show the substation dialog
 									self.subshowDialog = true
 								}
 							}

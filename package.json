@@ -22,6 +22,7 @@
     "lodash": "^4.17.10",
     "mapbox-gl": "^0.47.0",
     "mqtt": "^2.18.3",
+    "npm": "^6.4.1",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
     "vue-drag-zone": "^2.0.0-rc1",
