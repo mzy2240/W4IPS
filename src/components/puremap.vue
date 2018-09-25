@@ -275,6 +275,7 @@ export default {
 						this.busdetail[ele]
 					);
 				}
+				this.$store.commit('updateSubDetail', this.subdetail);
 			}
 		},
 		onDrawSub() {

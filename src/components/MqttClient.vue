@@ -1,6 +1,9 @@
 <template>
 	<div>
 		<chatpop v-if="chatShow" :visible="chatShow" :topic="chatTopic" @close="chatShow=false"></chatpop>
+		<linepop v-if="lineshowDialog" :visible='lineshowDialog' :type='type' :id='id' :name='name' @close="lineshowDialog=false" />
+		<subpop v-if="subshowDialog" :visible='subshowDialog' :children='children' :type='type' :id='id' :name='name' @close="subshowDialog=false" />
+		<!-- <linepop v-if="lineshowDialog" :visible='lineshowDialog' :type='type' :id='id' :name='name' :volt='volt' @close="lineshowDialog=false" /> -->
 		<!-- <p>{{ usermessage }}</p> -->
 		<!-- <p>{{ datamessage }}</p> -->
 	</div>
@@ -12,6 +15,8 @@ import { mapGetters } from 'vuex';
 import fingerprint from 'fingerprintjs2';
 import iziToast from 'izitoast';
 import chatpop from './chatpop';
+import linepop from './linepop';
+import subpop from './subpop';
 // import { Notification } from 'element-ui';
 
 export default {
@@ -24,7 +29,13 @@ export default {
 			clientid: null,
 			backend_online: null,
 			chatShow: false,
-			chatTopic:''
+			chatTopic: '',
+			id: null,
+			type: null,
+			lineshowDialog: false,
+			subshowDialog: false,
+			children: {},
+			name: ''
 		};
 	},
 	props: {
@@ -153,22 +164,38 @@ export default {
 		},
 		onMessage(topic, message) {
 			//console.log('#' + topic.toString() + '# ' + message.toString())
+			var self = this;
 			if (topic == 'ds/data') {
 				this.$store.commit('updateRawData', message);
 				this.backend_online = true;
 			} else if (topic == 'ds/note') {
-				this.usermessage = message.toString();
-				// console.log(this.usermessage)
-				// Notification.warning({
-				// 	title: 'Notification',
-				// 	message: this.usermessage,
-				// 	duration: 5000
-				// })
-				this.$toast.warning(
-					this.usermessage,
-					'System',
-					this.$store.state.notificationSystem.options.warning1
-				);
+				const temp = message.toString().split("@");
+				this.usermessage = temp[0];
+				iziToast.warning({
+					title: 'System',
+					message: this.usermessage,
+					position: 'topCenter',
+					timeout: 8000,
+					buttons: [
+						[
+							'<button>What?!</button>',
+							function() {
+								if(self.usermessage.includes("Branch")) {
+									self.id = temp[1]
+									self.name = temp[2]
+									self.type = "Branch"
+									self.lineshowDialog = true
+								} else if (self.usermessage.includes("Load")) {
+									self.id = temp[1].split(",")[0]
+									self.name = temp[2].split("Bus")[0]
+									self.type = "Substation"
+									self.children = self.$store.state.busDetail[temp[1]]; // id here does not have the substation ID
+									self.subshowDialog = true
+								}
+							}
+						]
+					]
+				});
 				this.$store.commit('updatebadge');
 				this.$store.commit('updatebadgelist', {
 					title: this.usermessage,
@@ -206,7 +233,6 @@ export default {
 				// 	iconClass: "el-icon-sort",
 				// 	duration: 5000
 				// })
-				var self = this;
 				iziToast.show({
 					title: message.toString().split(':')[0],
 					message: message.toString().split(':')[1],
@@ -261,7 +287,9 @@ export default {
 		}
 	},
 	components: {
-		chatpop
+		chatpop,
+		linepop,
+		subpop
 	}
 };
 </script>

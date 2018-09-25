@@ -25,7 +25,8 @@ export default new Vuex.Store({
 		notificationSystem,
 		badge: 0,
 		badgelist: [],
-		badgeShow: false
+		badgeShow: false,
+		subDetail: {}
 	},
 	getters: {
 		getPubStatus(state) {
@@ -103,6 +104,9 @@ export default new Vuex.Store({
 		},
 		resetbadgelist(state) {
 			state.badgelist = [];
+		},
+		updateSubDetail(state, payload) {
+			state.subDetail = payload;
 		}
 	},
 	actions: {

@@ -67,10 +67,12 @@ export default {
 			type: String
 		},
 		name: {
-			type: String
+			type: String,
+			default: "NULL"
 		},
 		volt: {
-			type: String
+			type: String,
+			default: ""
 		},
 		data: {
 			default: function() {
