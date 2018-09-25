@@ -101,7 +101,7 @@ export default new Vuex.Store({
 			state.badgeShow = false;
 		},
 		updatebadgelist(state, payload) {
-			state.badgelist.push(payload)
+			state.badgelist.unshift(payload)
 		},
 		resetbadgelist(state) {
 			state.badgelist = [];
