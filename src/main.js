@@ -9,13 +9,11 @@ import '@mdi/font/css/materialdesignicons.css'
 import ECharts from 'vue-echarts'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.css';
 import './assets/default.styl'
 
 Vue.use(ElementUI);
 Vue.use(Vuetify);
-Vue.use(VueIziToast);
 
 Vue.component('chart', ECharts)
 Vue.config.productionTip = false
