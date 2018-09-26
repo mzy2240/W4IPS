@@ -186,13 +186,27 @@ export default {
 									self.type = "Branch"
 									self.lineshowDialog = true
 								} else if (self.usermessage.includes("Load")) {
-									self.id = temp[1].split(",")[0]
+									const busid = temp[1].split(",")[0]
 									self.name = temp[2].split("Bus")[0]
 									self.type = "Substation"
+									var found
 									// Base on the bus id, find the substation
-									self.children = [self.$store.state.busDetail[+self.id]];
+									for (let subidx in self.$store.state.subDetail) {
+										found = self.$store.state.subDetail[subidx].Bus.find(function(ele){
+											if (ele["Int.Bus Number"] == busid) {
+												self.id = subidx;
+												self.children = self.$store.state.subDetail[subidx].Bus;
+												return true;
+											}
+										})
+										if (found) {
+											self.subshowDialog = true;
+											break
+										}
+									}
+									// self.children = [self.$store.state.busDetail[+self.id]];
 									// Show the substation dialog
-									self.subshowDialog = true
+									// self.subshowDialog = true
 								}
 							}
 						]

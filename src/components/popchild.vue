@@ -92,7 +92,7 @@ export default {
 		},
 		cmddetection(ele) {
 			if (this.showInput == true) {
-				if (ele != 'OPEN') {
+				if (ele != 'OPEN' && ele != 'CLOSE') {
 					this.InputDisabled = false;
 				} else {
 					this.value = null;
