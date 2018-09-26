@@ -96,11 +96,17 @@ export default {
 			// 		title: 'Success',
 			// 		message: "Successfully subscribed to a new topic #" + newVal
 			// 	})
-			this.$toast.success(
-				'Successfully subscribed to a new topic #' + newVal,
-				'System',
-				this.$store.state.notificationSystem.options.success
-			);
+			// this.$toast.success(
+			// 	'Successfully subscribed to a new topic #' + newVal,
+			// 	'System',
+			// 	this.$store.state.notificationSystem.options.success
+			// );
+			iziToast.success({
+				title: 'System',
+				message: 'Successfully subscribed to a new topic #' + newVal,
+				// color: 'yellow',
+				position: 'topRight'
+			});
 		},
 		getNewPublish: function(newVal, oldVal) {
 			this.client.publish(
@@ -118,11 +124,17 @@ export default {
 			// 		iconClass: "el-icon-circle-check-outline",
 			// 		duration: 4500
 			// 	})
-			this.$toast.success(
-				'DS backend is connected',
-				'System',
-				this.$store.state.notificationSystem.options.success
-			);
+			// this.$toast.success(
+			// 	'DS backend is connected',
+			// 	'System',
+			// 	this.$store.state.notificationSystem.options.success
+			// );
+			iziToast.success({
+				title: 'System',
+				message: 'DS backend is connected',
+				// color: 'yellow',
+				position: 'topRight'
+			});
 		}
 	},
 	methods: {
@@ -156,11 +168,17 @@ export default {
 			// 		iconClass: "el-icon-circle-check-outline",
 			// 		duration: 4000
 			// 	})
-			this.$toast.success(
-				'MQTT broker is connected',
-				'System',
-				this.$store.state.notificationSystem.options.success
-			);
+			// this.$toast.success(
+			// 	'MQTT broker is connected',
+			// 	'System',
+			// 	this.$store.state.notificationSystem.options.success
+			// );
+			iziToast.success({
+				title: 'System',
+				message: 'MQTT broker is connected',
+				// color: 'yellow',
+				position: 'topRight'
+			});
 		},
 		onMessage(topic, message) {
 			//console.log('#' + topic.toString() + '# ' + message.toString())
@@ -169,7 +187,7 @@ export default {
 				this.$store.commit('updateRawData', message);
 				this.backend_online = true;
 			} else if (topic == 'ds/note') {
-				const temp = message.toString().split("@");
+				const temp = message.toString().split('@');
 				this.usermessage = temp[0];
 				iziToast.warning({
 					title: 'System',
@@ -180,28 +198,31 @@ export default {
 						[
 							'<button>What?!</button>',
 							function() {
-								if(self.usermessage.includes("Branch")) {
-									self.id = temp[1]
-									self.name = temp[2]
-									self.type = "Branch"
-									self.lineshowDialog = true
-								} else if (self.usermessage.includes("Load")) {
-									const busid = temp[1].split(",")[0]
-									self.name = temp[2].split("Bus")[0]
-									self.type = "Substation"
-									var found
+								if (self.usermessage.includes('Branch')) {
+									self.id = temp[1];
+									self.name = temp[2];
+									self.type = 'Branch';
+									self.lineshowDialog = true;
+								} else if (self.usermessage.includes('Load')) {
+									const busid = temp[1].split(',')[0];
+									self.name = temp[2].split('Bus')[0];
+									self.type = 'Substation';
+									var found;
 									// Base on the bus id, find the substation
 									for (let subidx in self.$store.state.subDetail) {
-										found = self.$store.state.subDetail[subidx].Bus.find(function(ele){
-											if (ele["Int.Bus Number"] == busid) {
-												self.id = subidx;
-												self.children = self.$store.state.subDetail[subidx].Bus;
-												return true;
+										found = self.$store.state.subDetail[subidx].Bus.find(
+											function(ele) {
+												if (ele['Int.Bus Number'] == busid) {
+													self.id = subidx;
+													self.children =
+														self.$store.state.subDetail[subidx].Bus;
+													return true;
+												}
 											}
-										})
+										);
 										if (found) {
 											self.subshowDialog = true;
-											break
+											break;
 										}
 									}
 									// self.children = [self.$store.state.busDetail[+self.id]];
@@ -225,11 +246,18 @@ export default {
 				// 	iconClass: "el-icon-setting",
 				// 	duration: 5500
 				// })
-				this.$toast.warning(
-					message.toString(),
-					'System',
-					this.$store.state.notificationSystem.options.warning2
-				);
+				// this.$toast.warning(
+				// 	message.toString(),
+				// 	'System',
+				// 	this.$store.state.notificationSystem.options.warning2
+				// );
+				iziToast.warning({
+					title: 'System',
+					message: message.toString(),
+					// color: 'yellow',
+					position: 'topCenter',
+					timeout: 8000
+				});
 				if (message.toString() == 'The simulation has been aborted') {
 					this.$store.commit('setstartready');
 				} else if (message.toString() == 'The simulation is started') {
@@ -279,20 +307,32 @@ export default {
 		},
 		onReconnect() {
 			console.log('onReconnect');
-			Notification.success({
-				title: 'MQTT broker is being reconnected',
-				// message: message.toString(),
-				iconClass: 'el-icon-circle-check-outline',
-				duration: 3000
+			// Notification.success({
+			// 	title: 'MQTT broker is being reconnected',
+			// 	// message: message.toString(),
+			// 	iconClass: 'el-icon-circle-check-outline',
+			// 	duration: 3000
+			// });
+			iziToast.success({
+				title: 'System',
+				message: 'MQTT broker is being reconnected',
+				// color: 'yellow',
+				position: 'topRight'
 			});
 		},
 		onOffline() {
 			console.log('onOffline');
-			Notification.error({
-				title: 'MQTT broker is disconnected',
-				// message: message.toString(),
-				iconClass: 'el-icon-circle-close-outline',
-				duration: 3000
+			// Notification.error({
+			// 	title: 'MQTT broker is disconnected',
+			// 	// message: message.toString(),
+			// 	iconClass: 'el-icon-circle-close-outline',
+			// 	duration: 3000
+			// });
+			iziToast.error({
+				title: 'System',
+				message: 'MQTT broker is disconnected',
+				// color: 'yellow',
+				position: 'topRight'
 			});
 		},
 		onError(error) {

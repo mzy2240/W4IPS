@@ -275,8 +275,8 @@ export default {
 						this.busdetail[ele]
 					);
 				}
-				console.log(this.busdetail);
-				this.$store.commit('updateBusDetail', this.busdetail);
+				// console.log(this.busdetail);
+				// this.$store.commit('updateBusDetail', this.busdetail);
 				this.$store.commit('updateSubDetail', this.subdetail);
 			}
 		},
