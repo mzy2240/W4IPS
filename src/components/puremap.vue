@@ -31,8 +31,8 @@
 <script>
 import echarts from 'echarts';
 import 'echarts-gl/dist/echarts-gl';
-import linepop from './linepop';
-import subpop from './subpop';
+// import linepop from './linepop';
+// import subpop from './subpop';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
 // import _ from 'lodash';
@@ -443,8 +443,8 @@ export default {
 	// 	}
 	// },
 	components: {
-		linepop,
-		subpop
+		linepop: () => import("./linepop"),
+		subpop:() => import("./subpop")
 	}
 };
 </script>

@@ -14,9 +14,9 @@ import mqtt from 'mqtt';
 import { mapGetters } from 'vuex';
 import fingerprint from 'fingerprintjs2';
 import iziToast from 'izitoast';
-import chatpop from './chatpop';
-import linepop from './linepop';
-import subpop from './subpop';
+// import chatpop from './chatpop';
+// import linepop from './linepop';
+// import subpop from './subpop';
 // import { Notification } from 'element-ui';
 
 export default {
@@ -343,9 +343,9 @@ export default {
 		}
 	},
 	components: {
-		chatpop,
-		linepop,
-		subpop
+		chatpop:() => import("./chatpop"),
+		linepop: () => import("./linepop"),
+		subpop: () => import("./subpop")
 	}
 };
 </script>

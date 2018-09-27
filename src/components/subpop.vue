@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import popchild from './popchild';
+// import popchild from './popchild';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -132,7 +132,7 @@ export default {
 		}
 	},
 	components: {
-		popchild
+		popchild: () => import("./popchild")
 	}
 };
 </script>
