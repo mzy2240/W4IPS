@@ -58,7 +58,7 @@ export default {
 
 <style>
 .loading {
-	position: absolute;
+	position: fixed;
 	z-index: 999;
 	height: 2em;
 	width: 2em;
