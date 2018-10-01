@@ -4,7 +4,7 @@
 		<v-container grid-list-xs text-xs-center>
 			<v-layout row wrap>
 				<v-flex d-flex xs8 style="height: auto;">
-					<div id="main"></div>
+					<div id="main" class="chart"></div>
 				</v-flex>
 				<v-flex d-flex xs4 style="height: 700px;">
 					<v-layout row wrap>
@@ -28,6 +28,9 @@
 	</div>
 </template>
 <style scoped>
+.chart {
+	z-index: 0;
+}
 .container {
 	max-width: 100vw;
 	padding: 0px;
@@ -43,7 +46,7 @@
 <script>
 import echarts from 'echarts';
 // import 'echarts-gl/dist/echarts-gl';
-// import 'echarts-leaflet';
+import 'echarts-leaflet';
 // import linepop from './linepop';
 // import subpop from './subpop';
 import _ from 'lodash';
@@ -90,30 +93,48 @@ export default {
 					show: true,
 					trigger: 'item'
 				},
-				bmap: {
+				// BMAP
+				// bmap: {
+				// 	center: [-86.84, 36.44],
+				// 	zoom: 8,
+				// 	roam: true,
+				// 	mapStyle: {
+				// 		// style: 'grayscale',
+				// 		styleJson: [
+				// 			{
+				// 				featureType: 'administrative',
+				// 				elementType: 'all',
+				// 				stylers: {
+				// 					color: '#ffffff',
+				// 					visibility: 'off'
+				// 				}
+				// 			},
+				// 			{
+				// 				featureType: 'boundary',
+				// 				elementType: 'all',
+				// 				stylers: {
+				// 					color: '#fefefe'
+				// 				}
+				// 			}
+				// 		]
+				// 	}
+				// },
+				// Leaflet
+				leaflet: {
 					center: [-86.84, 36.44],
 					zoom: 8,
 					roam: true,
-					mapStyle: {
-						// style: 'grayscale',
-						styleJson: [
-							{
-								featureType: 'administrative',
-								elementType: 'all',
-								stylers: {
-									color: '#ffffff',
-									visibility: 'off'
-								}
-							},
-							{
-								featureType: 'boundary',
-								elementType: 'all',
-								stylers: {
-									color: '#fefefe'
-								}
+					tiles: [
+						{
+							label: 'OpenStreetMap',
+							urlTemplate:
+								'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+							options: {
+								attribution:
+									'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 							}
-						]
-					}
+						}
+					]
 				},
 				// mapbox: {
 				//   center: [-86.84, 36.44],
@@ -145,7 +166,8 @@ export default {
 						id: 'sub',
 						type: 'effectScatter',
 						name: 'sub',
-						coordinateSystem: 'bmap',
+						coordinateSystem: 'leaflet',
+						// coordinateSystem: 'bmap',
 						symbol: 'circle',
 						showEffectOn: 'emphasis',
 						// zindex: 2,
@@ -163,7 +185,8 @@ export default {
 						id: 'lines',
 						name: 'lines',
 						type: 'lines',
-						coordinateSystem: 'bmap',
+						coordinateSystem: 'leaflet',
+						// coordinateSystem: 'bmap',
 						silent: false,
 						effect: {
 							show: true,
@@ -200,7 +223,8 @@ export default {
 						id: 'openLines',
 						name: 'openLines',
 						type: 'lines',
-						coordinateSystem: 'bmap',
+						coordinateSystem: 'leaflet',
+						// coordinateSystem: 'bmap',
 						silent: false,
 						// blendMode: 'lighter',
 						// polyline: true,
