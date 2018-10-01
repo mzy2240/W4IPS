@@ -1,36 +1,30 @@
 <template>
 	<div>
-		<!-- <HelloWorld></HelloWorld> -->
-		<directchart></directchart>
-		<!-- <mapchart></mapchart> -->
-		<!-- <MqttClient style="font-size: 12px"></MqttClient> -->
-		<!-- <ApiClient></ApiClient> -->
+		<chart></chart>
 	</div>
 </template>
 
 <style>
-.chart {
+/* .chart {
 	height: 800px;
 	width: 800px;
-}
+} */
 </style>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld';
-// import MqttClient from '@/components/MqttClient';
-import ApiClient from '@/components/ApiClient';
-import mapchart from '@/components/map';
-import directchart from '@/components/puremap';
+// import HelloWorld from '@/components/HelloWorld';
+// import ApiClient from '@/components/ApiClient';
+// import mapchart from '@/components/map';
+import chart from '@/components/puremap';
 
 export default {
 	name: 'home',
 	components: {
-		HelloWorld,
-		// MqttClient,
-		ApiClient,
-		mapchart,
-		directchart
+		// HelloWorld,
+		// ApiClient,
+		// mapchart,
+		chart
 	}
 };
 </script>

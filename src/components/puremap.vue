@@ -3,10 +3,10 @@
 	<div>
 		<v-container grid-list-md text-xs-center>
 			<v-layout row wrap>
-				<v-flex d-flex xs8 style="height: 800px;">
+				<v-flex d-flex xs8 style="height: auto;">
 					<div id="main"></div>
 				</v-flex>
-				<v-flex d-flex xs4 style="height: 800px;">
+				<v-flex d-flex xs4 style="height: 700px;">
 					<v-layout row wrap>
 						<v-flex style="height:50%;" d-flex xs12>
 							<v-card dark color="light-blue">
@@ -27,6 +27,18 @@
 
 	</div>
 </template>
+<style scoped>
+.container {
+	max-width: 100vw;
+	padding: 0px;
+	margin: 5px;
+}
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+</style>
 
 <script>
 import echarts from 'echarts';
@@ -443,15 +455,9 @@ export default {
 	// 	}
 	// },
 	components: {
-		linepop: () => import("./linepop"),
-		subpop:() => import("./subpop")
+		linepop: () => import('./linepop'),
+		subpop: () => import('./subpop')
 	}
 };
 </script>
-<style scoped>
-* {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-</style>
+
