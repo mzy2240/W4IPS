@@ -54,7 +54,7 @@
 						<v-icon medium>notifications</v-icon>
 					</v-badge>
 				</v-btn>
-				<NotificationList v-if="show"></NotificationList>
+				<NotificationList></NotificationList>
 			</v-menu>
 		</v-toolbar>
 		<v-content>
