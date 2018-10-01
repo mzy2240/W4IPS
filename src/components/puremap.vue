@@ -1,7 +1,7 @@
 /* eslint-disable */
 <template>
 	<div>
-		<v-container grid-list-md text-xs-center>
+		<v-container grid-list-xs text-xs-center>
 			<v-layout row wrap>
 				<v-flex d-flex xs8 style="height: auto;">
 					<div id="main"></div>
@@ -31,7 +31,7 @@
 .container {
 	max-width: 100vw;
 	padding: 0px;
-	margin: 5px;
+	margin: 2px;
 }
 * {
 	margin: 0;
@@ -42,7 +42,8 @@
 
 <script>
 import echarts from 'echarts';
-import 'echarts-gl/dist/echarts-gl';
+// import 'echarts-gl/dist/echarts-gl';
+// import 'echarts-leaflet';
 // import linepop from './linepop';
 // import subpop from './subpop';
 import _ from 'lodash';
