@@ -437,7 +437,8 @@ export default {
 			// 	branchIndex.toString()
 			// ] = this.openLineData.length;
 			this.openLineData.push(temp);
-			this.linedata[branchIndex]['coords'] = [[], []];
+			// this.linedata[branchIndex]['coords'] = [[], []];
+			this.linedata[branchIndex]['coords'] = [temp.coords[0], temp.coords[0]];
 		},
 		updateLineClose(branchIndex) {
 			for (let i in this.openLineData) {
