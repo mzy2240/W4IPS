@@ -1,133 +1,82 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="desserts"
-    hide-actions
-    item-key="name"
-  >
-    <template slot="items" slot-scope="props">
-      <tr @click="props.expanded = !props.expanded">
-        <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.calories }}</td>
-        <td class="text-xs-right">{{ props.item.fat }}</td>
-        <td class="text-xs-right">{{ props.item.carbs }}</td>
-        <td class="text-xs-right">{{ props.item.protein }}</td>
-        <td class="text-xs-right">{{ props.item.iron }}</td>
-      </tr>
-    </template>
-    <template slot="expand" slot-scope="props">
-      <v-card flat>
-        <v-card-text>Peek-a-boo!</v-card-text>
-      </v-card>
-    </template>
-  </v-data-table>
+	<div>
+		<v-data-table :headers="headers" :items="gens" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
+			<template slot="items" slot-scope="props">
+				<tr @click="props.expanded = !props.expanded">
+					<td class="text-xs-left">{{ props.item.name }}</td>
+					<td class="text-xs-right">{{ props.item.MW }}</td>
+					<td class="text-xs-right">{{ props.item.Mvar }}</td>
+					<td class="text-xs-right">{{ props.item.MWSetpoint }}</td>
+					<td class="text-xs-right">{{ props.item.VpuSetpoint }}</td>
+					<td class="text-xs-right">{{ props.item.MWMax }}</td>
+					<td class="text-xs-right">{{ props.item.MWMin }}</td>
+					<!-- <td class="text-xs-right">{{ props.item.carbs }}</td>
+					<td class="text-xs-right">{{ props.item.protein }}</td>
+					<td class="text-xs-right">{{ props.item.iron }}</td> -->
+				</tr>
+			</template>
+			<template slot="expand" slot-scope="props">
+				<v-card flat>
+					<v-card-text>Peek-a-boo!</v-card-text>
+				</v-card>
+			</template>
+		</v-data-table>
+	</div>
 </template>
 
 <style>
-
+table.v-table tbody td:first-child, table.v-table tbody td:not(:first-child), table.v-table tbody th:first-child, table.v-table tbody th:not(:first-child), table.v-table thead td:first-child, table.v-table thead td:not(:first-child), table.v-table thead th:first-child, table.v-table thead th:not(:first-child) {
+  padding: 0 10px
+}
 </style>
 
 <script>
-  export default {
-    data () {
-      return {
-        headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'left',
-            sortable: false,
-            value: 'name'
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' }
-        ],
-        desserts: [
-          {
-            value: false,
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%'
-          },
-          {
-            value: false,
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%'
-          },
-          {
-            value: false,
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%'
-          },
-          {
-            value: false,
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%'
-          },
-          {
-            value: false,
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%'
-          },
-          {
-            value: false,
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%'
-          },
-          {
-            value: false,
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%'
-          },
-          {
-            value: false,
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%'
-          },
-          {
-            value: false,
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          }
-        ]
-      }
-    }
-  }
+export default {
+	data() {
+		return {
+			headers: [
+				{
+					text: 'Generator',
+					align: 'left',
+					sortable: false,
+					value: 'name'
+				},
+				{ text: 'MW', value: 'MW'},
+				{ text: 'Mvar', value: 'Mvar' },
+				// { text: 'MVA', value: 'MVA' },
+				{ text: 'MW Setpoint', value: 'MWSetpoint' },
+				{ text: 'Vpu Setpoint', value: 'VpuSetpoint' },
+				{ text: 'MW Max Limit', value: 'MWMax' },
+				{ text: 'MW Min Limit', value: 'MWMin' },
+				// { text: 'MW setpoint', value: 'MWSet', sortable: false },
+				// { text: 'Vpu setpoint', value: 'VpuSet', sortable: false },
+				{ text: 'Actions', value: 'Actions', sortable: false }
+			],
+			gens: [],
+			defaultRowItems: [10,25,{"text":"$vuetify.dataIterator.rowsPerPageAll","value":-1}]
+		};
+	},
+	methods: {
+		initTable() {
+			let temp = []
+			for (let i in this.$store.state.casedetail.content.Gen) {
+				temp.push({
+					value: false,
+					name: i,
+					MWMax: this.$store.state.casedetail.content.Gen[i]['Single.MW Max Limit'],
+					MWMin: this.$store.state.casedetail.content.Gen[i]['Single.MW Min Limit'],
+					MW: 0,
+					Mvar: 0,
+					MWSetpoint: 0,
+					VpuSetpoint: 1
+				})
+			}
+			this.gens = temp;
+		},
+		updateTable() {}
+	},
+	mounted() {
+		this.initTable();
+	}
+};
 </script>

@@ -1,10 +1,10 @@
 <template>
 	<v-container grid-list-xs text-xs-center>
 		<v-layout row wrap>
-			<v-flex d-flex xs6 style="height: auto;">
+			<v-flex d-block xs7 style="height: auto;width:100%;">
 				<gentable></gentable>
 			</v-flex>
-			<v-flex d-flex xs6 style="height: 700px;">
+			<v-flex d-flex xs5 style="height: 700px;">
 				<v-layout row wrap>
 					<v-flex style="height:50%;" d-flex xs12>
 						<v-card dark color="light-blue">
