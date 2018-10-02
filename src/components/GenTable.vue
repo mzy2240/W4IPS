@@ -72,11 +72,21 @@ export default {
 				})
 			}
 			this.gens = temp;
+			if (this.gens.length > 1) {
+				return Promise.resolve("Table initialized properly")
+			} else {
+				return Promise.reject("Error in initialization")
+			}
 		},
-		updateTable() {}
+		updateTable() {
+			console.log(this.gens);
+		}
+	},
+	created() {
+		// this.initTable();
 	},
 	mounted() {
-		this.initTable();
+		this.initTable().then(() => this.updateTable())
 	}
 };
 </script>
