@@ -35,6 +35,10 @@
 	</div>
 </template>
 
+<style>
+
+</style>
+
 <script>
 // import popchild from './popchild';
 import { mapGetters } from 'vuex';
