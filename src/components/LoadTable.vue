@@ -66,8 +66,8 @@ export default {
 			anchor: 0,
 			loadDataLength: 0,
 			defaultRowItems: [
-				10,
-				25,
+				15,
+				30,
 				{ text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
 			]
 		};

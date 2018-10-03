@@ -8,7 +8,12 @@
 					<td class="text-xs-right">{{ props.item.MW }}</td>
 					<td class="text-xs-right">{{ props.item.Mvar }}</td>
 					<td class="text-xs-right">
-						{{ props.item.MWSetpoint }}
+						<v-edit-dialog :return-value.sync="props.item.MWSetpoint" large lazy @save="save(props.item)" @open="open(props.item)">
+							<div>{{ props.item.MWSetpoint }}</div>
+							<div slot="input" class="mt-3 title">Update MW Setpoint</div>
+							<v-text-field slot="input" v-model="mws" label="Edit" single-line autofocus></v-text-field>
+						</v-edit-dialog>
+						<!-- {{ props.item.MWSetpoint }} -->
 					</td>
 					<td class="text-xs-right">{{ props.item.VpuSetpoint }}</td>
 					<td class="text-xs-right">{{ props.item.MWMax }}</td>
@@ -75,7 +80,8 @@ export default {
 				10,
 				25,
 				{ text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
-			]
+			],
+			mws: 0
 		};
 	},
 	methods: {
@@ -112,7 +118,10 @@ export default {
 					MW: 0,
 					Mvar: 0,
 					MWSetpoint: 0,
-					VpuSetpoint: 1
+					VpuSetpoint: 1,
+					id: this.$store.state.casedetail.content.Gen[i][
+						'String.ID'
+					]
 				});
 			}
 			this.gens = temp;
@@ -135,11 +144,27 @@ export default {
 							temp[this.anchor + 9 + i * this.genDataLength];
 						this.gens[i].Status =
 							temp[this.anchor + 5 + i * this.genDataLength];
+						this.gens[i].id =
+							temp[this.anchor + 5 + i * this.genDataLength];
 					}
 				} catch (e) {
 					console.log('The raw data are not ready');
 				}
 			}, 500);
+		},
+		save(item) {
+			console.log(item);
+			const command = "Set Power " + this.mws + " MW";
+			this.$store.commit('setMessage', [
+							"Gen",
+							item.name + ',' + item.id,
+							item.name + '#' + item.id,
+							command
+						]);
+			this.$store.commit('setPublish');
+		},
+		open(item) {
+			this.mws = item.MWSetpoint;
 		}
 	},
 	created() {
