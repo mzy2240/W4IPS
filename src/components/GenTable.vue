@@ -27,13 +27,6 @@
 						<div class="my-2">
 							<v-switch v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
 						</div>
-
-						<!-- <v-icon small class="mr-2" @click="editItem(props.item)">
-							edit
-						</v-icon>
-						<v-icon small @click="deleteItem(props.item)">
-							delete
-						</v-icon> -->
 					</td>
 				</tr>
 			</template>

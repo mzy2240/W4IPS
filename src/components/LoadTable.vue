@@ -10,12 +10,9 @@
 					<td class="text-xs-right">{{ props.item.Vpu }}</td>
 					<td class="text-xs-right">{{ props.item.FreqHz }}</td>
 					<td class="justify-center layout px-0">
-						<v-icon small class="mr-2" @click="editItem(props.item)">
-							edit
-						</v-icon>
-						<v-icon small @click="deleteItem(props.item)">
-							delete
-						</v-icon>
+						<div class="my-2">
+							<v-switch v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
+						</div>
 					</td>
 				</tr>
 			</template>
@@ -100,7 +97,8 @@ export default {
 					MW: 0,
 					Mvar: 0,
 					Vpu: 1,
-					FreqHz: 60
+					FreqHz: 60,
+					id: this.$store.state.casedetail.content.Load[i]['String.ID']
 				});
 			}
 			this.loads = temp;
@@ -128,6 +126,21 @@ export default {
 					console.log('The raw data are not ready');
 				}
 			}, 500);
+		},
+		toggle(item) {
+			var command;
+			if (item.Status == true) {
+				command = 'CLOSE';
+			} else {
+				command = 'OPEN';
+			}
+			this.$store.commit('setMessage', [
+				'Load',
+				item.name + ',' + item.id,
+				item.name + '#' + item.id,
+				command
+			]);
+			this.$store.commit('setPublish');
 		}
 	},
 	created() {
