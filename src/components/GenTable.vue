@@ -24,7 +24,10 @@
 					<td class="text-xs-right">{{ props.item.MWMax }}</td>
 					<td class="text-xs-right">{{ props.item.MWMin }}</td>
 					<td class="justify-center layout px-0">
-						<v-switch v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
+						<div class="my-2">
+							<v-switch v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
+						</div>
+
 						<!-- <v-icon small class="mr-2" @click="editItem(props.item)">
 							edit
 						</v-icon>
