@@ -203,7 +203,7 @@ export default {
 									self.name = temp[2];
 									self.type = 'Branch';
 									self.lineshowDialog = true;
-								} else if (self.usermessage.includes('Load')) {
+								} else if (self.usermessage.includes('Load') || self.usermessage.includes('Gen') || self.usermessage.includes('Shunt')) {
 									const busid = temp[1].split(',')[0];
 									self.name = temp[2].split('Bus')[0];
 									self.type = 'Substation';
