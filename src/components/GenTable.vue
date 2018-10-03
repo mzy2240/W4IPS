@@ -8,23 +8,29 @@
 					<td class="text-xs-right">{{ props.item.MW }}</td>
 					<td class="text-xs-right">{{ props.item.Mvar }}</td>
 					<td class="text-xs-right">
-						<v-edit-dialog :return-value.sync="props.item.MWSetpoint" large lazy @save="save(props.item)" @open="open(props.item)">
+						<v-edit-dialog :return-value.sync="props.item.MWSetpoint" large lazy @save="savemws(props.item)" @open="openmws(props.item)">
 							<div>{{ props.item.MWSetpoint }}</div>
 							<div slot="input" class="mt-3 title">Update MW Setpoint</div>
 							<v-text-field slot="input" v-model="mws" label="Edit" single-line autofocus></v-text-field>
 						</v-edit-dialog>
-						<!-- {{ props.item.MWSetpoint }} -->
 					</td>
-					<td class="text-xs-right">{{ props.item.VpuSetpoint }}</td>
+					<td class="text-xs-right">
+						<v-edit-dialog :return-value.sync="props.item.VpuSetpoint" large lazy @save="savevps(props.item)" @open="openvps(props.item)">
+							<div>{{ props.item.VpuSetpoint }}</div>
+							<div slot="input" class="mt-3 title">Update Vpu Setpoint</div>
+							<v-text-field slot="input" v-model="vps" label="Edit" single-line autofocus></v-text-field>
+						</v-edit-dialog>
+					</td>
 					<td class="text-xs-right">{{ props.item.MWMax }}</td>
 					<td class="text-xs-right">{{ props.item.MWMin }}</td>
 					<td class="justify-center layout px-0">
-						<v-icon small class="mr-2" @click="editItem(props.item)">
+						<v-switch v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
+						<!-- <v-icon small class="mr-2" @click="editItem(props.item)">
 							edit
 						</v-icon>
 						<v-icon small @click="deleteItem(props.item)">
 							delete
-						</v-icon>
+						</v-icon> -->
 					</td>
 				</tr>
 			</template>
@@ -51,6 +57,8 @@ table.v-table thead th:not(:first-child) {
 </style>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	data() {
 		return {
@@ -81,7 +89,8 @@ export default {
 				25,
 				{ text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
 			],
-			mws: 0
+			mws: 0,
+			vps: 1
 		};
 	},
 	methods: {
@@ -119,9 +128,7 @@ export default {
 					Mvar: 0,
 					MWSetpoint: 0,
 					VpuSetpoint: 1,
-					id: this.$store.state.casedetail.content.Gen[i][
-						'String.ID'
-					]
+					id: this.$store.state.casedetail.content.Gen[i]['String.ID']
 				});
 			}
 			this.gens = temp;
@@ -132,39 +139,63 @@ export default {
 			}
 		},
 		updateTable() {
-			setInterval(() => {
-				try {
-					const temp = JSON.parse(this.$store.state.rawdata).Data;
-					for (let i in this.gens) {
-						this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
-						this.gens[i].Mvar = temp[this.anchor + 7 + i * this.genDataLength];
-						this.gens[i].MWSetpoint =
-							temp[this.anchor + 10 + i * this.genDataLength];
-						this.gens[i].VpuSetpoint =
-							temp[this.anchor + 9 + i * this.genDataLength];
-						this.gens[i].Status =
-							temp[this.anchor + 5 + i * this.genDataLength];
-						this.gens[i].id =
-							temp[this.anchor + 5 + i * this.genDataLength];
-					}
-				} catch (e) {
-					console.log('The raw data are not ready');
+			// setInterval(() => {
+			try {
+				const temp = JSON.parse(this.$store.state.rawdata).Data;
+				for (let i in this.gens) {
+					this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
+					this.gens[i].Mvar = temp[this.anchor + 7 + i * this.genDataLength];
+					this.gens[i].MWSetpoint =
+						temp[this.anchor + 10 + i * this.genDataLength];
+					this.gens[i].VpuSetpoint =
+						temp[this.anchor + 9 + i * this.genDataLength];
+					this.gens[i].Status = temp[this.anchor + 5 + i * this.genDataLength];
 				}
-			}, 500);
+			} catch (e) {
+				console.log('The raw data are not ready');
+			}
+			// }, 500);
 		},
-		save(item) {
-			console.log(item);
-			const command = "Set Power " + this.mws + " MW";
+		savemws(item) {
+			const command = 'Set Power ' + this.mws + ' MW';
 			this.$store.commit('setMessage', [
-							"Gen",
-							item.name + ',' + item.id,
-							item.name + '#' + item.id,
-							command
-						]);
+				'Gen',
+				item.name + ',' + item.id,
+				item.name + '#' + item.id,
+				command
+			]);
 			this.$store.commit('setPublish');
 		},
-		open(item) {
+		openmws(item) {
 			this.mws = item.MWSetpoint;
+		},
+		savevps(item) {
+			const command = 'Set Exciter_Setpoint ' + this.vps + ' pu';
+			this.$store.commit('setMessage', [
+				'Gen',
+				item.name + ',' + item.id,
+				item.name + '#' + item.id,
+				command
+			]);
+			this.$store.commit('setPublish');
+		},
+		openvps(item) {
+			this.vps = item.VpuSetpoint;
+		},
+		toggle(item) {
+			var command;
+			if (item.Status == true) {
+				command = 'CLOSE';
+			} else {
+				command = 'OPEN';
+			}
+			this.$store.commit('setMessage', [
+				'Gen',
+				item.name + ',' + item.id,
+				item.name + '#' + item.id,
+				command
+			]);
+			this.$store.commit('setPublish');
 		}
 	},
 	created() {
@@ -172,7 +203,18 @@ export default {
 		// this.initTable();
 	},
 	mounted() {
+		// this.initTable();
 		this.initTable().then(() => this.updateTable());
+	},
+	computed: {
+		...mapGetters({
+			dataflag: 'getDataUpdate'
+		})
+	},
+	watch: {
+		dataflag: function() {
+			this.updateTable();
+		}
 	}
 };
 </script>
