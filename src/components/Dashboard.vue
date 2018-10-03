@@ -20,7 +20,16 @@
 						</v-list-tile-avatar>
 
 						<v-list-tile-content>
-							<v-list-tile-title>Start</v-list-tile-title>
+							<v-list-tile-title>Generator</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
+					<v-list-tile avatar :key="'load'" @click="$store.commit('setpage', 'load')">
+						<v-list-tile-avatar>
+							<v-icon>mdi-lightbulb</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>Load</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
 					<v-list-tile avatar :key="'start'" v-if="$store.state.ready4start" @click="$store.commit('trigstartsim')">
@@ -69,6 +78,7 @@
 <script>
 // import Home from './views/Home';
 import generator from '../views/generator-view';
+import load from '../views/load-view';
 // import chatpop from './components/chatpop';
 import MqttClient from './MqttClient';
 import Util from '../util';
@@ -92,6 +102,7 @@ export default {
 		MqttClient,
 		Home: () => import('../views/Home'),
 		generator: generator,
+		load: load,
 		NotificationList: () => import('./NotificationList')
 	},
 	methods: {
