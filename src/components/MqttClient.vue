@@ -49,7 +49,7 @@ export default {
 		},
 		address: {
 			type: String,
-			default: '165.91.215.141:8083/mqtt'
+			default: '104.254.244.143:8083/mqtt'
 		},
 		qos: {
 			type: Number,

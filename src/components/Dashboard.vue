@@ -5,13 +5,13 @@
 		<v-navigation-drawer fixed mini-variant app clipped v-model="drawer">
 			<v-toolbar flat class="transparent">
 				<v-list class="pa-0">
-					<v-list-tile avatar :key="'chat'" @click="dialog=true">
+					<v-list-tile avatar :key="'home'" @click="$store.commit('setpage', 'Home')">
 						<v-list-tile-avatar>
-							<v-icon>chat</v-icon>
+							<v-icon>mdi-home</v-icon>
 						</v-list-tile-avatar>
 
 						<v-list-tile-content>
-							<v-list-tile-title>Configure</v-list-tile-title>
+							<v-list-tile-title>Home</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
 					<v-list-tile avatar :key="'generator'" @click="$store.commit('setpage', 'generator')">
@@ -39,6 +39,15 @@
 
 						<v-list-tile-content>
 							<v-list-tile-title>Shunt</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
+					<v-list-tile avatar :key="'chat'" @click="dialog=true">
+						<v-list-tile-avatar>
+							<v-icon>chat</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>chat</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
 					<v-list-tile avatar :key="'start'" v-if="$store.state.ready4start" @click="$store.commit('trigstartsim')">

@@ -1,4 +1,54 @@
 {
+	"Area": [
+		{
+			"text": "GenMW",
+			"value": "GenMW"
+		},
+		{
+			"text": "GenMvar",
+			"value": "GenMvar"
+		},
+		{
+			"text": "LoadMW",
+			"value": "LoadMW"
+		},
+		{
+			"text": "LoadMvar",
+			"value": "LoadMvar"
+		},
+		{
+			"text": "ShuntMW",
+			"value": "ShuntMW"
+		},
+		{
+			"text": "ShuntMvar",
+			"value": "ShuntMvar"
+		},
+		{
+			"text": "ExportMW",
+			"value": "ExportMW"
+		},
+		{
+			"text": "ExportMvar",
+			"value": "ExportMvar"
+		},
+		{
+			"text": "FrequencyAve",
+			"value": "FrequencyAve"
+		},
+		{
+			"text": "ACE",
+			"value": "ACE"
+		},
+		{
+			"text": "LossMW",
+			"value": "LossMW"
+		},
+		{
+			"text": "LossMvar",
+			"value": "LossMvar"
+		}
+	],
 	"Substation": [
 		{
 			"text": "GenMW",
