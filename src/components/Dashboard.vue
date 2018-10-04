@@ -106,7 +106,7 @@ import Util from '../util';
 export default {
 	data() {
 		return {
-			drawer: false,
+			drawer: true,
 			dialog: false,
 			show: false
 		};

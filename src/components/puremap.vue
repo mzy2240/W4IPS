@@ -1,10 +1,32 @@
 /* eslint-disable */
 <template>
 	<div>
-		<v-container grid-list-xs text-xs-center>
+		<v-layout row class="align-center layout px-4 pt-4 app--page-header">
+			<div class="page-header-left">
+				<h3 class="pr-3">Overview</h3>
+			</div>
+			<v-breadcrumbs divider="-">
+				<v-breadcrumbs-item>
+					<v-icon larg>home</v-icon>
+				</v-breadcrumbs-item>
+			</v-breadcrumbs>
+			<v-spacer></v-spacer>
+			<div class="page-header-right">
+				<v-btn icon>
+					<v-icon class="text--secondary">refresh</v-icon>
+				</v-btn>
+			</div>
+		</v-layout>
+		<!-- <v-container grid-list-xs text-xs-center> -->
+		<v-container grid-list-xl text-xs-center fluid>
 			<v-layout row wrap>
-				<v-flex d-flex xs8 style="height: auto;">
-					<div id="main" class="chart"></div>
+				<v-flex lg8 sm12 xs12>
+					<v-widget title="Site Map" content-bg="white">
+						<!-- <v-flex d-flex xs8 style="height: auto;"> -->
+						<div slot="widget-content">
+							<div id="main" class="chart"></div>
+						</div>
+					</v-widget>
 				</v-flex>
 				<v-flex d-flex xs4 style="height: 700px;">
 					<v-layout row wrap>
@@ -30,6 +52,8 @@
 <style scoped>
 .chart {
 	z-index: 0;
+	height: 700px;
+	width: 100%;
 }
 .container {
 	max-width: 100vw;
@@ -51,6 +75,7 @@ import 'echarts-leaflet';
 // import subpop from './subpop';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
+import VWidget from '@/components/VWidget';
 // import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
@@ -482,7 +507,8 @@ export default {
 	// },
 	components: {
 		linepop: () => import('./linepop'),
-		subpop: () => import('./subpop')
+		subpop: () => import('./subpop'),
+		VWidget
 	}
 };
 </script>
