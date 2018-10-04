@@ -44,7 +44,7 @@ export default {
 		return {
 			headers: [
 				{
-					text: 'Load',
+					text: 'Shunt',
 					align: 'left',
 					sortable: false,
 					value: 'name'
