@@ -32,6 +32,15 @@
 							<v-list-tile-title>Load</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
+					<v-list-tile avatar :key="'shunt'" @click="$store.commit('setpage', 'shunt')">
+						<v-list-tile-avatar>
+							<v-icon>mdi-currency-usd</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>Shunt</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
 					<v-list-tile avatar :key="'start'" v-if="$store.state.ready4start" @click="$store.commit('trigstartsim')">
 						<v-list-tile-avatar>
 							<v-icon>play_arrow</v-icon>
@@ -79,6 +88,7 @@
 // import Home from './views/Home';
 import generator from '../views/generator-view';
 import load from '../views/load-view';
+import shunt from '../views/shunt-view';
 // import chatpop from './components/chatpop';
 import MqttClient from './MqttClient';
 import Util from '../util';
@@ -103,6 +113,7 @@ export default {
 		Home: () => import('../views/Home'),
 		generator: generator,
 		load: load,
+		shunt: shunt,
 		NotificationList: () => import('./NotificationList')
 	},
 	methods: {
