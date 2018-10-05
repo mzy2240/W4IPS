@@ -85,7 +85,10 @@
 			</v-menu>
 		</v-toolbar>
 		<v-content>
-			<component v-bind:is="page"></component>
+			<div class="page-wrapper">
+				<component v-bind:is="page"></component>
+			</div>
+
 			<!-- <router-view/> -->
 		</v-content>
 		<MqttClient style="font-size: 12px"></MqttClient>
@@ -140,8 +143,9 @@ export default {
 };
 </script>
 
-<style>
-.anchorBL {
-	display: none;
-}
+<style lang="stylus">
+// .anchorBL
+// 	display: none;
+.page-wrapper
+    min-height:calc(100vh - 64px - 50px - 81px );
 </style>

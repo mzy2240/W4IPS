@@ -2,6 +2,7 @@
 	<div>
 		<chart></chart>
 	</div>
+
 </template>
 
 <style>

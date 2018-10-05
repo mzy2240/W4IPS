@@ -10,12 +10,6 @@
 					<v-icon larg>home</v-icon>
 				</v-breadcrumbs-item>
 			</v-breadcrumbs>
-			<v-spacer></v-spacer>
-			<div class="page-header-right">
-				<v-btn icon>
-					<v-icon class="text--secondary">refresh</v-icon>
-				</v-btn>
-			</div>
 		</v-layout>
 		<!-- <v-container grid-list-xs text-xs-center> -->
 		<v-container grid-list-xl text-xs-center fluid>
@@ -28,17 +22,25 @@
 						</div>
 					</v-widget>
 				</v-flex>
-				<v-flex d-flex xs4 style="height: 700px;">
+				<v-flex lg4 sm12 xs12>
 					<v-layout row wrap>
-						<v-flex style="height:50%;" d-flex xs12>
-							<v-card dark color="light-blue">
-								<v-card-text class="px-0">Tool1</v-card-text>
-							</v-card>
+						<v-flex lg12 sm12 xs12>
+							<v-widget title="Tool1" content-bg="white">
+								<div slot="widget-content" class='cardiv'>
+									<v-card dark color="light-blue">
+										<v-card-text class="px-0">Tool1</v-card-text>
+									</v-card>
+								</div>
+							</v-widget>
 						</v-flex>
-						<v-flex style="height:50%;" d-flex xs12>
-							<v-card dark color="light-blue">
-								<v-card-text class="px-0">Tool2</v-card-text>
-							</v-card>
+						<v-flex lg12 sm12 xs12>
+							<v-widget title="Tool2" content-bg="white">
+								<div slot="widget-content" class='cardiv'>
+									<v-card dark color="light-blue">
+										<v-card-text class="px-0">Tool2</v-card-text>
+									</v-card>
+								</div>
+							</v-widget>
 						</v-flex>
 					</v-layout>
 				</v-flex>
@@ -55,15 +57,9 @@
 	height: 700px;
 	width: 100%;
 }
-.container {
-	max-width: 100vw;
-	padding: 0px;
-	margin: 2px;
-}
-* {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+.cardiv {
+	height: 300px;
+	width: 100%;
 }
 </style>
 
