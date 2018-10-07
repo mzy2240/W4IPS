@@ -14,6 +14,43 @@
 		<!-- <v-container grid-list-xs text-xs-center> -->
 		<v-container grid-list-xl text-xs-center fluid>
 			<v-layout row wrap>
+				<!-- mini statistic start -->
+        <v-flex lg3 sm6 xs12>
+          <mini-statistic
+            icon="fa fa-facebook"
+            title="Total Generation"
+            :sub-title="areaData[0]"
+            color="indigo"      
+          >
+          </mini-statistic>  
+        </v-flex>
+        <v-flex lg3 sm6 xs12>
+          <mini-statistic
+            icon="fa fa-google"
+            title="Total Load"
+            :sub-title="areaData[2]"
+            color="red"      
+          >
+          </mini-statistic>           
+        </v-flex>          
+        <v-flex lg3 sm6 xs12>
+          <mini-statistic
+            icon="fa fa-twitter"
+            title="Average Frequency"
+            :sub-title="areaData[8]"
+            color="light-blue"      
+          >
+          </mini-statistic>            
+        </v-flex>        
+        <v-flex lg3 sm6 xs12>
+          <mini-statistic
+            icon="fa fa-instagram"
+            title="Export Power"
+            :sub-title="areaData[6]"
+            color="purple"      
+          >
+          </mini-statistic>             
+        </v-flex> 
 				<v-flex lg8 sm12 xs12>
 					<v-widget title="Site Map" content-bg="white">
 						<!-- <v-flex d-flex xs8 style="height: auto;"> -->
@@ -72,6 +109,7 @@ import 'echarts-leaflet';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
 import VWidget from '@/components/VWidget';
+import MiniStatistic from '@/components/MiniStatistic';
 // import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
@@ -102,7 +140,9 @@ export default {
 			statusArray: [],
 			mwfromArray: [],
 			openLineData: [],
-			branchToOpenBranch: {}
+			branchToOpenBranch: {},
+			areaData: [],
+			areaDataLength: this.$store.state.fieldstore['Area'].length
 		};
 	},
 	methods: {
@@ -412,6 +452,7 @@ export default {
 		},
 		updateLines() {
 			const temp = JSON.parse(this.$store.state.rawdata).Data;
+			this.areaData = temp.slice(0, this.areaDataLength);
 			const branchData = temp.slice(this.anchor, this.anchor + this.dataLength);
 			let branchIndex;
 			let statusTemp = [];
@@ -504,7 +545,8 @@ export default {
 	components: {
 		linepop: () => import('./linepop'),
 		subpop: () => import('./subpop'),
-		VWidget
+		VWidget,
+		MiniStatistic
 	}
 };
 </script>
