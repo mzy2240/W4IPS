@@ -453,6 +453,9 @@ export default {
 		updateLines() {
 			const temp = JSON.parse(this.$store.state.rawdata).Data;
 			this.areaData = temp.slice(0, this.areaDataLength);
+			this.areaData = this.areaData.map(function(ele) {
+				return Number(ele.toFixed(3));
+			});
 			const branchData = temp.slice(this.anchor, this.anchor + this.dataLength);
 			let branchIndex;
 			let statusTemp = [];
