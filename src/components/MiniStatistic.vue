@@ -10,7 +10,8 @@
           <v-flex :class=containerStyle>
             <graph v-if="showGraph" :visible="showGraph" :id="name" :data="subTitle"></graph>
             <div v-else class="layout column ma-0 justify-center align-center">
-              <v-icon size="24px" :color="color">{{icon}}</v-icon>
+              <!-- <v-icon size="24px" :color="color">{{icon}}</v-icon> -->
+			  <img :src="img" />
             </div>
           </v-flex>
           <v-flex white--text :class="color">
@@ -44,7 +45,7 @@
       </v-container>
     </v-card-text>
   </v-card>
-</div>   
+</div>
 </template>
 
 <style>
@@ -62,7 +63,8 @@ export default {
 		title: String,
 		subTitle: [String, Number],
 		color: String,
-		name: String
+		name: String,
+		img: String
 	},
 	data() {
 		return {

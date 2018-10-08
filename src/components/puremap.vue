@@ -21,9 +21,10 @@
             icon="fa fa-facebook"
             title="Total Generation"
             :sub-title="areaData[0]"
-            color="indigo"      
+            color="indigo"
+			:img="require('../assets/icons8-factory-64.png')"
           >
-          </mini-statistic>  
+          </mini-statistic>
         </v-flex>
         <v-flex lg3 sm6 xs12>
           <mini-statistic
@@ -31,30 +32,33 @@
             icon="fa fa-google"
             title="Total Load"
             :sub-title="areaData[2]"
-            color="red"      
+            color="red"
+			:img="require('../assets/kitchen-set.png')"
           >
-          </mini-statistic>           
-        </v-flex>          
+          </mini-statistic>
+        </v-flex>
         <v-flex lg3 sm6 xs12>
           <mini-statistic
 		  	:name="'Freq'"
             icon="fa fa-twitter"
             title="Average Frequency"
             :sub-title="areaData[8]"
-            color="light-blue"      
+            color="light-blue"
+			:img="require('../assets/icons8-frequency-64.png')"
           >
-          </mini-statistic>            
-        </v-flex>        
+          </mini-statistic>
+        </v-flex>
         <v-flex lg3 sm6 xs12>
           <mini-statistic
 		  	:name="'ExportMW'"
             icon="fa fa-instagram"
             title="Export Power"
             :sub-title="areaData[6]"
-            color="purple"      
+            color="purple"
+			:img="require('../assets/export.png')"
           >
-          </mini-statistic>             
-        </v-flex> 
+          </mini-statistic>
+        </v-flex>
 				<v-flex lg8 sm12 xs12>
 					<v-widget title="Site Map" content-bg="white">
 						<!-- <v-flex d-flex xs8 style="height: auto;"> -->
@@ -67,11 +71,13 @@
 					<v-layout row wrap>
 						<v-flex lg12 sm12 xs12>
 							<v-widget title="Tool1" content-bg="white">
-								<div slot="widget-content" class='cardiv'>
+								<pie></pie>
+								<!-- <div slot="widget-content" class='cardiv'>
 									<v-card dark color="light-blue">
-										<v-card-text class="px-0">Tool1</v-card-text>
+
+										<v-card-text class="px-0">Title</v-card-text>
 									</v-card>
-								</div>
+								</div> -->
 							</v-widget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
@@ -114,6 +120,7 @@ import _ from 'lodash';
 import { mapGetters } from 'vuex';
 import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/MiniStatistic';
+import pie from '@/components/pie';
 // import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
@@ -553,7 +560,8 @@ export default {
 		linepop: () => import('./linepop'),
 		subpop: () => import('./subpop'),
 		VWidget,
-		MiniStatistic
+		MiniStatistic,
+		pie
 	}
 };
 </script>
