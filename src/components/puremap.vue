@@ -17,6 +17,7 @@
 				<!-- mini statistic start -->
         <v-flex lg3 sm6 xs12>
           <mini-statistic
+		  	:name="'GenMW'"
             icon="fa fa-facebook"
             title="Total Generation"
             :sub-title="areaData[0]"
@@ -26,6 +27,7 @@
         </v-flex>
         <v-flex lg3 sm6 xs12>
           <mini-statistic
+		  	:name="'LoadMW'"
             icon="fa fa-google"
             title="Total Load"
             :sub-title="areaData[2]"
@@ -35,6 +37,7 @@
         </v-flex>          
         <v-flex lg3 sm6 xs12>
           <mini-statistic
+		  	:name="'Freq'"
             icon="fa fa-twitter"
             title="Average Frequency"
             :sub-title="areaData[8]"
@@ -44,6 +47,7 @@
         </v-flex>        
         <v-flex lg3 sm6 xs12>
           <mini-statistic
+		  	:name="'ExportMW'"
             icon="fa fa-instagram"
             title="Export Power"
             :sub-title="areaData[6]"

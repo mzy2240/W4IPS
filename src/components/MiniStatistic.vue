@@ -1,14 +1,19 @@
 <template>
+<div>
+  <!-- <v-card v-if="showGraph">
+    <graph :id="name" :data="subTitle"></graph>
+  </v-card> -->
   <v-card @mouseover="disable = false" @mouseout="disable = true">
     <v-card-text class="pa-0 ma-0">
       <v-container class="pa-0 ma-0">
-        <div class="layout row ma-0">
-          <div class="sm6 xs6 flex">
-            <div class="layout column ma-0 justify-center align-center">
+        <v-layout row wrap>
+          <v-flex :class=containerStyle>
+            <graph v-if="showGraph" :visible="showGraph" :id="name" :data="subTitle"></graph>
+            <div v-else class="layout column ma-0 justify-center align-center">
               <v-icon size="24px" :color="color">{{icon}}</v-icon>
             </div>
-          </div>
-          <v-flex sm6 xs6 white--text :class="color">
+          </v-flex>
+          <v-flex white--text :class="color">
               <v-layout row wrap>
                   <v-flex sm12 xs12>
                       <div class="text-sm-center pt-3">
@@ -18,7 +23,7 @@
                   </v-flex>
                   <v-flex sm12 xs12 class="pa-0 ma-0">
                      <v-layout align-end justify-end>
-                         <v-btn icon depressed :disabled='disable'>
+                         <v-btn icon depressed :disabled='disable' @click="showGraph = !showGraph">
                             <v-icon dark>mdi-chart-line-variant</v-icon>
                     </v-btn>
                      </v-layout>
@@ -35,24 +40,51 @@
                 </v-btn>
             </div>
           </div> -->
-        </div>
+        </v-layout>
       </v-container>
     </v-card-text>
-  </v-card>    
+  </v-card>
+</div>   
 </template>
 
+<style>
+.vis-panel {
+	box-sizing: content-box;
+}
+</style>
+
 <script>
+import graph from './graph';
+
 export default {
 	props: {
 		icon: String,
 		title: String,
 		subTitle: [String, Number],
-		color: String
-    },
-    data() {
-        return {
-            disable: true
-        }
-    }
+		color: String,
+		name: String
+	},
+	data() {
+		return {
+			disable: true,
+      showGraph: false,
+      containerStyle: "sm6 xs6"
+		};
+	},
+	mounted() {
+		// this.visTest();
+	},
+	watch: {
+	  showGraph: function() {
+	    if(this.showGraph){
+	      this.containerStyle = "sm12 xs12"
+	    } else {
+        this.containerStyle = "sm6 xs6"
+      }
+	  }
+	},
+	components: {
+		graph
+	}
 };
 </script>
