@@ -10,6 +10,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
+		username: '',
 		toPublish: 0,
 		message: '',
 		UUID: '',
@@ -63,6 +64,9 @@ export default new Vuex.Store({
 		}
 	},
 	mutations: {
+		setUsername(state, payload) {
+			state.username = payload;
+		},
 		setPublish(state) {
 			state.toPublish++;
 		},

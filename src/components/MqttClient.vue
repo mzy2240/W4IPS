@@ -154,10 +154,12 @@ export default {
 			this.client.on('end', this.onEnd);
 		},
 		onGetUUID() {
-			fingerprint().get((result, components) => {
-				this.clientid = result.substring(0, 4);
-				this.$store.commit('setUUID', this.clientid);
-			});
+			// fingerprint().get((result, components) => {
+			// 	this.clientid = result.substring(0, 4);
+			// 	this.$store.commit('setUUID', this.clientid);
+			// });
+			this.clientid = this.$store.state.username;
+			this.$store.commit('setUUID', this.clientid);
 		},
 		onConnect(connack) {
 			console.log('onConnect');
