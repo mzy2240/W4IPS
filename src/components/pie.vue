@@ -1,8 +1,8 @@
 <template>
-	<div id="pie" class="chart"></div>
+	<div id="pie" class="chartdiv"></div>
 </template>
 <style>
-.chart {
+.chartdiv {
 	/* z-index: 0; */
 	height: 100%;
 	width: 100%;

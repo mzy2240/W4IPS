@@ -15,50 +15,22 @@
 		<v-container grid-list-xl text-xs-center fluid>
 			<v-layout row wrap>
 				<!-- mini statistic start -->
-        <v-flex lg3 sm6 xs12>
-          <mini-statistic
-		  	:name="'GenMW'"
-            icon="fa fa-facebook"
-            title="Total Generation"
-            :sub-title="areaData[0]"
-            color="indigo"
-			:img="require('../assets/icons8-factory-64.png')"
-          >
-          </mini-statistic>
-        </v-flex>
-        <v-flex lg3 sm6 xs12>
-          <mini-statistic
-		  	:name="'LoadMW'"
-            icon="fa fa-google"
-            title="Total Load"
-            :sub-title="areaData[2]"
-            color="red"
-			:img="require('../assets/kitchen-set.png')"
-          >
-          </mini-statistic>
-        </v-flex>
-        <v-flex lg3 sm6 xs12>
-          <mini-statistic
-		  	:name="'Freq'"
-            icon="fa fa-twitter"
-            title="Average Frequency"
-            :sub-title="areaData[8]"
-            color="light-blue"
-			:img="require('../assets/icons8-frequency-64.png')"
-          >
-          </mini-statistic>
-        </v-flex>
-        <v-flex lg3 sm6 xs12>
-          <mini-statistic
-		  	:name="'ExportMW'"
-            icon="fa fa-instagram"
-            title="Export Power"
-            :sub-title="areaData[6]"
-            color="purple"
-			:img="require('../assets/export.png')"
-          >
-          </mini-statistic>
-        </v-flex>
+				<v-flex lg3 sm6 xs12>
+					<mini-statistic :name="'GenMW'" icon="fa fa-facebook" title="Total Generation" :sub-title="areaData[0]" color="indigo" :img="require('../assets/icons8-factory-64.png')">
+					</mini-statistic>
+				</v-flex>
+				<v-flex lg3 sm6 xs12>
+					<mini-statistic :name="'LoadMW'" icon="fa fa-google" title="Total Load" :sub-title="areaData[2]" color="red" :img="require('../assets/kitchen-set.png')">
+					</mini-statistic>
+				</v-flex>
+				<v-flex lg3 sm6 xs12>
+					<mini-statistic :name="'Freq'" icon="fa fa-twitter" title="Average Frequency" :sub-title="areaData[8]" color="light-blue" :img="require('../assets/icons8-frequency-64.png')">
+					</mini-statistic>
+				</v-flex>
+				<v-flex lg3 sm6 xs12>
+					<mini-statistic :name="'ExportMW'" icon="fa fa-instagram" title="Export Power" :sub-title="areaData[6]" color="purple" :img="require('../assets/export.png')">
+					</mini-statistic>
+				</v-flex>
 				<v-flex lg8 sm12 xs12>
 					<v-widget title="Site Map" content-bg="white">
 						<!-- <v-flex d-flex xs8 style="height: auto;"> -->
@@ -70,14 +42,14 @@
 				<v-flex lg4 sm12 xs12>
 					<v-layout row wrap>
 						<v-flex lg12 sm12 xs12>
-							<v-widget title="Tool1" content-bg="white">
-								<pie></pie>
-								<!-- <div slot="widget-content" class='cardiv'>
-									<v-card dark color="light-blue">
+							<v-widget title="Area Generation Overview" content-bg="white">
+								<div slot="widget-content" style="height:300px;">
+									<pie></pie>
+									<!-- <v-card dark color="light-blue">
 
 										<v-card-text class="px-0">Title</v-card-text>
-									</v-card>
-								</div> -->
+									</v-card> -->
+								</div>
 							</v-widget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
