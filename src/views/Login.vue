@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-app v-if="showDash" calss="app">
+		<v-app v-if="showDash" class="app">
 			<dashboard></dashboard>
 		</v-app>
 		<!-- <v-app class="app"></v-app> -->
@@ -32,6 +32,13 @@
 		</v-app>
 	</div>
 </template>
+
+<style>
+styleDash {
+	position: 'absolute';
+	width: '100%';
+}
+</style>
 
 <script>
 import Spinner from 'vue-spinkit';

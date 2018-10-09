@@ -11,7 +11,7 @@
             <graph v-if="showGraph" :visible="showGraph" :id="name" :data="subTitle"></graph>
             <div v-else class="layout column ma-0 justify-center align-center">
               <!-- <v-icon size="24px" :color="color">{{icon}}</v-icon> -->
-			  <img :src="img" />
+			        <img :src="img" />
             </div>
           </v-flex>
           <v-flex white--text :class="color">
@@ -69,21 +69,21 @@ export default {
 	data() {
 		return {
 			disable: true,
-      showGraph: false,
-      containerStyle: "sm6 xs6"
+			showGraph: false,
+			containerStyle: 'sm6 xs6'
 		};
 	},
 	mounted() {
 		// this.visTest();
 	},
 	watch: {
-	  showGraph: function() {
-	    if(this.showGraph){
-	      this.containerStyle = "sm12 xs12"
-	    } else {
-        this.containerStyle = "sm6 xs6"
-      }
-	  }
+		showGraph: function() {
+			if (this.showGraph) {
+				this.containerStyle = 'sm12 xs12';
+			} else {
+				this.containerStyle = 'sm6 xs6';
+			}
+		}
 	},
 	components: {
 		graph

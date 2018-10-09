@@ -10,10 +10,10 @@
 					<v-icon larg>home</v-icon>
 				</v-breadcrumbs-item>
 			</v-breadcrumbs>
-			<v-spacer></v-spacer>
+			<!-- <v-spacer></v-spacer>
 			<div class="page-header-right">
 				<h4 class="pr-1">Hi {{$store.state.username}}</h4>
-			</div>
+			</div> -->
 		</v-layout>
 		<!-- <v-container grid-list-xs text-xs-center> -->
 		<v-container grid-list-xl text-xs-center fluid>
