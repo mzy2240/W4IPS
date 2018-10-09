@@ -18,18 +18,35 @@ export default {
 	},
 	data() {
 		return {
-			chart: ''
+			chart: '',
+			anchor: 0,
+			genDataLength: 0
 		};
 	},
 	methods: {
+		preProcess() {
+			let anchor = 0;
+			var arrlength;
+			var keyarr;
+
+			for (let ele in this.$store.state.fieldstore) {
+				arrlength = this.$store.state.fieldstore[ele].length;
+				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				if (ele != 'Gen') {
+					anchor += arrlength * keyarr.length;
+				} else {
+					break;
+				}
+			}
+			this.anchor = anchor;
+			this.genDataLength = arrlength;
+		},
 		initdraw() {
-			console.log(this.$store.state.totalCapacity);
-			console.log(this.$store.state.totalCapacity);
-			console.log(this.$store.state.totalCapacity);
 			this.chart = echarts.init(document.getElementById('pie'));
 			this.chart.setOption({
 				series: [
 					{
+						id: 'pie',
 						type: 'pie',
 						radius: '65%',
 						center: ['50%', '50%'],
@@ -37,7 +54,7 @@ export default {
 						selectedMode: 'single',
 						label: {
 							position: 'outside',
-							formatter: '{a|{b}}\n{hr|}\n {c|{c} MW}  {per|{d}%}',
+							formatter: '{a|{b}}\n{hr|}\n{c|{c} MW}\n{hr|}\n{per|{d}%}{abg|}',
 							backgroundColor: '#eee',
 							borderColor: '#aaa',
 							borderWidth: 1,
@@ -48,6 +65,13 @@ export default {
 									lineHeight: 22,
 									align: 'center'
 								},
+								abg: {
+                                    backgroundColor: '#333',
+                                    width: '100%',
+                                    align: 'right',
+                                    height: 15,
+                                    borderRadius: [0, 0, 4, 4]
+                                },
 								hr: {
 									borderColor: '#aaa',
 									width: '100%',
@@ -59,13 +83,16 @@ export default {
 									lineHeight: 33
 								},
 								c: {
-									color: '#999'
+									color: '#999',
+									lineHeight: 20
 								},
 								per: {
 									color: '#eee',
-									backgroundColor: '#334455',
-									padding: [2, 4],
-									borderRadius: 2
+									// backgroundColor: '#334455',
+									// padding: [2, 4],
+									// borderRadius: 2,
+									align: 'center',
+									// width: '100%'
 								}
 							}
 						},
@@ -73,18 +100,6 @@ export default {
 							show: true
 						},
 						data: [
-							{
-								value: 10000,
-								name: 'Current Generation'
-							},
-							{
-								value: 10000,
-								name: 'Online Capacity'
-							},
-							{
-								value: 10000,
-								name: 'Offline Capacity'
-							}
 						],
 						itemStyle: {
 							emphasis: {
@@ -96,10 +111,54 @@ export default {
 					}
 				]
 			});
+		},
+		updateData() {
+			try {
+				const temp = JSON.parse(this.$store.state.rawdata).Data;
+				var status;
+				let offlineCapacity = 0;
+				for (let [index, val] of Object.entries(
+					this.$store.state.casedetail.content.Gen
+				)) {
+					status = temp[this.anchor + 5 + index * this.genDataLength];
+					if (status == 0) {
+						// console.log(val);
+						offlineCapacity += val[
+							'Single.MW Max Limit'
+						];
+					}
+				}
+				// console.log(this.areatotal);
+				this.chart.setOption({
+					series: {
+						id: 'pie',
+						data: [
+							{
+								value: this.areatotal,
+								name: 'Current Generation'
+							},
+							{
+								value: this.$store.state.totalCapacity-offlineCapacity-this.areatotal,
+								name: 'Online Capacity'
+							},
+							{
+								value: offlineCapacity,
+								name: 'Offline Capacity'
+							}
+						]
+					}
+				});
+			} catch (e) {
+				console.log(e);
+			}
 		}
 	},
 	mounted() {
 		this.initdraw();
+		this.preProcess();
+		setInterval(() => {
+			this.updateData();
+		}, 1000);
 	}
 };
 </script>
