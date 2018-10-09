@@ -16,19 +16,19 @@
 			<v-layout row wrap>
 				<!-- mini statistic start -->
 				<v-flex lg3 sm6 xs12>
-					<mini-statistic :name="'GenMW'" icon="fa fa-facebook" title="Total Generation" :sub-title="areaData[0]" color="indigo" :img="require('../assets/icons8-factory-64.png')">
+					<mini-statistic :name="'GenMW'" icon="fa fa-facebook" title="Total Generation (MW)" :sub-title="areaData[0]" color="indigo" :img="require('../assets/icons8-factory-64.png')">
 					</mini-statistic>
 				</v-flex>
 				<v-flex lg3 sm6 xs12>
-					<mini-statistic :name="'LoadMW'" icon="fa fa-google" title="Total Load" :sub-title="areaData[2]" color="red" :img="require('../assets/kitchen-set.png')">
+					<mini-statistic :name="'LoadMW'" icon="fa fa-google" title="Total Load (MW)" :sub-title="areaData[2]" color="red" :img="require('../assets/kitchen-set.png')">
 					</mini-statistic>
 				</v-flex>
 				<v-flex lg3 sm6 xs12>
-					<mini-statistic :name="'Freq'" icon="fa fa-twitter" title="Average Frequency" :sub-title="areaData[8]" color="light-blue" :img="require('../assets/icons8-frequency-64.png')">
+					<mini-statistic :name="'Freq'" icon="fa fa-twitter" title="Average Frequency (Hz)" :sub-title="areaData[8]" color="light-blue" :img="require('../assets/icons8-frequency-64.png')">
 					</mini-statistic>
 				</v-flex>
 				<v-flex lg3 sm6 xs12>
-					<mini-statistic :name="'ExportMW'" icon="fa fa-instagram" title="Export Power" :sub-title="areaData[6]" color="purple" :img="require('../assets/export.png')">
+					<mini-statistic :name="'ExportMW'" icon="fa fa-instagram" title="Export Power (MW)" :sub-title="areaData[6]" color="purple" :img="require('../assets/export.png')">
 					</mini-statistic>
 				</v-flex>
 				<v-flex lg8 sm12 xs12>

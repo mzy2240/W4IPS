@@ -84,7 +84,8 @@ export default {
 								},
 								c: {
 									color: '#999',
-									lineHeight: 20
+									lineHeight: 20,
+									align: 'center'
 								},
 								per: {
 									color: '#eee',
@@ -117,10 +118,12 @@ export default {
 				const temp = JSON.parse(this.$store.state.rawdata).Data;
 				var status;
 				let offlineCapacity = 0;
-				for (let [index, val] of Object.entries(
+				let index = 0;
+				for (let [key, val] of Object.entries(
 					this.$store.state.casedetail.content.Gen
 				)) {
 					status = temp[this.anchor + 5 + index * this.genDataLength];
+					index += 1;
 					if (status == 0) {
 						// console.log(val);
 						offlineCapacity += val[
@@ -134,15 +137,15 @@ export default {
 						id: 'pie',
 						data: [
 							{
-								value: this.areatotal,
+								value: Math.round(this.areatotal),
 								name: 'Current Generation'
 							},
 							{
-								value: this.$store.state.totalCapacity-offlineCapacity-this.areatotal,
+								value: Math.round(this.$store.state.totalCapacity-offlineCapacity-this.areatotal),
 								name: 'Online Capacity'
 							},
 							{
-								value: offlineCapacity,
+								value: Math.round(offlineCapacity),
 								name: 'Offline Capacity'
 							}
 						]
