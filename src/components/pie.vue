@@ -11,6 +11,7 @@
 
 <script>
 import echarts from 'echarts';
+import Material from 'vuetify/es5/util/colors';
 
 export default {
 	props: {
@@ -20,7 +21,8 @@ export default {
 		return {
 			chart: '',
 			anchor: 0,
-			genDataLength: 0
+			genDataLength: 0,
+			color: Material
 		};
 	},
 	methods: {
@@ -44,6 +46,8 @@ export default {
 		initdraw() {
 			this.chart = echarts.init(document.getElementById('pie'));
 			this.chart.setOption({
+				legend: {bottom: '0'},
+				color: [this.color.lightBlue.base, this.color.indigo.base, this.color.pink.base],
 				series: [
 					{
 						id: 'pie',
