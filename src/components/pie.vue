@@ -13,7 +13,9 @@
 import echarts from 'echarts';
 
 export default {
-	props: {},
+	props: {
+		areatotal: Number
+	},
 	data() {
 		return {
 			chart: ''
@@ -21,6 +23,9 @@ export default {
 	},
 	methods: {
 		initdraw() {
+			console.log(this.$store.state.totalCapacity);
+			console.log(this.$store.state.totalCapacity);
+			console.log(this.$store.state.totalCapacity);
 			this.chart = echarts.init(document.getElementById('pie'));
 			this.chart.setOption({
 				series: [

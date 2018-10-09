@@ -44,7 +44,7 @@
 						<v-flex lg12 sm12 xs12>
 							<v-widget title="Area Generation Overview" content-bg="white">
 								<div slot="widget-content" style="height:300px;">
-									<pie></pie>
+									<pie :areatotal="areaData[0]"></pie>
 									<!-- <v-card dark color="light-blue">
 
 										<v-card-text class="px-0">Title</v-card-text>
