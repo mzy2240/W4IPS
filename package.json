@@ -31,6 +31,7 @@
     "vue-drag-zone": "^2.0.0-rc1",
     "vue-echarts": "^3.0.9",
     "vue-grid-layout": "^2.1.13",
+    "vue-native-notification": "^1.0.5",
     "vue-router": "^3.0.1",
     "vue-spinkit": "^1.4.1",
     "vuetify": "^1.1.9",

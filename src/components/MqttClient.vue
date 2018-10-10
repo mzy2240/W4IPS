@@ -18,6 +18,14 @@ import iziToast from 'izitoast';
 // import linepop from './linepop';
 // import subpop from './subpop';
 // import { Notification } from 'element-ui';
+import Vue from 'vue'
+import VueNativeNotification from 'vue-native-notification'
+
+Vue.use(VueNativeNotification, {
+  // Automatic permission request before
+  // showing notification (default: true)
+  requestOnNotify: true
+})
 
 export default {
 	name: 'MqttClient',
@@ -82,7 +90,7 @@ export default {
 	watch: {
 		getPubStatus: function(newVal, oldVal) {
 			const temp = {
-				user: this.$store.state.username,//this.clientid,
+				user: this.$store.state.username, //this.clientid,
 				type: this.$store.state.message[0],
 				id: this.$store.state.message[1],
 				name: this.$store.state.message[2],
@@ -116,7 +124,10 @@ export default {
 			);
 		},
 		startsimtrigger: function() {
-			this.client.publish('user/system', this.$store.state.username + ':' + 'Start');
+			this.client.publish(
+				'user/system',
+				this.$store.state.username + ':' + 'Start'
+			);
 			// this.client.publish('user/system', this.clientid + ':' + 'Start');
 		},
 		backend_online: function() {
@@ -142,14 +153,17 @@ export default {
 	methods: {
 		onInitClient() {
 			this.onGetUUID();
-			if(!this.clientid) {
-				this.clientid = this.$store.state.username;
-			}
-			this.client = mqtt.connect(this.protocol + '://' + this.address, {
-				clientId: this.clientid,
-				username: this.username,
-				password: this.password
-			});
+			// if(!this.clientid) {
+			// 	this.clientid = this.$store.state.username;
+			// }
+			this.client = mqtt.connect(
+				this.protocol + '://' + this.address,
+				{
+					clientId: this.clientid,
+					username: this.username,
+					password: this.password
+				}
+			);
 			this.client.on('connect', this.onConnect);
 			this.client.on('message', this.onMessage);
 			this.client.on('close', this.onClose);
@@ -210,7 +224,11 @@ export default {
 									self.name = temp[2];
 									self.type = 'Branch';
 									self.lineshowDialog = true;
-								} else if (self.usermessage.includes('Load') || self.usermessage.includes('Gen') || self.usermessage.includes('Shunt')) {
+								} else if (
+									self.usermessage.includes('Load') ||
+									self.usermessage.includes('Gen') ||
+									self.usermessage.includes('Shunt')
+								) {
 									const busid = temp[1].split(',')[0];
 									self.name = temp[2].split('Bus')[0];
 									self.type = 'Substation';
@@ -240,6 +258,13 @@ export default {
 						]
 					]
 				});
+				this.$notification.show(
+					'System',
+					{
+						body: this.usermessage
+					},
+					{}
+				);
 				this.$store.commit('updatebadge');
 				this.$store.commit('updatebadgelist', {
 					title: this.usermessage,
@@ -350,9 +375,9 @@ export default {
 		}
 	},
 	components: {
-		chatpop:() => import("./chatpop"),
-		linepop: () => import("./linepop"),
-		subpop: () => import("./subpop")
+		chatpop: () => import('./chatpop'),
+		linepop: () => import('./linepop'),
+		subpop: () => import('./subpop')
 	}
 };
 </script>
