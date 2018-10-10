@@ -82,7 +82,7 @@ export default {
 	watch: {
 		getPubStatus: function(newVal, oldVal) {
 			const temp = {
-				user: this.clientid,
+				user: this.$store.state.username,//this.clientid,
 				type: this.$store.state.message[0],
 				id: this.$store.state.message[1],
 				name: this.$store.state.message[2],
@@ -111,11 +111,13 @@ export default {
 		getNewPublish: function(newVal, oldVal) {
 			this.client.publish(
 				newVal[0],
-				'User #' + this.clientid + ': ' + newVal[1]
+				'User #' + this.$store.state.username + ': ' + newVal[1]
+				// 'User #' + this.clientid + ': ' + newVal[1]
 			);
 		},
 		startsimtrigger: function() {
-			this.client.publish('user/system', this.clientid + ':' + 'Start');
+			this.client.publish('user/system', this.$store.state.username + ':' + 'Start');
+			// this.client.publish('user/system', this.clientid + ':' + 'Start');
 		},
 		backend_online: function() {
 			// Notification.success({
@@ -157,12 +159,12 @@ export default {
 			this.client.on('end', this.onEnd);
 		},
 		onGetUUID() {
-			// fingerprint().get((result, components) => {
-			// 	this.clientid = result.substring(0, 4);
-			// 	this.$store.commit('setUUID', this.clientid);
-			// });
-			this.clientid = this.$store.state.username;
-			this.$store.commit('setUUID', this.clientid);
+			fingerprint().get((result, components) => {
+				this.clientid = result.substring(0, 4);
+				this.$store.commit('setUUID', this.clientid);
+			});
+			// this.clientid = this.$store.state.username;
+			// this.$store.commit('setUUID', this.clientid);
 		},
 		onConnect(connack) {
 			console.log('onConnect');
