@@ -36,7 +36,7 @@
 					</mini-statistic>
 				</v-flex>
 				<v-flex lg8 sm12 xs12>
-					<v-widget title="Site Map" content-bg="white">
+					<v-widget title="Interactive Site Map" content-bg="white">
 						<!-- <v-flex d-flex xs8 style="height: auto;"> -->
 						<div slot="widget-content">
 							<div id="main" class="chart"></div>
@@ -129,7 +129,8 @@ export default {
 			openLineData: [],
 			branchToOpenBranch: {},
 			areaData: [],
-			areaDataLength: this.$store.state.fieldstore['Area'].length
+			areaDataLength: this.$store.state.fieldstore['Area'].length,
+			highRiskLines: {}
 		};
 	},
 	methods: {
@@ -255,7 +256,7 @@ export default {
 							color: function(params) {
 								let temp;
 								// console.log(params.data.attributes.volt)
-								switch(params.data.attributes.volt) {
+								switch (params.data.attributes.volt) {
 									case 230:
 										temp = '#3949ab';
 										break;
@@ -464,7 +465,10 @@ export default {
 			let branchIndex;
 			let statusTemp = [];
 			let branchChanged = false;
-			for (let i = 0; i < branchData.length; i = i + this.branchArrLength) {
+			let i = 0;
+			for (let [key, val] of Object.entries(
+				this.$store.state.casedetail.content.Branch
+			)) {
 				statusTemp.push(branchData[i]);
 				branchIndex = i / this.branchArrLength;
 				if (
@@ -482,7 +486,15 @@ export default {
 					this.updateLineClose(branchIndex);
 					branchChanged = true;
 				}
+				if(branchData[i+3] >= 0.9*val["Single.MVA Limit"]) {
+					this.highRiskLines[key] = val;
+					this.highRiskLines[key]["MVA"] = branchData[i+3];
+				} else if (key in this.highRiskLines) {
+					delete this.highRiskLines[key]
+				}
+				i += this.branchArrLength;
 			}
+			// console.log(this.highRiskLines);
 			if (branchChanged) {
 				// console.log(this.openLineData);
 				this.chart.setOption({
@@ -537,6 +549,11 @@ export default {
 		this.onDrawLines();
 		this.updateLinesCycle();
 	},
+	// watch: {
+	// 	highRiskLines: function() {
+	// 		console.log(this.highRiskLines);
+	// 	}
+	// },
 	// computed: {
 	// 	...mapGetters({
 	// 		updateBadge: 'getBadge'
