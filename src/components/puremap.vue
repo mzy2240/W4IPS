@@ -47,7 +47,7 @@
 					<v-layout row wrap>
 						<v-flex lg12 sm12 xs12>
 							<v-widget title="Area Generation Overview" content-bg="white">
-								<div slot="widget-content" style="height:300px;">
+								<div slot="widget-content">
 									<pie :areatotal="areaData[0]"></pie>
 									<!-- <v-card dark color="light-blue">
 
@@ -95,7 +95,7 @@ import 'echarts-leaflet';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
 import VWidget from '@/components/VWidget';
-import MiniStatistic from '@/components/MiniStatistic';
+import MiniStatistic from '@/components/MiniStat';
 import pie from '@/components/pie';
 // import _ from 'lodash';
 // mapboxgl.accessToken =

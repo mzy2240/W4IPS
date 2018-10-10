@@ -40,6 +40,18 @@ styleDash {
 }
 </style>
 
+<style scoped lang="css">
+/* #login {
+	height: 50%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: '';
+	z-index: 0;
+} */
+</style>
+
 <script>
 import Spinner from 'vue-spinkit';
 const dashboard = import('../components/Dashboard');
@@ -85,14 +97,4 @@ export default {
 	}
 };
 </script>
-<style scoped lang="css">
-#login {
-	height: 50%;
-	width: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	content: '';
-	z-index: 0;
-}
-</style>
+

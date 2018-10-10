@@ -3,10 +3,14 @@
 </template>
 <style>
 .chartdiv {
-	/* z-index: 0; */
-	height: 100%;
+	z-index: 0;
+	height: 300px;
 	width: 100%;
 }
+/* .echarts {
+	width: 100%;
+    height: 300px;
+} */
 </style>
 
 <script>
@@ -52,7 +56,7 @@ export default {
 					{
 						id: 'pie',
 						type: 'pie',
-						radius: '65%',
+						// radius: '65%',
 						center: ['50%', '50%'],
 						radius: ['30%', '60%'],
 						selectedMode: 'single',
@@ -158,11 +162,19 @@ export default {
 			} catch (e) {
 				console.log(e);
 			}
+		},
+		resizeChart() {
+			window.onresize = () => {
+				if(this.chart) {
+					this.chart.resize();
+				}
+			}
 		}
 	},
 	mounted() {
 		this.initdraw();
 		this.preProcess();
+		this.resizeChart();
 		setInterval(() => {
 			this.updateData();
 		}, 1000);
