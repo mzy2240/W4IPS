@@ -18,14 +18,15 @@ import iziToast from 'izitoast';
 // import linepop from './linepop';
 // import subpop from './subpop';
 // import { Notification } from 'element-ui';
-import Vue from 'vue'
-import VueNativeNotification from 'vue-native-notification'
+// import Vue from 'vue'
+// import VueNativeNotification from 'vue-native-notification'
 
-Vue.use(VueNativeNotification, {
-  // Automatic permission request before
-  // showing notification (default: true)
-  requestOnNotify: true
-})
+// Vue.use(VueNativeNotification, {
+//   // Automatic permission request before
+//   // showing notification (default: true)
+//   requestOnNotify: true
+// })
+import Push from 'push.js';
 
 export default {
 	name: 'MqttClient',
@@ -258,13 +259,56 @@ export default {
 						]
 					]
 				});
-				this.$notification.show(
-					'System',
-					{
-						body: this.usermessage
-					},
-					{}
-				);
+				Push.create('System', {
+					body: this.usermessage,
+					icon: require('../assets/logo.png'),
+					timeout: 6000,
+					onClick: function() {
+						window.focus();
+						this.close();
+						if (self.usermessage.includes('Branch')) {
+							self.id = temp[1];
+							self.name = temp[2];
+							self.type = 'Branch';
+							self.lineshowDialog = true;
+						} else if (
+							self.usermessage.includes('Load') ||
+							self.usermessage.includes('Gen') ||
+							self.usermessage.includes('Shunt')
+						) {
+							const busid = temp[1].split(',')[0];
+							self.name = temp[2].split('Bus')[0];
+							self.type = 'Substation';
+							var found;
+							// Base on the bus id, find the substation
+							for (let subidx in self.$store.state.subDetail) {
+								found = self.$store.state.subDetail[subidx].Bus.find(function(
+									ele
+								) {
+									if (ele['Int.Bus Number'] == busid) {
+										self.id = subidx;
+										self.children = self.$store.state.subDetail[subidx].Bus;
+										return true;
+									}
+								});
+								if (found) {
+									self.subshowDialog = true;
+									break;
+								}
+							}
+							// self.children = [self.$store.state.busDetail[+self.id]];
+							// Show the substation dialog
+							// self.subshowDialog = true
+						}
+					}
+				});
+				// this.$notification.show(
+				// 	'System',
+				// 	{
+				// 		body: this.usermessage
+				// 	},
+				// 	{}
+				// );
 				this.$store.commit('updatebadge');
 				this.$store.commit('updatebadgelist', {
 					title: this.usermessage,
