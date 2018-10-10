@@ -2,9 +2,9 @@
 
 <template>
 	<v-app class='app'>
-		<!-- <Login></Login> -->
-		<Spinner v-if="loading" name="pacman" color="#2243a5" class="loading" />
-		<dashboard v-bind:style="styleDashboard"></dashboard>
+		<Login></Login>
+		<!-- <Spinner v-if="loading" name="pacman" color="#2243a5" class="loading" />
+		<dashboard v-bind:style="styleDashboard"></dashboard> -->
 	</v-app>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<v-app v-if="showDash" class="app">
-			<dashboard></dashboard>
+			<dashboard v-if="showDash"></dashboard>
 		</v-app>
 		<!-- <v-app class="app"></v-app> -->
 		<v-app v-else id="login" class="primary">

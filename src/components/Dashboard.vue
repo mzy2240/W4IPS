@@ -91,7 +91,7 @@
 
 			<!-- <router-view/> -->
 		</v-content>
-		<MqttClient style="font-size: 12px"></MqttClient>
+		<MqttClient></MqttClient>
 		<chatpop v-if="dialog" :visible="dialog" @close="dialog=false"></chatpop>
 	</div>
 </template>

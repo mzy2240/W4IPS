@@ -140,6 +140,9 @@ export default {
 	methods: {
 		onInitClient() {
 			this.onGetUUID();
+			if(!this.clientid) {
+				this.clientid = this.$store.state.username;
+			}
 			this.client = mqtt.connect(this.protocol + '://' + this.address, {
 				clientId: this.clientid,
 				username: this.username,
