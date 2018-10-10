@@ -221,6 +221,7 @@ export default {
 						// zindex: 2,
 						data: [],
 						tooltip: {
+							confine: true,
 							formatter: function(params) {
 								return 'Substation: ' + params.name;
 							}
@@ -250,10 +251,26 @@ export default {
 						// polyline: true,
 						lineStyle: {
 							width: 1,
-							color: 'rgb(200, 40, 0)',
+							// color: 'rgb(200, 40, 0)',
+							color: function(params) {
+								let temp;
+								// console.log(params.data.attributes.volt)
+								switch(params.data.attributes.volt) {
+									case 230:
+										temp = '#3949ab';
+										break;
+									case 500:
+										temp = '#e53935';
+										break;
+								}
+								// console.log(params.data.attributes.volt);
+								return temp;
+							},
 							opacity: 1
 						},
 						tooltip: {
+							// position: [10, 10],
+							confine: true,
 							formatter: function(params) {
 								return 'Branch: ' + params.name;
 							}
