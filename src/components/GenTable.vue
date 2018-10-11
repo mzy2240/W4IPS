@@ -1,42 +1,57 @@
 <template>
-	<div>
-		<v-data-table :headers="headers" :items="gens" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
-			<template slot="items" slot-scope="props">
-				<tr @click="props.expanded = !props.expanded">
-					<td class="text-xs-left">{{ props.item.name }}</td>
-					<td class="text-xs-left">{{ props.item.Status }}</td>
-					<td class="text-xs-right">{{ props.item.MW }}</td>
-					<td class="text-xs-right">{{ props.item.Mvar }}</td>
-					<td class="text-xs-right">
-						<v-edit-dialog :return-value.sync="props.item.MWSetpoint" large lazy @save="savemws(props.item)" @open="openmws(props.item)">
-							<div>{{ props.item.MWSetpoint }}</div>
-							<div slot="input" class="mt-3 title">Update MW Setpoint</div>
-							<v-text-field slot="input" v-model="mws" label="Edit" single-line autofocus></v-text-field>
-						</v-edit-dialog>
-					</td>
-					<td class="text-xs-right">
-						<v-edit-dialog :return-value.sync="props.item.VpuSetpoint" large lazy @save="savevps(props.item)" @open="openvps(props.item)">
-							<div>{{ props.item.VpuSetpoint }}</div>
-							<div slot="input" class="mt-3 title">Update Vpu Setpoint</div>
-							<v-text-field slot="input" v-model="vps" label="Edit" single-line autofocus></v-text-field>
-						</v-edit-dialog>
-					</td>
-					<td class="text-xs-right">{{ props.item.MWMax }}</td>
-					<td class="text-xs-right">{{ props.item.MWMin }}</td>
-					<td class="justify-center layout px-0">
-						<div class="my-2">
-							<v-switch v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
-						</div>
-					</td>
-				</tr>
-			</template>
-			<!-- <template slot="expand" slot-scope="props">
+	<v-card>
+		<v-toolbar card dense color="transparent">
+			<v-toolbar-title>
+				<h4> {{title}} </h4>
+			</v-toolbar-title>
+			<v-spacer></v-spacer>
+			<v-btn icon>
+				<v-icon>more_vert</v-icon>
+			</v-btn>
+		</v-toolbar>
+		<v-divider></v-divider>
+		<v-card-text class="pa-0">
+			<template>
+				<v-data-table :headers="headers" :items="gens" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
+					<template slot="items" slot-scope="props">
+						<tr @click="props.expanded = !props.expanded">
+							<td class="text-xs-left">{{ props.item.name }}</td>
+							<td class="text-xs-left">{{ props.item.Status }}</td>
+							<td class="text-xs-right">{{ props.item.MW }}</td>
+							<td class="text-xs-right">{{ props.item.Mvar }}</td>
+							<td class="text-xs-right">
+								<v-edit-dialog :return-value.sync="props.item.MWSetpoint" large lazy @save="savemws(props.item)" @open="openmws(props.item)">
+									<div>{{ props.item.MWSetpoint }}</div>
+									<div slot="input" class="mt-3 title">Update MW Setpoint</div>
+									<v-text-field slot="input" v-model="mws" label="Edit" single-line autofocus></v-text-field>
+								</v-edit-dialog>
+							</td>
+							<td class="text-xs-right">
+								<v-edit-dialog :return-value.sync="props.item.VpuSetpoint" large lazy @save="savevps(props.item)" @open="openvps(props.item)">
+									<div>{{ props.item.VpuSetpoint }}</div>
+									<div slot="input" class="mt-3 title">Update Vpu Setpoint</div>
+									<v-text-field slot="input" v-model="vps" label="Edit" single-line autofocus></v-text-field>
+								</v-edit-dialog>
+							</td>
+							<td class="text-xs-right">{{ props.item.MWMax }}</td>
+							<td class="text-xs-right">{{ props.item.MWMin }}</td>
+							<td class="justify-center layout px-0">
+								<div class="my-2">
+									<v-switch v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
+								</div>
+							</td>
+						</tr>
+					</template>
+					<!-- <template slot="expand" slot-scope="props">
 				<v-card flat>
 					<v-card-text>Peek-a-boo!</v-card-text>
 				</v-card>
 			</template> -->
-		</v-data-table>
-	</div>
+				</v-data-table>
+			</template>
+			<v-divider></v-divider>
+		</v-card-text>
+	</v-card>
 </template>
 
 <style>
@@ -56,6 +71,9 @@ table.v-table thead th:not(:first-child) {
 import { mapGetters } from 'vuex';
 
 export default {
+	props: {
+		title: String
+	},
 	data() {
 		return {
 			headers: [

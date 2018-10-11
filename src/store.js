@@ -35,7 +35,8 @@ export default new Vuex.Store({
 				temp += casedetail.content.Gen[ele]["Single.MW Max Limit"]
 			}
 			return temp;
-		})()
+		})(),
+		violatedLines: []
 	},
 	getters: {
 		getPubStatus(state) {
@@ -60,7 +61,10 @@ export default new Vuex.Store({
 			return state.page;
 		},
 		getBadge(state) {
-			return state.badge
+			return state.badge;
+		},
+		getViolatedLines(state) {
+			return state.violatedLines;
 		}
 	},
 	mutations: {
@@ -122,6 +126,12 @@ export default new Vuex.Store({
 		},
 		updateBusDetail(state, payload) {
 			state.busDetail = payload;
+		},
+		addLine(state, payload) {
+			state.violatedLines.push(payload)
+		},
+		removeLine(state, payload) {
+			state.violatedLines.pop(payload)
 		}
 	},
 	actions: {

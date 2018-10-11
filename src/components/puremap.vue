@@ -57,13 +57,7 @@
 							</v-widget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<v-widget title="Tool2" content-bg="white">
-								<div slot="widget-content" class='cardiv'>
-									<v-card dark color="light-blue">
-										<v-card-text class="px-0">Tool2</v-card-text>
-									</v-card>
-								</div>
-							</v-widget>
+							<branchTable title="High-load Branches" :data="formatRiskLines"></branchTable>
 						</v-flex>
 					</v-layout>
 				</v-flex>
@@ -97,6 +91,7 @@ import { mapGetters } from 'vuex';
 import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/MiniStat';
 import pie from '@/components/pie';
+import branchTable from '@/components/RiskBranchTable';
 // import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
@@ -130,7 +125,8 @@ export default {
 			branchToOpenBranch: {},
 			areaData: [],
 			areaDataLength: this.$store.state.fieldstore['Area'].length,
-			highRiskLines: {}
+			highRiskLines: {},
+			formatRiskLines: []
 		};
 	},
 	methods: {
@@ -313,6 +309,26 @@ export default {
 							}
 						},
 						data: []
+					},
+					{
+						id: 'violatedLines',
+						name: 'violatedLines',
+						type: 'lines',
+						coordinateSystem: 'leaflet',
+						silent: false,
+						zlevel: 10,
+						z: 10,
+						symbol: 'triangle',
+						symbolSize: 20,
+						lineStyle: {
+							width: 10,
+							color: '#b2ff59',
+							// type: 'dotted',
+							shadowColor: '#ccff90',
+							shadowBlur: 10,
+							opacity: 1
+						},
+						data: []
 					}
 				]
 			});
@@ -466,9 +482,11 @@ export default {
 			let statusTemp = [];
 			let branchChanged = false;
 			let i = 0;
-			for (let [key, val] of Object.entries(
-				this.$store.state.casedetail.content.Branch
-			)) {
+			var key;
+			// for (let [key, val] of Object.entries(
+			// 	this.$store.state.casedetail.content.Branch
+			// )) {
+			for (let index in this.linedata) {
 				statusTemp.push(branchData[i]);
 				branchIndex = i / this.branchArrLength;
 				if (
@@ -486,14 +504,41 @@ export default {
 					this.updateLineClose(branchIndex);
 					branchChanged = true;
 				}
-				if(branchData[i+3] >= 0.9*val["Single.MVA Limit"]) {
-					this.highRiskLines[key] = val;
-					this.highRiskLines[key]["MVA"] = branchData[i+3];
+				key = this.linedata[index].id;
+				// console.log(key);
+				if (
+					branchData[i + 3] >=
+					0.85 * this.linedata[index].attributes.MVALimit
+				) {
+					// this.highRiskLines[key] = val;
+					this.highRiskLines[key] = {};
+					this.highRiskLines[key]['name'] = key;
+					this.highRiskLines[key]['MVA'] = branchData[i + 3];
+					this.highRiskLines[key]['Ratio'] = (
+						(branchData[i + 3] / this.linedata[index].attributes.MVALimit) *
+						100
+					).toFixed(2);
+					this.highRiskLines[key]['MVALimit'] = this.linedata[
+						index
+					].attributes.MVALimit;
+					this.highRiskLines[key]['coords'] = this.linedata[index].coords;
 				} else if (key in this.highRiskLines) {
-					delete this.highRiskLines[key]
+					delete this.highRiskLines[key];
 				}
+				// if (branchData[i + 3] >= 0.85 * val['Single.MVA Limit']) {
+				// 	this.highRiskLines[key] = val;
+				// 	this.highRiskLines[key]['name'] = key;
+				// 	this.highRiskLines[key]['MVA'] = branchData[i + 3];
+				// 	this.highRiskLines[key]['Ratio'] =
+				// 		((branchData[i + 3] / val['Single.MVA Limit']) * 100)
+				// 			.toFixed(2);
+				// } else if (key in this.highRiskLines) {
+				// 	delete this.highRiskLines[key];
+				// }
 				i += this.branchArrLength;
 			}
+			this.formatRiskLines = Object.values(this.highRiskLines);
+			// console.log(this.formatRiskLines);
 			// console.log(this.highRiskLines);
 			if (branchChanged) {
 				// console.log(this.openLineData);
@@ -554,24 +599,26 @@ export default {
 	// 		console.log(this.highRiskLines);
 	// 	}
 	// },
-	// computed: {
-	// 	...mapGetters({
-	// 		updateBadge: 'getBadge'
-	// 	})
-	// },
-	// watch: {
-	// 	updateBadge: function() {
-	// 		setTimeout(() => {
-	// 			this.updateLines();
-	// 		}, 1000);
-	// 	}
-	// },
+	computed: {
+		...mapGetters({
+			ViolatedLines: 'getViolatedLines'
+		})
+	},
+	watch: {
+		ViolatedLines: function() {
+			// console.log(this.$store.state.violatedLines);
+			let temp = this.chart.getOption();
+			temp.series[3].data = this.$store.state.violatedLines;
+			this.chart.setOption(temp);
+		}
+	},
 	components: {
 		linepop: () => import('./linepop'),
 		subpop: () => import('./subpop'),
 		VWidget,
 		MiniStatistic,
-		pie
+		pie,
+		branchTable
 	}
 };
 </script>

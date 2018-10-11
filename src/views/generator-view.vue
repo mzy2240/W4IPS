@@ -13,11 +13,11 @@
 		<v-container grid-list-xl text-xs-center fluid>
 			<v-layout row wrap>
 				<v-flex lg8 sm12 xs12>
-					<v-widget title="Realtime Data" content-bg="white">
-						<div slot="widget-content">
-							<gentable></gentable>
-						</div>
-					</v-widget>
+					<!-- <v-widget title="Realtime Data" content-bg="white">
+						<div slot="widget-content"> -->
+							<gentable title="Realtime Data"></gentable>
+						<!-- </div>
+					</v-widget> -->
 				</v-flex>
 				<v-flex lg4 sm12 xs12>
 					<v-layout row wrap>
