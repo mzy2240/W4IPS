@@ -57,7 +57,7 @@
 							</v-widget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<branchTable title="High-load Branches" :data="formatRiskLines"></branchTable>
+							<branchTable title="High-load Branches (with hover indicator)" :data="formatRiskLines"></branchTable>
 						</v-flex>
 					</v-layout>
 				</v-flex>
@@ -322,10 +322,10 @@ export default {
 						symbolSize: 20,
 						lineStyle: {
 							width: 10,
-							color: '#b2ff59',
+							color: '#bef67a',
 							// type: 'dotted',
 							shadowColor: '#ccff90',
-							shadowBlur: 10,
+							shadowBlur: 20,
 							opacity: 1
 						},
 						data: []

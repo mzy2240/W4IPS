@@ -23,6 +23,13 @@
 							<td class="text-xs-right">{{ props.item.MVALimit }}</td>
 						</tr>
 					</template>
+					<template slot="no-data">
+						<v-card dark color="success">
+							<v-card-text>
+								Currently no violating branches!
+							</v-card-text>
+						</v-card>
+					</template>
 				</v-data-table>
 			</template>
 			<v-divider></v-divider>
@@ -80,29 +87,27 @@ export default {
 	methods: {
 		getColorByRatio(ratio) {
 			var temp;
-			if(ratio > 100) {
+			if (ratio > 100) {
 				temp = 'red';
 			} else if (ratio > 90) {
 				temp = 'orange';
 			} else if (ratio > 80) {
-				temp = 'yellow'
+				temp = 'yellow';
 			}
 			return temp;
 		},
 		onMapInteraction(item) {
-			const temp = {name: item.name, coords: item.coords};
+			const temp = { name: item.name, coords: item.coords };
 			this.$store.commit('addLine', temp);
 		},
 		offMapInteraction(item) {
-			const temp = {name: item.name, coords: item.coords};
+			const temp = { name: item.name, coords: item.coords };
 			this.$store.commit('removeLine', item);
 		}
 	},
 	created() {
 		// this.initTable();
 	},
-	mounted() {
-
-	}
+	mounted() {}
 };
 </script>
