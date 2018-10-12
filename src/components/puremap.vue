@@ -95,8 +95,6 @@ import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/MiniStat';
 import pie from '@/components/pie';
 import branchTable from '@/components/RiskBranchTable';
-import 'vue-status-indicator/styles.css'
-import { StatusIndicator } from 'vue-status-indicator'
 // import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
@@ -632,8 +630,7 @@ export default {
 		VWidget,
 		MiniStatistic,
 		pie,
-		branchTable,
-		StatusIndicator
+		branchTable
 	}
 };
 </script>

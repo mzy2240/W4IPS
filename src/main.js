@@ -11,6 +11,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'izitoast/dist/css/iziToast.css';
 import './assets/default.styl';
+import 'vue-status-indicator/styles.css'
+import StatusIndicator from 'vue-status-indicator'
 
 Vue.use(ElementUI);
 Vue.use(Vuetify, {
@@ -32,6 +34,7 @@ Vue.use(Vuetify, {
 		}
 	}
 });
+Vue.use(StatusIndicator);
 
 // Vue.component('chart', ECharts);
 Vue.config.productionTip = false;

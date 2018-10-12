@@ -9,6 +9,13 @@
 					<v-icon larg>mdi-currency-usd</v-icon>
 				</v-breadcrumbs-item>
 			</v-breadcrumbs>
+			<v-spacer></v-spacer>
+			<div class="page-header-right">
+				<h4 class="pr-1">
+					Hi {{$store.state.username}}  
+					<status-indicator :negative="$store.state.alarm" :positive="!$store.state.alarm" pulse></status-indicator>
+				</h4>
+			</div>
 		</v-layout>
 		<v-container grid-list-xl text-xs-center fluid>
 			<v-layout row wrap>
