@@ -12,9 +12,22 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="shunts" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
+				<v-data-table :headers="headers" :items="shunts" :rows-per-page-items="defaultRowItems" v-model="selected" select-all disable-initial-sort item-key="name">
+					<template slot="headerCell" slot-scope="props">
+						<v-tooltip bottom>
+							<span slot="activator">
+								{{ props.header.text }}
+							</span>
+							<span>
+								{{ props.header.text }}
+							</span>
+						</v-tooltip>
+					</template>
 					<template slot="items" slot-scope="props">
-						<tr @click="props.expanded = !props.expanded">
+						<tr :active="props.selected">
+							<td>
+								<v-checkbox v-model="props.selected" primary hide-details @click="props.selected = !props.selected"></v-checkbox>
+							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-left">{{ props.item.Status }}</td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
@@ -81,6 +94,7 @@ export default {
 				{ text: 'Actions', value: 'Actions', sortable: false }
 			],
 			shunts: [],
+			selected: [],
 			anchor: 0,
 			shuntDataLength: 0,
 			defaultRowItems: [
@@ -110,9 +124,11 @@ export default {
 		},
 		initTable() {
 			let temp = [];
+			let subID;
 			for (let i in this.$store.state.casedetail.content.Shunt) {
+				subID = this.$store.state.casedetail.content.Bus[i]["Int.Sub Number"];
 				temp.push({
-					value: false,
+					value: [this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Longitude"], this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Latitude"]],
 					name: i,
 					Status: 1,
 					Mvar: 0,
@@ -171,6 +187,11 @@ export default {
 	},
 	mounted() {
 		this.initTable().then(() => this.updateTable());
+	},
+	watch: {
+		selected: function(newval, oldval) {
+			this.$store.commit('updateSelectedShunts', newval);
+		}
 	}
 };
 </script>

@@ -12,9 +12,22 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="data" hide-actions item-key="name">
+				<v-data-table :headers="headers" :items="data" v-model="selected" select-all hide-actions item-key="name">
+					<template slot="headerCell" slot-scope="props">
+						<v-tooltip bottom>
+							<span slot="activator">
+								{{ props.header.text }}
+							</span>
+							<span>
+								{{ props.header.text }}
+							</span>
+						</v-tooltip>
+					</template>
 					<template slot="items" slot-scope="props">
-						<tr @click="props.expanded = !props.expanded" @mouseover="onMapInteraction(props.item)" @mouseout="offMapInteraction(props.item)">
+						<tr :active="props.selected" @click="props.selected = !props.selected">
+							<td>
+								<v-checkbox v-model="props.selected" primary hide-details></v-checkbox>
+							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-right">
 								<v-chip label small :color="getColorByRatio(props.item.Ratio)" text-color="white">{{ props.item.Ratio }}</v-chip>
@@ -76,6 +89,7 @@ export default {
 			],
 			branches: [],
 			anchor: 0,
+			selected: [],
 			shuntDataLength: 0,
 			defaultRowItems: [
 				15,
@@ -108,6 +122,11 @@ export default {
 	created() {
 		// this.initTable();
 	},
-	mounted() {}
+	mounted() {},
+	watch: {
+		selected: function(newval, oldval) {
+			this.$store.commit('updateSelectedBranches', newval);
+		}
+	}
 };
 </script>

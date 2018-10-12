@@ -11,10 +11,6 @@
 			<v-divider v-if="enableHeader"></v-divider>
 			<slot name="widget-content"></slot>
 			<div id="map" class="chart"></div>
-			<!-- <v-card-text :class="contentBg">
-        <slot name="widget-content"></slot>
-		<div id="map" class="chart"></div>
-      </v-card-text> -->
 		</v-card>
 	</div>
 </template>
@@ -155,6 +151,15 @@ export default {
 						itemStyle: {
 							color: '#ff6d00'
 						},
+						label: {
+							show: true,
+							position: 'top',
+							color: 'black',
+							// fontWeight: 'bold',
+							formatter: function(params) {
+								return 'Bus#' + params.name;
+							}
+						},
 						data: []
 					},
 					{
@@ -163,11 +168,20 @@ export default {
 						type: 'scatter',
 						coordinateSystem: 'leaflet',
 						silent: false,
-						symbol: 'rect',
+						symbol: 'pin',
 						symbolSize: 50,
-						zindex: 3,
+						zindex: 2,
 						itemStyle: {
 							color: '#4caf50'
+						},
+						label: {
+							show: true,
+							position: 'top',
+							color: 'black',
+							// fontWeight: 'bold',
+							formatter: function(params) {
+								return 'Shunt#' + params.name;
+							}
 						},
 						data: []
 					}
@@ -273,14 +287,19 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			ViolatedBuses: 'getViolatedBuses'
+			ViolatedBuses: 'getViolatedBuses',
+			SelectedShunts: 'getSelectedShunts'
 		})
 	},
 	watch: {
 		ViolatedBuses: function() {
-			// console.log(this.$store.state.violatedBuses);
 			let temp = this.chart.getOption();
 			temp.series[2].data = this.$store.state.violatedBuses;
+			this.chart.setOption(temp);
+		},
+		SelectedShunts: function() {
+			let temp = this.chart.getOption();
+			temp.series[3].data = this.$store.state.selectedShunts;
 			this.chart.setOption(temp);
 		}
 	},

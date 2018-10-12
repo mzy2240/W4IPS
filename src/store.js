@@ -37,7 +37,8 @@ export default new Vuex.Store({
 			return temp;
 		})(),
 		violatedLines: [],
-		violatedBuses: []
+		violatedBuses: [],
+		selectedShunts: []
 	},
 	getters: {
 		getPubStatus(state) {
@@ -69,6 +70,9 @@ export default new Vuex.Store({
 		},
 		getViolatedBuses(state) {
 			return state.violatedBuses;
+		},
+		getSelectedShunts(state) {
+			return state.selectedShunts;
 		}
 	},
 	mutations: {
@@ -137,8 +141,14 @@ export default new Vuex.Store({
 		removeLine(state, payload) {
 			state.violatedLines.pop(payload)
 		},
+		updateSelectedBranches(state, payload) {
+			state.violatedLines = payload;
+		},
 		updateVBuses(state, payload) {
 			state.violatedBuses = payload
+		},
+		updateSelectedShunts(state, payload) {
+			state.selectedShunts = payload
 		}
 	},
 	actions: {
