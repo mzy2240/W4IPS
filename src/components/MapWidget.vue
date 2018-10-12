@@ -87,6 +87,7 @@ export default {
 						symbolSize: 7,
 						// showEffectOn: 'emphasis',
 						// zindex: 2,
+						zlevel: 3,
 						data: [],
 						tooltip: {
 							confine: true,
@@ -137,6 +138,7 @@ export default {
 								shadowBlur: 10
 							}
 						},
+						zlevel: 3,
 						data: []
 					},
 					{
@@ -147,7 +149,7 @@ export default {
 						silent: false,
 						symbol: 'pin',
 						symbolSize: 50,
-						zindex: 2,
+						zlevel: 1,
 						itemStyle: {
 							color: '#ff6d00'
 						},
@@ -170,7 +172,7 @@ export default {
 						silent: false,
 						symbol: 'pin',
 						symbolSize: 50,
-						zindex: 2,
+						zlevel: 2,
 						itemStyle: {
 							color: '#4caf50'
 						},
@@ -296,8 +298,18 @@ export default {
 			let temp = this.chart.getOption();
 			temp.series[2].data = this.$store.state.violatedBuses;
 			this.chart.setOption(temp);
+			// this.chart.setOption({series: [{
+			// 	id: 'vbus',
+			// 	name: 'vbus',
+			// 	data: this.$store.state.violatedBuses
+			// }]})
 		},
 		SelectedShunts: function() {
+			// this.chart.setOption({series: [{
+			// 	id: 'shunt',
+			// 	name: 'shunt',
+			// 	data: this.$store.state.selectedShunts
+			// }]})
 			let temp = this.chart.getOption();
 			temp.series[3].data = this.$store.state.selectedShunts;
 			this.chart.setOption(temp);
