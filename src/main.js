@@ -6,7 +6,7 @@ import Vuetify from 'vuetify';
 import './registerServiceWorker';
 import 'vuetify/dist/vuetify.min.css';
 import '@mdi/font/css/materialdesignicons.css';
-import ECharts from 'vue-echarts';
+// import ECharts from 'vue-echarts';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'izitoast/dist/css/iziToast.css';
@@ -33,9 +33,9 @@ Vue.use(Vuetify, {
 	}
 });
 
-Vue.component('chart', ECharts);
+// Vue.component('chart', ECharts);
 Vue.config.productionTip = false;
-require('echarts/extension/bmap/bmap');
+//require('echarts/extension/bmap/bmap');
 
 new Vue({
 	router,

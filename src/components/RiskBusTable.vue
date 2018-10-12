@@ -12,9 +12,22 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="formatRiskBuses" hide-actions item-key="name">
+				<v-data-table :headers="headers" :items="formatRiskBuses" v-model="selected" hide-actions select-all item-key="name">
+					<template slot="headerCell" slot-scope="props">
+						<v-tooltip bottom>
+							<span slot="activator">
+								{{ props.header.text }}
+							</span>
+							<span>
+								{{ props.header.text }}
+							</span>
+						</v-tooltip>
+					</template>
 					<template slot="items" slot-scope="props">
-						<tr @click="props.expanded = !props.expanded" @mouseover="onMapInteraction(props.item)" @mouseout="offMapInteraction(props.item)">
+						<tr :active="props.selected" @click="props.selected = !props.selected">
+							<td>
+								<v-checkbox v-model="props.selected" primary hide-details></v-checkbox>
+							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-right">
 								<v-chip label small :color="getColorByValue(props.item.Vpu)" text-color="white">{{ props.item.Vpu }}</v-chip>
@@ -80,6 +93,7 @@ export default {
 			dataLength: 0,
 			arrLength: 0,
 			violateBuses: [],
+			selected: [],
 			defaultRowItems: [
 				15,
 				30,
@@ -152,13 +166,9 @@ export default {
 			}
 			return temp;
 		},
-		onMapInteraction(item) {
-			const temp = { name: item.name, value: item.value };
-			// this.$store.commit('addLine', temp);
-		},
-		offMapInteraction(item) {
-			const temp = { name: item.name, value: item.value };
-			// this.$store.commit('removeLine', item);
+		toggleAll() {
+			if (this.selected.length) this.selected = [];
+			else this.selected = this.desserts.slice();
 		}
 	},
 	created() {
@@ -169,6 +179,12 @@ export default {
 		setInterval(() => {
 			this.onMonitor();
 		}, 1000);
+	},
+	watch: {
+		selected: function(newval,oldval) {
+			// console.log(newval);
+			this.$store.commit('updateVBuses', newval);
+		}
 	}
 };
 </script>

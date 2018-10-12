@@ -166,7 +166,7 @@ export default {
 				// },
 				// Leaflet
 				leaflet: {
-					center: [-86.84, 36.44],
+					center: [-86.0, 36.44],
 					zoom: 8,
 					roam: true,
 					tiles: [

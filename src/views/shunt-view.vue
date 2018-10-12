@@ -25,13 +25,14 @@
 							<bustable title="Violating Buses"></bustable>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<v-widget title="Tool2" content-bg="white">
+							<MapWidget title="Location Assist"></MapWidget>
+							<!-- <v-widget title="Tool2" content-bg="white">
 								<div slot="widget-content" class='cardiv'>
 									<v-card dark color="light-blue">
 										<v-card-text class="px-0">Tool2</v-card-text>
 									</v-card>
 								</div>
-							</v-widget>
+							</v-widget> -->
 						</v-flex>
 					</v-layout>
 				</v-flex>
@@ -53,13 +54,15 @@
 import shunttable from '@/components/ShuntTable';
 import bustable from '@/components/RiskBusTable';
 import VWidget from '@/components/VWidget';
+import MapWidget from '@/components/MapWidget'
 
 export default {
 	name: 'generator',
 	components: {
 		shunttable,
 		VWidget,
-		bustable
+		bustable,
+		MapWidget
 	}
 };
 </script>

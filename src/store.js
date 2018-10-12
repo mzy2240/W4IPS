@@ -36,7 +36,8 @@ export default new Vuex.Store({
 			}
 			return temp;
 		})(),
-		violatedLines: []
+		violatedLines: [],
+		violatedBuses: []
 	},
 	getters: {
 		getPubStatus(state) {
@@ -65,6 +66,9 @@ export default new Vuex.Store({
 		},
 		getViolatedLines(state) {
 			return state.violatedLines;
+		},
+		getViolatedBuses(state) {
+			return state.violatedBuses;
 		}
 	},
 	mutations: {
@@ -132,6 +136,9 @@ export default new Vuex.Store({
 		},
 		removeLine(state, payload) {
 			state.violatedLines.pop(payload)
+		},
+		updateVBuses(state, payload) {
+			state.violatedBuses = payload
 		}
 	},
 	actions: {
