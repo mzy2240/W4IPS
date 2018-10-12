@@ -38,7 +38,8 @@ export default new Vuex.Store({
 		})(),
 		violatedLines: [],
 		violatedBuses: [],
-		selectedShunts: []
+		selectedShunts: [],
+		alarm: []
 	},
 	getters: {
 		getPubStatus(state) {
@@ -149,6 +150,16 @@ export default new Vuex.Store({
 		},
 		updateSelectedShunts(state, payload) {
 			state.selectedShunts = payload
+		},
+		triggerAlarm(state, payload) {
+			if(!(payload in state.alarm)) {
+				state.alarm.push(payload);
+			}
+		},
+		dismissAlarm(state, payload) {
+			if(payload in state.alarm) {
+				state.alarm.pop(payload);
+			}
 		}
 	},
 	actions: {

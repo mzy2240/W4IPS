@@ -184,6 +184,13 @@ export default {
 		selected: function(newval,oldval) {
 			// console.log(newval);
 			this.$store.commit('updateVBuses', newval);
+		},
+		data: function(newval, oldval) {
+			if (this.data.length>0) {
+				this.$store.commit('triggerAlarm', 'Bus')
+			} else {
+				this.$store.commit('dismissAlarm', 'Bus')
+			}
 		}
 	}
 };

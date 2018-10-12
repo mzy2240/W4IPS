@@ -12,7 +12,7 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="data" v-model="selected" select-all hide-actions item-key="name">
+				<v-data-table :headers="headers" :items="tabledata" v-model="selected" select-all hide-actions item-key="name">
 					<template slot="headerCell" slot-scope="props">
 						<v-tooltip bottom>
 							<span slot="activator">
@@ -71,7 +71,7 @@ table.v-table thead th:not(:first-child) {
 <script>
 export default {
 	props: {
-		data: Array,
+		tabledata: Array,
 		title: String
 	},
 	data() {
@@ -126,6 +126,13 @@ export default {
 	watch: {
 		selected: function(newval, oldval) {
 			this.$store.commit('updateSelectedBranches', newval);
+		},
+		tabledata: function(newval, oldval) {
+			if (this.tabledata.length>0) {
+				this.$store.commit('triggerAlarm', 'Branch')
+			} else {
+				this.$store.commit('dismissAlarm', 'Branch')
+			}
 		}
 	}
 };

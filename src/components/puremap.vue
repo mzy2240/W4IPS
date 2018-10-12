@@ -12,7 +12,10 @@
 			</v-breadcrumbs>
 			<v-spacer></v-spacer>
 			<div class="page-header-right">
-				<h4 class="pr-1">Hi {{$store.state.username}}</h4>
+				<h4 class="pr-1">
+					Hi {{$store.state.username}}  
+					<status-indicator :negative="$store.state.alarm" :positive="!$store.state.alarm" pulse></status-indicator>
+				</h4>
 			</div>
 		</v-layout>
 		<!-- <v-container grid-list-xs text-xs-center> -->
@@ -57,7 +60,7 @@
 							</v-widget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<branchTable title="High-load Branches" :data="formatRiskLines"></branchTable>
+							<branchTable title="High-load Branches" :tabledata="formatRiskLines"></branchTable>
 						</v-flex>
 					</v-layout>
 				</v-flex>
@@ -92,6 +95,8 @@ import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/MiniStat';
 import pie from '@/components/pie';
 import branchTable from '@/components/RiskBranchTable';
+import 'vue-status-indicator/styles.css'
+import { StatusIndicator } from 'vue-status-indicator'
 // import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
@@ -627,7 +632,8 @@ export default {
 		VWidget,
 		MiniStatistic,
 		pie,
-		branchTable
+		branchTable,
+		StatusIndicator
 	}
 };
 </script>
