@@ -41,7 +41,9 @@ export default new Vuex.Store({
 		selectedShunts: [],
 		alarm: [],
 		totalCost: 0,
-		genData: []
+		genData: [],
+		totalMWh: 0,
+		unitTimeCost: null
 	},
 	getters: {
 		getPubStatus(state) {
@@ -168,6 +170,12 @@ export default new Vuex.Store({
 		},
 		addCost(state, payload) {
 			state.totalCost = state.totalCost+payload;
+		},
+		addMWh(state, payload) {
+			state.totalMWh = state.totalMWh + payload;
+		},
+		updateUnitTimeCost(state, payload) {
+			state.unitTimeCost = payload;
 		}
 	},
 	actions: {

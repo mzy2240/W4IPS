@@ -2,7 +2,7 @@
 
 <template>
 	<div>
-		<v-navigation-drawer fixed mini-variant app clipped v-model="drawer">
+		<v-navigation-drawer fixed mini-variant app clipped dark mobile-break-point="300" v-model="drawer">
 			<v-toolbar flat class="transparent">
 				<v-list class="pa-0">
 					<v-list-tile avatar :key="'home'" @click="$store.commit('setpage', 'Home')">
@@ -62,7 +62,7 @@
 				</v-list>
 			</v-toolbar>
 		</v-navigation-drawer>
-		<v-toolbar color="blue darken-3" dark app :clipped-left="$vuetify.breakpoint.mdAndUp" fixed>
+		<v-toolbar color="blue darken-3" dark app clipped-left fixed>
 			<v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
 			<v-toolbar-title class="white--text">
 				<button v-on:click="$store.commit('setpage','Home')">PowerWeb</button>

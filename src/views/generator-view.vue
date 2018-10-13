@@ -29,22 +29,10 @@
 				<v-flex lg4 sm12 xs12>
 					<v-layout row wrap>
 						<v-flex lg12 sm12 xs12>
-							<v-widget title="Tool1" content-bg="white">
-								<div slot="widget-content" class='cardiv'>
-									<v-card dark color="light-blue">
-										<v-card-text class="px-0">Tool1</v-card-text>
-									</v-card>
-								</div>
-							</v-widget>
+							<chartStatistic id="UTC" min=null max=null left="13%" title="Current Cost ($/h)" icon="attach_money" card-color="indigo" :chart-color="[color.indigo.lighten1]" :costData='$store.state.unitTimeCost' type="line"></chartStatistic>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<v-widget title="Tool2" content-bg="white">
-								<div slot="widget-content" class='cardiv'>
-									<v-card dark color="light-blue">
-										<v-card-text class="px-0">Tool2</v-card-text>
-									</v-card>
-								</div>
-							</v-widget>
+							<chartStatistic id="ATC" min=null max=null left="8%" :precision=1 title="Average Total Cost ($/MWh)" icon="attach_money" card-color="pink" :chart-color="[color.pink.darken1, 'rgba(255,255,255,0.3)']" :costData='+($store.state.totalCost/$store.state.totalMWh).toFixed(2)' type="line"></chartStatistic>
 						</v-flex>
 					</v-layout>
 				</v-flex>
@@ -73,15 +61,23 @@
 // import mapchart from '@/components/map';
 import gentable from '@/components/GenTable';
 import VWidget from '@/components/VWidget';
+import chartStatistic from '@/components/chartStatistic2';
+import Material from 'vuetify/es5/util/colors';
 
 export default {
 	name: 'generator',
+	data(){
+		return {
+			color: Material
+		}
+	},
 	components: {
 		// HelloWorld,
 		// ApiClient,
 		// mapchart,
 		gentable,
-		VWidget
+		VWidget,
+		chartStatistic
 	}
 };
 </script>

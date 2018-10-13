@@ -49,7 +49,7 @@
 				<v-flex lg4 sm12 xs12>
 					<v-layout row wrap>
 						<v-flex lg12 sm12 xs12>
-							<chartStatistic title="Total Cost" icon="attach_money" card-color="indigo" :chart-color="[color.indigo.lighten1]" :costData='$store.state.totalCost.toFixed(2)' type="line"></chartStatistic>
+							<chartStatistic id="TC" min="dataMin" max="dataMax" title="Total Cost" icon="attach_money" card-color="indigo" :chart-color="[color.indigo.lighten1]" :costData='$store.state.totalCost.toFixed(2)' type="line"></chartStatistic>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
 							<v-widget title="Area Generation Overview" content-bg="white">

@@ -86,18 +86,26 @@ export default {
 		updateTotalCost() {
 			setInterval(() => {
 				let deltaCost = 0;
+				let deltaMWh = 0;
 				for (let i in this.gens) {
-					deltaCost += this.gens[i].MarginalCost*this.gens[i].MW / 120;
-				}
-                this.$store.commit('addCost', +deltaCost.toFixed(0));
-                // console.log(deltaCost.toFixed(2));
+					deltaCost +=
+						this.gens[i].MarginalCostCoefficients[0]*this.gens[i].MW*1+
+						this.gens[i].MarginalCostCoefficients[1]*this.gens[i].MW*this.gens[i].MW;
+					deltaMWh += this.gens[i].MW;
+                }
+                this.$store.commit('updateUnitTimeCost',+deltaCost.toFixed(0));
+				deltaCost = deltaCost / 120;
+                deltaMWh = deltaMWh*1/ 120;
+				this.$store.commit('addCost', +deltaCost.toFixed(0));
+				this.$store.commit('addMWh', +deltaMWh.toFixed(2));
+				// console.log(deltaCost.toFixed(2));
 			}, 500);
 		}
 	},
 	created() {
 		this.preProcess();
-        this.initData();
-        this.updateTotalCost();
+		this.initData();
+		this.updateTotalCost();
 	},
 	computed: {
 		...mapGetters({

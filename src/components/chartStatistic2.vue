@@ -25,8 +25,8 @@ export default {
 		costData: [Number, String],
 		caption: String,
 		value: Number,
-        color: String,
-        id: String,
+		color: String,
+		id: String,
 		gradient: {
 			type: Boolean,
 			default: false
@@ -35,52 +35,80 @@ export default {
 			type: String,
 			default: 'white'
 		},
-        chartColor: Array,
-        min: [String, null],
-        max: [String, null]
+		chartColor: Array,
+		min: [String, null],
+        max: [String, null],
+        left: String,
+        precision:{
+            default: 0,
+            type: Number
+        }
 	},
 	data() {
 		return {
 			chart: null,
-            dataSeries: []
+			dataSeries: [],
+			index: 0
 		};
 	},
 	computed: {
 		computeCardDark() {
 			return this.cardColor !== 'white';
-        },
-        dispData(){
-            return numeral(this.costData).format('0,0');
-        }
+		},
+		dispData() {
+			return numeral(this.costData).format('0,0');
+		}
 	},
 	methods: {
 		initChart() {
-			this.chart = echarts.init(document.getElementById(this.id));
+            this.chart = echarts.init(document.getElementById(this.id));
+            var self = this;
 			this.chart.setOption({
 				tooltip: {
 					trigger: 'axis',
 					formatter: function(params) {
-						return (params[0].name + ": " + params[0].value);
+						return params[0].name + ': ' + params[0].value[1];
 					},
 					axisPointer: {
 						animation: false
-                    },
-                    confine: true
+					},
+					confine: true
 				},
 				xAxis: {
 					show: false,
-                    min: this.min,
-                    max: this.max
+					type: 'value',
+					// splitLine: {
+					// 	show: false
+					// }
+					min: 'dataMin',
+					max: 'dataMax'
 					// type: 'value',
 				},
 				yAxis: {
-					show: false,
-                    min: this.min,
-                    max: this.max
+					show: true,
+					type: 'value',
+					splitLine: {
+						show: false
+					},
+					min: function(value) {
+                        // console.log(self)
+						return (value.min * 0.99).toFixed(self.precision);
+					},
+					max: function(value) {
+						return (value.max * 1.01).toFixed(self.precision);
+                    },
+                    axisLine: {
+                        lineStyle: {color: 'rgba(255,255,255,1)'}
+                    }
+					// boundaryGap: [0, '100%'],
+					// splitLine: {
+					// 	show: false
+					// }
+					// boundaryGap: [0, '100%']
 					// type: 'value',
 					// boundaryGap: ['0%','100%'],
 				},
-				grid: { top: '5%', left: '0', bottom: '0', right: '0' },
+				grid: { top: '5%', left: this.left, bottom: '5%', right: '0' },
 				color: this.chartColor,
 				series: [
 					{
@@ -92,14 +120,10 @@ export default {
 					}
 				]
 			});
-		}
-	},
-	mounted() {
-		this.initChart();
-	},
-	watch: {
-		costData: {
-			handler: function(newval, oldval) {
+		},
+		updateATC() {
+			setInterval(() => {
+				// console.log('?');
 				var today = new Date();
 				// var time = today.getTime();
 				var time =
@@ -108,7 +132,12 @@ export default {
 					today.getMinutes() +
 					':' +
 					today.getSeconds();
-				this.dataSeries.push({ name: time, value: newval });
+				// console.log(this.dataSeries);
+				this.dataSeries.push({
+					name: this.index.toString(),
+					value: [this.index, this.costData]
+				});
+				this.index++;
 				if (this.dataSeries.length > 60) {
 					this.dataSeries.shift();
 				}
@@ -119,9 +148,22 @@ export default {
 						}
 					]
 				});
+			}, 1000);
+        },
+        resizeChart() {
+			window.onresize = () => {
+				if(this.chart) {
+					this.chart.resize();
+				}
 			}
 		}
-	}
+	},
+	mounted() {
+		this.initChart();
+        this.updateATC();
+        this.resizeChart();
+	},
+	watch: {}
 };
 </script>
 
