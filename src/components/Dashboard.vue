@@ -92,6 +92,7 @@
 			<!-- <router-view/> -->
 		</v-content>
 		<MqttClient></MqttClient>
+		<CostBot></CostBot>
 		<chatpop v-if="dialog" :visible="dialog" @close="dialog=false"></chatpop>
 	</div>
 </template>
@@ -104,6 +105,7 @@ import shunt from '../views/shunt-view';
 // import chatpop from './components/chatpop';
 import MqttClient from './MqttClient';
 import Util from '../util';
+import CostBot from './CostBot'
 // import NotificationList from './components/NotificationList';
 
 export default {
@@ -126,7 +128,8 @@ export default {
 		generator: generator,
 		load: load,
 		shunt: shunt,
-		NotificationList: () => import('./NotificationList')
+		NotificationList: () => import('./NotificationList'),
+		CostBot
 	},
 	methods: {
 		handleFullScreen() {

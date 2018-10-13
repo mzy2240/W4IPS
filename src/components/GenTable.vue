@@ -12,13 +12,14 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="gens" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
+				<v-data-table :headers="headers" :items="$store.state.genData" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
 					<template slot="items" slot-scope="props">
 						<tr @click="props.expanded = !props.expanded">
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-left">{{ props.item.Status }}</td>
 							<td class="text-xs-right">{{ props.item.MW }}</td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
+							<td class="text-xs-right">{{ props.item.MarginalCost }}</td>
 							<td class="text-xs-right">
 								<v-edit-dialog :return-value.sync="props.item.MWSetpoint" large lazy @save="savemws(props.item)" @open="openmws(props.item)">
 									<div>{{ props.item.MWSetpoint }}</div>
@@ -86,7 +87,7 @@ export default {
 				{ text: 'Status', value: 'Status' },
 				{ text: 'MW', value: 'MW' },
 				{ text: 'Mvar', value: 'Mvar' },
-				// { text: 'MVA', value: 'MVA' },
+				{ text: 'Marginal Cost', value: 'MarginalCost' },
 				{ text: 'MW Setpoint', value: 'MWSetpoint' },
 				{ text: 'Vpu Setpoint', value: 'VpuSetpoint' },
 				{ text: 'MW Max Limit', value: 'MWMax' },
@@ -213,22 +214,22 @@ export default {
 		}
 	},
 	created() {
-		this.preProcess();
+		// this.preProcess();
 		// this.initTable();
 	},
 	mounted() {
 		// this.initTable();
-		this.initTable().then(() => this.updateTable());
+		// this.initTable().then(() => this.updateTable());
 	},
-	computed: {
-		...mapGetters({
-			dataflag: 'getDataUpdate'
-		})
-	},
-	watch: {
-		dataflag: function() {
-			this.updateTable();
-		}
-	}
+	// computed: {
+	// 	...mapGetters({
+	// 		dataflag: 'getDataUpdate'
+	// 	})
+	// },
+	// watch: {
+	// 	dataflag: function() {
+	// 		this.updateTable();
+	// 	}
+	// }
 };
 </script>

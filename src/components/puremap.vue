@@ -49,6 +49,9 @@
 				<v-flex lg4 sm12 xs12>
 					<v-layout row wrap>
 						<v-flex lg12 sm12 xs12>
+							<chartStatistic title="Total Cost" icon="attach_money" card-color="indigo" :chart-color="[color.indigo.lighten1]" :costData='$store.state.totalCost.toFixed(2)' type="line"></chartStatistic>
+						</v-flex>
+						<v-flex lg12 sm12 xs12>
 							<v-widget title="Area Generation Overview" content-bg="white">
 								<div slot="widget-content">
 									<pie :areatotal="areaData[0]"></pie>
@@ -95,6 +98,8 @@ import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/MiniStat';
 import pie from '@/components/pie';
 import branchTable from '@/components/RiskBranchTable';
+import chartStatistic from '@/components/chartStatistic';
+import Material from 'vuetify/es5/util/colors';
 // import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
@@ -103,6 +108,7 @@ export default {
 	name: 'TEST',
 	data() {
 		return {
+			color: Material,
 			chart: '',
 			linedata: [],
 			subdata: [],
@@ -481,6 +487,7 @@ export default {
 			// }, 1000);
 			setInterval(() => {
 				this.updateLines();
+				// console.log(this.$store.state.totalCost);
 			}, 1500);
 		},
 		updateLines() {
@@ -630,7 +637,8 @@ export default {
 		VWidget,
 		MiniStatistic,
 		pie,
-		branchTable
+		branchTable,
+		chartStatistic
 	}
 };
 </script>

@@ -1,0 +1,114 @@
+<template>
+</template>
+
+<script>
+import { mapGetters } from 'vuex';
+
+export default {
+	data() {
+		return {
+			anchor: null,
+			genDataLength: null,
+			show: false,
+			marginalcost: [],
+			gens: null
+		};
+	},
+	methods: {
+		initData() {
+			let temp = [];
+			for (let i in this.$store.state.casedetail.content.Gen) {
+				temp.push({
+					value: false,
+					name: i,
+					Status: 1,
+					MWMax: this.$store.state.casedetail.content.Gen[i][
+						'Single.MW Max Limit'
+					],
+					MWMin: this.$store.state.casedetail.content.Gen[i][
+						'Single.MW Min Limit'
+					],
+					MW: 0,
+					Mvar: 0,
+					MWSetpoint: 0,
+					VpuSetpoint: 1,
+					OperationCost: this.$store.state.casedetail.content.Gen[i][
+						'OperationCost'
+					],
+					MarginalCostCoefficients: this.$store.state.casedetail.content.Gen[i][
+						'MarginalCostCoefficients'
+					],
+					MarginalCost: 0,
+					id: this.$store.state.casedetail.content.Gen[i]['String.ID']
+				});
+			}
+			this.gens = temp;
+			if (this.gens.length > 1) {
+				return Promise.resolve('Table initialized properly');
+			} else {
+				return Promise.reject('Error in initialization');
+			}
+		},
+		preProcess() {
+			let anchor = 0;
+			var arrlength;
+			var keyarr;
+
+			for (let ele in this.$store.state.fieldstore) {
+				arrlength = this.$store.state.fieldstore[ele].length;
+				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				if (ele != 'Gen') {
+					anchor += arrlength * keyarr.length;
+				} else {
+					break;
+				}
+			}
+			this.anchor = anchor;
+			this.genDataLength = arrlength;
+		},
+		getMP() {
+			const temp = JSON.parse(this.$store.state.rawdata).Data;
+			for (let i in this.gens) {
+				this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
+				this.gens[i].Mvar = temp[this.anchor + 7 + i * this.genDataLength];
+				this.gens[i].MWSetpoint =
+					temp[this.anchor + 10 + i * this.genDataLength];
+				this.gens[i].VpuSetpoint =
+					temp[this.anchor + 9 + i * this.genDataLength];
+				this.gens[i].Status = temp[this.anchor + 5 + i * this.genDataLength];
+				this.gens[i].MarginalCost = (
+					this.gens[i].MarginalCostCoefficients[0] +
+					this.gens[i].MarginalCostCoefficients[1] * 2 * this.gens[i].MW
+				).toFixed(2);
+			}
+			this.$store.commit('updateGenData', this.gens);
+		},
+		updateTotalCost() {
+			setInterval(() => {
+				let deltaCost = 0;
+				for (let i in this.gens) {
+					deltaCost += this.gens[i].MarginalCost / 120;
+				}
+                this.$store.commit('addCost', +deltaCost.toFixed(2));
+                // console.log(deltaCost.toFixed(2));
+			}, 500);
+		}
+	},
+	created() {
+		this.preProcess();
+        this.initData();
+        this.updateTotalCost();
+	},
+	computed: {
+		...mapGetters({
+			dataflag: 'getDataUpdate'
+		})
+	},
+	watch: {
+		dataflag: function() {
+			this.getMP();
+		}
+	}
+};
+</script>
+

@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import datafield from './assets/datafield.json'
 import tcmcommands from './assets/tcmcommands.json'
-import casedetail from './assets/150.json'
+import casedetail from './assets/150G.json'
 import notificationSystem from './assets/notificationsettings'
 // import casedetail from './assets/150.json'
 
@@ -39,7 +39,9 @@ export default new Vuex.Store({
 		violatedLines: [],
 		violatedBuses: [],
 		selectedShunts: [],
-		alarm: []
+		alarm: [],
+		totalCost: 0,
+		genData: []
 	},
 	getters: {
 		getPubStatus(state) {
@@ -160,6 +162,12 @@ export default new Vuex.Store({
 			if(payload in state.alarm) {
 				state.alarm.pop(payload);
 			}
+		},
+		updateGenData(state, payload) {
+			state.genData = payload;
+		},
+		addCost(state, payload) {
+			state.totalCost = state.totalCost+payload;
 		}
 	},
 	actions: {
