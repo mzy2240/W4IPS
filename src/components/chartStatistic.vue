@@ -4,7 +4,7 @@
       <div class="layout row ma-0">
         <div class="subheading">{{title}}</div>
         <v-spacer></v-spacer>
-        <div class="subheading">${{costData}}</div>
+        <div class="subheading">${{dispData}}</div>
       </div>
     </v-card-title>
     <v-card-media class="white--text">
@@ -15,6 +15,8 @@
 
 <script>
 import echarts from 'echarts';
+import numeral from 'numeral';
+// var numeral = require('numeral');
 
 export default {
 	props: {
@@ -37,13 +39,16 @@ export default {
 	data() {
 		return {
 			chart: null,
-			dataSeries: []
+            dataSeries: []
 		};
 	},
 	computed: {
 		computeCardDark() {
 			return this.cardColor !== 'white';
-		}
+        },
+        dispData(){
+            return numeral(this.costData).format('0,0');
+        }
 	},
 	methods: {
 		initChart() {

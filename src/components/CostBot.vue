@@ -87,9 +87,9 @@ export default {
 			setInterval(() => {
 				let deltaCost = 0;
 				for (let i in this.gens) {
-					deltaCost += this.gens[i].MarginalCost / 120;
+					deltaCost += this.gens[i].MarginalCost*this.gens[i].MW / 120;
 				}
-                this.$store.commit('addCost', +deltaCost.toFixed(2));
+                this.$store.commit('addCost', +deltaCost.toFixed(0));
                 // console.log(deltaCost.toFixed(2));
 			}, 500);
 		}
