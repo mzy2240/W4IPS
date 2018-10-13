@@ -98,6 +98,11 @@ export default {
 				action: this.$store.state.message[3]
 			};
 			this.client.publish('user/cmd', JSON.stringify(temp));
+			if(temp.type == 'Gen' && ['OPEN', 'CLOSE'].includes(temp.action)) {
+				const id = temp.id.split(',')[1];
+				// console.log(this.$store.state.casedetail.content.Gen[id]["OperationCost"])
+				this.$store.commit('addCost', this.$store.state.casedetail.content.Gen[id]["OperationCost"])
+			}
 		},
 		getNewSubscribe: function(newVal, oldVal) {
 			this.client.subscribe(newVal);

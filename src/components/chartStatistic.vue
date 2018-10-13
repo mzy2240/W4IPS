@@ -61,12 +61,14 @@ export default {
 				},
 				xAxis: {
 					show: false,
-					min: 'dataMin'
+                    min: 'dataMin',
+                    max: 'dataMax'
 					// type: 'value',
 				},
 				yAxis: {
 					show: false,
-					min: 'dataMin'
+                    min: 'dataMin',
+                    max: 'dataMax'
 					// type: 'value',
 					// boundaryGap: ['0%','100%'],
 				},
