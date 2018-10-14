@@ -28,6 +28,22 @@
 				</v-flex>
 				<v-flex lg4 sm12 xs12>
 					<v-layout row wrap>
+						<v-flex>
+              				<v-layout row wrap>
+                  				<v-flex sm6 xs6 white--text>
+									<div class="text-sm-center primary card">
+										<div class="caption pt-3">Total Cost</div>
+										<span class="headline">${{ $store.state.totalCost }}</span>
+									</div>
+								</v-flex>
+								<v-flex sm6 xs6 white--text>
+									<div class="align-center text-sm-center green card">
+										<div class="caption pt-3">ACE</div>
+										<span class="headline">0</span>
+									</div>
+								</v-flex>
+							</v-layout>
+						</v-flex>
 						<v-flex lg12 sm12 xs12>
 							<chartStatistic id="UTC" min=null max=null left="13%" title="Current Cost ($/h)" icon="attach_money" card-color="indigo" :chart-color="[color.indigo.lighten1]" :costData='$store.state.unitTimeCost' type="line"></chartStatistic>
 						</v-flex>
@@ -52,6 +68,9 @@
 	height: 300px;
 	width: 100%;
 }
+.card {
+	height: 100px;
+}
 </style>
 
 <script>
@@ -66,10 +85,10 @@ import Material from 'vuetify/es5/util/colors';
 
 export default {
 	name: 'generator',
-	data(){
+	data() {
 		return {
 			color: Material
-		}
+		};
 	},
 	components: {
 		// HelloWorld,
