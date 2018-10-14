@@ -17,7 +17,7 @@
 						<tr @click="props.expanded = !props.expanded">
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-left">{{ props.item.Status }}</td>
-							<td class="text-xs-right">{{ props.item.MW }}</td>
+							<td class="text-xs-right"><v-chip label small :color="getColorByValue(props.item.MW, props.item.MWMax)" text-color="black" class="chip">{{ props.item.MW }}</v-chip></td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
 							<td class="text-xs-right">{{ props.item.MarginalCost }}</td>
 							<td class="text-xs-right">
@@ -65,6 +65,9 @@ table.v-table thead td:not(:first-child),
 table.v-table thead th:first-child,
 table.v-table thead th:not(:first-child) {
 	padding: 0 10px;
+}
+.chip{
+	width: 60px;
 }
 </style>
 
@@ -211,6 +214,15 @@ export default {
 				command
 			]);
 			this.$store.commit('setPublish');
+		},
+		getColorByValue(MW, MAX) {
+			var temp = 'white';
+			if (MW >= MAX) {
+				temp = 'red';
+			} else if (MW > 0.9*MAX) {
+				temp = 'yellow';
+			}
+			return temp;
 		}
 	},
 	created() {
