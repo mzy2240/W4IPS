@@ -12,7 +12,17 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="$store.state.genData" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
+				<v-data-table class="fixed-header" :headers="headers" :items="$store.state.genData" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
+					<template slot="headerCell" slot-scope="props">
+						<v-tooltip bottom>
+						<span slot="activator">
+							{{ props.header.text }}
+						</span>
+						<span>
+							{{ props.header.text }}
+						</span>
+						</v-tooltip>
+					</template>
 					<template slot="items" slot-scope="props">
 						<tr @click="props.expanded = !props.expanded">
 							<td class="text-xs-left">{{ props.item.name }}</td>
@@ -36,10 +46,15 @@
 							</td>
 							<td class="text-xs-right">{{ props.item.MWMax }}</td>
 							<td class="text-xs-right">{{ props.item.MWMin }}</td>
-							<td class="justify-center layout px-0">
-								<div class="my-2">
-									<v-switch v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
-								</div>
+							<td class="text-xs-center">
+								<!-- <div class="mt-3 pa-0"> -->
+									<v-switch class="mt-3" v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
+								<!-- </div> -->
+							</td>
+							<td class="text-xs-center">
+								<!-- <div class="mt-3 pa-0"> -->
+									<v-switch class="mt-3" v-model="props.item.AGC" @click.native="toggleAGC(props.item)"></v-switch>
+								<!-- </div> -->
 							</td>
 						</tr>
 					</template>
@@ -55,7 +70,7 @@
 	</v-card>
 </template>
 
-<style>
+<style scoped>
 table.v-table tbody td:first-child,
 table.v-table tbody td:not(:first-child),
 table.v-table tbody th:first-child,
@@ -66,8 +81,28 @@ table.v-table thead th:first-child,
 table.v-table thead th:not(:first-child) {
 	padding: 0 10px;
 }
-.chip{
+
+.chip {
 	width: 60px;
+}
+.fixed-header table {
+    table-layout: fixed;
+}
+
+.fixed-header th {
+    background-color: #fff; /* just for LIGHT THEME, change it to #474747 for DARK */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.fixed-header tr.datatable__progress th {
+    top: 56px;
+}
+
+.fixed-header .table__overflow {
+    overflow: auto;
+    height: 100%;
 }
 </style>
 
@@ -85,19 +120,21 @@ export default {
 					text: 'Generator',
 					align: 'left',
 					sortable: false,
-					value: 'name'
+					value: 'name',
+					width: '1%'
 				},
-				{ text: 'Status', value: 'Status' },
-				{ text: 'MW', value: 'MW' },
-				{ text: 'Mvar', value: 'Mvar' },
-				{ text: 'Marginal Cost', value: 'MarginalCost' },
-				{ text: 'MW Setpoint', value: 'MWSetpoint' },
-				{ text: 'Vpu Setpoint', value: 'VpuSetpoint' },
-				{ text: 'MW Max Limit', value: 'MWMax' },
-				{ text: 'MW Min Limit', value: 'MWMin' },
+				{ text: 'Status', value: 'Status', width: '1%' },
+				{ text: 'MW', value: 'MW', width: '1%' },
+				{ text: 'Mvar', value: 'Mvar', width: '1%' },
+				{ text: 'Marginal Cost', value: 'MarginalCost', width: '1%' },
+				{ text: 'MW Setpoint', value: 'MWSetpoint', width: '1%' },
+				{ text: 'Vpu Setpoint', value: 'VpuSetpoint', width: '1%' },
+				{ text: 'MW Max Limit', value: 'MWMax', width: '1%' },
+				{ text: 'MW Min Limit', value: 'MWMin', width: '1%' },
 				// { text: 'MW setpoint', value: 'MWSet', sortable: false },
 				// { text: 'Vpu setpoint', value: 'VpuSet', sortable: false },
-				{ text: 'Actions', value: 'Actions', sortable: false }
+				{ text: 'Actions', value: 'Actions', width: '1%' },
+				{ text: 'AGC', value: 'AGC', width: '1%' }
 			],
 			gens: [],
 			anchor: 0,
@@ -215,11 +252,14 @@ export default {
 			]);
 			this.$store.commit('setPublish');
 		},
+		toggleAGC(item) {
+			console.log(item);
+		},
 		getColorByValue(MW, MAX) {
-			var temp = 'white';
+			var temp = 'transparent';
 			if (MW >= MAX) {
 				temp = 'red';
-			} else if (MW > 0.9*MAX) {
+			} else if (MW > 0.9 * MAX) {
 				temp = 'yellow';
 			}
 			return temp;
@@ -232,7 +272,7 @@ export default {
 	mounted() {
 		// this.initTable();
 		// this.initTable().then(() => this.updateTable());
-	},
+	}
 	// computed: {
 	// 	...mapGetters({
 	// 		dataflag: 'getDataUpdate'

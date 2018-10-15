@@ -16,6 +16,57 @@
   Include theme variables, mixins, colors
 */
 @import '~vuetify/src/stylus/bootstrap'
+@import '~vuetify/src/stylus/theme'
+/* Theme */
+/* Theme */
+fixed-header($material)
+    &
+        display: flex
+        flex-direction: column
+        height: 100%
+        background-color: $material.cards
+
+    table
+        table-layout: fixed
+
+    th
+        background-color: $material.cards
+        position: sticky
+        top: 0
+        z-index: 10
+
+        &:after
+            content: ''
+            position: absolute
+            left: 0
+            bottom: 0
+            width: 100%
+            border-bottom: 1px solid rgba($material.fg-color, $material.divider-percent)
+
+    tr.v-datatable__progress
+        th
+            top: 56px
+
+    .v-table__overflow
+        flex-grow: 1
+        flex-shrink: 1
+        overflow-x: auto
+        overflow-y: auto
+
+    /*
+    
+        height: 100% */
+    .v-datatable.v-table
+        flex-grow: 0
+        flex-shrink: 1
+
+        .v-datatable__actions
+            flex-wrap: nowrap
+
+            .v-datatable__actions__pagination
+                white-space: nowrap
+
+theme(fixed-header, 'fixed-header')
 
 /*------------------------------------------------------------------
 [Generic Animations]

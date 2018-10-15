@@ -39,7 +39,8 @@ export default {
 						'MarginalCostCoefficients'
 					],
 					MarginalCost: 0,
-					id: this.$store.state.casedetail.content.Gen[i]['String.ID']
+					id: this.$store.state.casedetail.content.Gen[i]['String.ID'],
+					AGC: false
 				});
 			}
 			this.gens = temp;

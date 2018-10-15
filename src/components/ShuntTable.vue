@@ -53,7 +53,7 @@
 	</v-card>
 </template>
 
-<style>
+<style scoped>
 table.v-table tbody td:first-child,
 table.v-table tbody td:not(:first-child),
 table.v-table tbody th:first-child,
