@@ -39,7 +39,7 @@
 								<v-flex sm6 xs6 white--text>
 									<div class="align-center text-sm-center green card">
 										<div class="caption pt-3">ACE</div>
-										<span class="headline">0</span>
+										<span class="headline">{{ $store.state.ACE }}MW</span>
 									</div>
 								</v-flex>
 							</v-layout>

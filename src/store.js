@@ -43,7 +43,8 @@ export default new Vuex.Store({
 		totalCost: 0,
 		genData: [],
 		totalMWh: 0,
-		unitTimeCost: null
+		unitTimeCost: null,
+		ACE: 30 // for test
 	},
 	getters: {
 		getPubStatus(state) {
@@ -176,6 +177,11 @@ export default new Vuex.Store({
 		},
 		updateUnitTimeCost(state, payload) {
 			state.unitTimeCost = payload;
+		},
+		toggleALL(state, payload) {
+			for(let i in state.genData) {
+				state.genData[i].AGC = payload;
+			}
 		}
 	},
 	actions: {

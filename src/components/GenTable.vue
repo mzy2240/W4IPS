@@ -5,14 +5,23 @@
 				<h4> {{title}} </h4>
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
-			<v-btn icon>
-				<v-icon>more_vert</v-icon>
-			</v-btn>
+			<v-toolbar-items>
+        		<v-menu bottom right offset-x>
+					<v-btn icon slot="activator">
+						<v-icon>more_vert</v-icon>
+					</v-btn>
+					<v-list>
+						<v-list-tile @click="toggleALL">
+							<v-list-tile-title>Toggle all AGC</v-list-tile-title>
+						</v-list-tile>
+					</v-list>
+        		</v-menu>
+			</v-toolbar-items>
 		</v-toolbar>
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table class="fixed-header" :headers="headers" :items="$store.state.genData" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
+				<v-data-table :headers="headers" :items="$store.state.genData" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
 					<template slot="headerCell" slot-scope="props">
 						<v-tooltip bottom>
 						<span slot="activator">
@@ -53,7 +62,7 @@
 							</td>
 							<td class="text-xs-center">
 								<!-- <div class="mt-3 pa-0"> -->
-									<v-switch class="mt-3" v-model="props.item.AGC" @click.native="toggleAGC(props.item)"></v-switch>
+									<v-switch class="mt-3" v-model="props.item.AGC"></v-switch>
 								<!-- </div> -->
 							</td>
 						</tr>
@@ -145,7 +154,8 @@ export default {
 				{ text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
 			],
 			mws: 0,
-			vps: 1
+			vps: 1,
+			switch: false
 		};
 	},
 	methods: {
@@ -254,6 +264,11 @@ export default {
 		},
 		toggleAGC(item) {
 			console.log(item);
+			// console.log(this.$store.state.genData)
+		},
+		toggleALL(){
+			this.switch = !this.switch;
+			this.$store.commit('toggleALL', this.switch);
 		},
 		getColorByValue(MW, MAX) {
 			var temp = 'transparent';
