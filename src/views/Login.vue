@@ -18,9 +18,14 @@
 									<v-form>
 										<v-text-field append-icon="person" name="login" label="Login" type="text" v-model="model.username"></v-text-field>
 										<v-text-field append-icon="lock" name="password" label="Password" id="password" type="password" v-model="model.password"></v-text-field>
+										<v-select :items="items" label="Area"></v-select>
 									</v-form>
 								</v-card-text>
 								<v-card-actions>
+									<v-checkbox
+									label="Administrator"
+									v-model="checkbox"
+									></v-checkbox>
 									<v-spacer></v-spacer>
 									<v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
 								</v-card-actions>
@@ -69,11 +74,16 @@ export default {
 				username: 'Admin',
 				password: 'password'
 			},
-			showDash: false
+			showDash: false,
+			items: Object.keys(this.$store.state.casedetail.content.Area).concat(['Not specified']),
+			checkbox: false
 		};
 	},
 	methods: {
 		login() {
+			if(this.checkbox) {
+				this.$store.commit('onAdmin');
+			}
 			this.$store.commit('setUsername', this.model.username);
 			this.loading = true;
 			setTimeout(() => {

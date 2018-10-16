@@ -17,9 +17,11 @@ export default {
 	methods: {
 		initData() {
 			let temp = [];
+			let subID;
 			for (let i in this.$store.state.casedetail.content.Gen) {
+				subID = this.$store.state.casedetail.content.Bus[i]["Int.Sub Number"];
 				temp.push({
-					value: false,
+					value: [this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Longitude"], this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Latitude"]],
 					name: i,
 					Status: 1,
 					MWMax: this.$store.state.casedetail.content.Gen[i][

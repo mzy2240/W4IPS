@@ -7,15 +7,30 @@ import axios from 'axios'
 
 export default {
     name: 'ApiClient',
+    props: {
+        link: String,
+        interval:{
+            type: Number,
+            default: 0
+        }
+    },
     data() {
         return {
             info: null
         }
     },
     created() {
-        axios
-            .get('http://127.0.0.1:5000/Messages/message?type=14')
+        if(this.interval == 0) {
+            axios
+            .get(this.link)
             .then(response => (this.info = response))
+        } else {
+            setInterval(() => {
+                axios
+                .get(this.link)
+                .then(response => (this.info = response))
+            }, this.interval)
+        }
     }
 }
 </script>

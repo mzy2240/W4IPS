@@ -39,12 +39,14 @@ export default new Vuex.Store({
 		violatedLines: [],
 		violatedBuses: [],
 		selectedShunts: [],
+		selectedGens: [],
 		alarm: [],
 		totalCost: 0,
 		genData: [],
 		totalMWh: 0,
 		unitTimeCost: null,
-		ACE: 30 // for test
+		ACE: 30, // for test,
+		isAdmin: false
 	},
 	getters: {
 		getPubStatus(state) {
@@ -79,6 +81,9 @@ export default new Vuex.Store({
 		},
 		getSelectedShunts(state) {
 			return state.selectedShunts;
+		},
+		getSelectedGens(state) {
+			return state.selectedGens;
 		}
 	},
 	mutations: {
@@ -156,6 +161,9 @@ export default new Vuex.Store({
 		updateSelectedShunts(state, payload) {
 			state.selectedShunts = payload
 		},
+		updateSelectedGens(state, payload) {
+			state.selectedGens = payload
+		},
 		triggerAlarm(state, payload) {
 			if(!(payload in state.alarm)) {
 				state.alarm.push(payload);
@@ -182,6 +190,9 @@ export default new Vuex.Store({
 			for(let i in state.genData) {
 				state.genData[i].AGC = payload;
 			}
+		},
+		onAdmin(state) {
+			state.isAdmin = true;
 		}
 	},
 	actions: {

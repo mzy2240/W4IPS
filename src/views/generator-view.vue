@@ -50,6 +50,9 @@
 						<v-flex lg12 sm12 xs12>
 							<chartStatistic id="ATC" min=null max=null left="8%" :precision=1 title="Average Total Cost ($/MWh)" icon="attach_money" card-color="pink" :chart-color="[color.pink.darken1, 'rgba(255,255,255,0.3)']" :costData='+($store.state.totalCost/$store.state.totalMWh).toFixed(2)' type="line"></chartStatistic>
 						</v-flex>
+						<v-flex lg12 sm12 xs12>
+							<MapWidget title="Location Assist"></MapWidget>
+						</v-flex>
 					</v-layout>
 				</v-flex>
 			</v-layout>
@@ -82,6 +85,7 @@ import gentable from '@/components/GenTable';
 import VWidget from '@/components/VWidget';
 import chartStatistic from '@/components/chartStatistic2';
 import Material from 'vuetify/es5/util/colors';
+import MapWidget from '@/components/MapWidget'
 
 export default {
 	name: 'generator',
@@ -96,7 +100,8 @@ export default {
 		// mapchart,
 		gentable,
 		VWidget,
-		chartStatistic
+		chartStatistic,
+		MapWidget
 	}
 };
 </script>

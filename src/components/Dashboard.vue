@@ -59,6 +59,15 @@
 							<v-list-tile-title>Start</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
+					<v-list-tile avatar :key="'admin'" v-if="$store.state.isAdmin" @click="$store.commit('setpage', 'admin')">
+						<v-list-tile-avatar>
+							<v-icon>account-supervisor</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>Admin</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
 				</v-list>
 			</v-toolbar>
 		</v-navigation-drawer>
@@ -103,6 +112,7 @@
 import generator from '../views/generator-view';
 import load from '../views/load-view';
 import shunt from '../views/shunt-view';
+import admin from '../views/admin-view';
 // import chatpop from './components/chatpop';
 import MqttClient from './MqttClient';
 import Util from '../util';
@@ -130,6 +140,7 @@ export default {
 		generator: generator,
 		load: load,
 		shunt: shunt,
+		admin,
 		NotificationList: () => import('./NotificationList'),
 		CostBot,
 		AGCBot

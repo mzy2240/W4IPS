@@ -186,6 +186,58 @@ export default {
 							}
 						},
 						data: []
+					},
+					{
+						id: 'violatedLines',
+						name: 'violatedLines',
+						type: 'lines',
+						coordinateSystem: 'leaflet',
+						silent: false,
+						zlevel: 10,
+						z: 10,
+						symbol: 'pin',
+						symbolSize: 30,
+						lineStyle: {
+							width: 10,
+							color: '#bef67a',
+							// type: 'dotted',
+							shadowColor: '#ccff90',
+							shadowBlur: 20,
+							opacity: 1
+						},
+						label: {
+							show: true,
+							position: 'middle',
+							color: 'black',
+							// fontWeight: 'bold',
+							formatter: function(params) {
+								return 'Branch#' + params.name;
+							}
+						},
+						data: []
+					},
+					{
+						id: 'gen',
+						name: 'gen',
+						type: 'scatter',
+						coordinateSystem: 'leaflet',
+						silent: false,
+						symbol: 'pin',
+						symbolSize: 50,
+						zlevel: 2,
+						itemStyle: {
+							color: '#1565c0'
+						},
+						label: {
+							show: true,
+							position: 'top',
+							color: 'black',
+							// fontWeight: 'bold',
+							formatter: function(params) {
+								return 'Gen#' + params.name;
+							}
+						},
+						data: []
 					}
 				]
 			});
@@ -290,7 +342,9 @@ export default {
 	computed: {
 		...mapGetters({
 			ViolatedBuses: 'getViolatedBuses',
-			SelectedShunts: 'getSelectedShunts'
+			SelectedShunts: 'getSelectedShunts',
+			ViolatedLines: 'getViolatedLines',
+			SelectedGens: 'getSelectedGens',
 		})
 	},
 	watch: {
@@ -312,6 +366,17 @@ export default {
 			// }]})
 			let temp = this.chart.getOption();
 			temp.series[3].data = this.$store.state.selectedShunts;
+			this.chart.setOption(temp);
+		},
+		ViolatedLines: function() {
+			// console.log(this.$store.state.violatedLines);
+			let temp = this.chart.getOption();
+			temp.series[4].data = this.$store.state.violatedLines;
+			this.chart.setOption(temp);
+		},
+		SelectedGens: function() {
+			let temp = this.chart.getOption();
+			temp.series[5].data = this.$store.state.selectedGens;
 			this.chart.setOption(temp);
 		}
 	},
