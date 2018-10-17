@@ -603,7 +603,7 @@ export default {
 			// }
 			// delete this.branchToOpenBranch[branchIndex.toString()];
 		},
-		restore(){
+		restore() {
 			var temp = this.chart.getOption();
 			temp.leaflet[0].center = [-86.0, 36.44];
 			temp.leaflet[0].zoom = 8;
@@ -620,7 +620,7 @@ export default {
 		this.onDrawLines();
 		this.updateLinesCycle();
 	},
-	beforeDestroy(){
+	beforeDestroy() {
 		this.chart.clear();
 	},
 	// watch: {

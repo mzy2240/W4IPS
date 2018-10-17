@@ -9,8 +9,8 @@
     </v-card-title>
     <v-card-media class="white--text">
       <div :id="id" class="chart"></div>
-    </v-card-media>    
-  </v-card>    
+    </v-card-media>
+  </v-card>
 </template>
 
 <script>
@@ -42,7 +42,8 @@ export default {
 	data() {
 		return {
 			chart: null,
-            dataSeries: []
+			dataSeries: [],
+			Process: null
 		};
 	},
 	computed: {

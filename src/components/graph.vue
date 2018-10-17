@@ -14,7 +14,8 @@ export default {
 	},
 	data() {
 		return {
-			itv: null
+			itv: null,
+			chart: null
 		};
 	},
 	methods: {},
@@ -83,7 +84,7 @@ export default {
 				orientation: 'bottom' // top, bottom
 			}
 		};
-		var graph2d = new vis.Graph2d(container, dataset, options);
+		this.chart = new vis.Graph2d(container, dataset, options);
 
 		// a function to generate data points
 		// function y(x) {
@@ -93,10 +94,10 @@ export default {
 		function renderStep() {
 			// move the window (you can think of different strategies).
 			var now = vis.moment();
-			var range = graph2d.getWindow();
+			var range = self.chart.getWindow();
 			var interval = range.end - range.start;
 			if (now > range.end) {
-				graph2d.setWindow(now - 0.1 * interval, now + 0.9 * interval);
+				self.chart.setWindow(now - 0.1 * interval, now + 0.9 * interval);
 			}
 			setTimeout(renderStep, DELAY);
 		}
@@ -116,7 +117,7 @@ export default {
 				});
 
 				// remove all data points which are no longer visible
-				var range = graph2d.getWindow();
+				var range = self.chart.getWindow();
 				var interval = range.end - range.start;
 				var oldIds = dataset.getIds({
 					filter: function(item) {
@@ -131,6 +132,10 @@ export default {
 		this.itv = setInterval(() => {
 			addDataPoint();
 		}, DELAY);
+	},
+	beforeDestroy(){
+		clearInterval(this.itv);
+		this.chart.destroy();
 	}
 };
 </script>

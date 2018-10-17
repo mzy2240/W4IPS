@@ -26,7 +26,8 @@ export default {
 			chart: '',
 			anchor: 0,
 			genDataLength: 0,
-			color: Material
+			color: Material,
+			Process: null
 		};
 	},
 	methods: {
@@ -50,8 +51,12 @@ export default {
 		initdraw() {
 			this.chart = echarts.init(document.getElementById('pie'));
 			this.chart.setOption({
-				legend: {bottom: '0'},
-				color: [this.color.lightBlue.base, this.color.indigo.base, this.color.pink.base],
+				legend: { bottom: '0' },
+				color: [
+					this.color.lightBlue.base,
+					this.color.indigo.base,
+					this.color.pink.base
+				],
 				series: [
 					{
 						id: 'pie',
@@ -74,12 +79,12 @@ export default {
 									align: 'center'
 								},
 								abg: {
-                                    backgroundColor: '#333',
-                                    width: '100%',
-                                    align: 'right',
-                                    height: 15,
-                                    borderRadius: [0, 0, 4, 4]
-                                },
+									backgroundColor: '#333',
+									width: '100%',
+									align: 'right',
+									height: 15,
+									borderRadius: [0, 0, 4, 4]
+								},
 								hr: {
 									borderColor: '#aaa',
 									width: '100%',
@@ -100,7 +105,7 @@ export default {
 									// backgroundColor: '#334455',
 									// padding: [2, 4],
 									// borderRadius: 2,
-									align: 'center',
+									align: 'center'
 									// width: '100%'
 								}
 							}
@@ -108,8 +113,7 @@ export default {
 						labelLine: {
 							show: true
 						},
-						data: [
-						],
+						data: [],//[],
 						itemStyle: {
 							emphasis: {
 								shadowBlur: 10,
@@ -134,9 +138,7 @@ export default {
 					index += 1;
 					if (status == 0) {
 						// console.log(val);
-						offlineCapacity += val[
-							'Single.MW Max Limit'
-						];
+						offlineCapacity += val['Single.MW Max Limit'];
 					}
 				}
 				// console.log(this.areatotal);
@@ -149,7 +151,11 @@ export default {
 								name: 'Current Generation'
 							},
 							{
-								value: Math.round(this.$store.state.totalCapacity-offlineCapacity-this.areatotal),
+								value: Math.round(
+									this.$store.state.totalCapacity -
+										offlineCapacity -
+										this.areatotal
+								),
 								name: 'Online Capacity'
 							},
 							{
@@ -165,21 +171,25 @@ export default {
 		},
 		resizeChart() {
 			window.onresize = () => {
-				if(this.chart) {
+				if (this.chart) {
 					this.chart.resize();
 				}
-			}
+			};
 		}
+	},
+	created() {
+		// this.$nextTick(()=> { this.initdraw(); })
 	},
 	mounted() {
 		this.initdraw();
 		this.preProcess();
 		this.resizeChart();
-		setInterval(() => {
+		this.Process = setInterval(() => {
 			this.updateData();
 		}, 1000);
 	},
-	beforeDestroy(){
+	beforeDestroy() {
+		clearInterval(this.Process);
 		this.chart.clear();
 	}
 };

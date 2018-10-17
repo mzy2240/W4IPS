@@ -1,16 +1,16 @@
 <template>
-  <v-card :color="cardColor" :dark="computeCardDark">
-    <v-card-title>
-      <div class="layout row ma-0">
-        <div class="subheading">{{title}}</div>
-        <v-spacer></v-spacer>
-        <div class="subheading">${{dispData}}</div>
-      </div>
-    </v-card-title>
-    <v-card-media class="white--text">
-      <div :id="id" class="chart"></div>
-    </v-card-media>    
-  </v-card>    
+	<v-card :color="cardColor" :dark="computeCardDark">
+		<v-card-title>
+			<div class="layout row ma-0">
+				<div class="subheading">{{title}}</div>
+				<v-spacer></v-spacer>
+				<div class="subheading">${{dispData}}</div>
+			</div>
+		</v-card-title>
+		<v-card-media class="white--text">
+			<div :id="id" class="chart"></div>
+		</v-card-media>
+	</v-card>
 </template>
 
 <script>
@@ -37,18 +37,19 @@ export default {
 		},
 		chartColor: Array,
 		min: [String, null],
-        max: [String, null],
-        left: String,
-        precision:{
-            default: 0,
-            type: Number
-        }
+		max: [String, null],
+		left: String,
+		precision: {
+			default: 0,
+			type: Number
+		}
 	},
 	data() {
 		return {
 			chart: null,
 			dataSeries: [],
-			index: 0
+			index: 0,
+			Process: null
 		};
 	},
 	computed: {
@@ -61,8 +62,8 @@ export default {
 	},
 	methods: {
 		initChart() {
-            this.chart = echarts.init(document.getElementById(this.id));
-            var self = this;
+			this.chart = echarts.init(document.getElementById(this.id));
+			var self = this;
 			this.chart.setOption({
 				tooltip: {
 					trigger: 'axis',
@@ -91,15 +92,15 @@ export default {
 						show: false
 					},
 					min: function(value) {
-                        // console.log(self)
+						// console.log(self)
 						return (value.min * 0.99).toFixed(self.precision);
 					},
 					max: function(value) {
 						return (value.max * 1.01).toFixed(self.precision);
-                    },
-                    axisLine: {
-                        lineStyle: {color: 'rgba(255,255,255,1)'}
-                    }
+					},
+					axisLine: {
+						lineStyle: { color: 'rgba(255,255,255,1)' }
+					}
 					// boundaryGap: [0, '100%'],
 					// splitLine: {
 					// 	show: false
@@ -122,7 +123,7 @@ export default {
 			});
 		},
 		updateATC() {
-			setInterval(() => {
+			this.Process = setInterval(() => {
 				// console.log('?');
 				var today = new Date();
 				// var time = today.getTime();
@@ -149,21 +150,22 @@ export default {
 					]
 				});
 			}, 1000);
-        },
-        resizeChart() {
+		},
+		resizeChart() {
 			window.onresize = () => {
-				if(this.chart) {
+				if (this.chart) {
 					this.chart.resize();
 				}
-			}
+			};
 		}
 	},
 	mounted() {
 		this.initChart();
-        this.updateATC();
-        this.resizeChart();
+		this.updateATC();
+		this.resizeChart();
 	},
-	beforeDestroy(){
+	beforeDestroy() {
+		clearInterval(this.Process);
 		this.chart.clear();
 	},
 	watch: {}
