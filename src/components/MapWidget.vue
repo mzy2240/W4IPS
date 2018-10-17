@@ -7,6 +7,9 @@
 				</v-toolbar-title>
 				<v-spacer></v-spacer>
 				<slot name="widget-header-action"></slot>
+				<v-btn icon @click="restore">
+					<v-icon>restore</v-icon>
+				</v-btn>
 			</v-toolbar>
 			<v-divider v-if="enableHeader"></v-divider>
 			<slot name="widget-content"></slot>
@@ -331,6 +334,12 @@ export default {
 					}
 				]
 			});
+		},
+		restore() {
+			var temp = this.chart.getOption();
+			temp.leaflet[0].center = [-86.0, 36.44];
+			temp.leaflet[0].zoom = 6;
+			this.chart.setOption(temp);
 		}
 	},
 	mounted() {
@@ -344,7 +353,7 @@ export default {
 			ViolatedBuses: 'getViolatedBuses',
 			SelectedShunts: 'getSelectedShunts',
 			ViolatedLines: 'getViolatedLines',
-			SelectedGens: 'getSelectedGens',
+			SelectedGens: 'getSelectedGens'
 		})
 	},
 	watch: {
@@ -379,6 +388,6 @@ export default {
 			temp.series[5].data = this.$store.state.selectedGens;
 			this.chart.setOption(temp);
 		}
-	},
+	}
 };
 </script>

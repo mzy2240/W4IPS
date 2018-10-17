@@ -13,7 +13,7 @@
 			<v-spacer></v-spacer>
 			<div class="page-header-right">
 				<h4 class="pr-1">
-					Hi {{$store.state.username}}  
+					Hi {{$store.state.username}}
 					<status-indicator :negative="$store.state.alarm" :positive="!$store.state.alarm" pulse></status-indicator>
 				</h4>
 			</div>
@@ -39,12 +39,12 @@
 					</mini-statistic>
 				</v-flex>
 				<v-flex lg8 sm12 xs12>
-					<v-widget title="Interactive Site Map" content-bg="white">
+					<m-widget title="Interactive Site Map" content-bg="white" @clicked="restore">
 						<!-- <v-flex d-flex xs8 style="height: auto;"> -->
 						<div slot="widget-content">
 							<div id="main" class="chart"></div>
 						</div>
-					</v-widget>
+					</m-widget>
 				</v-flex>
 				<v-flex lg4 sm12 xs12>
 					<v-layout row wrap>
@@ -94,6 +94,7 @@ import 'echarts-leaflet';
 // import subpop from './subpop';
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
+import MWidget from '@/components/MWidget';
 import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/MiniStat';
 import pie from '@/components/pie';
@@ -601,6 +602,12 @@ export default {
 			// 	this.openLineData = [];
 			// }
 			// delete this.branchToOpenBranch[branchIndex.toString()];
+		},
+		restore(){
+			var temp = this.chart.getOption();
+			temp.leaflet[0].center = [-86.0, 36.44];
+			temp.leaflet[0].zoom = 8;
+			this.chart.setOption(temp);
 		}
 	},
 	created() {
@@ -635,6 +642,7 @@ export default {
 		linepop: () => import('./linepop'),
 		subpop: () => import('./subpop'),
 		VWidget,
+		MWidget,
 		MiniStatistic,
 		pie,
 		branchTable,

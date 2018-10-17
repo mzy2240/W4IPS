@@ -1,5 +1,5 @@
 <template>
-    <!-- <ApiClient :interval=2000 link="http://104.254.244.143:8080/api/v3nodes/emqx@127.0.0.1/connections/"></ApiClient> -->
+    <!-- <ApiClient link="http://104.254.244.143:8085/api/v3/connections/"></ApiClient> -->
 </template>
 
 <style>
