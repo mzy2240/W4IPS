@@ -620,6 +620,9 @@ export default {
 		this.onDrawLines();
 		this.updateLinesCycle();
 	},
+	beforeDestroy(){
+		this.chart.clear();
+	},
 	// watch: {
 	// 	highRiskLines: function() {
 	// 		console.log(this.highRiskLines);

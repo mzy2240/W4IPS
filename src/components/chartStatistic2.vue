@@ -163,6 +163,9 @@ export default {
         this.updateATC();
         this.resizeChart();
 	},
+	beforeDestroy(){
+		this.chart.clear();
+	},
 	watch: {}
 };
 </script>

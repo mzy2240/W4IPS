@@ -97,6 +97,9 @@ export default {
 	mounted() {
 		this.initChart();
 	},
+	beforeDestroy(){
+		this.chart.clear();
+	},
 	watch: {
 		costData: {
 			handler: function(newval, oldval) {

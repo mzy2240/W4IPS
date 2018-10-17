@@ -348,6 +348,9 @@ export default {
 		this.onDrawSub();
 		this.onDrawLines();
 	},
+	beforeDestroy(){
+		this.chart.clear();
+	},
 	computed: {
 		...mapGetters({
 			ViolatedBuses: 'getViolatedBuses',

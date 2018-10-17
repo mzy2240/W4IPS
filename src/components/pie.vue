@@ -178,6 +178,9 @@ export default {
 		setInterval(() => {
 			this.updateData();
 		}, 1000);
+	},
+	beforeDestroy(){
+		this.chart.clear();
 	}
 };
 </script>
