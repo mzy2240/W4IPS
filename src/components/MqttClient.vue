@@ -339,7 +339,7 @@ export default {
 					position: 'topCenter',
 					timeout: 8000
 				});
-				if (message.toString() == 'The simulation has been aborted') {
+				if (['The simulation has been aborted', 'The system goes blackout'].includes(message.toString())) {
 					this.$store.commit('setstartready');
 				} else if (message.toString() == 'The simulation is started') {
 					this.$store.commit('setstartdisable');

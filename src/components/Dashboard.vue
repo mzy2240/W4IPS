@@ -41,6 +41,15 @@
 							<v-list-tile-title>Shunt</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
+					<v-list-tile avatar :key="'branch'" @click="$store.commit('setpage', 'branch')">
+						<v-list-tile-avatar>
+							<v-icon>linear_scale</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>Branch</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
 					<v-list-tile avatar :key="'chat'" @click="dialog=true">
 						<v-list-tile-avatar>
 							<v-icon>chat</v-icon>
@@ -61,7 +70,7 @@
 					</v-list-tile>
 					<v-list-tile avatar :key="'admin'" v-if="$store.state.isAdmin" @click="$store.commit('setpage', 'admin')">
 						<v-list-tile-avatar>
-							<v-icon>account-supervisor</v-icon>
+							<v-icon>supervisor_account</v-icon>
 						</v-list-tile-avatar>
 
 						<v-list-tile-content>
@@ -113,6 +122,7 @@ import generator from '../views/generator-view';
 import load from '../views/load-view';
 import shunt from '../views/shunt-view';
 import admin from '../views/admin-view';
+import branch from '../views/branch-view';
 // import chatpop from './components/chatpop';
 import MqttClient from './MqttClient';
 import Util from '../util';
@@ -143,7 +153,8 @@ export default {
 		admin,
 		NotificationList: () => import('./NotificationList'),
 		CostBot,
-		AGCBot
+		AGCBot,
+		branch
 	},
 	methods: {
 		handleFullScreen() {
