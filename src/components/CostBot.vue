@@ -70,7 +70,9 @@ export default {
 			this.genDataLength = arrlength;
 		},
 		getMP() {
-			const temp = JSON.parse(this.$store.state.rawdata).Data;
+			const message = JSON.parse(this.$store.state.rawdata)
+			this.$store.commit('setCurrentTime', +message['SOC']);
+			const temp = message.Data;
 			for (let i in this.gens) {
 				this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
 				this.gens[i].Mvar = temp[this.anchor + 7 + i * this.genDataLength];

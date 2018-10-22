@@ -69,6 +69,16 @@
 							<v-list-tile-title>Start</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
+					<v-list-tile avatar :key="'abort'" @click="$store.commit('trigabortsim')">
+					<!-- <v-list-tile avatar :key="'start'" @click="startDialog=true"> -->
+						<v-list-tile-avatar>
+							<v-icon>mdi-stop</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>Abort</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
 					<v-list-tile avatar :key="'admin'" v-if="$store.state.isAdmin" @click="$store.commit('setpage', 'admin')">
 						<v-list-tile-avatar>
 							<v-icon>supervisor_account</v-icon>

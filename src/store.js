@@ -22,6 +22,7 @@ export default new Vuex.Store({
 		newsubscribe: [],
 		newpublish: [],
 		startsim: 0,
+		abortsim: 0,
 		ready4start: false,
 		page: 'Home',
 		notificationSystem,
@@ -48,7 +49,11 @@ export default new Vuex.Store({
 		unitTimeCost: null,
 		ACE: 30, // for test,
 		isAdmin: false,
-		simtime: null
+		simtime: null,
+		slider: 150,
+		startTime: null,
+		currentTime: null,
+		lapse: null
 	},
 	getters: {
 		getPubStatus(state) {
@@ -69,6 +74,9 @@ export default new Vuex.Store({
 		startsimtrigger(state) {
 			return state.startsim;
 		},
+		abortsimtrigger(state) {
+			return state.abortsim;
+		},
 		page (state) {
 			return state.page;
 		},
@@ -86,6 +94,9 @@ export default new Vuex.Store({
 		},
 		getSelectedGens(state) {
 			return state.selectedGens;
+		},
+		getLapse(state) {
+			return state.lapse;
 		}
 	},
 	mutations: {
@@ -122,6 +133,9 @@ export default new Vuex.Store({
 		trigsimtoseconds(state, payload) {
 			state.simtime = payload;
 			state.startsim ++;
+		},
+		trigabortsim(state) {
+			state.abortsim ++;
 		},
 		clearsimtime(state) {
 			state.simtime = null;
@@ -202,6 +216,15 @@ export default new Vuex.Store({
 		},
 		onAdmin(state) {
 			state.isAdmin = true;
+		},
+		setStartTime(state, payload) {
+			state.startTime = payload;
+		},
+		setCurrentTime(state, payload) {
+			state.currentTime = payload;
+			if(state.startTime) {
+				state.lapse = +(state.currentTime - state.startTime)
+			}
 		}
 	},
 	actions: {

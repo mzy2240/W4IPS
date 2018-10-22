@@ -9,7 +9,7 @@
 					<v-container grid-list-md>
 						<v-layout wrap>
 							<v-flex xs12>
-								<v-text-field label="Seconds to stop" v-model.lazy="time" required :rules="[rules.prohibited]"></v-text-field>
+								<v-text-field label="Seconds to stop" v-model.lazy="time" required :rules="[rules.prohibited]" @keyup.enter="enterClicked"></v-text-field>
 							</v-flex>
 							<!-- <v-flex xs12>
 								<v-text-field label="Content" v-model.lazy="content" @keyup.enter="enterClicked"></v-text-field>
@@ -73,7 +73,7 @@ export default {
 			} else {
 				this.$store.commit('trigsimtoseconds', +this.time);
 			}
-			// this.show = false;
+			this.show = false;
 		},
 		enterClicked() {
 			this.activate();

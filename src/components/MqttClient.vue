@@ -85,7 +85,8 @@ export default {
 			'getPubStatus',
 			'getNewSubscribe',
 			'getNewPublish',
-			'startsimtrigger'
+			'startsimtrigger',
+			'abortsimtrigger'
 		])
 	},
 	watch: {
@@ -147,6 +148,12 @@ export default {
 			}
 
 			// this.client.publish('user/system', this.clientid + ':' + 'Start');
+		},
+		abortsimtrigger: function() {
+			this.client.publish(
+				'user/system',
+				this.$store.state.username + ':' + 'Abort'
+			);
 		},
 		backend_online: function() {
 			// Notification.success({
@@ -358,7 +365,8 @@ export default {
 					].includes(message.toString())
 				) {
 					this.$store.commit('setstartready');
-				} else if (message.toString() == 'The simulation is started') {
+				} else if (message.toString().includes('The simulation is started')) {
+					this.$store.commit('setStartTime', +message.toString().split('@')[1])
 					this.$store.commit('setstartdisable');
 				}
 				this.$store.commit('updatebadge');

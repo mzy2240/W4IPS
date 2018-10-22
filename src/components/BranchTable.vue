@@ -162,6 +162,9 @@ export default {
 		updateTable() {
 			setInterval(() => {
 				try {
+					// const temp = JSON.parse(this.$store.state.rawdata).Data;
+					// const message = JSON.parse(this.$store.state.rawdata)
+					// console.log(message);
 					const temp = JSON.parse(this.$store.state.rawdata).Data;
 					for (let i in this.branches) {
 						this.branches[i].Status =
