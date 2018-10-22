@@ -98,10 +98,13 @@ export default {
 				action: this.$store.state.message[3]
 			};
 			this.client.publish('user/cmd', JSON.stringify(temp));
-			if(temp.type == 'Gen' && ['OPEN', 'CLOSE'].includes(temp.action)) {
+			if (temp.type == 'Gen' && ['OPEN', 'CLOSE'].includes(temp.action)) {
 				const id = temp.id.split(',')[1];
 				// console.log(this.$store.state.casedetail.content.Gen[id]["OperationCost"])
-				this.$store.commit('addCost', this.$store.state.casedetail.content.Gen[id]["OperationCost"])
+				this.$store.commit(
+					'addCost',
+					this.$store.state.casedetail.content.Gen[id]['OperationCost']
+				);
 			}
 		},
 		getNewSubscribe: function(newVal, oldVal) {
@@ -130,10 +133,19 @@ export default {
 			);
 		},
 		startsimtrigger: function() {
-			this.client.publish(
-				'user/system',
-				this.$store.state.username + ':' + 'Start'
-			);
+			if (!this.$store.state.simtime) {
+				this.client.publish(
+					'user/system',
+					this.$store.state.username + ':' + 'Start'
+				);
+			} else {
+				this.client.publish(
+					'user/system',
+					this.$store.state.username + ':' + 'run till seconds ' + this.$store.state.simtime
+				);
+				this.$store.commit('clearsimtime');
+			}
+
 			// this.client.publish('user/system', this.clientid + ':' + 'Start');
 		},
 		backend_online: function() {
@@ -339,7 +351,12 @@ export default {
 					position: 'topCenter',
 					timeout: 8000
 				});
-				if (['The simulation has been aborted', 'The system goes blackout'].includes(message.toString())) {
+				if (
+					[
+						'The simulation has been aborted',
+						'The system goes blackout'
+					].includes(message.toString())
+				) {
 					this.$store.commit('setstartready');
 				} else if (message.toString() == 'The simulation is started') {
 					this.$store.commit('setstartdisable');

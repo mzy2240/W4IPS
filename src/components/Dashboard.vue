@@ -59,7 +59,8 @@
 							<v-list-tile-title>Chat</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
-					<v-list-tile avatar :key="'start'" v-if="$store.state.ready4start" @click="$store.commit('trigstartsim')">
+					<!-- <v-list-tile avatar :key="'start'" v-if="$store.state.ready4start" @click="$store.commit('trigstartsim')"> -->
+					<v-list-tile avatar :key="'start'" @click="startDialog=true">
 						<v-list-tile-avatar>
 							<v-icon>play_arrow</v-icon>
 						</v-list-tile-avatar>
@@ -113,6 +114,7 @@
 		<CostBot></CostBot>
 		<AGCBot></AGCBot>
 		<chatpop v-if="dialog" :visible="dialog" @close="dialog=false"></chatpop>
+		<startpop v-if="startDialog" :visible="startDialog" @close="startDialog=false"></startpop>
 	</div>
 </template>
 
@@ -135,7 +137,8 @@ export default {
 		return {
 			drawer: true,
 			dialog: false,
-			show: false
+			show: false,
+			startDialog: false
 		};
 	},
 	computed: {
@@ -145,6 +148,7 @@ export default {
 	},
 	components: {
 		chatpop: () => import('./chatpop'),
+		startpop: () => import('./startpop'),
 		MqttClient,
 		Home: () => import('../views/Home'),
 		generator: generator,

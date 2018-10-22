@@ -47,7 +47,8 @@ export default new Vuex.Store({
 		totalMWh: 0,
 		unitTimeCost: null,
 		ACE: 30, // for test,
-		isAdmin: false
+		isAdmin: false,
+		simtime: null
 	},
 	getters: {
 		getPubStatus(state) {
@@ -117,6 +118,13 @@ export default new Vuex.Store({
 		},
 		trigstartsim(state) {
 			state.startsim ++;
+		},
+		trigsimtoseconds(state, payload) {
+			state.simtime = payload;
+			state.startsim ++;
+		},
+		clearsimtime(state) {
+			state.simtime = null;
 		},
 		setstartready(state) {
 			state.ready4start = true;
