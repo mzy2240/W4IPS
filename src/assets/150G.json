@@ -2228,8 +2228,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "110": {
@@ -2244,8 +2244,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "111": {
@@ -2260,8 +2260,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "112": {
@@ -2276,8 +2276,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "113": {
@@ -2292,8 +2292,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "114": {
@@ -2308,8 +2308,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "115": {
@@ -2324,8 +2324,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "116": {
@@ -2340,8 +2340,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "117": {
@@ -2356,8 +2356,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "118": {
@@ -2372,8 +2372,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "119": {
@@ -2388,8 +2388,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "120": {
@@ -2404,8 +2404,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "121": {
@@ -2420,8 +2420,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "122": {
@@ -2436,8 +2436,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "123": {
@@ -2452,8 +2452,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "124": {
@@ -2468,8 +2468,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "125": {
@@ -2484,8 +2484,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "126": {
@@ -2500,8 +2500,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "127": {
@@ -2516,8 +2516,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "128": {
@@ -2532,8 +2532,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "129": {
@@ -2548,8 +2548,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "130": {
@@ -2564,8 +2564,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "131": {
@@ -2580,8 +2580,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "132": {
@@ -2596,8 +2596,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "133": {
@@ -2612,8 +2612,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "134": {
@@ -2628,8 +2628,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             },
             "135": {
@@ -2644,8 +2644,8 @@
                 "String.ID": "1",
                 "OperationCost": 25,
                 "MarginalCostCoefficients": [
-                    25,
-                    0.025
+                    15,
+                    0.01
                 ]
             }
         },
