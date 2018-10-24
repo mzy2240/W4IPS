@@ -23,19 +23,19 @@
 			<v-layout row wrap>
 				<!-- mini statistic start -->
 				<v-flex lg3 sm6 xs12>
-					<mini-statistic :name="'GenMW'" icon="fa fa-facebook" title="Total Generation (MW)" :sub-title="areaData[0]" color="indigo" :img="require('../assets/icons8-factory-64.png')">
+					<mini-statistic :name="'GenMW'" icon="fa fa-facebook" title="Total Generation (MW)" :sub-title="$store.state.areaData[0]" color="indigo" :img="require('../assets/icons8-factory-64.png')">
 					</mini-statistic>
 				</v-flex>
 				<v-flex lg3 sm6 xs12>
-					<mini-statistic :name="'LoadMW'" icon="fa fa-google" title="Total Load (MW)" :sub-title="areaData[2]" color="red" :img="require('../assets/kitchen-set.png')">
+					<mini-statistic :name="'LoadMW'" icon="fa fa-google" title="Total Load (MW)" :sub-title="$store.state.areaData[2]" color="red" :img="require('../assets/kitchen-set.png')">
 					</mini-statistic>
 				</v-flex>
 				<v-flex lg3 sm6 xs12>
-					<mini-statistic :name="'Freq'" icon="fa fa-twitter" title="Average Frequency (Hz)" :sub-title="areaData[8]" color="light-blue" :img="require('../assets/icons8-frequency-64.png')">
+					<mini-statistic :name="'Freq'" icon="fa fa-twitter" title="Average Frequency (Hz)" :sub-title="$store.state.areaData[8]" color="light-blue" :img="require('../assets/icons8-frequency-64.png')">
 					</mini-statistic>
 				</v-flex>
 				<v-flex lg3 sm6 xs12>
-					<mini-statistic :name="'ExportMW'" icon="fa fa-instagram" title="Export Power (MW)" :sub-title="areaData[6]" color="purple" :img="require('../assets/export.png')">
+					<mini-statistic :name="'ExportMW'" icon="fa fa-instagram" title="Export Power (MW)" :sub-title="$store.state.areaData[6]" color="purple" :img="require('../assets/export.png')">
 					</mini-statistic>
 				</v-flex>
 				<v-flex lg8 sm12 xs12>
@@ -54,7 +54,7 @@
 						<v-flex lg12 sm12 xs12>
 							<v-widget title="Area Generation Overview" content-bg="white">
 								<div slot="widget-content">
-									<pie :areatotal="areaData[0]"></pie>
+									<pie :areatotal="$store.state.areaData[0]"></pie>
 									<!-- <v-card dark color="light-blue">
 
 										<v-card-text class="px-0">Title</v-card-text>
@@ -133,8 +133,6 @@ export default {
 			mwfromArray: [],
 			openLineData: [],
 			branchToOpenBranch: {},
-			areaData: [],
-			areaDataLength: this.$store.state.fieldstore['Area'].length,
 			highRiskLines: {},
 			formatRiskLines: []
 		};
@@ -493,10 +491,6 @@ export default {
 		},
 		updateLines() {
 			const temp = JSON.parse(this.$store.state.rawdata).Data;
-			this.areaData = temp.slice(0, this.areaDataLength);
-			// this.areaData = this.areaData.map(function(ele) {
-			// 	return Number(ele.toFixed(3));
-			// });
 			const branchData = temp.slice(this.anchor, this.anchor + this.dataLength);
 			let branchIndex;
 			let statusTemp = [];

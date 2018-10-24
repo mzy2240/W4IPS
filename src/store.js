@@ -62,7 +62,8 @@ export default new Vuex.Store({
 			data: [],
 			violate: [],
 			comment: null
-		}
+		},
+		areaData: []
 	},
 	getters: {
 		getPubStatus(state) {
@@ -273,6 +274,9 @@ export default new Vuex.Store({
 				violate: [],
 				comment: null
 			};
+		},
+		setAreaData(state, payload) {
+			state.areaData = payload;
 		}
 	},
 	actions: {

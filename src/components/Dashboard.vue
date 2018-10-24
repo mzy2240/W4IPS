@@ -151,7 +151,8 @@
 			<!-- <router-view/> -->
 		</v-content>
 		<MqttClient></MqttClient>
-		<CostBot></CostBot>
+		<DataProcessing></DataProcessing>
+		<!-- <CostBot></CostBot> -->
 		<AGCBot></AGCBot>
 		<chatpop v-if="dialog" :visible="dialog" @close="dialog=false"></chatpop>
 		<startpop v-if="startDialog" :visible="startDialog" @close="startDialog=false"></startpop>
@@ -169,7 +170,8 @@ import branch from '../views/branch-view';
 // import chatpop from './components/chatpop';
 import MqttClient from './MqttClient';
 import Util from '../util';
-import CostBot from './CostBot';
+import DataProcessing from './DataProcessing';
+// import CostBot from './CostBot';
 import AGCBot from './AGCBot';
 import marquee from './marquee';
 import Clock from './Clock';
@@ -201,11 +203,12 @@ export default {
 		shunt: shunt,
 		admin,
 		NotificationList: () => import('./NotificationList'),
-		CostBot,
+		// CostBot,
 		AGCBot,
 		branch,
 		marquee,
-		Clock
+		Clock,
+		DataProcessing
 	},
 	methods: {
 		handleFullScreen() {
