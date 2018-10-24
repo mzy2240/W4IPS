@@ -76,7 +76,12 @@ export default {
 			this.$store.commit('setCurrentTime', +message['SOC']);
 			this.$store.commit('setCurrentStatus', message['Status']);
 			const temp = message.Data;
-			this.$store.commit('setAreaData', temp.slice(0, this.areaDataLength));
+			const areaData = temp.slice(0, this.areaDataLength);
+			this.$store.commit('setAreaData', areaData);
+			this.$store.commit('addReportData', {
+				time: this.$store.state.currentTime,
+				areaData: areaData
+			});
 			for (let i in this.gens) {
 				this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
 				this.gens[i].Mvar = temp[this.anchor + 7 + i * this.genDataLength];
