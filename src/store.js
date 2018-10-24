@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import datafield from './assets/datafield.json'
-import tcmcommands from './assets/tcmcommands.json'
-import casedetail from './assets/150G.json'
+import datafield from './assets/datafield.json';
+import tcmcommands from './assets/tcmcommands.json';
+import casedetail from './assets/150G.json';
 // import casedetail from './assets/2000.json'
-import notificationSystem from './assets/notificationsettings'
+import notificationSystem from './assets/notificationsettings';
 // import casedetail from './assets/150.json'
 
 Vue.use(Vuex);
@@ -32,10 +32,10 @@ export default new Vuex.Store({
 		badgeShow: false,
 		subDetail: {},
 		busDetail: {},
-		totalCapacity: (function(){
+		totalCapacity: (function() {
 			var temp = 0;
 			for (let ele in casedetail.content.Gen) {
-				temp += casedetail.content.Gen[ele]["Single.MW Max Limit"]
+				temp += casedetail.content.Gen[ele]['Single.MW Max Limit'];
 			}
 			return temp;
 		})(),
@@ -55,7 +55,14 @@ export default new Vuex.Store({
 		startTime: null,
 		currentTime: null,
 		lapse: null,
-		status: 'offline'
+		status: 'offline',
+		report: {
+			name: null,
+			user: [],
+			data: [],
+			violate: [],
+			comment: null
+		}
 	},
 	getters: {
 		getPubStatus(state) {
@@ -82,7 +89,7 @@ export default new Vuex.Store({
 		abortsimtrigger(state) {
 			return state.abortsim;
 		},
-		page (state) {
+		page(state) {
 			return state.page;
 		},
 		getBadge(state) {
@@ -126,7 +133,7 @@ export default new Vuex.Store({
 		setUUID(state, payload) {
 			state.UUID = payload;
 		},
-		updateConfig(state, payload){
+		updateConfig(state, payload) {
 			state.casedetail = payload;
 		},
 		updateRawData(state, payload) {
@@ -139,17 +146,17 @@ export default new Vuex.Store({
 			state.newpublish = payload;
 		},
 		trigstartsim(state) {
-			state.startsim ++;
+			state.startsim++;
 		},
 		trigsimtoseconds(state, payload) {
 			state.simtime = payload;
-			state.startsim ++;
+			state.startsim++;
 		},
 		trigpausesim(state) {
-			state.pausesim ++;
+			state.pausesim++;
 		},
 		trigabortsim(state) {
-			state.abortsim ++;
+			state.abortsim++;
 		},
 		clearsimtime(state) {
 			state.simtime = null;
@@ -164,7 +171,7 @@ export default new Vuex.Store({
 			state.page = payload;
 		},
 		updatebadge(state) {
-			state.badge ++;
+			state.badge++;
 			state.badgeShow = true;
 		},
 		resetbadge(state) {
@@ -172,7 +179,7 @@ export default new Vuex.Store({
 			state.badgeShow = false;
 		},
 		updatebadgelist(state, payload) {
-			state.badgelist.unshift(payload)
+			state.badgelist.unshift(payload);
 		},
 		resetbadgelist(state) {
 			state.badgelist = [];
@@ -184,30 +191,30 @@ export default new Vuex.Store({
 			state.busDetail = payload;
 		},
 		addLine(state, payload) {
-			state.violatedLines.push(payload)
+			state.violatedLines.push(payload);
 		},
 		removeLine(state, payload) {
-			state.violatedLines.pop(payload)
+			state.violatedLines.pop(payload);
 		},
 		updateSelectedBranches(state, payload) {
 			state.violatedLines = payload;
 		},
 		updateVBuses(state, payload) {
-			state.violatedBuses = payload
+			state.violatedBuses = payload;
 		},
 		updateSelectedShunts(state, payload) {
-			state.selectedShunts = payload
+			state.selectedShunts = payload;
 		},
 		updateSelectedGens(state, payload) {
-			state.selectedGens = payload
+			state.selectedGens = payload;
 		},
 		triggerAlarm(state, payload) {
-			if(!(payload in state.alarm)) {
+			if (!(payload in state.alarm)) {
 				state.alarm.push(payload);
 			}
 		},
 		dismissAlarm(state, payload) {
-			if(payload in state.alarm) {
+			if (payload in state.alarm) {
 				state.alarm.pop(payload);
 			}
 		},
@@ -215,7 +222,7 @@ export default new Vuex.Store({
 			state.genData = payload;
 		},
 		addCost(state, payload) {
-			state.totalCost = state.totalCost+payload;
+			state.totalCost = state.totalCost + payload;
 		},
 		addMWh(state, payload) {
 			state.totalMWh = state.totalMWh + payload;
@@ -224,7 +231,7 @@ export default new Vuex.Store({
 			state.unitTimeCost = payload;
 		},
 		toggleALL(state, payload) {
-			for(let i in state.genData) {
+			for (let i in state.genData) {
 				state.genData[i].AGC = payload;
 			}
 		},
@@ -236,12 +243,36 @@ export default new Vuex.Store({
 		},
 		setCurrentTime(state, payload) {
 			state.currentTime = payload;
-			if(state.startTime) {
-				state.lapse = +(state.currentTime - state.startTime)
+			if (state.startTime) {
+				state.lapse = +(state.currentTime - state.startTime);
 			}
 		},
 		setCurrentStatus(state, payload) {
 			state.status = payload;
+		},
+		setReportName(state, payload) {
+			state.report.name = payload;
+		},
+		addReportData(state, payload) {
+			state.report.data.push(payload);
+		},
+		addReportUser(state, payload) {
+			state.report.user.push(payload);
+		},
+		addReportViolate(state, payload) {
+			state.report.violate.push(payload);
+		},
+		setReportComment(state, payload) {
+			state.report.comment = payload;
+		},
+		resetReport(state) {
+			state.report = {
+				name: null,
+				user: [],
+				data: [],
+				violate: [],
+				comment: null
+			};
 		}
 	},
 	actions: {

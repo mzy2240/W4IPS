@@ -155,6 +155,7 @@
 		<AGCBot></AGCBot>
 		<chatpop v-if="dialog" :visible="dialog" @close="dialog=false"></chatpop>
 		<startpop v-if="startDialog" :visible="startDialog" @close="startDialog=false"></startpop>
+		<reportpop v-if="reportDialog" :visible="reportDialog" @close="reportDialog=false"></reportpop>
 	</div>
 </template>
 
@@ -192,6 +193,7 @@ export default {
 	components: {
 		chatpop: () => import('./chatpop'),
 		startpop: () => import('./startpop'),
+		reportpop: () => import('./reportpop'),
 		MqttClient,
 		Home: () => import('../views/Home'),
 		generator: generator,

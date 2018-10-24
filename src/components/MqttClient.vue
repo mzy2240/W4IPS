@@ -3,9 +3,6 @@
 		<chatpop v-if="chatShow" :visible="chatShow" :topic="chatTopic" @close="chatShow=false"></chatpop>
 		<linepop v-if="lineshowDialog" :visible='lineshowDialog' :type='type' :id='id' :name='name' @close="lineshowDialog=false" />
 		<subpop v-if="subshowDialog" :visible='subshowDialog' :children='children' :type='type' :id='id' :name='name' @close="subshowDialog=false" />
-		<!-- <linepop v-if="lineshowDialog" :visible='lineshowDialog' :type='type' :id='id' :name='name' :volt='volt' @close="lineshowDialog=false" /> -->
-		<!-- <p>{{ usermessage }}</p> -->
-		<!-- <p>{{ datamessage }}</p> -->
 	</div>
 </template>
 
@@ -14,18 +11,6 @@ import mqtt from 'mqtt';
 import { mapGetters } from 'vuex';
 import fingerprint from 'fingerprintjs2';
 import iziToast from 'izitoast';
-// import chatpop from './chatpop';
-// import linepop from './linepop';
-// import subpop from './subpop';
-// import { Notification } from 'element-ui';
-// import Vue from 'vue'
-// import VueNativeNotification from 'vue-native-notification'
-
-// Vue.use(VueNativeNotification, {
-//   // Automatic permission request before
-//   // showing notification (default: true)
-//   requestOnNotify: true
-// })
 import Push from 'push.js';
 
 export default {
@@ -100,9 +85,12 @@ export default {
 				action: this.$store.state.message[3]
 			};
 			this.client.publish('user/cmd', JSON.stringify(temp));
+			this.$store.commit('addReportUser', {
+				time: this.$store.state.currentTime,
+				event: [temp.type, temp.id, temp.action]
+			})
 			if (temp.type == 'Gen' && ['OPEN', 'CLOSE'].includes(temp.action)) {
 				const id = temp.id.split(',')[1];
-				// console.log(this.$store.state.casedetail.content.Gen[id]["OperationCost"])
 				this.$store.commit(
 					'addCost',
 					this.$store.state.casedetail.content.Gen[id]['OperationCost']
@@ -111,15 +99,6 @@ export default {
 		},
 		getNewSubscribe: function(newVal, oldVal) {
 			this.client.subscribe(newVal);
-			// Notification.success({
-			// 		title: 'Success',
-			// 		message: "Successfully subscribed to a new topic #" + newVal
-			// 	})
-			// this.$toast.success(
-			// 	'Successfully subscribed to a new topic #' + newVal,
-			// 	'System',
-			// 	this.$store.state.notificationSystem.options.success
-			// );
 			iziToast.success({
 				title: 'System',
 				message: 'Successfully subscribed to a new topic #' + newVal,
@@ -143,12 +122,13 @@ export default {
 			} else {
 				this.client.publish(
 					'user/system',
-					this.$store.state.username + ':' + 'run till seconds ' + this.$store.state.simtime
+					this.$store.state.username +
+						':' +
+						'run till seconds ' +
+						this.$store.state.simtime
 				);
 				this.$store.commit('clearsimtime');
 			}
-
-			// this.client.publish('user/system', this.clientid + ':' + 'Start');
 		},
 		pausesimtrigger: function() {
 			this.client.publish(
@@ -163,17 +143,6 @@ export default {
 			);
 		},
 		backend_online: function() {
-			// Notification.success({
-			// 		title: 'DS backend is connected',
-			// 		// message: message.toString(),
-			// 		iconClass: "el-icon-circle-check-outline",
-			// 		duration: 4500
-			// 	})
-			// this.$toast.success(
-			// 	'DS backend is connected',
-			// 	'System',
-			// 	this.$store.state.notificationSystem.options.success
-			// );
 			iziToast.success({
 				title: 'System',
 				message: 'DS backend is connected',
@@ -185,9 +154,6 @@ export default {
 	methods: {
 		onInitClient() {
 			this.onGetUUID();
-			// if(!this.clientid) {
-			// 	this.clientid = this.$store.state.username;
-			// }
 			this.client = mqtt.connect(
 				this.protocol + '://' + this.address,
 				{
@@ -209,23 +175,10 @@ export default {
 				this.clientid = result.substring(0, 4);
 				this.$store.commit('setUUID', this.clientid);
 			});
-			// this.clientid = this.$store.state.username;
-			// this.$store.commit('setUUID', this.clientid);
 		},
 		onConnect(connack) {
 			console.log('onConnect');
 			this.client.subscribe(this.subtopic);
-			// Notification.success({
-			// 		title: 'MQTT broker is connected',
-			// 		// message: message.toString(),
-			// 		iconClass: "el-icon-circle-check-outline",
-			// 		duration: 4000
-			// 	})
-			// this.$toast.success(
-			// 	'MQTT broker is connected',
-			// 	'System',
-			// 	this.$store.state.notificationSystem.options.success
-			// );
 			iziToast.success({
 				title: 'System',
 				message: 'MQTT broker is connected',
@@ -234,7 +187,6 @@ export default {
 			});
 		},
 		onMessage(topic, message) {
-			//console.log('#' + topic.toString() + '# ' + message.toString())
 			var self = this;
 			if (topic == 'ds/data') {
 				this.$store.commit('updateRawData', message);
@@ -282,9 +234,6 @@ export default {
 											break;
 										}
 									}
-									// self.children = [self.$store.state.busDetail[+self.id]];
-									// Show the substation dialog
-									// self.subshowDialog = true
 								}
 							}
 						]
@@ -327,19 +276,9 @@ export default {
 									break;
 								}
 							}
-							// self.children = [self.$store.state.busDetail[+self.id]];
-							// Show the substation dialog
-							// self.subshowDialog = true
 						}
 					}
 				});
-				// this.$notification.show(
-				// 	'System',
-				// 	{
-				// 		body: this.usermessage
-				// 	},
-				// 	{}
-				// );
 				this.$store.commit('updatebadge');
 				this.$store.commit('updatebadgelist', {
 					title: this.usermessage,
@@ -348,16 +287,6 @@ export default {
 					time: Date.now()
 				});
 			} else if (topic == 'ds/system') {
-				// Notification.warning({
-				// 	title: message.toString(),
-				// 	iconClass: "el-icon-setting",
-				// 	duration: 5500
-				// })
-				// this.$toast.warning(
-				// 	message.toString(),
-				// 	'System',
-				// 	this.$store.state.notificationSystem.options.warning2
-				// );
 				iziToast.warning({
 					title: 'System',
 					message: message.toString(),
@@ -373,7 +302,8 @@ export default {
 				) {
 					this.$store.commit('setstartready');
 				} else if (message.toString().includes('The simulation is started')) {
-					this.$store.commit('setStartTime', +message.toString().split('@')[1])
+					this.$store.commit('resetReport');  // Reset the report when the simulation starts
+					this.$store.commit('setStartTime', +message.toString().split('@')[1]);
 					this.$store.commit('setstartdisable');
 				}
 				this.$store.commit('updatebadge');
@@ -384,12 +314,6 @@ export default {
 					time: Date.now()
 				});
 			} else {
-				// Notification.success({
-				// 	title: 'User Message',
-				// 	message: message.toString(),
-				// 	iconClass: "el-icon-sort",
-				// 	duration: 5000
-				// })
 				iziToast.show({
 					title: message.toString().split(':')[0],
 					message: message.toString().split(':')[1],
@@ -405,7 +329,6 @@ export default {
 						]
 					]
 				});
-				// this.$toast.show(message.toString().split(':')[1], message.toString().split(':')[0], this.$store.state.notificationSystem.options.ballon);
 				this.$store.commit('updatebadge');
 				this.$store.commit('updatebadgelist', {
 					title: message.toString(),
@@ -420,12 +343,6 @@ export default {
 		},
 		onReconnect() {
 			console.log('onReconnect');
-			// Notification.success({
-			// 	title: 'MQTT broker is being reconnected',
-			// 	// message: message.toString(),
-			// 	iconClass: 'el-icon-circle-check-outline',
-			// 	duration: 3000
-			// });
 			iziToast.success({
 				title: 'System',
 				message: 'MQTT broker is being reconnected',
@@ -435,12 +352,6 @@ export default {
 		},
 		onOffline() {
 			console.log('onOffline');
-			// Notification.error({
-			// 	title: 'MQTT broker is disconnected',
-			// 	// message: message.toString(),
-			// 	iconClass: 'el-icon-circle-close-outline',
-			// 	duration: 3000
-			// });
 			iziToast.error({
 				title: 'System',
 				message: 'MQTT broker is disconnected',
