@@ -29,16 +29,19 @@
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
 							<v-widget title="GMD" content-bg="white">
+								<div slot="widget-header-action">
+									<v-switch class="mt-3" v-model="GMDSwitch"></v-switch>
+								</div>
 								<div slot="widget-content">
 									<v-card flat color="transparent">
 										<v-card-title>Johnsonville - Nashville</v-card-title>
 										<v-subheader>{{$store.state.lapse}}</v-subheader>
 										<v-card-text>
 											<v-layout row>
-												<v-flex sm10>
+												<v-flex sm9>
 													<v-slider v-model="slider" :max="max" :min="min"></v-slider>
 												</v-flex>
-												<v-flex sm2>
+												<v-flex sm3>
 													<v-text-field v-model="slider" suffix="s" class="mt-0" hide-details single-line type="number"></v-text-field>
 												</v-flex>
 											</v-layout>
@@ -80,7 +83,8 @@ export default {
 			min: 0,
 			max: 250,
 			slider: this.$store.state.slider,
-			triggered: false
+			triggered: false,
+			GMDSwitch: false
 		}
 	},
 	components: {
@@ -96,7 +100,10 @@ export default {
 	},
 	watch: {
 		timelapse: function() {
-			if(this.$store.state.lapse >= +this.slider && !this.triggered) {
+			if(this.$store.state.lapse < +this.slider && this.triggered) {
+				this.triggered = false;
+			};
+			if(this.$store.state.lapse >= +this.slider && !this.triggered && this.GMDSwitch) {
 				this.$store.commit('setMessage', [
 						'Branch',
 						'144,101,1',
@@ -105,7 +112,7 @@ export default {
 					]);
 					this.$store.commit('setPublish');
 				this.triggered = true;
-			}
+			};
 			// this.chart.setOption({series: [{
 			// 	id: 'vbus',
 			// 	name: 'vbus',

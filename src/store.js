@@ -100,6 +100,9 @@ export default new Vuex.Store({
 		getSelectedGens(state) {
 			return state.selectedGens;
 		},
+		getCurrentTime(state) {
+			return state.currentTime;
+		},
 		getLapse(state) {
 			return state.lapse;
 		},

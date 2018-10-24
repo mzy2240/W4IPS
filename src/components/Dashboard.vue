@@ -5,6 +5,16 @@
 		<v-navigation-drawer fixed app clipped dark mobile-break-point="300" width="160" v-model="drawer">
 			<v-toolbar flat class="transparent">
 				<v-list dense expand class="pa-0">
+					<v-list-tile avatar :key="'clock'">
+						<Clock></Clock>
+						<!-- <v-list-tile-avatar>
+							<v-icon>mdi-home</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>Home</v-list-tile-title>
+						</v-list-tile-content> -->
+					</v-list-tile>
 					<v-list-tile avatar :key="'home'" @click="$store.commit('setpage', 'Home')">
 						<v-list-tile-avatar>
 							<v-icon>mdi-home</v-icon>
@@ -152,6 +162,7 @@ import Util from '../util';
 import CostBot from './CostBot';
 import AGCBot from './AGCBot';
 import marquee from './marquee';
+import Clock from './Clock';
 // import NotificationList from './components/NotificationList';
 
 export default {
@@ -181,7 +192,8 @@ export default {
 		CostBot,
 		AGCBot,
 		branch,
-		marquee
+		marquee,
+		Clock
 	},
 	methods: {
 		handleFullScreen() {
