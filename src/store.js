@@ -54,7 +54,8 @@ export default new Vuex.Store({
 		slider: 150,
 		startTime: null,
 		currentTime: null,
-		lapse: null
+		lapse: null,
+		status: 'offline'
 	},
 	getters: {
 		getPubStatus(state) {
@@ -101,6 +102,9 @@ export default new Vuex.Store({
 		},
 		getLapse(state) {
 			return state.lapse;
+		},
+		getStatus(state) {
+			return state.status;
 		}
 	},
 	mutations: {
@@ -232,6 +236,9 @@ export default new Vuex.Store({
 			if(state.startTime) {
 				state.lapse = +(state.currentTime - state.startTime)
 			}
+		},
+		setCurrentStatus(state, payload) {
+			state.status = payload;
 		}
 	},
 	actions: {

@@ -124,6 +124,7 @@
 			</v-menu>
 		</v-toolbar>
 		<v-content>
+			<marquee></marquee>
 			<div class="page-wrapper">
 				<component v-bind:is="page"></component>
 			</div>
@@ -150,6 +151,7 @@ import MqttClient from './MqttClient';
 import Util from '../util';
 import CostBot from './CostBot';
 import AGCBot from './AGCBot';
+import marquee from './marquee';
 // import NotificationList from './components/NotificationList';
 
 export default {
@@ -178,7 +180,8 @@ export default {
 		NotificationList: () => import('./NotificationList'),
 		CostBot,
 		AGCBot,
-		branch
+		branch,
+		marquee
 	},
 	methods: {
 		handleFullScreen() {

@@ -72,6 +72,7 @@ export default {
 		getMP() {
 			const message = JSON.parse(this.$store.state.rawdata)
 			this.$store.commit('setCurrentTime', +message['SOC']);
+			this.$store.commit('setCurrentStatus', message['Status']);
 			const temp = message.Data;
 			for (let i in this.gens) {
 				this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
