@@ -108,6 +108,15 @@
 							<v-list-tile-title>Admin</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
+					<v-list-tile avatar :key="'report'" @click="reportDialog=true">
+						<v-list-tile-avatar>
+							<v-icon>save_alt</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>Report</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
 				</v-list>
 			</v-toolbar>
 		</v-navigation-drawer>
@@ -171,7 +180,8 @@ export default {
 			drawer: true,
 			dialog: false,
 			show: false,
-			startDialog: false
+			startDialog: false,
+			reportDialog: false
 		};
 	},
 	computed: {
