@@ -86,6 +86,7 @@ export default {
 			'getNewSubscribe',
 			'getNewPublish',
 			'startsimtrigger',
+			'pausesimtrigger',
 			'abortsimtrigger'
 		])
 	},
@@ -148,6 +149,12 @@ export default {
 			}
 
 			// this.client.publish('user/system', this.clientid + ':' + 'Start');
+		},
+		pausesimtrigger: function() {
+			this.client.publish(
+				'user/system',
+				this.$store.state.username + ':' + 'Pause'
+			);
 		},
 		abortsimtrigger: function() {
 			this.client.publish(

@@ -69,6 +69,16 @@
 							<v-list-tile-title>Start</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
+					<v-list-tile avatar :key="'pause'" @click="$store.commit('trigpausesim')">
+					<!-- <v-list-tile avatar :key="'start'" @click="startDialog=true"> -->
+						<v-list-tile-avatar>
+							<v-icon>mdi-pause</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>pause</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
 					<v-list-tile avatar :key="'abort'" @click="$store.commit('trigabortsim')">
 					<!-- <v-list-tile avatar :key="'start'" @click="startDialog=true"> -->
 						<v-list-tile-avatar>

@@ -22,6 +22,7 @@ export default new Vuex.Store({
 		newsubscribe: [],
 		newpublish: [],
 		startsim: 0,
+		pausesim: 0,
 		abortsim: 0,
 		ready4start: false,
 		page: 'Home',
@@ -73,6 +74,9 @@ export default new Vuex.Store({
 		},
 		startsimtrigger(state) {
 			return state.startsim;
+		},
+		pausesimtrigger(state) {
+			return state.pausesim;
 		},
 		abortsimtrigger(state) {
 			return state.abortsim;
@@ -133,6 +137,9 @@ export default new Vuex.Store({
 		trigsimtoseconds(state, payload) {
 			state.simtime = payload;
 			state.startsim ++;
+		},
+		trigpausesim(state) {
+			state.pausesim ++;
 		},
 		trigabortsim(state) {
 			state.abortsim ++;
