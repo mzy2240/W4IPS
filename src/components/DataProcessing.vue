@@ -252,15 +252,11 @@ export default {
 			this.$store.commit('setCurrentTime', +message['SOC']);
 			this.$store.commit('setCurrentStatus', message['Status']);
 			const temp = message.Data;
-			const areaData = temp.slice(0, this.areaDataLength);
+			this.areaData = temp.slice(0, this.areaDataLength);
 			this.busData = temp.slice(this.busAnchor, this.busAnchor + this.busDataLength);
 			this.branchData = temp.slice(this.branchAnchor, this.branchAnchor + this.branchDataLength);
 			this.$store.commit('setData', temp);
 			this.$store.commit('setAreaData', areaData);
-			this.$store.commit('addReportData', {
-				time: this.$store.state.currentTime,
-				areaData: areaData
-			});
 			for (let i in this.gens) {
 				this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
 				this.gens[i].Mvar = temp[this.anchor + 7 + i * this.genDataLength];
@@ -302,6 +298,14 @@ export default {
 		this.initRiskBus();
 		this.initRiskBranch();
 		this.updateTotalCost();
+		setInterval(()=> {
+			if(this.$store.state.status === 'running') {
+				this.$store.commit('addReportData', {
+					time: this.$store.state.currentTime,
+					areaData: this.areaData
+			});
+			}
+		}, 1000);
 		setInterval(() => {
 			if(this.$store.state.status === 'running') {
 				if(this.formatRiskBuses.length>0) {
@@ -317,7 +321,7 @@ export default {
 					})
 				};
 			}
-		}, 5000)
+		}, 5000);
 	},
 	computed: {
 		...mapGetters({
