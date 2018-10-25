@@ -223,6 +223,8 @@ export default {
 						// coordinateSystem: 'bmap',
 						symbol: 'circle',
 						showEffectOn: 'emphasis',
+						progressive: 20,
+						progressiveThreshold: 100,
 						// zindex: 2,
 						data: [],
 						tooltip: {
@@ -240,6 +242,9 @@ export default {
 						name: 'lines',
 						type: 'lines',
 						coordinateSystem: 'leaflet',
+						animation: false,
+						progressive: 20,
+						progressiveThreshold: 100,
 						// coordinateSystem: 'bmap',
 						silent: false,
 						// effect: {
@@ -257,7 +262,9 @@ export default {
 							position: 'middle',
 							formatter: function(params) {
 								const limit = params.data.attributes.MVALimit;
-								return limit.toString();
+								const value = params.data.attributes.MVA;
+								const percentage = (value*100/limit).toFixed(0)
+								return percentage.toString() + '%';
 							},
 							rich: {
 								overload: {
@@ -525,6 +532,7 @@ export default {
 			for (let index in this.linedata) {
 				statusTemp.push(branchData[i]);
 				branchIndex = i / this.branchArrLength;
+				this.linedata[branchIndex].attributes.MVA = branchData[i + 3];
 				if (
 					this.statusArray[branchIndex] == 1 &&
 					[0, 2, 3].includes(branchData[i])
@@ -586,6 +594,7 @@ export default {
 						},
 						{
 							id: 'openLines',
+							type:'lines',
 							data: this.openLineData
 						}
 					]
