@@ -242,15 +242,37 @@ export default {
 						coordinateSystem: 'leaflet',
 						// coordinateSystem: 'bmap',
 						silent: false,
-						effect: {
+						// effect: {
+						// 	show: true,
+						// 	constantSpeed: 20,
+						// 	symbol: 'arrow',
+						// 	symbolSize: 7,
+						// 	trailWidth: 2,
+						// 	trailLength: 0,
+						// 	trailOpacity: 1,
+						// 	spotIntensity: 10
+						// },
+						label: {
 							show: true,
-							constantSpeed: 20,
-							symbol: 'arrow',
-							symbolSize: 7,
-							trailWidth: 2,
-							trailLength: 0,
-							trailOpacity: 1,
-							spotIntensity: 10
+							position: 'middle',
+							formatter: function(params) {
+								const limit = params.data.attributes.MVALimit;
+								return limit.toString();
+							},
+							rich: {
+								overload: {
+									fontSize: 10,
+									color: 'red'
+								},
+								indanger: {
+									fontSize: 7,
+									color: 'yellow'
+								},
+								safe: {
+									fontSize: 4,
+									color: 'green'
+								}
+							}
 						},
 						// blendMode: 'lighter',
 						// polyline: true,
