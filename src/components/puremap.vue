@@ -526,9 +526,6 @@ export default {
 			let branchChanged = false;
 			let i = 0;
 			var key;
-			// for (let [key, val] of Object.entries(
-			// 	this.$store.state.casedetail.content.Branch
-			// )) {
 			for (let index in this.linedata) {
 				statusTemp.push(branchData[i]);
 				branchIndex = i / this.branchArrLength;
@@ -569,23 +566,10 @@ export default {
 				} else if (key in this.highRiskLines) {
 					delete this.highRiskLines[key];
 				}
-				// if (branchData[i + 3] >= 0.85 * val['Single.MVA Limit']) {
-				// 	this.highRiskLines[key] = val;
-				// 	this.highRiskLines[key]['name'] = key;
-				// 	this.highRiskLines[key]['MVA'] = branchData[i + 3];
-				// 	this.highRiskLines[key]['Ratio'] =
-				// 		((branchData[i + 3] / val['Single.MVA Limit']) * 100)
-				// 			.toFixed(2);
-				// } else if (key in this.highRiskLines) {
-				// 	delete this.highRiskLines[key];
-				// }
 				i += this.branchArrLength;
 			}
 			this.formatRiskLines = Object.values(this.highRiskLines);
-			// console.log(this.formatRiskLines);
-			// console.log(this.highRiskLines);
-			if (branchChanged) {
-				// console.log(this.openLineData);
+			if (true) {  //branchChanged
 				this.chart.setOption({
 					series: [
 						{
