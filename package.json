@@ -70,7 +70,8 @@
       "@vue/prettier"
     ],
     "rules": {
-      "no-console": 0,
+	  "no-console": 0,
+	  "no-constant-condition":2,
       "indent": [
         0,
         "tab"

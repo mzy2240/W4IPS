@@ -223,8 +223,8 @@ export default {
 						// coordinateSystem: 'bmap',
 						symbol: 'circle',
 						showEffectOn: 'emphasis',
-						progressive: 20,
-						progressiveThreshold: 100,
+						progressive: 40,
+						progressiveThreshold: 200,
 						// zindex: 2,
 						data: [],
 						tooltip: {
@@ -243,8 +243,8 @@ export default {
 						type: 'lines',
 						coordinateSystem: 'leaflet',
 						animation: false,
-						progressive: 20,
-						progressiveThreshold: 100,
+						progressive: 40,
+						progressiveThreshold: 200,
 						// coordinateSystem: 'bmap',
 						silent: false,
 						// effect: {
@@ -258,26 +258,37 @@ export default {
 						// 	spotIntensity: 10
 						// },
 						label: {
-							show: true,
-							position: 'middle',
-							formatter: function(params) {
-								const limit = params.data.attributes.MVALimit;
-								const value = params.data.attributes.MVA;
-								const percentage = (value*100/limit).toFixed(0)
-								return percentage.toString() + '%';
-							},
-							rich: {
-								overload: {
-									fontSize: 10,
-									color: 'red'
+							normal: {
+								show: true,
+								position: 'middle',
+								// formatter: 'YES',
+								formatter: function(params) {
+									const limit = params.data.attributes.MVALimit;
+									const value = params.data.attributes.MVA;
+									const percentage = ((value * 100) / limit).toFixed(0);
+									var richText;
+									if(percentage>=100) {
+										richText = '{overload|' + percentage.toString() + '%}'
+									} else if(percentage>=90) {
+										richText = '{indanger|' + percentage.toString() + '%}'
+									} else {
+										richText = '{safe|' + percentage.toString() + '%}'
+									}
+									return richText;
 								},
-								indanger: {
-									fontSize: 7,
-									color: 'yellow'
-								},
-								safe: {
-									fontSize: 4,
-									color: 'green'
+								rich: {
+									overload: {
+										fontSize: 18,
+										color: '#ba000d'
+									},
+									indanger: {
+										fontSize: 12,
+										color: '#ff9100'
+									},
+									safe: {
+										fontSize: 8,
+										color: '#1b5e20'
+									}
 								}
 							}
 						},
@@ -569,8 +580,9 @@ export default {
 				i += this.branchArrLength;
 			}
 			this.formatRiskLines = Object.values(this.highRiskLines);
-			if (true) {  //branchChanged
-				this.chart.setOption({
+			// if (true) {  //branchChanged
+			this.chart.setOption(
+				{
 					series: [
 						{
 							id: 'lines',
@@ -578,13 +590,15 @@ export default {
 						},
 						{
 							id: 'openLines',
-							type:'lines',
+							type: 'lines',
 							data: this.openLineData
 						}
 					]
-				});
-				this.statusArray = statusTemp;
-			}
+				},
+				false
+			);
+			this.statusArray = statusTemp;
+			// }
 		},
 		updateLineOpen(branchIndex) {
 			const temp = _.cloneDeep(this.linedata[branchIndex]);
