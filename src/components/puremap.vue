@@ -63,7 +63,7 @@
 							</v-widget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<branchTable title="High-load Branches" :tabledata="formatRiskLines"></branchTable>
+							<branchTable title="High-load Branches" :tabledata="$store.state.riskBranches"></branchTable>
 						</v-flex>
 					</v-layout>
 				</v-flex>

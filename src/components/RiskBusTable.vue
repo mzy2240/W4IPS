@@ -12,7 +12,8 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="formatRiskBuses" v-model="selected" hide-actions select-all item-key="name">
+				<v-data-table :headers="headers" :items="$store.state.riskBuses" v-model="selected" hide-actions select-all item-key="name">
+				<!-- <v-data-table :headers="headers" :items="formatRiskBuses" v-model="selected" hide-actions select-all item-key="name"> -->
 					<template slot="headerCell" slot-scope="props">
 						<v-tooltip bottom>
 							<span slot="activator">
@@ -159,7 +160,7 @@ export default {
 		},
 		getColorByValue(value) {
 			var temp;
-			if (value > 1.1) {
+			if (value >= 1.1) {
 				temp = 'red';
 			} else if (value < 0.9) {
 				temp = 'blue';
@@ -175,10 +176,10 @@ export default {
 		// this.initTable();
 	},
 	mounted() {
-		this.initMonitor();
-		setInterval(() => {
-			this.onMonitor();
-		}, 1000);
+		// this.initMonitor();
+		// setInterval(() => {
+		// 	this.onMonitor();
+		// }, 1000);
 	},
 	watch: {
 		selected: function(newval,oldval) {

@@ -63,7 +63,10 @@ export default new Vuex.Store({
 			violate: [],
 			comment: null
 		},
-		areaData: []
+		areaData: [],
+		data: [],
+		riskBuses: [],
+		riskBranches: []
 	},
 	getters: {
 		getPubStatus(state) {
@@ -277,6 +280,15 @@ export default new Vuex.Store({
 		},
 		setAreaData(state, payload) {
 			state.areaData = payload;
+		},
+		setData(state, payload) {
+			state.data = payload;
+		},
+		setRiskBuses(state, payload) {
+			state.riskBuses = payload;
+		},
+		setRiskBranches(state, payload) {
+			state.riskBranches = payload;
 		}
 	},
 	actions: {
