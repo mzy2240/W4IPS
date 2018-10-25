@@ -178,7 +178,8 @@ export default {
 					this.highRiskLines[key]['name'] = key;
 					this.highRiskLines[key]['MVA'] = this.branchData[i + 3];
 					this.highRiskLines[key]['Ratio'] = (
-						(this.branchData[i + 3] / this.linedata[index].attributes.MVALimit) *
+						(this.branchData[i + 3] /
+							this.linedata[index].attributes.MVALimit) *
 						100
 					).toFixed(2);
 					this.highRiskLines[key]['MVALimit'] = this.linedata[
@@ -197,9 +198,16 @@ export default {
 			let temp = [];
 			let subID;
 			for (let i in this.$store.state.casedetail.content.Gen) {
-				subID = this.$store.state.casedetail.content.Bus[i]["Int.Sub Number"];
+				subID = this.$store.state.casedetail.content.Bus[i]['Int.Sub Number'];
 				temp.push({
-					value: [this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Longitude"], this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Latitude"]],
+					value: [
+						this.$store.state.casedetail.content.Substation[subID.toString()][
+							'Double.Longitude'
+						],
+						this.$store.state.casedetail.content.Substation[subID.toString()][
+							'Double.Latitude'
+						]
+					],
 					name: i,
 					Status: 1,
 					MWMax: this.$store.state.casedetail.content.Gen[i][
@@ -248,13 +256,19 @@ export default {
 			this.genDataLength = arrlength;
 		},
 		getMP() {
-			const message = JSON.parse(this.$store.state.rawdata)
+			const message = JSON.parse(this.$store.state.rawdata);
 			this.$store.commit('setCurrentTime', +message['SOC']);
 			this.$store.commit('setCurrentStatus', message['Status']);
 			const temp = message.Data;
 			this.areaData = temp.slice(0, this.areaDataLength);
-			this.busData = temp.slice(this.busAnchor, this.busAnchor + this.busDataLength);
-			this.branchData = temp.slice(this.branchAnchor, this.branchAnchor + this.branchDataLength);
+			this.busData = temp.slice(
+				this.busAnchor,
+				this.busAnchor + this.busDataLength
+			);
+			this.branchData = temp.slice(
+				this.branchAnchor,
+				this.branchAnchor + this.branchDataLength
+			);
 			this.$store.commit('setData', temp);
 			this.$store.commit('setAreaData', this.areaData);
 			for (let i in this.gens) {
@@ -274,20 +288,24 @@ export default {
 		},
 		updateTotalCost() {
 			setInterval(() => {
-				let deltaCost = 0;
-				let deltaMWh = 0;
-				for (let i in this.gens) {
-					deltaCost +=
-						this.gens[i].MarginalCostCoefficients[0]*this.gens[i].MW*1+
-						this.gens[i].MarginalCostCoefficients[1]*this.gens[i].MW*this.gens[i].MW;
-					deltaMWh += this.gens[i].MW;
-                }
-                this.$store.commit('updateUnitTimeCost',+deltaCost.toFixed(0));
-				deltaCost = deltaCost / 120;
-                deltaMWh = deltaMWh*1/ 120;
-				this.$store.commit('addCost', +deltaCost.toFixed(0));
-				this.$store.commit('addMWh', +deltaMWh.toFixed(2));
-				// console.log(deltaCost.toFixed(2));
+				if (this.$store.state.status === 'running') {
+					let deltaCost = 0;
+					let deltaMWh = 0;
+					for (let i in this.gens) {
+						deltaCost +=
+							this.gens[i].MarginalCostCoefficients[0] * this.gens[i].MW * 1 +
+							this.gens[i].MarginalCostCoefficients[1] *
+								this.gens[i].MW *
+								this.gens[i].MW;
+						deltaMWh += this.gens[i].MW;
+					}
+					this.$store.commit('updateUnitTimeCost', +deltaCost.toFixed(0));
+					deltaCost = deltaCost / 120;
+					deltaMWh = (deltaMWh * 1) / 120;
+					this.$store.commit('addCost', +deltaCost.toFixed(0));
+					this.$store.commit('addMWh', +deltaMWh.toFixed(2));
+					// console.log(deltaCost.toFixed(2));
+				}
 			}, 500);
 		}
 	},
@@ -298,28 +316,28 @@ export default {
 		this.initRiskBus();
 		this.initRiskBranch();
 		this.updateTotalCost();
-		setInterval(()=> {
-			if(this.$store.state.status === 'running') {
+		setInterval(() => {
+			if (this.$store.state.status === 'running') {
 				this.$store.commit('addReportData', {
 					time: this.$store.state.currentTime,
 					areaData: this.areaData
-			});
+				});
 			}
 		}, 1000);
 		setInterval(() => {
-			if(this.$store.state.status === 'running') {
-				if(this.formatRiskBuses.length>0) {
-				this.$store.commit('addReportViolate', {
-					time: this.$store.state.currentTime,
-					Bus: this.formatRiskBuses
-					})
-				};
-				if(this.formatRiskLines.length>0) {
+			if (this.$store.state.status === 'running') {
+				if (this.formatRiskBuses.length > 0) {
+					this.$store.commit('addReportViolate', {
+						time: this.$store.state.currentTime,
+						Bus: this.formatRiskBuses
+					});
+				}
+				if (this.formatRiskLines.length > 0) {
 					this.$store.commit('addReportViolate', {
 						time: this.$store.state.currentTime,
 						Branch: this.formatRiskLines
-					})
-				};
+					});
+				}
 			}
 		}, 5000);
 	},

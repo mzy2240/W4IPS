@@ -229,6 +229,9 @@ export default new Vuex.Store({
 		addCost(state, payload) {
 			state.totalCost = state.totalCost + payload;
 		},
+		resetTotalCost(state) {
+			state.totalCost = 0;
+		},
 		addMWh(state, payload) {
 			state.totalMWh = state.totalMWh + payload;
 		},
