@@ -104,6 +104,9 @@ export default {
 	watch: {
 		costData: {
 			handler: function(newval, oldval) {
+				if(newval == 0) {
+					this.dataSeries = []
+				}
 				var today = new Date();
 				// var time = today.getTime();
 				var time =
