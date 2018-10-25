@@ -66,7 +66,8 @@ export default new Vuex.Store({
 		areaData: [],
 		data: [],
 		riskBuses: [],
-		riskBranches: []
+		riskBranches: [],
+		notMuted: true
 	},
 	getters: {
 		getPubStatus(state) {
@@ -289,6 +290,9 @@ export default new Vuex.Store({
 		},
 		setRiskBranches(state, payload) {
 			state.riskBranches = payload;
+		},
+		toggleMute(state) {
+			state.notMuted = !state.notMuted;
 		}
 	},
 	actions: {

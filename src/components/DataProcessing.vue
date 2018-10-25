@@ -256,7 +256,7 @@ export default {
 			this.busData = temp.slice(this.busAnchor, this.busAnchor + this.busDataLength);
 			this.branchData = temp.slice(this.branchAnchor, this.branchAnchor + this.branchDataLength);
 			this.$store.commit('setData', temp);
-			this.$store.commit('setAreaData', areaData);
+			this.$store.commit('setAreaData', this.areaData);
 			for (let i in this.gens) {
 				this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
 				this.gens[i].Mvar = temp[this.anchor + 7 + i * this.genDataLength];

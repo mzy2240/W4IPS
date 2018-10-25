@@ -88,7 +88,7 @@ export default {
 			this.$store.commit('addReportUser', {
 				time: this.$store.state.currentTime,
 				event: [temp.type, temp.id, temp.action]
-			})
+			});
 			if (temp.type == 'Gen' && ['OPEN', 'CLOSE'].includes(temp.action)) {
 				const id = temp.id.split(',')[1];
 				this.$store.commit(
@@ -194,91 +194,94 @@ export default {
 			} else if (topic == 'ds/note') {
 				const temp = message.toString().split('@');
 				this.usermessage = temp[0];
-				iziToast.warning({
-					title: 'System',
-					message: this.usermessage,
-					position: 'topCenter',
-					timeout: 8000,
-					buttons: [
-						[
-							'<button>What?!</button>',
-							function() {
-								if (self.usermessage.includes('Branch')) {
-									self.id = temp[1];
-									self.name = temp[2];
-									self.type = 'Branch';
-									self.lineshowDialog = true;
-								} else if (
-									self.usermessage.includes('Load') ||
-									self.usermessage.includes('Gen') ||
-									self.usermessage.includes('Shunt')
-								) {
-									const busid = temp[1].split(',')[0];
-									self.name = temp[2].split('Bus')[0];
-									self.type = 'Substation';
-									var found;
-									// Base on the bus id, find the substation
-									for (let subidx in self.$store.state.subDetail) {
-										found = self.$store.state.subDetail[subidx].Bus.find(
-											function(ele) {
-												if (ele['Int.Bus Number'] == busid) {
-													self.id = subidx;
-													self.children =
-														self.$store.state.subDetail[subidx].Bus;
-													return true;
+				if (this.$store.state.notMuted) {
+					iziToast.warning({
+						title: 'System',
+						message: this.usermessage,
+						position: 'topCenter',
+						timeout: 8000,
+						buttons: [
+							[
+								'<button>What?!</button>',
+								function() {
+									if (self.usermessage.includes('Branch')) {
+										self.id = temp[1];
+										self.name = temp[2];
+										self.type = 'Branch';
+										self.lineshowDialog = true;
+									} else if (
+										self.usermessage.includes('Load') ||
+										self.usermessage.includes('Gen') ||
+										self.usermessage.includes('Shunt')
+									) {
+										const busid = temp[1].split(',')[0];
+										self.name = temp[2].split('Bus')[0];
+										self.type = 'Substation';
+										var found;
+										// Base on the bus id, find the substation
+										for (let subidx in self.$store.state.subDetail) {
+											found = self.$store.state.subDetail[subidx].Bus.find(
+												function(ele) {
+													if (ele['Int.Bus Number'] == busid) {
+														self.id = subidx;
+														self.children =
+															self.$store.state.subDetail[subidx].Bus;
+														return true;
+													}
 												}
+											);
+											if (found) {
+												self.subshowDialog = true;
+												break;
 											}
-										);
-										if (found) {
-											self.subshowDialog = true;
-											break;
 										}
 									}
 								}
-							}
+							]
 						]
-					]
-				});
-				Push.create('System', {
-					body: this.usermessage,
-					icon: require('../assets/logo.png'),
-					timeout: 6000,
-					onClick: function() {
-						window.focus();
-						this.close();
-						if (self.usermessage.includes('Branch')) {
-							self.id = temp[1];
-							self.name = temp[2];
-							self.type = 'Branch';
-							self.lineshowDialog = true;
-						} else if (
-							self.usermessage.includes('Load') ||
-							self.usermessage.includes('Gen') ||
-							self.usermessage.includes('Shunt')
-						) {
-							const busid = temp[1].split(',')[0];
-							self.name = temp[2].split('Bus')[0];
-							self.type = 'Substation';
-							var found;
-							// Base on the bus id, find the substation
-							for (let subidx in self.$store.state.subDetail) {
-								found = self.$store.state.subDetail[subidx].Bus.find(function(
-									ele
-								) {
-									if (ele['Int.Bus Number'] == busid) {
-										self.id = subidx;
-										self.children = self.$store.state.subDetail[subidx].Bus;
-										return true;
+					});
+					Push.create('System', {
+						body: this.usermessage,
+						icon: require('../assets/logo.png'),
+						timeout: 6000,
+						onClick: function() {
+							window.focus();
+							this.close();
+							if (self.usermessage.includes('Branch')) {
+								self.id = temp[1];
+								self.name = temp[2];
+								self.type = 'Branch';
+								self.lineshowDialog = true;
+							} else if (
+								self.usermessage.includes('Load') ||
+								self.usermessage.includes('Gen') ||
+								self.usermessage.includes('Shunt')
+							) {
+								const busid = temp[1].split(',')[0];
+								self.name = temp[2].split('Bus')[0];
+								self.type = 'Substation';
+								var found;
+								// Base on the bus id, find the substation
+								for (let subidx in self.$store.state.subDetail) {
+									found = self.$store.state.subDetail[subidx].Bus.find(function(
+										ele
+									) {
+										if (ele['Int.Bus Number'] == busid) {
+											self.id = subidx;
+											self.children = self.$store.state.subDetail[subidx].Bus;
+											return true;
+										}
+									});
+									if (found) {
+										self.subshowDialog = true;
+										break;
 									}
-								});
-								if (found) {
-									self.subshowDialog = true;
-									break;
 								}
 							}
 						}
-					}
-				});
+					});
+				}
+
 				this.$store.commit('updatebadge');
 				this.$store.commit('updatebadgelist', {
 					title: this.usermessage,
@@ -302,7 +305,7 @@ export default {
 				) {
 					this.$store.commit('setstartready');
 				} else if (message.toString().includes('The simulation is started')) {
-					this.$store.commit('resetReport');  // Reset the report when the simulation starts
+					this.$store.commit('resetReport'); // Reset the report when the simulation starts
 					this.$store.commit('setStartTime', +message.toString().split('@')[1]);
 					this.$store.commit('setstartdisable');
 				}

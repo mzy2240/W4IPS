@@ -27,6 +27,7 @@
 			<v-divider></v-divider>
 			<v-btn block flat class="ma-0" @click="cleanclear">Clear</v-btn>
 			<v-divider></v-divider>
+			<v-btn block flat class="ma-0" @click="toggleMute"> {{mute}} </v-btn>
 		</v-card-text>
 	</v-card>
 </template>
@@ -49,7 +50,8 @@ export default {
 		return {
 			// items: this.$store.state.badgelist
 			timeAgo: new TimeAgo('en-US'),
-			canonical: canonical
+			canonical: canonical,
+			mute: 'mute'
 		};
 	},
 	methods: {
@@ -59,6 +61,14 @@ export default {
 		cleanclear: function() {
 			console.log('Yeah');
 			this.$store.commit('resetbadgelist');
+		},
+		toggleMute(){
+			this.$store.commit('toggleMute');
+			if(this.mute === 'mute') {
+				this.mute = 'unmute'
+			} else if (this.mute === 'unmute') {
+				this.mute = 'mute'
+			}
 		}
 	},
 	mounted() {
