@@ -12,16 +12,13 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="branches" :rows-per-page-items="defaultRowItems" v-model="selected" select-all disable-initial-sort item-key="name">
+				<v-data-table class="fixed-header" :headers="headers" :items="branches" :rows-per-page-items="defaultRowItems" v-model="selected" select-all disable-initial-sort item-key="name">
 					<template slot="headerCell" slot-scope="props">
-						<v-tooltip bottom>
+						<!-- <v-tooltip bottom> -->
 							<span slot="activator">
 								{{ props.header.text }}
 							</span>
-							<span>
-								{{ props.header.text }}
-							</span>
-						</v-tooltip>
+						<!-- </v-tooltip> -->
 					</template>
 					<template slot="items" slot-scope="props">
 						<tr :active="props.selected">
@@ -69,8 +66,28 @@ table.v-table thead th:first-child,
 table.v-table thead th:not(:first-child) {
 	padding: 0 10px;
 }
-td {
-	width: auto;
+
+.chip {
+	width: 60px;
+}
+.fixed-header table {
+    table-layout: fixed;
+}
+
+.fixed-header th {
+    background-color: #fff; /* just for LIGHT THEME, change it to #474747 for DARK */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.fixed-header tr.datatable__progress th {
+    top: 56px;
+}
+
+.fixed-header .table__overflow {
+    overflow: auto;
+    height: 100%;
 }
 </style>
 
@@ -88,7 +105,7 @@ export default {
 					sortable: false,
 					value: 'name'
 				},
-				{ text: 'Status', value: 'Status' },
+				{ text: 'Status', value: 'Status'},
 				{ text: 'MWFrom', value: 'MWFrom' },
 				{ text: 'MvarFrom', value: 'MvarFrom' },
 				{ text: 'MVAFrom', value: 'MVAFrom' },

@@ -51,6 +51,7 @@ table.v-table thead th:first-child,
 table.v-table thead th:not(:first-child) {
 	padding: 0 10px;
 }
+
 </style>
 
 <script>

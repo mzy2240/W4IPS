@@ -21,7 +21,7 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="$store.state.genData" :rows-per-page-items="defaultRowItems" v-model="selected" select-all disable-initial-sort item-key="name">
+				<v-data-table class="fixed-header" :headers="headers" :items="$store.state.genData" :rows-per-page-items="defaultRowItems" v-model="selected" select-all disable-initial-sort item-key="name">
 					<template slot="headerCell" slot-scope="props">
 						<v-tooltip bottom>
 						<span slot="activator">
@@ -132,21 +132,20 @@ export default {
 					text: 'Generator',
 					align: 'left',
 					sortable: false,
-					value: 'name',
-					width: '1%'
+					value: 'name'
 				},
-				{ text: 'Status', value: 'Status', width: '1%' },
-				{ text: 'MW', value: 'MW', width: '1%' },
-				{ text: 'Mvar', value: 'Mvar', width: '1%' },
-				{ text: 'Marginal Cost', value: 'MarginalCost', width: '1%' },
-				{ text: 'MW Setpoint', value: 'MWSetpoint', width: '1%' },
-				{ text: 'Vpu Setpoint', value: 'VpuSetpoint', width: '1%' },
-				{ text: 'MW Max Limit', value: 'MWMax', width: '1%' },
-				{ text: 'MW Min Limit', value: 'MWMin', width: '1%' },
+				{ text: 'Status', value: 'Status'},
+				{ text: 'MW', value: 'MW'},
+				{ text: 'Mvar', value: 'Mvar'},
+				{ text: 'Marginal Cost', value: 'MarginalCost'},
+				{ text: 'MW Setpoint', value: 'MWSetpoint'},
+				{ text: 'Vpu Setpoint', value: 'VpuSetpoint'},
+				{ text: 'MW Max Limit', value: 'MWMax'},
+				{ text: 'MW Min Limit', value: 'MWMin'},
 				// { text: 'MW setpoint', value: 'MWSet', sortable: false },
 				// { text: 'Vpu setpoint', value: 'VpuSet', sortable: false },
-				{ text: 'Actions', value: 'Actions', width: '1%' },
-				{ text: 'AGC', value: 'AGC', width: '1%' }
+				{ text: 'Actions', value: 'Actions'},
+				{ text: 'AGC', value: 'AGC'}
 			],
 			gens: [],
 			selected: [],

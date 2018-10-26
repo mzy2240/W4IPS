@@ -267,12 +267,12 @@ export default {
 									const value = params.data.attributes.MVA;
 									const percentage = ((value * 100) / limit).toFixed(0);
 									var richText;
-									if(percentage>=100) {
-										richText = '{overload|' + percentage.toString() + '%}'
-									} else if(percentage>=90) {
-										richText = '{indanger|' + percentage.toString() + '%}'
+									if (percentage >= 100) {
+										richText = '{overload|' + percentage.toString() + '%}';
+									} else if (percentage >= 90) {
+										richText = '{indanger|' + percentage.toString() + '%}';
 									} else {
-										richText = '{safe|' + percentage.toString() + '%}'
+										richText = '{safe|' + percentage.toString() + '%}';
 									}
 									return richText;
 								},
@@ -282,8 +282,8 @@ export default {
 										color: '#ba000d'
 									},
 									indanger: {
-										fontSize: 12,
-										color: '#ff9100'
+										fontSize: 15,
+										color: '#ffd600'
 									},
 									safe: {
 										fontSize: 8,
@@ -580,7 +580,10 @@ export default {
 				i += this.branchArrLength;
 			}
 			this.formatRiskLines = Object.values(this.highRiskLines);
-			// if (true) {  //branchChanged
+			// console.log(this.chart.getOption().series[1].data);
+			// console.log(this.linedata);
+			// if (this.chart.getOption().series[1].data != this.linedata) {
+			//branchChanged
 			this.chart.setOption(
 				{
 					series: [
