@@ -75,13 +75,15 @@ export default {
 				password: 'password'
 			},
 			showDash: false,
-			items: Object.keys(this.$store.state.casedetail.content.Area).concat(['Not specified']),
+			items: Object.keys(this.$store.state.casedetail.content.Area).concat([
+				'Not specified'
+			]),
 			checkbox: false
 		};
 	},
 	methods: {
 		login() {
-			if(this.checkbox) {
+			if (this.checkbox) {
 				this.$store.commit('onAdmin');
 			}
 			this.$store.commit('setUsername', this.model.username);
@@ -91,6 +93,9 @@ export default {
 				// this.$router.push('/dashboard');
 			}, 1000);
 		}
+	},
+	mounted(){
+
 	},
 	components: {
 		Spinner,
