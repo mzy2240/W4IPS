@@ -243,8 +243,8 @@ export default {
 						type: 'lines',
 						coordinateSystem: 'leaflet',
 						animation: false,
-						progressive: 40,
-						progressiveThreshold: 200,
+						progressive: 25,
+						progressiveThreshold: 150,
 						// coordinateSystem: 'bmap',
 						silent: false,
 						// effect: {
@@ -525,7 +525,9 @@ export default {
 			// 	this.updateLines();
 			// }, 1000);
 			setInterval(() => {
-				this.updateLines();
+				if(this.$store.state.status === 'running') {
+					this.updateLines();
+				}
 				// console.log(this.$store.state.totalCost);
 			}, 1500);
 		},
