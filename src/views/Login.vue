@@ -15,17 +15,15 @@
 										<img src="../assets/logo.png" alt="Vue Material Admin" width="120" height="120">
 										<h1 class="flex my-4 primary--text">PowerWeb</h1>
 									</div>
-									<v-form>
+
+									<v-form id="step1">
 										<v-text-field append-icon="person" name="login" label="Login" type="text" v-model="model.username"></v-text-field>
 										<v-text-field append-icon="lock" name="password" label="Password" id="password" type="password" v-model="model.password"></v-text-field>
 										<v-select :items="items" label="Area"></v-select>
 									</v-form>
 								</v-card-text>
-								<v-card-actions>
-									<v-checkbox
-									label="Administrator"
-									v-model="checkbox"
-									></v-checkbox>
+								<v-card-actions id="step2">
+									<v-checkbox label="Administrator" v-model="checkbox"></v-checkbox>
 									<v-spacer></v-spacer>
 									<v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
 								</v-card-actions>
@@ -94,8 +92,7 @@ export default {
 			}, 1000);
 		}
 	},
-	mounted(){
-
+	mounted() {
 	},
 	components: {
 		Spinner,

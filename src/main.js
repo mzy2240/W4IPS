@@ -13,6 +13,7 @@ import 'izitoast/dist/css/iziToast.css';
 import './assets/default.styl';
 import 'vue-status-indicator/styles.css'
 import StatusIndicator from 'vue-status-indicator'
+import VueIntro from 'vue-introjs';
 
 Vue.use(ElementUI);
 Vue.use(Vuetify, {
@@ -35,6 +36,7 @@ Vue.use(Vuetify, {
 	}
 });
 Vue.use(StatusIndicator);
+Vue.use(VueIntro);
 
 // Vue.component('chart', ECharts);
 Vue.config.productionTip = false;

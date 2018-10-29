@@ -4,17 +4,12 @@
 	<div>
 		<v-navigation-drawer fixed app clipped dark mobile-break-point="300" width="160" v-model="drawer">
 			<v-toolbar flat class="transparent">
-				<v-list dense expand class="pa-0">
-					<v-list-tile avatar :key="'clock'">
-						<Clock></Clock>
-						<!-- <v-list-tile-avatar>
-							<v-icon>mdi-home</v-icon>
-						</v-list-tile-avatar>
-
-						<v-list-tile-content>
-							<v-list-tile-title>Home</v-list-tile-title>
-						</v-list-tile-content> -->
-					</v-list-tile>
+				<v-list dense expand class="pa-0" id="step1">
+					<div id="step4">
+						<v-list-tile avatar :key="'clock'">
+							<Clock></Clock>
+						</v-list-tile>
+					</div>
 					<v-list-tile avatar :key="'home'" @click="$store.commit('setpage', 'Home')">
 						<v-list-tile-avatar>
 							<v-icon>mdi-home</v-icon>
@@ -80,7 +75,7 @@
 						</v-list-tile-content>
 					</v-list-tile>
 					<v-list-tile avatar :key="'pause'" @click="$store.commit('trigpausesim')">
-					<!-- <v-list-tile avatar :key="'start'" @click="startDialog=true"> -->
+						<!-- <v-list-tile avatar :key="'start'" @click="startDialog=true"> -->
 						<v-list-tile-avatar>
 							<v-icon>mdi-pause</v-icon>
 						</v-list-tile-avatar>
@@ -90,7 +85,7 @@
 						</v-list-tile-content>
 					</v-list-tile>
 					<v-list-tile avatar :key="'abort'" @click="$store.commit('trigabortsim')">
-					<!-- <v-list-tile avatar :key="'start'" @click="startDialog=true"> -->
+						<!-- <v-list-tile avatar :key="'start'" @click="startDialog=true"> -->
 						<v-list-tile-avatar>
 							<v-icon>mdi-stop</v-icon>
 						</v-list-tile-avatar>
@@ -143,8 +138,10 @@
 			</v-menu>
 		</v-toolbar>
 		<v-content>
-			<marquee></marquee>
-			<div class="page-wrapper">
+			<div id="step3">
+				<marquee></marquee>
+			</div>
+			<div class="page-wrapper" id="step2">
 				<component v-bind:is="page"></component>
 			</div>
 
@@ -221,6 +218,42 @@ export default {
 				this.$store.commit('resetbadgelist');
 			}
 		}
+	},
+	mounted() {
+		var intro = introJs();
+		intro.setOptions({
+			showStepNumbers: false,
+			// overlayOpacity: 0.1,
+			steps: [
+				{
+					intro: 'Welcome to the 460 final lab!'
+				},
+				{
+					element: document.querySelector('#step1'),
+					intro:
+						'You can switch pages, start/stop the simulation and get your report here.',
+					position: 'right'
+				},
+				// {
+				// 	element: document.querySelectorAll('#step2'),
+				// 	intro: "Here are the widgets showing the real-time data and events of the simulation.",
+				// 	position: 'right'
+				// },
+				{
+					element: '#step3',
+					intro: 'This marquee shows the status of the current simulation.',
+					position: 'bottom'
+				},
+				{
+					element: '#step4',
+					intro:
+						'This digital clock shows the simulation time (not the actual local time).',
+					position: 'bottom'
+				}
+			]
+		});
+
+		intro.start();
 	}
 };
 </script>
