@@ -19,7 +19,7 @@
 									<v-form id="step1">
 										<v-text-field append-icon="person" name="login" label="Login" type="text" v-model="model.username"></v-text-field>
 										<v-text-field append-icon="lock" name="password" label="Password" id="password" type="password" v-model="model.password"></v-text-field>
-										<v-select :items="items" label="Area"></v-select>
+										<v-select :items="items" label="Area" v-model="area"></v-select>
 									</v-form>
 								</v-card-text>
 								<v-card-actions id="step2">
@@ -76,7 +76,8 @@ export default {
 			items: Object.keys(this.$store.state.casedetail.content.Area).concat([
 				'Not specified'
 			]),
-			checkbox: false
+			checkbox: false,
+			area: null
 		};
 	},
 	methods: {
@@ -84,6 +85,7 @@ export default {
 			if (this.checkbox) {
 				this.$store.commit('onAdmin');
 			}
+			this.$store.commit('setArea', this.area);
 			this.$store.commit('setUsername', this.model.username);
 			this.loading = true;
 			setTimeout(() => {

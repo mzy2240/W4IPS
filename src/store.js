@@ -2,8 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import datafield from './assets/datafield.json';
 import tcmcommands from './assets/tcmcommands.json';
-import casedetail from './assets/150G.json';
-// import casedetail from './assets/2000.json'
+// import casedetail from './assets/150G.json';
+import casedetail from './assets/2000G.json'
 import notificationSystem from './assets/notificationsettings';
 // import casedetail from './assets/150.json'
 
@@ -67,7 +67,8 @@ export default new Vuex.Store({
 		data: [],
 		riskBuses: [],
 		riskBranches: [],
-		notMuted: true
+		notMuted: true,
+		area: null
 	},
 	getters: {
 		getPubStatus(state) {
@@ -296,6 +297,9 @@ export default new Vuex.Store({
 		},
 		toggleMute(state) {
 			state.notMuted = !state.notMuted;
+		},
+		setArea(state, payload) {
+			state.area = payload;
 		}
 	},
 	actions: {
