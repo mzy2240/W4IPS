@@ -2,7 +2,7 @@
 
 <template>
 	<div>
-		<v-navigation-drawer fixed app clipped dark mobile-break-point="300" width="160" v-model="drawer">
+		<v-navigation-drawer fixed app clipped mobile-break-point="300" width="160" v-model="drawer">
 			<v-toolbar flat class="transparent">
 				<v-list dense expand class="pa-0" id="step1">
 					<div id="step4">
@@ -220,47 +220,55 @@ export default {
 		}
 	},
 	mounted() {
-		var intro = introJs();
-		intro.setOptions({
-			showStepNumbers: false,
-			// overlayOpacity: 0.1,
-			steps: [
-				{
-					intro: 'Welcome to the 460 final lab!'
-				},
-				{
-					element: document.querySelector('#step1'),
-					intro:
-						'You can switch pages, start/stop the simulation and get your report here.',
-					position: 'right'
-				},
-				// {
-				// 	element: document.querySelectorAll('#step2'),
-				// 	intro: "Here are the widgets showing the real-time data and events of the simulation.",
-				// 	position: 'right'
-				// },
-				{
-					element: '#step3',
-					intro: 'This marquee shows the status of the current simulation.',
-					position: 'bottom'
-				},
-				{
-					element: '#step4',
-					intro:
-						'This digital clock shows the simulation time (not the actual local time).',
-					position: 'bottom'
-				}
-			]
-		});
+		// var intro = introJs();
+		// intro.setOptions({
+		// 	showStepNumbers: false,
+		// 	// overlayOpacity: 0.1,
+		// 	steps: [
+		// 		{
+		// 			intro: 'Welcome to the 460 final lab!'
+		// 		},
+		// 		{
+		// 			element: document.querySelector('#step1'),
+		// 			intro:
+		// 				'You can switch pages, start/stop the simulation and get your report here.',
+		// 			position: 'right'
+		// 		},
+		// 		// {
+		// 		// 	element: document.querySelectorAll('#step2'),
+		// 		// 	intro: "Here are the widgets showing the real-time data and events of the simulation.",
+		// 		// 	position: 'right'
+		// 		// },
+		// 		{
+		// 			element: '#step3',
+		// 			intro: 'This marquee shows the status of the current simulation.',
+		// 			position: 'bottom'
+		// 		},
+		// 		{
+		// 			element: '#step4',
+		// 			intro:
+		// 				'This digital clock shows the simulation time (not the actual local time).',
+		// 			position: 'bottom',
+		// 			highlightClass: 'customHighlightClass'
+		// 		}
+		// 	]
+		// });
 
-		intro.start();
+		// intro.start();
 	}
 };
 </script>
 
 <style lang="stylus">
-// .anchorBL
+// .anchorBLff0000
 // display: none;
+.customHighlightClass {
+	opacity: 0.2;
+}
+.listHighlightClass {
+	opacity: 0.2;
+	height: 600px;
+}
 .page-wrapper {
 	min-height: calc(100vh - 64px - 50px - 81px);
 }

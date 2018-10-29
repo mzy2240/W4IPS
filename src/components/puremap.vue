@@ -23,7 +23,7 @@
 			<v-layout row wrap>
 				<!-- mini statistic start -->
 				<v-flex lg3 sm6 xs12>
-					<mini-statistic :name="'GenMW'" icon="fa fa-facebook" title="Total Generation (MW)" :sub-title="$store.state.areaData[0]" color="indigo" :img="require('../assets/icons8-factory-64.png')">
+					<mini-statistic :name="'GenMW'" icon="fa fa-facebook" title="Total Generation (MW)" :sub-title="$store.state.areaData[0]" color="indigo" :img="require('../assets/icons8-factory-64.png')" id="step5">
 					</mini-statistic>
 				</v-flex>
 				<v-flex lg3 sm6 xs12>
@@ -647,6 +647,48 @@ export default {
 		this.onDrawSub();
 		this.onDrawLines();
 		this.updateLinesCycle();
+		var intro = introJs();
+		intro.setOptions({
+			showStepNumbers: false,
+			// overlayOpacity: 0.1,
+			steps: [
+				{
+					intro: 'Welcome to the 460 final lab!'
+				},
+				// {
+				// 	element: document.querySelector('#step1'),
+				// 	intro:
+				// 		'You can switch pages, start/stop the simulation and get your report here.',
+				// 	position: 'right',
+				// 	highlightClass: 'listHighlightClass'
+				// },
+				// {
+				// 	element: document.querySelectorAll('#step2'),
+				// 	intro: "Here are the widgets showing the real-time data and events of the simulation.",
+				// 	position: 'right'
+				// },
+				{
+					element: '#step3',
+					intro: 'This marquee shows the status of the current simulation.',
+					position: 'bottom'
+				},
+				{
+					element: '#step4',
+					intro:
+						'This digital clock shows the simulation time (not the actual local time).',
+					position: 'bottom',
+					highlightClass: 'customHighlightClass'
+				},
+				{
+					element: '#step5',
+					intro:
+						'Click the right-bottom button to toggle the dynamic plotting.',
+					position: 'right'
+				}
+			]
+		});
+
+		intro.start();
 	},
 	beforeDestroy() {
 		this.chart.clear();
