@@ -931,7 +931,8 @@ export default {
 			}
 		},
 		onMonitor() {
-			const temp = JSON.parse(this.$store.state.rawdata).Data;
+			const temp = this.$store.state.data
+			// const temp = JSON.parse(this.$store.state.rawdata).Data;
 			var branchMVALimit;
 			var rtMVA;
 			var idx = -1;
@@ -980,7 +981,7 @@ export default {
 		},
 		redraw(cluster_number) {
 			this.$nextTick(() => {
-				if (!this.interval) {
+				if (this.interval) {
 					clearInterval(this.interval);
                 }
                 // this.chart.showLoading();
@@ -989,9 +990,9 @@ export default {
                 this.onCluster();
 				// this.initdraw('main');
 				this.onDrawLines();
-				// this.interval = setInterval(() => {
-				// 	this.onMonitor();
-				// }, 5000);
+				this.interval = setInterval(() => {
+					this.onMonitor();
+				}, 5000);
 			});
         },
         reInitParameters(){
@@ -1007,6 +1008,7 @@ export default {
 		this.getData();
 		this.onFindBranchSegment();
 		this.initdraw('main');
+		this.redraw(1);
 		// this.onCluster();
 		// this.initdraw('main');
 		// //this.onDrawSub();
