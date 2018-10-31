@@ -897,7 +897,7 @@ export default {
 
 		onrenderClusterShape(params, api) {
 			const clusID = params.dataIndex;
-			var alpha = 0.9;
+			var alpha = 1.0;
 			const shapeNodeOrder = this.shapeNodeOrder[clusID];
 
 			// Set alpha upon zoom-in
