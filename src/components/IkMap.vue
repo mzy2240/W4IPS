@@ -333,7 +333,7 @@ export default {
 					self.lineshowDialog = true;
 				} else if (params.seriesName == 'clusterShape') {
 					basinID = params.value;
-					self.zoomInFlag = [true,basinID]
+					self.zoomInFlag = [true, basinID];
 
 					self.renderCenter = [
 						self.results[basinID].centroid[0],
@@ -384,31 +384,34 @@ export default {
 				}
 				this.originalSub = _.cloneDeep(this.subdata);
 				for (let ele in temp.content.Branch) {
-					const fromid = ele.split(',')[0];
-					const toid = ele.split(',')[1];
-					const coords = [
-						this.subdata[temp.content.Bus[fromid]['Int.Sub Number'] - 1].value,
-						this.subdata[temp.content.Bus[toid]['Int.Sub Number'] - 1].value
-					];
-					this.branchFromToCoord.push(coords);
-					this.linedata.push({
-						id: ele,
-						name:
-							this.subdata[
-								temp.content.Bus[fromid]['Int.Sub Number'] - 1
-							].name.split('_')[0] +
-							'-' +
-							this.subdata[
-								temp.content.Bus[toid]['Int.Sub Number'] - 1
-							].name.split('_')[0],
-						coords: coords,
-						count: 1,
-						attributes: {
-							MVALimit: temp.content.Branch[ele]['Single.MVA Limit'],
-							volt: temp.content.Bus[fromid]['Single.Nominal kV'],
-							tieline: false
-						}
-					});
+					if (temp.content.Branch[ele]['Byte.Type'] == 0) {
+						const fromid = ele.split(',')[0];
+						const toid = ele.split(',')[1];
+						const coords = [
+							this.subdata[temp.content.Bus[fromid]['Int.Sub Number'] - 1]
+								.value,
+							this.subdata[temp.content.Bus[toid]['Int.Sub Number'] - 1].value
+						];
+						this.branchFromToCoord.push(coords);
+						this.linedata.push({
+							id: ele,
+							name:
+								this.subdata[
+									temp.content.Bus[fromid]['Int.Sub Number'] - 1
+								].name.split('_')[0] +
+								'-' +
+								this.subdata[
+									temp.content.Bus[toid]['Int.Sub Number'] - 1
+								].name.split('_')[0],
+							coords: coords,
+							count: 1,
+							attributes: {
+								MVALimit: temp.content.Branch[ele]['Single.MVA Limit'],
+								volt: temp.content.Bus[fromid]['Single.Nominal kV'],
+								tieline: false
+							}
+						});
+					}
 				}
 				//console.log(this.subdata);
 				//console.log(this.branchFromToCoord);
@@ -454,8 +457,7 @@ export default {
 					{
 						id: 'sub',
 						data: []
-					}
-					,
+					},
 					{
 						id: 'lines',
 						// type: 'lines',
@@ -686,7 +688,7 @@ export default {
 			}
 			this.tieLines = tieLines;
 			this.nonTieLines = nonTieLines;
-			console.log(this.tieLines);
+			// console.log(this.tieLines);
 
 			//console.log(this.selectlinedata);
 			//console.log(this.linethickness);
@@ -916,8 +918,7 @@ export default {
 
 			// Check if cluster is a violated basin
 			if (this.violatedBasins.includes(clusID)) {
-				baseColor = 'hsla(15, 50%, 50%, '+ alpha.toString() + ')';//0.6)';
-				
+				baseColor = 'hsla(15, 50%, 50%, ' + alpha.toString() + ')'; //0.6)';
 			}
 
 			return {
@@ -1030,8 +1031,7 @@ export default {
 					{
 						id: 'sub',
 						data: this.originalSub
-					}
-					,
+					},
 					{
 						id: 'lines',
 						data: this.linedata
