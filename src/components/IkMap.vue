@@ -71,8 +71,8 @@ export default {
 	methods: {
 		initdraw(id) {
 			// this.chart = echarts.init(document.getElementById('main'));
-            var self = this;
-            // this.chart.hideLoading();
+			var self = this;
+			// this.chart.hideLoading();
 			this.chart.setOption(
 				{
 					animation: false,
@@ -251,6 +251,8 @@ export default {
 							name: 'lines',
 							type: 'lines',
 							coordinateSystem: 'bmap',
+							large: true,
+							largeThreshold: 1000,
 							silent: false,
 							zlevel: 3,
 							effect: {
@@ -439,8 +441,8 @@ export default {
 			this.chart.setOption({
 				series: [
 					{
-                        id: 'lines',
-                        // type: 'lines',
+						id: 'lines',
+						// type: 'lines',
 						data: this.selectlinedata,
 						color: 'black'
 					},
@@ -931,7 +933,7 @@ export default {
 			}
 		},
 		onMonitor() {
-			const temp = this.$store.state.data
+			const temp = this.$store.state.data;
 			// const temp = JSON.parse(this.$store.state.rawdata).Data;
 			var branchMVALimit;
 			var rtMVA;
@@ -983,23 +985,42 @@ export default {
 			this.$nextTick(() => {
 				if (this.interval) {
 					clearInterval(this.interval);
-                }
-                // this.chart.showLoading();
-                this.reInitParameters();
-				this.numClusters = +cluster_number;
-                this.onCluster();
-				// this.initdraw('main');
-				this.onDrawLines();
-				this.interval = setInterval(() => {
-					this.onMonitor();
-				}, 5000);
+				}
+				if (cluster_number == 0 || !cluster_number) {
+					this.onDrawFullTopo();
+				} else {
+					this.reInitParameters();
+					this.numClusters = +cluster_number;
+					this.onCluster();
+					// this.initdraw('main');
+					this.onDrawLines();
+					this.interval = setInterval(() => {
+						this.onMonitor();
+					}, 5000);
+				}
+
+				// this.chart.showLoading();
 			});
-        },
-        reInitParameters(){
-            this.FinalClustering = [];
-            this.selectlinedata = [];
-            this.shapeNodeOrder = [];
-        }
+		},
+		reInitParameters() {
+			this.FinalClustering = [];
+			this.selectlinedata = [];
+			this.shapeNodeOrder = [];
+		},
+		onDrawFullTopo() {
+			this.chart.setOption({
+				series: [
+					{
+						id: 'lines',
+						data: this.linedata
+					},
+					{
+						id: 'clusterShape',
+						data: []
+					}
+				]
+			});
+		}
 	},
 
 	mounted() {
@@ -1008,7 +1029,8 @@ export default {
 		this.getData();
 		this.onFindBranchSegment();
 		this.initdraw('main');
-		this.redraw(1);
+		this.onDrawFullTopo();
+		// this.redraw(1);
 		// this.onCluster();
 		// this.initdraw('main');
 		// //this.onDrawSub();
