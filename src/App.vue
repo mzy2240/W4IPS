@@ -10,7 +10,7 @@
 
 <script>
 import Spinner from 'vue-spinkit';
-import Login from './views/Login'
+import Login from './views/Login';
 const dashboard = import('./components/Dashboard');
 const loadingComponent = {
 	render(h) {
@@ -60,6 +60,9 @@ export default {
 </script>
 
 <style>
+.anchorBL {
+	display: none;
+}
 .loading {
 	position: fixed;
 	z-index: 999;

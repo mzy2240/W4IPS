@@ -112,6 +112,15 @@
 							<v-list-tile-title>Report</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
+					<v-list-tile avatar :key="'IkMap'" @click="$store.commit('setpage', 'IkView')">
+						<v-list-tile-avatar>
+							<v-icon>highlight_off</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>DoNotClick</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
 				</v-list>
 			</v-toolbar>
 		</v-navigation-drawer>
@@ -195,6 +204,7 @@ export default {
 		reportpop: () => import('./reportpop'),
 		MqttClient,
 		Home: () => import('../views/Home'),
+		IkView: () => import('../views/Ik-view'),
 		generator: generator,
 		load: load,
 		shunt: shunt,
