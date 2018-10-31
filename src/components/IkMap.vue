@@ -15,7 +15,7 @@ import echarts from 'echarts';
 import linepop from './linepop';
 import subpop from './subpop';
 
-// import _ from 'lodash';
+import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
 
@@ -65,7 +65,8 @@ export default {
 			zoomInFlag: false,
 			zoomOutFlag: false,
 			projection: {},
-			interval: null
+			interval: null,
+			originalSub: null
 		};
 	},
 	methods: {
@@ -230,8 +231,11 @@ export default {
 							type: 'scatter',
 							name: 'sub',
 							coordinateSystem: 'bmap',
+							large: true,
+							largeThreshold: 800,
 							symbol: 'circle',
-							symbolSize: (_, params) => this.Ongetsubstationsize(_, params),
+							symbolSize: 6,
+							// symbolSize: (_, params) => this.Ongetsubstationsize(_, params),
 							showEffectOn: 'emphasis',
 							// zindex: 2,
 							data: [],
@@ -243,7 +247,8 @@ export default {
 								}
 							},
 							itemStyle: {
-								color: res => this.Ongetsubstatcolor(res)
+								color: 'rgb(25, 0, 128)'
+								// color: res => this.Ongetsubstatcolor(res)
 							}
 						},
 						{
@@ -251,20 +256,24 @@ export default {
 							name: 'lines',
 							type: 'lines',
 							coordinateSystem: 'bmap',
-							large: true,
-							largeThreshold: 1000,
-							silent: false,
+							progressive: 50,
+							progressiveThreshold: 500,
+							// animationDuration: 1000,
+							// large: true,
+							// largeThreshold: 800,
+							silent: true,
 							zlevel: 3,
 							effect: {
 								show: true,
 								constantSpeed: 10,
 								symbol: 'arrow',
-								symbolSize: 7,
-								trailWidth: 2,
+								symbolSize: 5,
+								// trailWidth: 2,
 								trailLength: 0,
-								trailOpacity: 1,
-								spotIntensity: 10,
-								color: 'blue'
+								// trailOpacity: 1,
+								// spotIntensity: 10,
+								color: 'red',
+								loop: true
 							},
 							blendMode: 'lighter',
 							// polyline: true,
@@ -373,6 +382,7 @@ export default {
 						bus: []
 					});
 				}
+				this.originalSub = _.cloneDeep(this.subdata);
 				for (let ele in temp.content.Branch) {
 					const fromid = ele.split(',')[0];
 					const toid = ele.split(',')[1];
@@ -441,6 +451,11 @@ export default {
 		onDrawLines() {
 			this.chart.setOption({
 				series: [
+					{
+						id: 'sub',
+						data: []
+					}
+					,
 					{
 						id: 'lines',
 						// type: 'lines',
@@ -1012,6 +1027,11 @@ export default {
 		onDrawFullTopo() {
 			this.chart.setOption({
 				series: [
+					{
+						id: 'sub',
+						data: this.originalSub
+					}
+					,
 					{
 						id: 'lines',
 						data: this.linedata
