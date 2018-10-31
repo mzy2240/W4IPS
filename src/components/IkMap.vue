@@ -324,6 +324,7 @@ export default {
 					self.lineshowDialog = true;
 				} else if (params.seriesName == 'clusterShape') {
 					basinID = params.value;
+					self.zoomInFlag = true
 
 					self.renderCenter = [
 						self.results[basinID].centroid[0],
@@ -882,7 +883,7 @@ export default {
 
 		onrenderClusterShape(params, api) {
 			const clusID = params.dataIndex;
-			var alpha = 1.0;
+			var alpha = 1;
 			const shapeNodeOrder = this.shapeNodeOrder[clusID];
 
 			// Set alpha upon zoom-in
@@ -891,7 +892,7 @@ export default {
 			}
 
 			var points = [];
-			var baseColor = 'hsla(56, 50%, 50%, ' + alpha + ')';
+			var baseColor = 'hsla(56, 50%, 50%, 1)';
 
 			for (let j = 0; j < shapeNodeOrder.length; j++) {
 				// for (let j in shapeNodeOrder) {
@@ -900,7 +901,8 @@ export default {
 
 			// Check if cluster is a violated basin
 			if (this.violatedBasins.includes(clusID)) {
-				baseColor = 'hsla(0, 50%, 50%, 0.6)';
+				baseColor = 'hsla(15, 50%, 50%, '+ alpha.toString() + ')';//0.6)';
+				
 			}
 
 			return {
