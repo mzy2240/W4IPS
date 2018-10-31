@@ -40,11 +40,14 @@
                                         <v-flex lg2 sm2 xs2>
                                             <div class="text-xs-center">
                                                 <div>
-                                                    <v-btn color="primary" fab small dark @click="$refs.map.redraw(cluster)">
+                                                    <v-btn color="primary" fab small dark @click="draw">
                                                         <v-icon>edit</v-icon>
                                                     </v-btn>
                                                 </div>
                                             </div>
+                                        </v-flex>
+                                        <v-flex xs12 v-show="inProgress">
+                                            <v-progress-linear :indeterminate="true"></v-progress-linear>
                                         </v-flex>
 									</v-layout>
 								</div>
@@ -80,15 +83,24 @@ import IkMap from '@/components/IkMap';
 import VWidget from '@/components/VWidget';
 
 export default {
-    name: 'generator',
-    data(){
-        return {
-            cluster: null
-        }
-    },
+	name: 'generator',
+	data() {
+		return {
+			cluster: null,
+			inProgress: false
+		};
+	},
 	components: {
 		IkMap,
 		VWidget
+	},
+	methods: {
+		draw() {
+			this.$nextTick(() => {
+                // this.inProgress = true;
+                this.$refs.map.redraw(this.cluster);
+			});
+		}
 	}
 };
 </script>

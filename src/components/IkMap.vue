@@ -72,7 +72,7 @@ export default {
 		initdraw(id) {
 			// this.chart = echarts.init(document.getElementById('main'));
             var self = this;
-            this.chart.hideLoading();
+            // this.chart.hideLoading();
 			this.chart.setOption(
 				{
 					animation: false,
@@ -983,11 +983,11 @@ export default {
 				if (!this.interval) {
 					clearInterval(this.interval);
                 }
-                this.chart.showLoading();
+                // this.chart.showLoading();
                 this.reInitParameters();
 				this.numClusters = +cluster_number;
                 this.onCluster();
-				this.initdraw('main');
+				// this.initdraw('main');
 				this.onDrawLines();
 				// this.interval = setInterval(() => {
 				// 	this.onMonitor();
@@ -1006,7 +1006,7 @@ export default {
 		this.onColorPick();
 		this.getData();
 		this.onFindBranchSegment();
-		// this.initdraw('main');
+		this.initdraw('main');
 		// this.onCluster();
 		// this.initdraw('main');
 		// //this.onDrawSub();
