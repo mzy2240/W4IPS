@@ -62,7 +62,7 @@ export default {
 			tieLines: [],
 			nonTieLines: [],
 			violatedBasins: [],
-			zoomInFlag: false,
+			zoomInFlag: [],
 			zoomOutFlag: false,
 			projection: {},
 			interval: null,
@@ -333,7 +333,7 @@ export default {
 					self.lineshowDialog = true;
 				} else if (params.seriesName == 'clusterShape') {
 					basinID = params.value;
-					self.zoomInFlag = true
+					self.zoomInFlag = [true,basinID]
 
 					self.renderCenter = [
 						self.results[basinID].centroid[0],
@@ -686,7 +686,7 @@ export default {
 			}
 			this.tieLines = tieLines;
 			this.nonTieLines = nonTieLines;
-			//console.log(this.tieLines);
+			console.log(this.tieLines);
 
 			//console.log(this.selectlinedata);
 			//console.log(this.linethickness);
@@ -902,7 +902,7 @@ export default {
 			const shapeNodeOrder = this.shapeNodeOrder[clusID];
 
 			// Set alpha upon zoom-in
-			if (this.zoomInFlag == true) {
+			if (this.zoomInFlag[0] == true && clusID == this.zoomInFlag[1]) {
 				alpha = 0.6;
 			}
 
