@@ -71,7 +71,8 @@ export default {
 	methods: {
 		initdraw(id) {
 			// this.chart = echarts.init(document.getElementById('main'));
-			var self = this;
+            var self = this;
+            this.chart.hideLoading();
 			this.chart.setOption(
 				{
 					animation: false,
@@ -277,7 +278,7 @@ export default {
 									shadowBlur: 10
 								}
 							},
-							data: this.selectlinedata//[]
+							data: []
 						},
 						{
 							id: 'clusterShape',
@@ -287,10 +288,7 @@ export default {
 							animation: false,
 							zlevel: 4,
 							renderItem: this.onrenderClusterShape,
-							data: Array.apply(null, { length: this.numClusters }).map(
-							Number.call,
-							Number
-						)
+							data: []
 						}
 						// {
 						// 	id: 'clusterShape',
@@ -339,7 +337,7 @@ export default {
 					self.chart.setOption(tmp);
 
 					miniResults = self.onMiniCluster(basinID);
-					console.log(miniResults);
+					// console.log(miniResults);
 				}
 			});
 			// Reset default rendering center
@@ -442,13 +440,13 @@ export default {
 				series: [
 					{
                         id: 'lines',
-                        type: 'lines',
+                        // type: 'lines',
 						data: this.selectlinedata,
 						color: 'black'
 					},
 					{
 						id: 'clusterShape',
-						type: 'custom',
+						// type: 'custom',
 						name: 'clusterShape',
 						// coordinateSystem: 'bmap',
 						// animation: false,
@@ -460,12 +458,12 @@ export default {
 						)
 					}
 				]
-			}, true);
+			});
 		},
 		onRoam() {
 			// Obtain current zoom level
 			this.currentZoom = this.chart.getOption().bmap[0].zoom;
-			console.log(this.chart.getOption().bmap[0].zoom);
+			// console.log(this.chart.getOption().bmap[0].zoom);
 		},
 
 		onCluster() {
@@ -618,23 +616,23 @@ export default {
 							this.subdata[toBusSubStation - 1].value
 						];
 						//	Set select linedata not to be rendered
-						this.selectlinedata.push({
-							id: ele,
-							name:
-								this.subdata[frBusSubStation - 1].name.split('_')[0] +
-								'-' +
-								this.subdata[toBusSubStation - 1].name.split('_')[0],
-							coords: [[0, 0], [0, 0]], //coords,
-							count: 1,
-							attributes: {
-								MVALimit: this.case.content.Branch[ele]['Single.MVA Limit'],
-								volt: this.case.content.Bus[fromid]['Single.Nominal kV'],
-								tieline: false
-							},
-							lineStyle: {
-								opacity: 0
-							}
-						});
+						// this.selectlinedata.push({
+						// 	id: ele,
+						// 	name:
+						// 		this.subdata[frBusSubStation - 1].name.split('_')[0] +
+						// 		'-' +
+						// 		this.subdata[toBusSubStation - 1].name.split('_')[0],
+						// 	coords: [[0, 0], [0, 0]], //coords,
+						// 	count: 1,
+						// 	attributes: {
+						// 		MVALimit: this.case.content.Branch[ele]['Single.MVA Limit'],
+						// 		volt: this.case.content.Bus[fromid]['Single.Nominal kV'],
+						// 		tieline: false
+						// 	},
+						// 	lineStyle: {
+						// 		opacity: 0
+						// 	}
+						// });
 					} else {
 						// Define tielines
 						tieLines.push([ele, clusterfromid, clustertoid, fromid, toid]);
@@ -984,19 +982,23 @@ export default {
 			this.$nextTick(() => {
 				if (!this.interval) {
 					clearInterval(this.interval);
-					console.log('Interval cleared');
-				}
-				// this.chart.clear();
-				// this.chart.dispose();
+                }
+                this.chart.showLoading();
+                this.reInitParameters();
 				this.numClusters = +cluster_number;
-				this.onCluster();
+                this.onCluster();
 				this.initdraw('main');
-				// this.onDrawLines();
+				this.onDrawLines();
 				// this.interval = setInterval(() => {
 				// 	this.onMonitor();
 				// }, 5000);
 			});
-		}
+        },
+        reInitParameters(){
+            this.FinalClustering = [];
+            this.selectlinedata = [];
+            this.shapeNodeOrder = [];
+        }
 	},
 
 	mounted() {
