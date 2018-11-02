@@ -29,12 +29,17 @@ export default {
 			subdata: [],
 			linedata: [],
 			subdetail: [],
-			busdetail: []
+			busdetail: [],
+			area_index: 0,
+			genArray: []
 		};
 	},
 	methods: {
 		before_init() {
 			const temp = this.$store.state.casedetail;
+			this.area_index = Object.keys(
+				this.$store.state.casedetail.content.Area
+			).indexOf(this.$store.state.area);
 			if (temp.content.type == 'dsmDictionary') {
 				for (let ele in temp.content.Substation) {
 					this.subdata.push({
@@ -197,39 +202,47 @@ export default {
 		initData() {
 			let temp = [];
 			let subID;
+			let count = 0;
 			for (let i in this.$store.state.casedetail.content.Gen) {
-				subID = this.$store.state.casedetail.content.Bus[i]['Int.Sub Number'];
-				temp.push({
-					value: [
-						this.$store.state.casedetail.content.Substation[subID.toString()][
-							'Double.Longitude'
+				if (
+					this.$store.state.casedetail.content.Gen[i]['Int.Area Number'] ==
+					+this.$store.state.area
+				) {
+					this.genArray.push(count);
+					subID = this.$store.state.casedetail.content.Bus[i]['Int.Sub Number'];
+					temp.push({
+						value: [
+							this.$store.state.casedetail.content.Substation[subID.toString()][
+								'Double.Longitude'
+							],
+							this.$store.state.casedetail.content.Substation[subID.toString()][
+								'Double.Latitude'
+							]
 						],
-						this.$store.state.casedetail.content.Substation[subID.toString()][
-							'Double.Latitude'
-						]
-					],
-					name: i,
-					Status: 1,
-					MWMax: this.$store.state.casedetail.content.Gen[i][
-						'Single.MW Max Limit'
-					],
-					MWMin: this.$store.state.casedetail.content.Gen[i][
-						'Single.MW Min Limit'
-					],
-					MW: 0,
-					Mvar: 0,
-					MWSetpoint: 0,
-					VpuSetpoint: 1,
-					OperationCost: this.$store.state.casedetail.content.Gen[i][
-						'OperationCost'
-					],
-					MarginalCostCoefficients: this.$store.state.casedetail.content.Gen[i][
-						'MarginalCostCoefficients'
-					],
-					MarginalCost: 0,
-					id: this.$store.state.casedetail.content.Gen[i]['String.ID'],
-					AGC: false
-				});
+						name: i,
+						Status: 1,
+						MWMax: this.$store.state.casedetail.content.Gen[i][
+							'Single.MW Max Limit'
+						],
+						MWMin: this.$store.state.casedetail.content.Gen[i][
+							'Single.MW Min Limit'
+						],
+						MW: 0,
+						Mvar: 0,
+						MWSetpoint: 0,
+						VpuSetpoint: 1,
+						OperationCost: this.$store.state.casedetail.content.Gen[i][
+							'OperationCost'
+						],
+						MarginalCostCoefficients: this.$store.state.casedetail.content.Gen[
+							i
+						]['MarginalCostCoefficients'],
+						MarginalCost: 0,
+						id: this.$store.state.casedetail.content.Gen[i]['String.ID'],
+						AGC: false
+					});
+				}
+				count ++;
 			}
 			this.gens = temp;
 			if (this.gens.length > 1) {
@@ -255,12 +268,16 @@ export default {
 			this.anchor = anchor;
 			this.genDataLength = arrlength;
 		},
-		getMP() {
+		regularLoop() {
 			const message = JSON.parse(this.$store.state.rawdata);
 			this.$store.commit('setCurrentTime', +message['SOC']);
 			this.$store.commit('setCurrentStatus', message['Status']);
 			const temp = message.Data;
-			this.areaData = temp.slice(0, this.areaDataLength);
+			this.areaData = temp.slice(
+				this.area_index * this.areaDataLength,
+				this.area_index * this.areaDataLength + this.areaDataLength
+			);
+			// this.areaData = temp.slice(0, this.areaDataLength);
 			this.busData = temp.slice(
 				this.busAnchor,
 				this.busAnchor + this.busDataLength
@@ -272,17 +289,28 @@ export default {
 			this.$store.commit('setData', temp);
 			this.$store.commit('setAreaData', this.areaData);
 			for (let i in this.gens) {
-				this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
-				this.gens[i].Mvar = temp[this.anchor + 7 + i * this.genDataLength];
+				this.gens[i].MW = temp[this.anchor + 6 + this.genArray[i] * this.genDataLength]; // MW is the 6th in the gen data
+				this.gens[i].Mvar = temp[this.anchor + 7 + this.genArray[i] * this.genDataLength];
 				this.gens[i].MWSetpoint =
-					temp[this.anchor + 10 + i * this.genDataLength];
+					temp[this.anchor + 10 + this.genArray[i] * this.genDataLength];
 				this.gens[i].VpuSetpoint =
-					temp[this.anchor + 9 + i * this.genDataLength];
-				this.gens[i].Status = temp[this.anchor + 5 + i * this.genDataLength];
+					temp[this.anchor + 9 + this.genArray[i] * this.genDataLength];
+				this.gens[i].Status = temp[this.anchor + 5 + this.genArray[i] * this.genDataLength];
 				this.gens[i].MarginalCost = (
 					this.gens[i].MarginalCostCoefficients[0] +
 					this.gens[i].MarginalCostCoefficients[1] * 2 * this.gens[i].MW
 				).toFixed(2);
+				// this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
+				// this.gens[i].Mvar = temp[this.anchor + 7 + i * this.genDataLength];
+				// this.gens[i].MWSetpoint =
+				// 	temp[this.anchor + 10 + i * this.genDataLength];
+				// this.gens[i].VpuSetpoint =
+				// 	temp[this.anchor + 9 + i * this.genDataLength];
+				// this.gens[i].Status = temp[this.anchor + 5 + i * this.genDataLength];
+				// this.gens[i].MarginalCost = (
+				// 	this.gens[i].MarginalCostCoefficients[0] +
+				// 	this.gens[i].MarginalCostCoefficients[1] * 2 * this.gens[i].MW
+				// ).toFixed(2);
 			}
 			this.$store.commit('updateGenData', this.gens);
 		},
@@ -348,7 +376,7 @@ export default {
 	},
 	watch: {
 		dataflag: function() {
-			this.getMP();
+			this.regularLoop();
 			this.onMonitorRiskBus();
 			this.onMonitorRiskBranch();
 		}
