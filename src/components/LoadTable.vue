@@ -51,7 +51,6 @@ table.v-table thead th:first-child,
 table.v-table thead th:not(:first-child) {
 	padding: 0 10px;
 }
-
 </style>
 
 <script>
@@ -85,7 +84,8 @@ export default {
 				15,
 				30,
 				{ text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
-			]
+			],
+			loadArray: []
 		};
 	},
 	methods: {
@@ -108,17 +108,25 @@ export default {
 		},
 		initTable() {
 			let temp = [];
+			let count = 0;
 			for (let i in this.$store.state.casedetail.content.Load) {
-				temp.push({
-					value: false,
-					name: i,
-					Status: 1,
-					MW: 0,
-					Mvar: 0,
-					Vpu: 1,
-					FreqHz: 60,
-					id: this.$store.state.casedetail.content.Load[i]['String.ID']
-				});
+				if (
+					this.$store.state.casedetail.content.Load[i]['Int.Area Number'] ==
+					+this.$store.state.area
+				) {
+					this.loadArray.push(count);
+					temp.push({
+						value: false,
+						name: i,
+						Status: 1,
+						MW: 0,
+						Mvar: 0,
+						Vpu: 1,
+						FreqHz: 60,
+						id: this.$store.state.casedetail.content.Load[i]['String.ID']
+					});
+				}
+				count++;
 			}
 			this.loads = temp;
 			if (this.loads.length > 1) {
@@ -130,16 +138,16 @@ export default {
 		updateTable() {
 			setInterval(() => {
 				try {
-					const temp = JSON.parse(this.$store.state.rawdata).Data;
+					const temp = this.$store.state.parsedData;
 					for (let i in this.loads) {
-						this.loads[i].MW = temp[this.anchor + 6 + i * this.loadDataLength]; // MW is the 6th in the load data
+						this.loads[i].MW = temp[this.anchor + 6 + this.loadArray[i] * this.loadDataLength]; // MW is the 6th in the load data
 						this.loads[i].Mvar =
-							temp[this.anchor + 7 + i * this.loadDataLength];
-						this.loads[i].Vpu = temp[this.anchor + i * this.loadDataLength];
+							temp[this.anchor + 7 + this.loadArray[i] * this.loadDataLength];
+						this.loads[i].Vpu = temp[this.anchor + this.loadArray[i] * this.loadDataLength];
 						this.loads[i].FreqHz =
-							temp[this.anchor + 3 + i * this.loadDataLength];
+							temp[this.anchor + 3 + this.loadArray[i] * this.loadDataLength];
 						this.loads[i].Status =
-							temp[this.anchor + 5 + i * this.loadDataLength];
+							temp[this.anchor + 5 + this.loadArray[i] * this.loadDataLength];
 					}
 				} catch (e) {
 					console.log('The raw data are not ready');
