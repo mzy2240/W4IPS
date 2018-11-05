@@ -31,52 +31,82 @@ export default {
 			subdetail: [],
 			busdetail: [],
 			area_index: 0,
-			genArray: []
+			genArray: [],
+			busArray: [],
+			areaBus: {},
+			branchArray: []
 		};
 	},
 	methods: {
 		before_init() {
 			const temp = this.$store.state.casedetail;
+			let count = 0;
+			let count_b = 0;
 			this.area_index = Object.keys(
 				this.$store.state.casedetail.content.Area
 			).indexOf(this.$store.state.area);
 			if (temp.content.type == 'dsmDictionary') {
 				for (let ele in temp.content.Substation) {
-					this.subdata.push({
-						id: ele,
-						name: temp.content.Substation[ele]['String.Name'],
-						value: [
-							temp.content.Substation[ele]['Double.Longitude'],
-							temp.content.Substation[ele]['Double.Latitude']
-						],
-						attributes: {},
-						bus: []
-					});
+					if (
+						temp.content.Substation[ele]['Int.Area Number'] ==
+						+this.$store.state.area
+					) {
+						this.subdata.push({
+							id: ele,
+							name: temp.content.Substation[ele]['String.Name'],
+							value: [
+								temp.content.Substation[ele]['Double.Longitude'],
+								temp.content.Substation[ele]['Double.Latitude']
+							],
+							attributes: {
+							},
+							bus: []
+						});
+					}
 				}
 				for (let ele in temp.content.Branch) {
 					const fromid = ele.split(',')[0];
 					const toid = ele.split(',')[1];
 					const coords = [
-						this.subdata[temp.content.Bus[fromid]['Int.Sub Number'] - 1].value,
-						this.subdata[temp.content.Bus[toid]['Int.Sub Number'] - 1].value
+						[temp.content.Substation[temp.content.Bus[fromid]['Int.Sub Number'].toString()]['Double.Longitude'], temp.content.Substation[temp.content.Bus[fromid]['Int.Sub Number'].toString()]['Double.Latitude']],
+					[temp.content.Substation[temp.content.Bus[toid]['Int.Sub Number'].toString()]['Double.Longitude'], temp.content.Substation[temp.content.Bus[toid]['Int.Sub Number'].toString()]['Double.Latitude']]
 					];
-					this.linedata.push({
-						id: ele,
-						name:
-							this.subdata[
-								temp.content.Bus[fromid]['Int.Sub Number'] - 1
-							].name.split('_')[0] +
-							'-' +
-							this.subdata[
-								temp.content.Bus[toid]['Int.Sub Number'] - 1
-							].name.split('_')[0],
-						coords: coords,
-						count: 1,
-						attributes: {
-							MVALimit: temp.content.Branch[ele]['Single.MVA Limit'],
-							volt: temp.content.Bus[fromid]['Single.Nominal kV']
-						}
-					});
+					if (
+						[
+							temp.content.Branch[ele]['FromArea'],
+							temp.content.Branch[ele]['ToArea']
+						].includes(+this.$store.state.area)
+					) {
+						this.branchArray.push(count_b)
+						this.linedata.push({
+							id: ele,
+							name:
+								temp.content.Substation[
+									temp.content.Bus[fromid]['Int.Sub Number'].toString()
+								]['String.Name'].split('_')[0] +
+								'-' +
+								temp.content.Substation[
+									temp.content.Bus[toid]['Int.Sub Number'].toString()
+								]['String.Name'].split('_')[0],
+							coords: coords,
+							count: 1,
+							attributes: {
+								MVALimit: temp.content.Branch[ele]['Single.MVA Limit'],
+								volt: temp.content.Bus[fromid]['Single.Nominal kV']
+							}
+						});
+					}
+					count_b ++;
+				}
+				for (let i in this.$store.state.casedetail.content.Bus) {
+					if (
+						this.$store.state.casedetail.content.Bus[i]['Int.Area Number'] ==
+						+this.$store.state.area
+					) {
+						this.busArray.push(count);
+						this.areaBus[i] = this.$store.state.casedetail.content.Bus[i];
+					}
+					count ++;
 				}
 				this.subdetail = temp.content.Substation;
 				this.busdetail = temp.content.Bus;
@@ -123,16 +153,16 @@ export default {
 			let i = 0;
 			var key;
 			for (let [key, val] of Object.entries(
-				this.$store.state.casedetail.content.Bus
+				this.areaBus
 			)) {
 				if (
-					this.busData[i] <= val['Single.Max Limit'] ||
-					this.busData[i] >= val['Single.Min Limit']
+					this.busData[this.busArray[i]] <= val['Single.Max Limit'] ||
+					this.busData[this.busArray[i]] >= val['Single.Min Limit']
 				) {
 					// this.highRiskLines[key] = val;
 					this.violateBuses[key] = {};
 					this.violateBuses[key]['name'] = key;
-					this.violateBuses[key]['Vpu'] = this.busData[i];
+					this.violateBuses[key]['Vpu'] = this.busData[this.busArray[i]];
 					this.violateBuses[key]['Max'] = val['Single.Min Limit'];
 					this.violateBuses[key]['Min'] = val['Single.Max Limit'];
 					this.violateBuses[key]['SubID'] = val['Int.Sub Number'];
@@ -176,14 +206,14 @@ export default {
 			for (let index in this.linedata) {
 				key = this.linedata[index].id;
 				if (
-					this.branchData[i + 3] >=
+					this.branchData[this.branchArray[i] + 3] >=
 					0.85 * this.linedata[index].attributes.MVALimit
 				) {
 					this.highRiskLines[key] = {};
 					this.highRiskLines[key]['name'] = key;
-					this.highRiskLines[key]['MVA'] = this.branchData[i + 3];
+					this.highRiskLines[key]['MVA'] = this.branchData[this.branchArray[i] + 3];
 					this.highRiskLines[key]['Ratio'] = (
-						(this.branchData[i + 3] /
+						(this.branchData[this.branchArray[i] + 3] /
 							this.linedata[index].attributes.MVALimit) *
 						100
 					).toFixed(2);
@@ -242,7 +272,7 @@ export default {
 						AGC: false
 					});
 				}
-				count ++;
+				count++;
 			}
 			this.gens = temp;
 			if (this.gens.length > 1) {
@@ -289,28 +319,20 @@ export default {
 			this.$store.commit('setData', temp);
 			this.$store.commit('setAreaData', this.areaData);
 			for (let i in this.gens) {
-				this.gens[i].MW = temp[this.anchor + 6 + this.genArray[i] * this.genDataLength]; // MW is the 6th in the gen data
-				this.gens[i].Mvar = temp[this.anchor + 7 + this.genArray[i] * this.genDataLength];
+				this.gens[i].MW =
+					temp[this.anchor + 6 + this.genArray[i] * this.genDataLength]; // MW is the 6th in the gen data
+				this.gens[i].Mvar =
+					temp[this.anchor + 7 + this.genArray[i] * this.genDataLength];
 				this.gens[i].MWSetpoint =
 					temp[this.anchor + 10 + this.genArray[i] * this.genDataLength];
 				this.gens[i].VpuSetpoint =
 					temp[this.anchor + 9 + this.genArray[i] * this.genDataLength];
-				this.gens[i].Status = temp[this.anchor + 5 + this.genArray[i] * this.genDataLength];
+				this.gens[i].Status =
+					temp[this.anchor + 5 + this.genArray[i] * this.genDataLength];
 				this.gens[i].MarginalCost = (
 					this.gens[i].MarginalCostCoefficients[0] +
 					this.gens[i].MarginalCostCoefficients[1] * 2 * this.gens[i].MW
 				).toFixed(2);
-				// this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
-				// this.gens[i].Mvar = temp[this.anchor + 7 + i * this.genDataLength];
-				// this.gens[i].MWSetpoint =
-				// 	temp[this.anchor + 10 + i * this.genDataLength];
-				// this.gens[i].VpuSetpoint =
-				// 	temp[this.anchor + 9 + i * this.genDataLength];
-				// this.gens[i].Status = temp[this.anchor + 5 + i * this.genDataLength];
-				// this.gens[i].MarginalCost = (
-				// 	this.gens[i].MarginalCostCoefficients[0] +
-				// 	this.gens[i].MarginalCostCoefficients[1] * 2 * this.gens[i].MW
-				// ).toFixed(2);
 			}
 			this.$store.commit('updateGenData', this.gens);
 		},

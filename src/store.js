@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import datafield from './assets/datafield.json';
 import tcmcommands from './assets/tcmcommands.json';
 // import casedetail from './assets/150G.json';
-import casedetail from './assets/2000G.json'
+import casedetail from './assets/2000GA.json'
 import notificationSystem from './assets/notificationsettings';
 // import casedetail from './assets/150.json'
 
