@@ -65,7 +65,7 @@ table.v-table thead th:not(:first-child) {
 	padding: 0 10px;
 }
 td {
-  width: auto;
+	width: auto;
 }
 </style>
 
@@ -101,7 +101,8 @@ export default {
 				15,
 				30,
 				{ text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
-			]
+			],
+			shuntArray: []
 		};
 	},
 	methods: {
@@ -125,18 +126,33 @@ export default {
 		initTable() {
 			let temp = [];
 			let subID;
+			let count = 0;
 			for (let i in this.$store.state.casedetail.content.Shunt) {
-				subID = this.$store.state.casedetail.content.Bus[i]["Int.Sub Number"];
-				temp.push({
-					value: [this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Longitude"], this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Latitude"]],
-					name: i,
-					Status: 1,
-					Mvar: 0,
-					MvarNom: 0,
-					Vpu: 1,
-					FreqHz: 60,
-					id: this.$store.state.casedetail.content.Shunt[i]['String.ID']
-				});
+				if (
+					this.$store.state.casedetail.content.Shunt[i]['Int.Area Number'] ==
+					+this.$store.state.area
+				) {
+					this.shuntArray.push(count);
+					subID = this.$store.state.casedetail.content.Bus[i]['Int.Sub Number'];
+					temp.push({
+						value: [
+							this.$store.state.casedetail.content.Substation[subID.toString()][
+								'Double.Longitude'
+							],
+							this.$store.state.casedetail.content.Substation[subID.toString()][
+								'Double.Latitude'
+							]
+						],
+						name: i,
+						Status: 1,
+						Mvar: 0,
+						MvarNom: 0,
+						Vpu: 1,
+						FreqHz: 60,
+						id: this.$store.state.casedetail.content.Shunt[i]['String.ID']
+					});
+				}
+				count++;
 			}
 			this.shunts = temp;
 			if (this.shunts.length > 1) {
@@ -148,17 +164,17 @@ export default {
 		updateTable() {
 			setInterval(() => {
 				try {
-					const temp = JSON.parse(this.$store.state.rawdata).Data;
+					const temp = this.$store.state.parsedData;
 					for (let i in this.shunts) {
 						this.shunts[i].MvarNom =
-							temp[this.anchor + 7 + i * this.shuntDataLength]; // MW is the 6th in the load data
+							temp[this.anchor + 7 + this.shuntArray[i] * this.shuntDataLength]; // MW is the 6th in the load data
 						this.shunts[i].Mvar =
-							temp[this.anchor + 6 + i * this.shuntDataLength];
-						this.shunts[i].Vpu = temp[this.anchor + i * this.shuntDataLength];
+							temp[this.anchor + 6 + this.shuntArray[i] * this.shuntDataLength];
+						this.shunts[i].Vpu = temp[this.anchor + this.shuntArray[i] * this.shuntDataLength];
 						this.shunts[i].FreqHz =
-							temp[this.anchor + 3 + i * this.shuntDataLength];
+							temp[this.anchor + 3 + this.shuntArray[i] * this.shuntDataLength];
 						this.shunts[i].Status =
-							temp[this.anchor + 5 + i * this.shuntDataLength];
+							temp[this.anchor + 5 + this.shuntArray[i] * this.shuntDataLength];
 					}
 				} catch (e) {
 					console.log('The raw data are not ready');
