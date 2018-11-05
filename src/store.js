@@ -68,7 +68,10 @@ export default new Vuex.Store({
 		riskBuses: [],
 		riskBranches: [],
 		notMuted: true,
-		area: null
+		area: null,
+		subData: null,
+		lineData: null,
+		areaHelper: null
 	},
 	getters: {
 		getPubStatus(state) {
@@ -300,6 +303,15 @@ export default new Vuex.Store({
 		},
 		setArea(state, payload) {
 			state.area = payload;
+		},
+		setSubData(state, payload) {
+			state.subData = payload;
+		},
+		setLineData(state, payload) {
+			state.lineData = payload;
+		},
+		setAreaHelper(state, payload) {
+			state.areaHelper = payload;
 		}
 	},
 	actions: {

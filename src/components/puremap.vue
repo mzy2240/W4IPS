@@ -134,7 +134,8 @@ export default {
 			openLineData: [],
 			branchToOpenBranch: {},
 			highRiskLines: {},
-			formatRiskLines: []
+			formatRiskLines: [],
+			mapCenter: [-99.90, 31.97]
 		};
 	},
 	methods: {
@@ -174,7 +175,7 @@ export default {
 				// },
 				// Leaflet
 				leaflet: {
-					center: [-86.0, 36.44],
+					center: this.mapCenter,
 					zoom: 8,
 					roam: true,
 					tiles: [
@@ -391,70 +392,69 @@ export default {
 			});
 		},
 		getData() {
-			const temp = this.$store.state.casedetail;
-			// const temp = require('../assets/150.json');
-			// console.log(temp.content);
-			if (temp.content.type == 'dsmDictionary') {
-				for (let ele in temp.content.Substation) {
-					this.subdata.push({
-						id: ele,
-						name: temp.content.Substation[ele]['String.Name'],
-						value: [
-							temp.content.Substation[ele]['Double.Longitude'],
-							temp.content.Substation[ele]['Double.Latitude']
-						],
-						attributes: {},
-						bus: []
-					});
-				}
-				for (let ele in temp.content.Branch) {
-					const fromid = ele.split(',')[0];
-					const toid = ele.split(',')[1];
-					const coords = [
-						this.subdata[temp.content.Bus[fromid]['Int.Sub Number'] - 1].value,
-						this.subdata[temp.content.Bus[toid]['Int.Sub Number'] - 1].value
-					];
-					this.linedata.push({
-						id: ele,
-						name:
-							this.subdata[
-								temp.content.Bus[fromid]['Int.Sub Number'] - 1
-							].name.split('_')[0] +
-							'-' +
-							this.subdata[
-								temp.content.Bus[toid]['Int.Sub Number'] - 1
-							].name.split('_')[0],
-						coords: coords,
-						count: 1,
-						attributes: {
-							MVALimit: temp.content.Branch[ele]['Single.MVA Limit'],
-							volt: temp.content.Bus[fromid]['Single.Nominal kV']
-						}
-					});
-				}
-				this.subdetail = temp.content.Substation;
-				this.busdetail = temp.content.Bus;
-				for (let ele in this.subdetail) {
-					this.subdetail[ele].Bus = [];
-				}
-				for (let ele in temp.content.Gen) {
-					this.busdetail[ele].Gen = temp.content.Gen[ele];
-				}
-				for (let ele in temp.content.Load) {
-					this.busdetail[ele].Load = temp.content.Load[ele];
-				}
-				for (let ele in temp.content.Shunt) {
-					this.busdetail[ele].Shunt = temp.content.Shunt[ele];
-				}
-				for (let ele in temp.content.Bus) {
-					this.subdetail[temp.content.Bus[ele]['Int.Sub Number']].Bus.push(
-						this.busdetail[ele]
-					);
-				}
-				// console.log(this.busdetail);
-				// this.$store.commit('updateBusDetail', this.busdetail);
-				this.$store.commit('updateSubDetail', this.subdetail);
-			}
+			this.subdata = this.$store.state.subData;
+			this.linedata = this.$store.state.lineData;
+			this.subdetail = this.$store.state.subDetail;
+			// const temp = this.$store.state.casedetail;
+			// if (temp.content.type == 'dsmDictionary') {
+			// 	for (let ele in temp.content.Substation) {
+			// 		this.subdata.push({
+			// 			id: ele,
+			// 			name: temp.content.Substation[ele]['String.Name'],
+			// 			value: [
+			// 				temp.content.Substation[ele]['Double.Longitude'],
+			// 				temp.content.Substation[ele]['Double.Latitude']
+			// 			],
+			// 			attributes: {},
+			// 			bus: []
+			// 		});
+			// 	}
+			// 	for (let ele in temp.content.Branch) {
+			// 		const fromid = ele.split(',')[0];
+			// 		const toid = ele.split(',')[1];
+			// 		const coords = [
+			// 			this.subdata[temp.content.Bus[fromid]['Int.Sub Number'] - 1].value,
+			// 			this.subdata[temp.content.Bus[toid]['Int.Sub Number'] - 1].value
+			// 		];
+			// 		this.linedata.push({
+			// 			id: ele,
+			// 			name:
+			// 				this.subdata[
+			// 					temp.content.Bus[fromid]['Int.Sub Number'] - 1
+			// 				].name.split('_')[0] +
+			// 				'-' +
+			// 				this.subdata[
+			// 					temp.content.Bus[toid]['Int.Sub Number'] - 1
+			// 				].name.split('_')[0],
+			// 			coords: coords,
+			// 			count: 1,
+			// 			attributes: {
+			// 				MVALimit: temp.content.Branch[ele]['Single.MVA Limit'],
+			// 				volt: temp.content.Bus[fromid]['Single.Nominal kV']
+			// 			}
+			// 		});
+			// 	}
+			// 	this.subdetail = temp.content.Substation;
+			// 	this.busdetail = temp.content.Bus;
+			// 	for (let ele in this.subdetail) {
+			// 		this.subdetail[ele].Bus = [];
+			// 	}
+			// 	for (let ele in temp.content.Gen) {
+			// 		this.busdetail[ele].Gen = temp.content.Gen[ele];
+			// 	}
+			// 	for (let ele in temp.content.Load) {
+			// 		this.busdetail[ele].Load = temp.content.Load[ele];
+			// 	}
+			// 	for (let ele in temp.content.Shunt) {
+			// 		this.busdetail[ele].Shunt = temp.content.Shunt[ele];
+			// 	}
+			// 	for (let ele in temp.content.Bus) {
+			// 		this.subdetail[temp.content.Bus[ele]['Int.Sub Number']].Bus.push(
+			// 			this.busdetail[ele]
+			// 		);
+			// 	}
+			// 	this.$store.commit('updateSubDetail', this.subdetail);
+			// }
 		},
 		onDrawSub() {
 			this.chart.setOption({
@@ -500,31 +500,35 @@ export default {
 			});
 		},
 		initUpdateLines() {
-			var arrlength;
-			var keyCaseArr;
-			var valueFieldArr;
+			// var arrlength;
+			// var keyCaseArr;
+			// var valueFieldArr;
 
-			for (let ele in this.$store.state.fieldstore) {
-				arrlength = this.$store.state.fieldstore[ele].length;
-				keyCaseArr = Object.keys(this.$store.state.casedetail.content[ele]);
-				valueFieldArr = Object.values(this.$store.state.fieldstore[ele]);
-				if (ele != 'Branch') {
-					this.anchor += arrlength * keyCaseArr.length;
-				} else {
-					this.dataLength = arrlength * keyCaseArr.length;
-					this.statusIndex = valueFieldArr.indexOf('Status');
-					this.mwfromIndex = valueFieldArr.indexOf('MWFrom');
-					this.branchArrLength = arrlength;
-					break;
-				}
-			}
-			this.statusArray = Array(keyCaseArr.length).fill(1);
+			// for (let ele in this.$store.state.fieldstore) {
+			// 	arrlength = this.$store.state.fieldstore[ele].length;
+			// 	keyCaseArr = Object.keys(this.$store.state.casedetail.content[ele]);
+			// 	valueFieldArr = Object.values(this.$store.state.fieldstore[ele]);
+			// 	if (ele != 'Branch') {
+			// 		this.anchor += arrlength * keyCaseArr.length;
+			// 	} else {
+			// 		this.dataLength = arrlength * keyCaseArr.length;
+			// 		// this.statusIndex = valueFieldArr.indexOf('Status');
+			// 		// this.mwfromIndex = valueFieldArr.indexOf('MWFrom');
+			// 		this.branchArrLength = arrlength;
+			// 		break;
+			// 	}
+			// }
+			this.anchor = this.$store.state.areaHelper.Branch.anchor;
+			this.branchArrLength = this.$store.state.areaHelper.Branch.length;
+			this.dataLength = Object.keys(this.$store.state.casedetail.content['Branch']).length*this.branchArrLength;
+			this.statusArray = Array(this.$store.state.areaHelper.Branch.list.length).fill(1);
 		},
 		updateLinesCycle: function() {
 			// setTimeout(() => {
 			// 	this.updateLines();
 			// }, 1000);
 			setInterval(() => {
+				// this.updateLines();
 				if(this.$store.state.status === 'running') {
 					this.updateLines();
 				}
@@ -534,42 +538,45 @@ export default {
 		updateLines() {
 			const temp = JSON.parse(this.$store.state.rawdata).Data;
 			const branchData = temp.slice(this.anchor, this.anchor + this.dataLength);
-			let branchIndex;
+			// let branchIndex;
 			let statusTemp = [];
 			let branchChanged = false;
 			let i = 0;
+			const branchArray = this.$store.state.areaHelper.Branch.list;
+			const branchArrLength = this.$store.state.areaHelper.Branch.length;
 			var key;
 			for (let index in this.linedata) {
-				statusTemp.push(branchData[i]);
-				branchIndex = i / this.branchArrLength;
-				this.linedata[branchIndex].attributes.MVA = branchData[i + 3];
+				// statusTemp.push(branchData[i]);
+				statusTemp.push(branchData[branchArray[index]*branchArrLength]);
+				// branchIndex = i / this.branchArrLength;
+				this.linedata[index].attributes.MVA = branchData[branchArray[index]*branchArrLength + 3];
 				if (
-					this.statusArray[branchIndex] == 1 &&
-					[0, 2, 3].includes(branchData[i])
+					this.statusArray[index] == 1 &&
+					[0, 2, 3].includes(branchData[branchArray[index]*branchArrLength])
 				) {
 					// Branch opened
-					this.updateLineOpen(branchIndex);
+					this.updateLineOpen(index);
 					branchChanged = true;
 				} else if (
-					[0, 2, 3].includes(this.statusArray[branchIndex]) &&
-					branchData[i] == 1
+					[0, 2, 3].includes(this.statusArray[index]) &&
+					branchData[branchArray[index]*branchArrLength] == 1
 				) {
 					// Branch closed
-					this.updateLineClose(branchIndex);
+					this.updateLineClose(index);
 					branchChanged = true;
 				}
 				key = this.linedata[index].id;
 				// console.log(key);
 				if (
-					branchData[i + 3] >=
+					branchData[branchArray[index]*branchArrLength + 3] >=
 					0.85 * this.linedata[index].attributes.MVALimit
 				) {
 					// this.highRiskLines[key] = val;
 					this.highRiskLines[key] = {};
 					this.highRiskLines[key]['name'] = key;
-					this.highRiskLines[key]['MVA'] = branchData[i + 3];
+					this.highRiskLines[key]['MVA'] = branchData[branchArray[index]*branchArrLength + 3];
 					this.highRiskLines[key]['Ratio'] = (
-						(branchData[i + 3] / this.linedata[index].attributes.MVALimit) *
+						(branchData[branchArray[index]*branchArrLength + 3] / this.linedata[index].attributes.MVALimit) *
 						100
 					).toFixed(2);
 					this.highRiskLines[key]['MVALimit'] = this.linedata[
@@ -633,15 +640,16 @@ export default {
 		},
 		restore() {
 			var temp = this.chart.getOption();
-			temp.leaflet[0].center = [-86.0, 36.44];
+			temp.leaflet[0].center = this.mapCenter;
 			temp.leaflet[0].zoom = 8;
 			this.chart.setOption(temp);
 		}
 	},
 	created() {
-		this.initUpdateLines();
+		
 	},
 	mounted() {
+		this.initUpdateLines();
 		this.getData();
 		this.initdraw('main');
 		this.onDrawSub();
