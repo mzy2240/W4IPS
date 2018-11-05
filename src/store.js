@@ -71,7 +71,8 @@ export default new Vuex.Store({
 		area: null,
 		subData: null,
 		lineData: null,
-		areaHelper: null
+		areaHelper: null,
+		otherArea: null
 	},
 	getters: {
 		getPubStatus(state) {
@@ -312,6 +313,9 @@ export default new Vuex.Store({
 		},
 		setAreaHelper(state, payload) {
 			state.areaHelper = payload;
+		},
+		setOtherArea(state, payload) {
+			state.otherArea = payload;
 		}
 	},
 	actions: {

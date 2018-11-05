@@ -223,6 +223,7 @@ export default {
 						coordinateSystem: 'leaflet',
 						// coordinateSystem: 'bmap',
 						symbol: 'circle',
+						symbolSize: 8,
 						showEffectOn: 'emphasis',
 						progressive: 40,
 						progressiveThreshold: 200,
@@ -387,6 +388,21 @@ export default {
 							}
 						},
 						data: []
+					},
+					{
+						id: 'otherSub',
+						type: 'scatter',
+						coordinateSystem: 'leaflet',
+						silent: true,
+						large: true,
+						largeThreshold: 1,
+						progressive: 100,
+						progressiveThreshold: 500,
+						symbolSize: 5,
+						itemStyle: {
+							color: '#757575'
+						},
+						data: this.$store.state.otherArea.Substation
 					}
 				]
 			});

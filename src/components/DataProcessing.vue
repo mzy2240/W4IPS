@@ -42,6 +42,8 @@ export default {
 			const temp = this.$store.state.casedetail;
 			let count = 0;
 			let count_b = 0;
+			let otherSub = [];
+			let otherBranch = [];
 			this.area_index = Object.keys(
 				this.$store.state.casedetail.content.Area
 			).indexOf(this.$store.state.area);
@@ -62,6 +64,14 @@ export default {
 							},
 							bus: []
 						});
+					} else {
+						otherSub.push({
+							name: temp.content.Substation[ele]['String.Name'],
+							value: [
+								temp.content.Substation[ele]['Double.Longitude'],
+								temp.content.Substation[ele]['Double.Latitude']
+							]
+						})
 					}
 				}
 				for (let ele in temp.content.Branch) {
@@ -95,6 +105,18 @@ export default {
 								volt: temp.content.Bus[fromid]['Single.Nominal kV']
 							}
 						});
+					} else {
+						otherBranch.push({
+							name:
+								temp.content.Substation[
+									temp.content.Bus[fromid]['Int.Sub Number'].toString()
+								]['String.Name'].split('_')[0] +
+								'-' +
+								temp.content.Substation[
+									temp.content.Bus[toid]['Int.Sub Number'].toString()
+								]['String.Name'].split('_')[0],
+							coords: coords
+						})
 					}
 					count_b ++;
 				}
@@ -129,6 +151,7 @@ export default {
 				}
 				this.$store.commit('setSubData', this.subdata);
 				this.$store.commit('setLineData', this.linedata);
+				this.$store.commit('setOtherArea', {Substation: otherSub, Branch: otherBranch});
 				this.$store.commit('updateSubDetail', this.subdetail);
 			}
 		},
