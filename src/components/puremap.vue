@@ -135,7 +135,8 @@ export default {
 			branchToOpenBranch: {},
 			highRiskLines: {},
 			formatRiskLines: [],
-			mapCenter: [-99.9, 31.97]
+			mapCenter: [-99.9, 31.97],
+			Interval: null
 		};
 	},
 	methods: {
@@ -577,7 +578,7 @@ export default {
 			// setTimeout(() => {
 			// 	this.updateLines();
 			// }, 1000);
-			setInterval(() => {
+			this.Interval = setInterval(() => {
 				// this.updateLines();
 				if (this.$store.state.status === 'running') {
 					this.updateLines();
@@ -586,7 +587,7 @@ export default {
 			}, 1500);
 		},
 		updateLines() {
-			const temp = JSON.parse(this.$store.state.rawdata).Data;
+			const temp = this.$store.state.parsedData;
 			const branchData = temp.slice(this.anchor, this.anchor + this.dataLength);
 			// let branchIndex;
 			let statusTemp = [];
@@ -754,6 +755,7 @@ export default {
 		intro.start();
 	},
 	beforeDestroy() {
+		clearInterval(this.Interval);
 		this.chart.clear();
 	},
 	// watch: {

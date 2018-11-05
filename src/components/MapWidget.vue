@@ -52,7 +52,8 @@ export default {
 			subdata: [],
 			linedata: [],
 			subdetail: [],
-			busdetail: []
+			busdetail: [],
+			mapCenter: [-99.9, 31.97]
 		};
 	},
 	methods: {
@@ -65,7 +66,7 @@ export default {
 					trigger: 'item'
 				},
 				leaflet: {
-					center: [-86.0, 36.44],
+					center: this.mapCenter,
 					zoom: 6,
 					roam: true,
 					tiles: [
@@ -91,7 +92,9 @@ export default {
 						// showEffectOn: 'emphasis',
 						// zindex: 2,
 						zlevel: 3,
-						data: [],
+						progressive: 100,
+						progressiveThreshold: 200,
+						data: this.$store.state.subData,
 						tooltip: {
 							confine: true,
 							formatter: function(params) {
@@ -107,6 +110,8 @@ export default {
 						name: 'lines',
 						type: 'lines',
 						coordinateSystem: 'leaflet',
+						progressive: 100,
+						progressiveThreshold: 200,
 						silent: false,
 						lineStyle: {
 							width: 1,
@@ -142,7 +147,7 @@ export default {
 							}
 						},
 						zlevel: 3,
-						data: []
+						data: this.$store.state.lineData
 					},
 					{
 						id: 'vbus',
@@ -337,16 +342,16 @@ export default {
 		},
 		restore() {
 			var temp = this.chart.getOption();
-			temp.leaflet[0].center = [-86.0, 36.44];
+			temp.leaflet[0].center = this.mapCenter;
 			temp.leaflet[0].zoom = 6;
 			this.chart.setOption(temp);
 		}
 	},
 	mounted() {
 		this.initdraw();
-		this.getData();
-		this.onDrawSub();
-		this.onDrawLines();
+		// this.getData();
+		// this.onDrawSub();
+		// this.onDrawLines();
 	},
 	beforeDestroy(){
 		this.chart.clear();

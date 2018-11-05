@@ -90,7 +90,7 @@ export default {
 				event: [temp.type, temp.id, temp.action]
 			});
 			if (temp.type == 'Gen' && ['OPEN', 'CLOSE'].includes(temp.action)) {
-				const id = temp.id.split(',')[1];
+				const id = temp.id.split(',')[0];
 				this.$store.commit(
 					'addCost',
 					this.$store.state.casedetail.content.Gen[id]['OperationCost']

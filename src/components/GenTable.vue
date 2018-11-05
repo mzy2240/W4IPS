@@ -6,7 +6,7 @@
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
 			<v-toolbar-items>
-        		<v-menu bottom right offset-x>
+				<v-menu bottom right offset-x>
 					<v-btn icon slot="activator">
 						<v-icon>more_vert</v-icon>
 					</v-btn>
@@ -15,7 +15,7 @@
 							<v-list-tile-title>Toggle all AGC</v-list-tile-title>
 						</v-list-tile>
 					</v-list>
-        		</v-menu>
+				</v-menu>
 			</v-toolbar-items>
 		</v-toolbar>
 		<v-divider></v-divider>
@@ -24,12 +24,12 @@
 				<v-data-table class="fixed-header" :headers="headers" :items="$store.state.genData" :rows-per-page-items="defaultRowItems" v-model="selected" select-all disable-initial-sort item-key="name">
 					<template slot="headerCell" slot-scope="props">
 						<v-tooltip bottom>
-						<span slot="activator">
-							{{ props.header.text }}
-						</span>
-						<span>
-							{{ props.header.text }}
-						</span>
+							<span slot="activator">
+								{{ props.header.text }}
+							</span>
+							<span>
+								{{ props.header.text }}
+							</span>
 						</v-tooltip>
 					</template>
 					<template slot="items" slot-scope="props">
@@ -39,7 +39,9 @@
 							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-left">{{ props.item.Status }}</td>
-							<td class="text-xs-right"><v-chip label small :color="getColorByValue(props.item.MW, props.item.MWMax)" text-color="black" class="chip">{{ props.item.MW }}</v-chip></td>
+							<td class="text-xs-right">
+								<v-chip label small :color="getColorByValue(props.item.MW, props.item.MWMax)" text-color="black" class="chip">{{ props.item.MW }}</v-chip>
+							</td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
 							<td class="text-xs-right">{{ props.item.MarginalCost }}</td>
 							<td class="text-xs-right">
@@ -60,12 +62,12 @@
 							<td class="text-xs-right">{{ props.item.MWMin }}</td>
 							<td class="text-xs-center">
 								<!-- <div class="mt-3 pa-0"> -->
-									<v-switch class="mt-3" v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
+								<v-switch class="mt-3" v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
 								<!-- </div> -->
 							</td>
 							<td class="text-xs-center">
 								<!-- <div class="mt-3 pa-0"> -->
-									<v-switch class="mt-3" v-model="props.item.AGC"></v-switch>
+								<v-switch class="mt-3" v-model="props.item.AGC"></v-switch>
 								<!-- </div> -->
 							</td>
 						</tr>
@@ -98,23 +100,23 @@ table.v-table thead th:not(:first-child) {
 	width: 60px;
 }
 .fixed-header table {
-    table-layout: fixed;
+	table-layout: fixed;
 }
 
 .fixed-header th {
-    background-color: #fff; /* just for LIGHT THEME, change it to #474747 for DARK */
-    position: sticky;
-    top: 0;
-    z-index: 10;
+	background-color: #fff; /* just for LIGHT THEME, change it to #474747 for DARK */
+	position: sticky;
+	top: 0;
+	z-index: 10;
 }
 
 .fixed-header tr.datatable__progress th {
-    top: 56px;
+	top: 56px;
 }
 
 .fixed-header .table__overflow {
-    overflow: auto;
-    height: 100%;
+	overflow: auto;
+	height: 100%;
 }
 </style>
 
@@ -134,18 +136,18 @@ export default {
 					sortable: false,
 					value: 'name'
 				},
-				{ text: 'Status', value: 'Status'},
-				{ text: 'MW', value: 'MW'},
-				{ text: 'Mvar', value: 'Mvar'},
-				{ text: 'Marginal Cost', value: 'MarginalCost'},
-				{ text: 'MW Setpoint', value: 'MWSetpoint'},
-				{ text: 'Vpu Setpoint', value: 'VpuSetpoint'},
-				{ text: 'MW Max Limit', value: 'MWMax'},
-				{ text: 'MW Min Limit', value: 'MWMin'},
+				{ text: 'Status', value: 'Status' },
+				{ text: 'MW', value: 'MW' },
+				{ text: 'Mvar', value: 'Mvar' },
+				{ text: 'Marginal Cost', value: 'MarginalCost' },
+				{ text: 'MW Setpoint', value: 'MWSetpoint' },
+				{ text: 'Vpu Setpoint', value: 'VpuSetpoint' },
+				{ text: 'MW Max Limit', value: 'MWMax' },
+				{ text: 'MW Min Limit', value: 'MWMin' },
 				// { text: 'MW setpoint', value: 'MWSet', sortable: false },
 				// { text: 'Vpu setpoint', value: 'VpuSet', sortable: false },
-				{ text: 'Actions', value: 'Actions'},
-				{ text: 'AGC', value: 'AGC'}
+				{ text: 'Actions', value: 'Actions' },
+				{ text: 'AGC', value: 'AGC' }
 			],
 			gens: [],
 			selected: [],
@@ -183,9 +185,16 @@ export default {
 			let temp = [];
 			let subID;
 			for (let i in this.$store.state.casedetail.content.Gen) {
-				subID = this.$store.state.casedetail.content.Bus[i]["Int.Sub Number"];
+				subID = this.$store.state.casedetail.content.Bus[i]['Int.Sub Number'];
 				temp.push({
-					value: [this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Longitude"], this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Latitude"]],
+					value: [
+						this.$store.state.casedetail.content.Substation[subID.toString()][
+							'Double.Longitude'
+						],
+						this.$store.state.casedetail.content.Substation[subID.toString()][
+							'Double.Latitude'
+						]
+					],
 					name: i,
 					Status: 1,
 					MWMax: this.$store.state.casedetail.content.Gen[i][
@@ -259,6 +268,7 @@ export default {
 			} else {
 				command = 'OPEN';
 			}
+			// console.log(item);
 			this.$store.commit('setMessage', [
 				'Gen',
 				item.name + ',' + item.id,
@@ -271,17 +281,20 @@ export default {
 			console.log(item);
 			// console.log(this.$store.state.genData)
 		},
-		toggleALL(){
+		toggleALL() {
 			this.switch = !this.switch;
 			this.$store.commit('toggleALL', this.switch);
 		},
 		getColorByValue(MW, MAX) {
 			var temp = 'transparent';
-			if (MW >= MAX) {
-				temp = 'red';
-			} else if (MW > 0.9 * MAX) {
-				temp = 'yellow';
+			if (MW > 0) {
+				if (MW >= MAX) {
+					temp = 'red';
+				} else if (MW > 0.9 * MAX) {
+					temp = 'yellow';
+				}
 			}
+
 			return temp;
 		}
 	},

@@ -350,6 +350,7 @@ export default {
 			this.$store.commit('setCurrentTime', +message['SOC']);
 			this.$store.commit('setCurrentStatus', message['Status']);
 			const temp = message.Data;
+			this.$store.commit('setParsedData', temp);
 			this.areaData = temp.slice(
 				this.area_index * this.areaDataLength,
 				this.area_index * this.areaDataLength + this.areaDataLength
