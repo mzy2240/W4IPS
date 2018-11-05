@@ -60,8 +60,7 @@ export default {
 								temp.content.Substation[ele]['Double.Longitude'],
 								temp.content.Substation[ele]['Double.Latitude']
 							],
-							attributes: {
-							},
+							attributes: {},
 							bus: []
 						});
 					} else {
@@ -71,15 +70,29 @@ export default {
 								temp.content.Substation[ele]['Double.Longitude'],
 								temp.content.Substation[ele]['Double.Latitude']
 							]
-						})
+						});
 					}
 				}
 				for (let ele in temp.content.Branch) {
 					const fromid = ele.split(',')[0];
 					const toid = ele.split(',')[1];
 					const coords = [
-						[temp.content.Substation[temp.content.Bus[fromid]['Int.Sub Number'].toString()]['Double.Longitude'], temp.content.Substation[temp.content.Bus[fromid]['Int.Sub Number'].toString()]['Double.Latitude']],
-					[temp.content.Substation[temp.content.Bus[toid]['Int.Sub Number'].toString()]['Double.Longitude'], temp.content.Substation[temp.content.Bus[toid]['Int.Sub Number'].toString()]['Double.Latitude']]
+						[
+							temp.content.Substation[
+								temp.content.Bus[fromid]['Int.Sub Number'].toString()
+							]['Double.Longitude'],
+							temp.content.Substation[
+								temp.content.Bus[fromid]['Int.Sub Number'].toString()
+							]['Double.Latitude']
+						],
+						[
+							temp.content.Substation[
+								temp.content.Bus[toid]['Int.Sub Number'].toString()
+							]['Double.Longitude'],
+							temp.content.Substation[
+								temp.content.Bus[toid]['Int.Sub Number'].toString()
+							]['Double.Latitude']
+						]
 					];
 					if (
 						[
@@ -87,7 +100,7 @@ export default {
 							temp.content.Branch[ele]['ToArea']
 						].includes(+this.$store.state.area)
 					) {
-						this.branchArray.push(count_b)
+						this.branchArray.push(count_b);
 						this.linedata.push({
 							id: ele,
 							name:
@@ -106,19 +119,21 @@ export default {
 							}
 						});
 					} else {
-						otherBranch.push({
-							name:
-								temp.content.Substation[
-									temp.content.Bus[fromid]['Int.Sub Number'].toString()
-								]['String.Name'].split('_')[0] +
-								'-' +
-								temp.content.Substation[
-									temp.content.Bus[toid]['Int.Sub Number'].toString()
-								]['String.Name'].split('_')[0],
-							coords: coords
-						})
+						if (temp.content.Branch[ele]['Byte.Type'] == 0) {
+							otherBranch.push({
+								name:
+									temp.content.Substation[
+										temp.content.Bus[fromid]['Int.Sub Number'].toString()
+									]['String.Name'].split('_')[0] +
+									'-' +
+									temp.content.Substation[
+										temp.content.Bus[toid]['Int.Sub Number'].toString()
+									]['String.Name'].split('_')[0],
+								coords: coords
+							});
+						}
 					}
-					count_b ++;
+					count_b++;
 				}
 				for (let i in this.$store.state.casedetail.content.Bus) {
 					if (
@@ -128,7 +143,7 @@ export default {
 						this.busArray.push(count);
 						this.areaBus[i] = this.$store.state.casedetail.content.Bus[i];
 					}
-					count ++;
+					count++;
 				}
 				this.subdetail = temp.content.Substation;
 				this.busdetail = temp.content.Bus;
@@ -151,7 +166,10 @@ export default {
 				}
 				this.$store.commit('setSubData', this.subdata);
 				this.$store.commit('setLineData', this.linedata);
-				this.$store.commit('setOtherArea', {Substation: otherSub, Branch: otherBranch});
+				this.$store.commit('setOtherArea', {
+					Substation: otherSub,
+					Branch: otherBranch
+				});
 				this.$store.commit('updateSubDetail', this.subdetail);
 			}
 		},
@@ -177,17 +195,19 @@ export default {
 		onMonitorRiskBus() {
 			let i = 0;
 			var key;
-			for (let [key, val] of Object.entries(
-				this.areaBus
-			)) {
+			for (let [key, val] of Object.entries(this.areaBus)) {
 				if (
-					this.busData[this.busArray[i]*this.busArrLength] <= val['Single.Max Limit'] ||
-					this.busData[this.busArray[i]*this.busArrLength] >= val['Single.Min Limit']
+					this.busData[this.busArray[i] * this.busArrLength] <=
+						val['Single.Max Limit'] ||
+					this.busData[this.busArray[i] * this.busArrLength] >=
+						val['Single.Min Limit']
 				) {
 					// this.highRiskLines[key] = val;
 					this.violateBuses[key] = {};
 					this.violateBuses[key]['name'] = key;
-					this.violateBuses[key]['Vpu'] = this.busData[this.busArray[i]*this.busArrLength];
+					this.violateBuses[key]['Vpu'] = this.busData[
+						this.busArray[i] * this.busArrLength
+					];
 					this.violateBuses[key]['Max'] = val['Single.Min Limit'];
 					this.violateBuses[key]['Min'] = val['Single.Max Limit'];
 					this.violateBuses[key]['SubID'] = val['Int.Sub Number'];
@@ -202,7 +222,7 @@ export default {
 				} else if (key in this.violateBuses) {
 					delete this.violateBuses[key];
 				}
-				i ++;
+				i++;
 			}
 			this.formatRiskBuses = Object.values(this.violateBuses);
 			this.$store.commit('setRiskBuses', this.formatRiskBuses);
@@ -231,14 +251,16 @@ export default {
 			for (let index in this.linedata) {
 				key = this.linedata[index].id;
 				if (
-					this.branchData[this.branchArray[i]*this.branchArrLength + 3] >=
+					this.branchData[this.branchArray[i] * this.branchArrLength + 3] >=
 					0.85 * this.linedata[index].attributes.MVALimit
 				) {
 					this.highRiskLines[key] = {};
 					this.highRiskLines[key]['name'] = key;
-					this.highRiskLines[key]['MVA'] = this.branchData[this.branchArray[i]*this.branchArrLength + 3];
+					this.highRiskLines[key]['MVA'] = this.branchData[
+						this.branchArray[i] * this.branchArrLength + 3
+					];
 					this.highRiskLines[key]['Ratio'] = (
-						(this.branchData[this.branchArray[i]*this.branchArrLength + 3] /
+						(this.branchData[this.branchArray[i] * this.branchArrLength + 3] /
 							this.linedata[index].attributes.MVALimit) *
 						100
 					).toFixed(2);
@@ -249,7 +271,7 @@ export default {
 				} else if (key in this.highRiskLines) {
 					delete this.highRiskLines[key];
 				}
-				i ++;
+				i++;
 			}
 			this.formatRiskLines = Object.values(this.highRiskLines);
 			this.$store.commit('setRiskBranches', this.formatRiskLines);
@@ -383,25 +405,24 @@ export default {
 				}
 			}, 500);
 		},
-		addAreaHelper(){
+		addAreaHelper() {
 			const areaHelper = {
-					Bus: {
-						anchor: this.busAnchor,
-						length: this.busArrLength,   //For a single bus object, not for the whole bus list
-						list: this.busArray
-					},
-					Gen: {
-						anchor: this.anchor,
-						length: this.genDataLength,
-						list: this.genArray
-					},
-					Branch: {
-						anchor: this.branchAnchor,
-						length: this.branchArrLength,
-						list: this.branchArray
-					}
-
+				Bus: {
+					anchor: this.busAnchor,
+					length: this.busArrLength, //For a single bus object, not for the whole bus list
+					list: this.busArray
+				},
+				Gen: {
+					anchor: this.anchor,
+					length: this.genDataLength,
+					list: this.genArray
+				},
+				Branch: {
+					anchor: this.branchAnchor,
+					length: this.branchArrLength,
+					list: this.branchArray
 				}
+			};
 			this.$store.commit('setAreaHelper', areaHelper);
 		}
 	},

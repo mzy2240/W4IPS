@@ -135,7 +135,7 @@ export default {
 			branchToOpenBranch: {},
 			highRiskLines: {},
 			formatRiskLines: [],
-			mapCenter: [-99.90, 31.97]
+			mapCenter: [-99.9, 31.97]
 		};
 	},
 	methods: {
@@ -176,14 +176,20 @@ export default {
 				// Leaflet
 				leaflet: {
 					center: this.mapCenter,
-					zoom: 8,
+					zoom: 7,
 					roam: true,
 					tiles: [
 						{
 							label: 'OpenStreetMap',
 							urlTemplate:
-								'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+								//'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}',
+								'https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png',
+							// 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
 							options: {
+								time: '',
+								maxZoom: 8,
+								tilematrixset: 'GoogleMapsCompatible_Level',
+								format: 'jpg',
 								attribution:
 									'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 							}
@@ -247,6 +253,7 @@ export default {
 						animation: false,
 						progressive: 25,
 						progressiveThreshold: 150,
+						zlevel: 1,
 						// coordinateSystem: 'bmap',
 						silent: false,
 						// effect: {
@@ -336,6 +343,7 @@ export default {
 						name: 'openLines',
 						type: 'lines',
 						coordinateSystem: 'leaflet',
+						zlevel: 1,
 						// coordinateSystem: 'bmap',
 						silent: false,
 						// blendMode: 'lighter',
@@ -366,8 +374,8 @@ export default {
 						type: 'lines',
 						coordinateSystem: 'leaflet',
 						silent: false,
-						zlevel: 10,
-						z: 10,
+						zlevel: 2,
+						z: 2,
 						symbol: 'pin',
 						symbolSize: 30,
 						lineStyle: {
@@ -396,16 +404,34 @@ export default {
 						silent: true,
 						large: true,
 						largeThreshold: 1,
-						progressive: 100,
-						progressiveThreshold: 500,
+						blendMode: 'lighter',
+						// progressive: 100,
+						// progressiveThreshold: 500,
 						symbolSize: 5,
 						itemStyle: {
-							color: '#757575'
+							color: '#616161'
 						},
 						data: this.$store.state.otherArea.Substation
+					},
+					{
+						id: 'otherBranch',
+						type: 'lines',
+						coordinateSystem: 'leaflet',
+						silent: true,
+						large: true,
+						largeThreshold: 1,
+						blendMode: 'lighter',
+						// progressive: 100,
+						// progressiveThreshold: 500,
+						// zindex: 5,
+						lineStyle: {
+							color: '#757575'
+						},
+						data: this.$store.state.otherArea.Branch
 					}
 				]
 			});
+			// console.log(this.chart.getOption());
 		},
 		getData() {
 			this.subdata = this.$store.state.subData;
@@ -473,14 +499,18 @@ export default {
 			// }
 		},
 		onDrawSub() {
-			this.chart.setOption({
-				series: [
-					{
-						id: 'sub',
-						data: this.subdata
-					}
-				]
-			});
+			let temp = this.chart.getOption();
+			temp.series[0].data = this.subdata;
+			temp.series[1].data = this.linedata;
+			this.chart.setOption(temp);
+			// this.chart.setOption({
+			// 	series: [
+			// 		{
+			// 			id: 'sub',
+			// 			data: this.subdata
+			// 		}
+			// 	]
+			// });
 			var self = this;
 			this.chart.on('click', function(params) {
 				if (params.seriesName == 'sub') {
@@ -536,8 +566,12 @@ export default {
 			// }
 			this.anchor = this.$store.state.areaHelper.Branch.anchor;
 			this.branchArrLength = this.$store.state.areaHelper.Branch.length;
-			this.dataLength = Object.keys(this.$store.state.casedetail.content['Branch']).length*this.branchArrLength;
-			this.statusArray = Array(this.$store.state.areaHelper.Branch.list.length).fill(1);
+			this.dataLength =
+				Object.keys(this.$store.state.casedetail.content['Branch']).length *
+				this.branchArrLength;
+			this.statusArray = Array(
+				this.$store.state.areaHelper.Branch.list.length
+			).fill(1);
 		},
 		updateLinesCycle: function() {
 			// setTimeout(() => {
@@ -545,7 +579,7 @@ export default {
 			// }, 1000);
 			setInterval(() => {
 				// this.updateLines();
-				if(this.$store.state.status === 'running') {
+				if (this.$store.state.status === 'running') {
 					this.updateLines();
 				}
 				// console.log(this.$store.state.totalCost);
@@ -563,19 +597,20 @@ export default {
 			var key;
 			for (let index in this.linedata) {
 				// statusTemp.push(branchData[i]);
-				statusTemp.push(branchData[branchArray[index]*branchArrLength]);
+				statusTemp.push(branchData[branchArray[index] * branchArrLength]);
 				// branchIndex = i / this.branchArrLength;
-				this.linedata[index].attributes.MVA = branchData[branchArray[index]*branchArrLength + 3];
+				this.linedata[index].attributes.MVA =
+					branchData[branchArray[index] * branchArrLength + 3];
 				if (
 					this.statusArray[index] == 1 &&
-					[0, 2, 3].includes(branchData[branchArray[index]*branchArrLength])
+					[0, 2, 3].includes(branchData[branchArray[index] * branchArrLength])
 				) {
 					// Branch opened
 					this.updateLineOpen(index);
 					branchChanged = true;
 				} else if (
 					[0, 2, 3].includes(this.statusArray[index]) &&
-					branchData[branchArray[index]*branchArrLength] == 1
+					branchData[branchArray[index] * branchArrLength] == 1
 				) {
 					// Branch closed
 					this.updateLineClose(index);
@@ -584,15 +619,17 @@ export default {
 				key = this.linedata[index].id;
 				// console.log(key);
 				if (
-					branchData[branchArray[index]*branchArrLength + 3] >=
+					branchData[branchArray[index] * branchArrLength + 3] >=
 					0.85 * this.linedata[index].attributes.MVALimit
 				) {
 					// this.highRiskLines[key] = val;
 					this.highRiskLines[key] = {};
 					this.highRiskLines[key]['name'] = key;
-					this.highRiskLines[key]['MVA'] = branchData[branchArray[index]*branchArrLength + 3];
+					this.highRiskLines[key]['MVA'] =
+						branchData[branchArray[index] * branchArrLength + 3];
 					this.highRiskLines[key]['Ratio'] = (
-						(branchData[branchArray[index]*branchArrLength + 3] / this.linedata[index].attributes.MVALimit) *
+						(branchData[branchArray[index] * branchArrLength + 3] /
+							this.linedata[index].attributes.MVALimit) *
 						100
 					).toFixed(2);
 					this.highRiskLines[key]['MVALimit'] = this.linedata[
@@ -609,22 +646,26 @@ export default {
 			// console.log(this.linedata);
 			// if (this.chart.getOption().series[1].data != this.linedata) {
 			//branchChanged
-			this.chart.setOption(
-				{
-					series: [
-						{
-							id: 'lines',
-							data: this.linedata
-						},
-						{
-							id: 'openLines',
-							type: 'lines',
-							data: this.openLineData
-						}
-					]
-				},
-				false
-			);
+			let tempOption = this.chart.getOption();
+			tempOption.series[1].data = this.linedata;
+			tempOption.series[2].data = this.openLineData;
+			this.chart.setOption(tempOption);
+			// this.chart.setOption(
+			// 	{
+			// 		series: [
+			// 			{
+			// 				id: 'lines',
+			// 				data: this.linedata
+			// 			},
+			// 			{
+			// 				id: 'openLines',
+			// 				type: 'lines',
+			// 				data: this.openLineData
+			// 			}
+			// 		]
+			// 	},
+			// 	false
+			// );
 			this.statusArray = statusTemp;
 			// }
 		},
@@ -657,19 +698,17 @@ export default {
 		restore() {
 			var temp = this.chart.getOption();
 			temp.leaflet[0].center = this.mapCenter;
-			temp.leaflet[0].zoom = 8;
+			temp.leaflet[0].zoom = 7;
 			this.chart.setOption(temp);
 		}
 	},
-	created() {
-		
-	},
+	created() {},
 	mounted() {
 		this.initUpdateLines();
 		this.getData();
 		this.initdraw('main');
 		this.onDrawSub();
-		this.onDrawLines();
+		// this.onDrawLines();
 		this.updateLinesCycle();
 		var intro = introJs();
 		intro.setOptions({
