@@ -77,7 +77,7 @@ export default {
 				'Not specified'
 			]),
 			checkbox: false,
-			area: null
+			area: 1//null
 		};
 	},
 	methods: {
