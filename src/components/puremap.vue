@@ -432,6 +432,9 @@ export default {
 					}
 				]
 			});
+			// var leafletmap = this.chart.getModel().getComponent('bmap')
+			var L = this.chart.getModel().getComponent('leaflet').__map;
+			// console.log(L)
 			// console.log(this.chart.getOption());
 		},
 		getData() {
