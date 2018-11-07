@@ -3,6 +3,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import * as math from 'mathjs';
 
 export default {
 	data() {
@@ -44,6 +45,8 @@ export default {
 			let count_b = 0;
 			let otherSub = [];
 			let otherBranch = [];
+			let longList = [];
+			let latList = [];
 			this.area_index = Object.keys(
 				this.$store.state.casedetail.content.Area
 			).indexOf(this.$store.state.area);
@@ -53,6 +56,8 @@ export default {
 						temp.content.Substation[ele]['Int.Area Number'] ==
 						+this.$store.state.area
 					) {
+						longList.push(temp.content.Substation[ele]['Double.Longitude']);
+						latList.push(temp.content.Substation[ele]['Double.Latitude']);
 						this.subdata.push({
 							id: ele,
 							name: temp.content.Substation[ele]['String.Name'],
@@ -73,6 +78,7 @@ export default {
 						});
 					}
 				}
+				this.$store.commit('setCenter', [math.median(longList), math.median(latList)]);
 				for (let ele in temp.content.Branch) {
 					const fromid = ele.split(',')[0];
 					const toid = ele.split(',')[1];

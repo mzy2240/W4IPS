@@ -66,7 +66,7 @@ export default {
 					trigger: 'item'
 				},
 				leaflet: {
-					center: this.mapCenter,
+					center: this.$store.state.center,
 					zoom: 6,
 					roam: true,
 					tiles: [
@@ -342,7 +342,7 @@ export default {
 		},
 		restore() {
 			var temp = this.chart.getOption();
-			temp.leaflet[0].center = this.mapCenter;
+			temp.leaflet[0].center = this.$store.state.center;
 			temp.leaflet[0].zoom = 6;
 			this.chart.setOption(temp);
 		}

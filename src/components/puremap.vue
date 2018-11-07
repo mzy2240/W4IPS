@@ -176,7 +176,7 @@ export default {
 				// },
 				// Leaflet
 				leaflet: {
-					center: this.mapCenter,
+					center: this.$store.state.center,//this.mapCenter,
 					zoom: 7,
 					roam: true,
 					tiles: [
@@ -184,8 +184,8 @@ export default {
 							label: 'OpenStreetMap',
 							urlTemplate:
 								//'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}',
-								'https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png',
-							// 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+								//'https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png',
+								'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
 							options: {
 								time: '',
 								maxZoom: 8,
@@ -232,8 +232,8 @@ export default {
 						symbol: 'circle',
 						symbolSize: 8,
 						showEffectOn: 'emphasis',
-						progressive: 40,
-						progressiveThreshold: 200,
+						// progressive: 40,
+						// progressiveThreshold: 200,
 						// zindex: 2,
 						data: [],
 						tooltip: {
@@ -252,8 +252,8 @@ export default {
 						type: 'lines',
 						coordinateSystem: 'leaflet',
 						animation: false,
-						progressive: 25,
-						progressiveThreshold: 150,
+						// progressive: 25,
+						// progressiveThreshold: 150,
 						zlevel: 1,
 						// coordinateSystem: 'bmap',
 						silent: false,
@@ -514,6 +514,7 @@ export default {
 			// });
 			var self = this;
 			this.chart.on('click', function(params) {
+				console.log(params);
 				if (params.seriesName == 'sub') {
 					self.type = 'Substation';
 					self.name = params.name;
@@ -698,7 +699,7 @@ export default {
 		},
 		restore() {
 			var temp = this.chart.getOption();
-			temp.leaflet[0].center = this.mapCenter;
+			temp.leaflet[0].center = this.$store.state.center;
 			temp.leaflet[0].zoom = 7;
 			this.chart.setOption(temp);
 		}

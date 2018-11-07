@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import datafield from './assets/datafield.json';
 import tcmcommands from './assets/tcmcommands.json';
 // import casedetail from './assets/150G.json';
-import casedetail from './assets/2000GA.json'
+import casedetail from './assets/460GA.json'
 import notificationSystem from './assets/notificationsettings';
 // import casedetail from './assets/150.json'
 
@@ -73,7 +73,8 @@ export default new Vuex.Store({
 		lineData: null,
 		areaHelper: null,
 		otherArea: null,
-		parsedData: null
+		parsedData: null,
+		center: null
 	},
 	getters: {
 		getPubStatus(state) {
@@ -320,6 +321,9 @@ export default new Vuex.Store({
 		},
 		setParsedData(state, payload) {
 			state.parsedData = payload;
+		},
+		setCenter(state,payload){
+			state.center = payload;
 		}
 	},
 	actions: {

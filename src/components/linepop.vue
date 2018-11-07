@@ -52,7 +52,11 @@ export default {
 		}
 		return {
 			dropdown: temp,
-			display: []
+			display: [],
+			anchor: 0,
+			arrlength: null,
+			keyarr: null,
+			Interval: null
 		};
 	},
 	props: {
@@ -68,11 +72,11 @@ export default {
 		},
 		name: {
 			type: String,
-			default: "NULL"
+			default: 'NULL'
 		},
 		volt: {
 			type: String,
-			default: ""
+			default: ''
 		},
 		data: {
 			default: function() {
@@ -81,9 +85,9 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters({
-			dataflag: 'getDataUpdate'
-		}),
+		// ...mapGetters({
+		// 	dataflag: 'getDataUpdate'
+		// }),
 		show: {
 			get() {
 				return this.visible;
@@ -96,39 +100,45 @@ export default {
 		}
 	},
 	methods: {
-		getData() {
-			const temp = JSON.parse(this.$store.state.rawdata).Data;
-			let anchor = 0;
-			var arrlength;
-			var keyarr;
-
+		init() {
 			for (let ele in this.$store.state.fieldstore) {
-				arrlength = this.$store.state.fieldstore[ele].length;
-				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				this.arrlength = this.$store.state.fieldstore[ele].length;
+				this.keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
 				if (ele != this.type) {
-					anchor += arrlength * keyarr.length;
+					this.anchor += this.arrlength * this.keyarr.length;
 				} else {
-					anchor += arrlength * keyarr.indexOf(this.id);
+					this.anchor += this.arrlength * this.keyarr.indexOf(this.id);
 					break;
 				}
 				// console.log(Object.keys(this.$store.state.fieldstore).indexOf(ele))
 				// console.log(Object.keys(this.$store.state.casedetail.content[ele]).length)
 				// console.log(this.$store.state.fieldstore[ele].length)
 			}
-			const spdata = temp.slice(anchor, anchor + arrlength);
+		},
+		getData() {
+			// const temp = this.$store.state.parsedData;
+			const spdata = this.$store.state.parsedData.slice(this.anchor, this.anchor + this.arrlength);
 			let container = {};
 			for (let e in spdata) {
-				container[
-					this.$store.state.fieldstore[this.type][e]['value']
-				] = spdata[e];
+				container[this.$store.state.fieldstore[this.type][e]['value']] =
+					spdata[e];
 			}
 			this.display = [container];
 		}
 	},
-	watch: {
-		dataflag: function() {
-			this.getData()
-		}
+	mounted() {
+		this.init();
+		this.Interval = setInterval(() => {
+			this.getData();
+		}, 500);
 	},
+	beforeDestroy(){
+		clearInterval(this.Interval);
+	}
+	// watch: {
+	// 	dataflag: function() {
+	// 		this.getData();
+	// 	}
+	// }
 };
 </script>
