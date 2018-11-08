@@ -36,7 +36,7 @@ export default {
 	props: {
 		subtopic: {
 			type: Array || String || Object,
-			default: () => ['/ds/data', '/ds/note', '/ds/system']
+			default: () => ['ds/data', 'ds/note', 'ds/system']
 		},
 		pubtopic: {
 			type: String || Array || Object,
@@ -182,6 +182,7 @@ export default {
 			var topic = this.subtopic;
 			topic = topic.map(i => this.simID + '/' + i);
 			this.client.subscribe(topic);
+			console.log(topic);
 			iziToast.success({
 				title: 'System',
 				message: 'MQTT broker is connected',
