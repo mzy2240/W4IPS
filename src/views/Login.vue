@@ -84,9 +84,13 @@ export default {
 			accessCode: null,
 			rules: {
 				id: value => {
-					const pattern = /[0-9]/g
-					if(value.length==3 && value.match(pattern).length==3){
-						return true
+					const pattern = /[0-9]/g;
+					if (value) {
+						if (value.length == 3 && value.match(pattern).length == 3) {
+							return true;
+						} else {
+							return false;
+						}
 					} else {
 						return false
 					}
