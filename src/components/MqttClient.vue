@@ -29,17 +29,18 @@ export default {
 			lineshowDialog: false,
 			subshowDialog: false,
 			children: {},
-			name: ''
+			name: '',
+			simID: this.$store.state.simID
 		};
 	},
 	props: {
 		subtopic: {
 			type: Array || String || Object,
-			default: () => ['ds/data', 'ds/note', 'ds/system']
+			default: () => ['/ds/data', '/ds/note', '/ds/system']
 		},
 		pubtopic: {
 			type: String || Array || Object,
-			default: 'user/cmd'
+			default: '/user/cmd'
 		},
 		address: {
 			type: String,
@@ -84,7 +85,7 @@ export default {
 				name: this.$store.state.message[2],
 				action: this.$store.state.message[3]
 			};
-			this.client.publish('user/cmd', JSON.stringify(temp));
+			this.client.publish(this.simID + '/user/cmd', JSON.stringify(temp));
 			this.$store.commit('addReportUser', {
 				time: this.$store.state.currentTime,
 				event: [temp.type, temp.id, temp.action]
@@ -116,12 +117,12 @@ export default {
 		startsimtrigger: function() {
 			if (!this.$store.state.simtime) {
 				this.client.publish(
-					'user/system',
+					this.simID +'/user/system',
 					this.$store.state.username + ':' + 'Start'
 				);
 			} else {
 				this.client.publish(
-					'user/system',
+					this.simID +'/user/system',
 					this.$store.state.username +
 						':' +
 						'run till seconds ' +
@@ -132,13 +133,13 @@ export default {
 		},
 		pausesimtrigger: function() {
 			this.client.publish(
-				'user/system',
+				this.simID +'/user/system',
 				this.$store.state.username + ':' + 'Pause'
 			);
 		},
 		abortsimtrigger: function() {
 			this.client.publish(
-				'user/system',
+				this.simID +'/user/system',
 				this.$store.state.username + ':' + 'Abort'
 			);
 		},
@@ -178,7 +179,9 @@ export default {
 		},
 		onConnect(connack) {
 			console.log('onConnect');
-			this.client.subscribe(this.subtopic);
+			var topic = this.subtopic;
+			topic = topic.map(i => this.simID + '/' + i);
+			this.client.subscribe(topic);
 			iziToast.success({
 				title: 'System',
 				message: 'MQTT broker is connected',
@@ -188,10 +191,10 @@ export default {
 		},
 		onMessage(topic, message) {
 			var self = this;
-			if (topic == 'ds/data') {
+			if (topic.includes('ds/data')) {
 				this.$store.commit('updateRawData', message);
 				this.backend_online = true;
-			} else if (topic == 'ds/note') {
+			} else if (topic.includes('ds/note')) {
 				const temp = message.toString().split('@');
 				this.usermessage = temp[0];
 				if (this.$store.state.notMuted) {
@@ -289,7 +292,7 @@ export default {
 					color: 'yellow',
 					time: Date.now()
 				});
-			} else if (topic == 'ds/system') {
+			} else if (topic.includes('ds/system')) {
 				iziToast.warning({
 					title: 'System',
 					message: message.toString(),

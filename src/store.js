@@ -75,7 +75,8 @@ export default new Vuex.Store({
 		otherArea: null,
 		parsedData: null,
 		center: null,
-		showTour: true
+		showTour: true,
+		simID: null
 	},
 	getters: {
 		getPubStatus(state) {
@@ -328,6 +329,9 @@ export default new Vuex.Store({
 		},
 		disableTour(state) {
 			state.showTour = false;
+		},
+		setSimID(state, payload) {
+			state.simID = payload;
 		}
 	},
 	actions: {
