@@ -74,7 +74,8 @@ export default new Vuex.Store({
 		areaHelper: null,
 		otherArea: null,
 		parsedData: null,
-		center: null
+		center: null,
+		showTour: true
 	},
 	getters: {
 		getPubStatus(state) {
@@ -324,6 +325,9 @@ export default new Vuex.Store({
 		},
 		setCenter(state,payload){
 			state.center = payload;
+		},
+		disableTour(state) {
+			state.showTour = false;
 		}
 	},
 	actions: {

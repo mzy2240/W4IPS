@@ -17,9 +17,10 @@
 									</div>
 
 									<v-form id="step1">
-										<v-text-field append-icon="person" name="login" label="Login" type="text" v-model="model.username"></v-text-field>
-										<v-text-field append-icon="lock" name="password" label="Password" id="password" type="password" v-model="model.password"></v-text-field>
-										<v-select :items="items" label="Area" v-model="area"></v-select>
+										<v-text-field append-icon="person" name="login" label="Name" type="text" v-model="model.username"></v-text-field>
+										<v-text-field append-icon="build" name="simID" label="Simulation ID" v-model="simID"></v-text-field>
+										<v-text-field append-icon="lock" name="password" label="Access Code" v-model="accessCode"></v-text-field>
+										<v-select disabled :items="items" label="Area" v-model="area" menu-props="auto"></v-select>
 									</v-form>
 								</v-card-text>
 								<v-card-actions id="step2">
@@ -77,7 +78,9 @@ export default {
 				'Not specified'
 			]),
 			checkbox: false,
-			area: 1//null
+			area: 2,//null
+			simID: null,
+			accessCode: null
 		};
 	},
 	methods: {
@@ -86,6 +89,7 @@ export default {
 				this.$store.commit('onAdmin');
 			}
 			this.$store.commit('setArea', this.area);
+			this.$store.commit('setSimID', this.simID);
 			this.$store.commit('setUsername', this.model.username);
 			this.loading = true;
 			setTimeout(() => {

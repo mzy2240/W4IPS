@@ -176,7 +176,7 @@ export default {
 				// },
 				// Leaflet
 				leaflet: {
-					center: this.$store.state.center,//this.mapCenter,
+					center: this.$store.state.center, //this.mapCenter,
 					zoom: 7,
 					roam: true,
 					tiles: [
@@ -232,8 +232,8 @@ export default {
 						symbol: 'circle',
 						symbolSize: 8,
 						showEffectOn: 'emphasis',
-						// progressive: 40,
-						// progressiveThreshold: 200,
+						progressive: 40,
+						progressiveThreshold: 200,
 						// zindex: 2,
 						data: [],
 						tooltip: {
@@ -252,8 +252,8 @@ export default {
 						type: 'lines',
 						coordinateSystem: 'leaflet',
 						animation: false,
-						// progressive: 25,
-						// progressiveThreshold: 150,
+						progressive: 25,
+						progressiveThreshold: 150,
 						zlevel: 1,
 						// coordinateSystem: 'bmap',
 						silent: false,
@@ -406,8 +406,8 @@ export default {
 						large: true,
 						largeThreshold: 1,
 						blendMode: 'lighter',
-						// progressive: 100,
-						// progressiveThreshold: 500,
+						progressive: 100,
+						progressiveThreshold: 500,
 						symbolSize: 5,
 						itemStyle: {
 							color: '#616161'
@@ -422,8 +422,8 @@ export default {
 						large: true,
 						largeThreshold: 1,
 						blendMode: 'lighter',
-						// progressive: 100,
-						// progressiveThreshold: 500,
+						progressive: 100,
+						progressiveThreshold: 500,
 						// zindex: 5,
 						lineStyle: {
 							color: '#757575'
@@ -715,48 +715,38 @@ export default {
 		this.onDrawSub();
 		// this.onDrawLines();
 		this.updateLinesCycle();
-		var intro = introJs();
-		intro.setOptions({
-			showStepNumbers: false,
-			// overlayOpacity: 0.1,
-			steps: [
-				{
-					intro: 'Welcome to the 460 final lab!'
-				},
-				// {
-				// 	element: document.querySelector('#step1'),
-				// 	intro:
-				// 		'You can switch pages, start/stop the simulation and get your report here.',
-				// 	position: 'right',
-				// 	highlightClass: 'listHighlightClass'
-				// },
-				// {
-				// 	element: document.querySelectorAll('#step2'),
-				// 	intro: "Here are the widgets showing the real-time data and events of the simulation.",
-				// 	position: 'right'
-				// },
-				{
-					element: '#step3',
-					intro: 'This marquee shows the status of the current simulation.',
-					position: 'bottom'
-				},
-				{
-					element: '#step4',
-					intro:
-						'This digital clock shows the simulation time (not the actual local time).',
-					position: 'bottom',
-					highlightClass: 'customHighlightClass'
-				},
-				{
-					element: '#step5',
-					intro:
-						'Click the right-bottom button to toggle the dynamic plotting.',
-					position: 'right'
-				}
-			]
-		});
-
-		intro.start();
+		if (this.$store.state.showTour) {
+			var intro = introJs();
+			intro.setOptions({
+				showStepNumbers: false,
+				// overlayOpacity: 0.1,
+				steps: [
+					{
+						intro: 'Welcome to the 460 final lab!'
+					},
+					{
+						element: '#step3',
+						intro: 'This marquee shows the status of the current simulation.',
+						position: 'bottom'
+					},
+					{
+						element: '#step4',
+						intro:
+							'This digital clock shows the simulation time (not the actual local time).',
+						position: 'bottom',
+						highlightClass: 'customHighlightClass'
+					},
+					{
+						element: '#step5',
+						intro:
+							'Click the right-bottom button to toggle the dynamic plotting.',
+						position: 'right'
+					}
+				]
+			});
+			this.$store.commit('disableTour');
+			intro.start();
+		}
 	},
 	beforeDestroy() {
 		clearInterval(this.Interval);
