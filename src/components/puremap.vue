@@ -188,9 +188,9 @@ export default {
 								'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
 							options: {
 								time: '',
-								maxZoom: 8,
-								tilematrixset: 'GoogleMapsCompatible_Level',
-								format: 'jpg',
+								// maxZoom: 8,
+								// tilematrixset: 'GoogleMapsCompatible_Level',
+								// format: 'jpg',
 								attribution:
 									'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 							}
@@ -252,8 +252,8 @@ export default {
 						type: 'lines',
 						coordinateSystem: 'leaflet',
 						animation: false,
-						progressive: 25,
-						progressiveThreshold: 150,
+						progressive: 100,
+						progressiveThreshold: 200,
 						zlevel: 1,
 						// coordinateSystem: 'bmap',
 						silent: false,
@@ -316,6 +316,12 @@ export default {
 										break;
 									case 500:
 										temp = '#e53935';
+										break;
+									case 115:
+										temp = '#40c4ff';
+										break;
+									case 13.8:
+										temp = '#7c4dff';
 										break;
 								}
 								// console.log(params.data.attributes.volt);
