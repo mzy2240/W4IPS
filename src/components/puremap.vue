@@ -925,7 +925,12 @@ export default {
 	},
 	beforeDestroy() {
 		clearInterval(this.Interval);
-		this.chart.clear();
+		try {
+			this.chart.clear();
+		}
+		catch(err) {
+			console.log("chart instance cannot be cleared")
+		}
 	},
 	// watch: {
 	// 	highRiskLines: function() {

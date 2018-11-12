@@ -19,7 +19,7 @@
                   <v-flex sm12 xs12>
                       <div class="text-sm-center pt-3">
                         <div class="caption">{{ title }}</div>
-                        <span class="headline">{{ subTitle }}</span>
+                        <span class="headline" dark>{{ subTitle }}</span>
                     </div>
                   </v-flex>
                   <v-flex sm12 xs12 class="pa-0 ma-0">

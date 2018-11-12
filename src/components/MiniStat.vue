@@ -12,7 +12,7 @@
             </v-flex>
             <v-flex class="sm6 xs6">
           <!-- <v-flex :class=containerStyle> -->
-            
+
             <div class="layout column ma-0 justify-center align-center">
               <!-- <v-icon size="24px" :color="color">{{icon}}</v-icon> -->
 			        <img :src="img" />
@@ -23,7 +23,7 @@
                   <v-flex sm12 xs12>
                       <div class="text-sm-center pt-3">
                         <div class="caption">{{ title }}</div>
-                        <span class="headline">{{ subTitle }}</span>
+                        <span class="headline" style="color:white">{{ subTitle }}</span>
                     </div>
                   </v-flex>
                   <v-flex sm12 xs12 class="pa-0 ma-0">

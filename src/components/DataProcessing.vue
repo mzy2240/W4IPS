@@ -47,9 +47,10 @@ export default {
 			let otherBranch = [];
 			let longList = [];
 			let latList = [];
+			// console.log(this.$store.state.area)
 			this.area_index = Object.keys(
 				this.$store.state.casedetail.content.Area
-			).indexOf(this.$store.state.area);
+			).indexOf(this.$store.state.area.toString());
 			if (temp.content.type == 'dsmDictionary') {
 				for (let ele in temp.content.Substation) {
 					if (
@@ -356,6 +357,7 @@ export default {
 			this.$store.commit('setCurrentTime', +message['SOC']);
 			this.$store.commit('setCurrentStatus', message['Status']);
 			const temp = message.Data;
+			// console.log(temp)
 			this.$store.commit('setParsedData', temp);
 			this.areaData = temp.slice(
 				this.area_index * this.areaDataLength,
@@ -370,6 +372,7 @@ export default {
 				this.branchAnchor,
 				this.branchAnchor + this.branchDataLength
 			);
+			this.$store.commit('setBranchData', this.branchData);
 			this.$store.commit('setData', temp);
 			this.$store.commit('setAreaData', this.areaData);
 			for (let i in this.gens) {

@@ -78,7 +78,8 @@ export default new Vuex.Store({
 		parsedData: null,
 		center: null,
 		showTour: true,
-		simID: null
+		simID: null,
+		branchData: null
 	},
 	getters: {
 		getPubStatus(state) {
@@ -334,6 +335,9 @@ export default new Vuex.Store({
 		},
 		setSimID(state, payload) {
 			state.simID = payload;
+		},
+		setBranchData(state, payload) {
+			state.branchData = payload;
 		}
 	},
 	actions: {

@@ -113,7 +113,7 @@ export default {
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
-				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				keyarr = Object.keys(this.$store.state.areadetail.content[ele]);
 				if (ele != 'Shunt') {
 					anchor += arrlength * keyarr.length;
 				} else {
@@ -127,19 +127,19 @@ export default {
 			let temp = [];
 			let subID;
 			let count = 0;
-			for (let i in this.$store.state.casedetail.content.Shunt) {
+			for (let i in this.$store.state.areadetail.content.Shunt) {
 				if (
-					this.$store.state.casedetail.content.Shunt[i]['Int.Area Number'] ==
+					this.$store.state.areadetail.content.Shunt[i]['Int.Area Number'] ==
 					+this.$store.state.area
 				) {
 					this.shuntArray.push(count);
-					subID = this.$store.state.casedetail.content.Bus[i]['Int.Sub Number'];
+					subID = this.$store.state.areadetail.content.Bus[i]['Int.Sub Number'];
 					temp.push({
 						value: [
-							this.$store.state.casedetail.content.Substation[subID.toString()][
+							this.$store.state.areadetail.content.Substation[subID.toString()][
 								'Double.Longitude'
 							],
-							this.$store.state.casedetail.content.Substation[subID.toString()][
+							this.$store.state.areadetail.content.Substation[subID.toString()][
 								'Double.Latitude'
 							]
 						],
@@ -149,7 +149,7 @@ export default {
 						MvarNom: 0,
 						Vpu: 1,
 						FreqHz: 60,
-						id: this.$store.state.casedetail.content.Shunt[i]['String.ID']
+						id: this.$store.state.areadetail.content.Shunt[i]['String.ID']
 					});
 				}
 				count++;

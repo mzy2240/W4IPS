@@ -96,7 +96,7 @@ export default {
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
-				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				keyarr = Object.keys(this.$store.state.areadetail.content[ele]);
 				if (ele != 'Load') {
 					anchor += arrlength * keyarr.length;
 				} else {
@@ -109,9 +109,9 @@ export default {
 		initTable() {
 			let temp = [];
 			let count = 0;
-			for (let i in this.$store.state.casedetail.content.Load) {
+			for (let i in this.$store.state.areadetail.content.Load) {
 				if (
-					this.$store.state.casedetail.content.Load[i]['Int.Area Number'] ==
+					this.$store.state.areadetail.content.Load[i]['Int.Area Number'] ==
 					+this.$store.state.area
 				) {
 					this.loadArray.push(count);
@@ -123,7 +123,7 @@ export default {
 						Mvar: 0,
 						Vpu: 1,
 						FreqHz: 60,
-						id: this.$store.state.casedetail.content.Load[i]['String.ID']
+						id: this.$store.state.areadetail.content.Load[i]['String.ID']
 					});
 				}
 				count++;

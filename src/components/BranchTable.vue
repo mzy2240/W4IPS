@@ -140,7 +140,7 @@ export default {
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
-				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				keyarr = Object.keys(this.$store.state.areadetail.content[ele]);
 				if (ele != 'Branch') {
 					anchor += arrlength * keyarr.length;
 				} else {
@@ -155,17 +155,17 @@ export default {
 			this.anchor = this.$store.state.areaHelper.Branch.anchor;
 			this.branchDataLength = this.$store.state.areaHelper.Branch.length;
 			// let subID;
-			for (let i in this.$store.state.casedetail.content.Branch) {
+			for (let i in this.$store.state.areadetail.content.Branch) {
 				if (
 					[
-						this.$store.state.casedetail.content.Branch[i]['FromArea'],
-						this.$store.state.casedetail.content.Branch[i]['ToArea']
+						this.$store.state.areadetail.content.Branch[i]['FromArea'],
+						this.$store.state.areadetail.content.Branch[i]['ToArea']
 					].includes(+this.$store.state.area)
 				) {
 					temp.push({
-						value: false, //[this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Longitude"], this.$store.state.casedetail.content.Substation[subID.toString()]["Double.Latitude"]],
+						value: false, //[this.$store.state.areadetail.content.Substation[subID.toString()]["Double.Longitude"], this.$store.state.areadetail.content.Substation[subID.toString()]["Double.Latitude"]],
 						name: i,
-						id: this.$store.state.casedetail.content.Branch[i][
+						id: this.$store.state.areadetail.content.Branch[i][
 							'String.CircuitID'
 						],
 						Status: 1,
@@ -177,7 +177,7 @@ export default {
 						MvarTo: 0,
 						MVATo: 0,
 						AmpsTo: 0,
-						MVALimit: this.$store.state.casedetail.content.Branch[i][
+						MVALimit: this.$store.state.areadetail.content.Branch[i][
 							'Single.MVA Limit'
 						]
 					});
@@ -196,26 +196,27 @@ export default {
 					// const temp = JSON.parse(this.$store.state.rawdata).Data;
 					// const message = JSON.parse(this.$store.state.rawdata)
 					// console.log(message);
-					const temp = this.$store.state.data;
+					// const temp = this.$store.state.data;
+					// console.log(this.branches)
 					for (let i in this.branches) {
 						this.branches[i].Status =
-							temp[this.anchor + 0 + this.branchArray[i] * this.branchDataLength];
+							this.$store.state.branchData[0 + i * this.branchDataLength];
 						this.branches[i].MWFrom =
-							temp[this.anchor + 1 + this.branchArray[i] * this.branchDataLength]; // MW is the 6th in the load data
+							this.$store.state.branchData[1 + i * this.branchDataLength]; // MW is the 6th in the load data
 						this.branches[i].MvarFrom =
-							temp[this.anchor + 2 + this.branchArray[i] * this.branchDataLength];
+							this.$store.state.branchData[2 + i * this.branchDataLength];
 						this.branches[i].MVAFrom =
-							temp[this.anchor + 3 + this.branchArray[i] * this.branchDataLength];
+							this.$store.state.branchData[3 + i * this.branchDataLength];
 						this.branches[i].AmpsFrom =
-							temp[this.anchor + 4 + this.branchArray[i] * this.branchDataLength];
+							this.$store.state.branchData[4 + i * this.branchDataLength];
 						this.branches[i].MWTo =
-							temp[this.anchor + 5 + this.branchArray[i] * this.branchDataLength]; // MW is the 6th in the load data
+							this.$store.state.branchData[5 + i * this.branchDataLength]; // MW is the 6th in the load data
 						this.branches[i].MvarTo =
-							temp[this.anchor + 6 + this.branchArray[i] * this.branchDataLength];
+							this.$store.state.branchData[6 + i * this.branchDataLength];
 						this.branches[i].MVATo =
-							temp[this.anchor + 7 + this.branchArray[i] * this.branchDataLength];
+							this.$store.state.branchData[7 + i * this.branchDataLength];
 						this.branches[i].AmpsTo =
-							temp[this.anchor + 8 + this.branchArray[i] * this.branchDataLength];
+							this.$store.state.branchData[8 + i * this.branchDataLength];
 					}
 				} catch (e) {
 					console.log('The raw data are not ready');
