@@ -137,24 +137,31 @@ export default {
 			branchToOpenBranch: {},
 			highRiskLines: {},
 			formatRiskLines: [],
-			mapCenter: [31.97, -99.90],
+			mapCenter: [31.97, -99.9],
 			Interval: null
 		};
 	},
 	methods: {
 		initdraw(id) {
-			var host = window.isLocal
-				? window.server
-				: 'http://support.supermap.com.cn:8090';
-			var url = host + '/iserver/services/map-world/rest/maps/世界地图_Gray';
-
+			const url =
+				'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+			const options = {
+				// redirect: true,
+				// time: '',
+				// maxZoom: 8,
+				// tilematrixset: 'GoogleMapsCompatible_Level',
+				// format: 'jpg',
+				attribution:
+					'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+			};
 			var map = L.map('main', {
-				crs: L.CRS.EPSG4326,
+				// crs: L.CRS.EPSG4326,
 				center: this.mapCenter, // this.$store.state.center, //this.mapCenter,
 				maxZoom: 18,
 				zoom: 5
 			});
-			L.supermap.tiledMapLayer(url).addTo(map);
+			L.tileLayer(url, options).addTo(map)
+			// L.supermap.tiledMapLayer(url, option).addTo(map);
 			var option = {
 				series: [
 					{
@@ -372,7 +379,8 @@ export default {
 					}
 				]
 			};
-			L.supermap.echartsLayer(option).addTo(map);
+			this.chart = L.supermap.echartsLayer(option);
+			this.chart.addTo(map);
 			// this.chart = echarts.init(document.getElementById(id));
 			// this.chart.setOption({
 			// 	animation: false,
@@ -678,15 +686,20 @@ export default {
 		},
 		onDrawSub() {
 			// console.log(L.supermap.echartsLayer);
-			// let temp = this.chart.getOption();
-			// temp.series[0].data = this.subdata;
-			// temp.series[1].data = this.linedata;
-			L.supermap.echartsLayer({
-				series: [{
-					id: 'sub',
-					data: this.subdata
-				}]
-			});
+			console.log(this.chart)
+			let temp = this.chart._echartsOptions;
+			temp.series[0].data = this.subdata;
+			temp.series[1].data = this.linedata;
+			this.chart.setOption(temp);
+			// console.log(temp);
+			// this.chart.setOption({
+			// 	series: [
+			// 		{
+			// 			id: 'sub',
+			// 			data: this.subdata
+			// 		}
+			// 	]
+			// });
 			// this.chart.setOption({
 			// 	series: [
 			// 		{
