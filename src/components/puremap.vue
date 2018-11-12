@@ -87,9 +87,9 @@
 </style>
 
 <script>
-import echarts from 'echarts';
+// import echarts from 'echarts';
 // import 'echarts-gl/dist/echarts-gl';
-import 'echarts-leaflet';
+// import 'echarts-leaflet';
 // import linepop from './linepop';
 // import subpop from './subpop';
 import _ from 'lodash';
@@ -101,6 +101,8 @@ import pie from '@/components/pie';
 import branchTable from '@/components/RiskBranchTable';
 import chartStatistic from '@/components/chartStatistic';
 import Material from 'vuetify/es5/util/colors';
+// import L from 'leaflet';
+// import {tiledMapLayer} from '@supermap/iclient-leaflet';
 // import _ from 'lodash';
 // mapboxgl.accessToken =
 // 	'pk.eyJ1IjoibXp5MjI0MCIsImEiOiJjamttc3VsODYyZmI4M2ttbGxmbzFudGM2In0.0dy22s32n9eth_63nlX1UA';
@@ -135,93 +137,25 @@ export default {
 			branchToOpenBranch: {},
 			highRiskLines: {},
 			formatRiskLines: [],
-			mapCenter: [-99.9, 31.97],
+			mapCenter: [31.97, -99.90],
 			Interval: null
 		};
 	},
 	methods: {
 		initdraw(id) {
-			this.chart = echarts.init(document.getElementById(id));
-			this.chart.setOption({
-				animation: false,
-				tooltip: {
-					show: true,
-					trigger: 'item'
-				},
-				// BMAP
-				// bmap: {
-				// 	center: [-86.84, 36.44],
-				// 	zoom: 8,
-				// 	roam: true,
-				// 	mapStyle: {
-				// 		// style: 'grayscale',
-				// 		styleJson: [
-				// 			{
-				// 				featureType: 'administrative',
-				// 				elementType: 'all',
-				// 				stylers: {
-				// 					color: '#ffffff',
-				// 					visibility: 'off'
-				// 				}
-				// 			},
-				// 			{
-				// 				featureType: 'boundary',
-				// 				elementType: 'all',
-				// 				stylers: {
-				// 					color: '#fefefe'
-				// 				}
-				// 			}
-				// 		]
-				// 	}
-				// },
-				// Leaflet
-				leaflet: {
-					center: this.$store.state.center, //this.mapCenter,
-					zoom: 7,
-					roam: true,
-					tiles: [
-						{
-							label: 'OpenStreetMap',
-							urlTemplate:
-								//'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}',
-								//'https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png',
-								'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-							options: {
-								time: '',
-								// maxZoom: 8,
-								// tilematrixset: 'GoogleMapsCompatible_Level',
-								// format: 'jpg',
-								attribution:
-									'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
-							}
-						}
-					]
-				},
-				// mapbox: {
-				//   center: [-86.84, 36.44],
-				//   zoom: 6.5,
-				//   // pitch: 50,
-				//   // bearing: -50,
-				//   altitudeScale: 100000000,
-				//   silent: true,
-				//   style: "mapbox://styles/mapbox/dark-v9",
-				//   postEffect: {
-				//     enable: true,
-				//     FXAA: {
-				//       enable: true
-				//     }
-				//   },
-				//   light: {
-				//     main: {
-				//       intensity: 1,
-				//       shadow: true,
-				//       shadowQuality: "high"
-				//     },
-				//     ambient: {
-				//       intensity: 0
-				//     }
-				//   }
-				// },
+			var host = window.isLocal
+				? window.server
+				: 'http://support.supermap.com.cn:8090';
+			var url = host + '/iserver/services/map-world/rest/maps/世界地图_Gray';
+
+			var map = L.map('main', {
+				crs: L.CRS.EPSG4326,
+				center: this.mapCenter, // this.$store.state.center, //this.mapCenter,
+				maxZoom: 18,
+				zoom: 5
+			});
+			L.supermap.tiledMapLayer(url).addTo(map);
+			var option = {
 				series: [
 					{
 						id: 'sub',
@@ -437,11 +371,305 @@ export default {
 						data: this.$store.state.otherArea.Branch
 					}
 				]
-			});
-			// var leafletmap = this.chart.getModel().getComponent('bmap')
-			var L = this.chart.getModel().getComponent('leaflet').__map;
-			// console.log(L)
-			// console.log(this.chart.getOption());
+			};
+			L.supermap.echartsLayer(option).addTo(map);
+			// this.chart = echarts.init(document.getElementById(id));
+			// this.chart.setOption({
+			// 	animation: false,
+			// 	tooltip: {
+			// 		show: true,
+			// 		trigger: 'item'
+			// 	},
+			// 	// BMAP
+			// 	// bmap: {
+			// 	// 	center: [-86.84, 36.44],
+			// 	// 	zoom: 8,
+			// 	// 	roam: true,
+			// 	// 	mapStyle: {
+			// 	// 		// style: 'grayscale',
+			// 	// 		styleJson: [
+			// 	// 			{
+			// 	// 				featureType: 'administrative',
+			// 	// 				elementType: 'all',
+			// 	// 				stylers: {
+			// 	// 					color: '#ffffff',
+			// 	// 					visibility: 'off'
+			// 	// 				}
+			// 	// 			},
+			// 	// 			{
+			// 	// 				featureType: 'boundary',
+			// 	// 				elementType: 'all',
+			// 	// 				stylers: {
+			// 	// 					color: '#fefefe'
+			// 	// 				}
+			// 	// 			}
+			// 	// 		]
+			// 	// 	}
+			// 	// },
+			// 	// Leaflet
+			// 	leaflet: {
+			// 		center: this.$store.state.center, //this.mapCenter,
+			// 		zoom: 7,
+			// 		roam: true,
+			// 		tiles: [
+			// 			{
+			// 				label: 'OpenStreetMap',
+			// 				urlTemplate:
+			// 					//'https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}',
+			// 					//'https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png',
+			// 					'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+			// 				options: {
+			// 					time: '',
+			// 					// maxZoom: 8,
+			// 					// tilematrixset: 'GoogleMapsCompatible_Level',
+			// 					// format: 'jpg',
+			// 					attribution:
+			// 						'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+			// 				}
+			// 			}
+			// 		]
+			// 	},
+			// 	// mapbox: {
+			// 	//   center: [-86.84, 36.44],
+			// 	//   zoom: 6.5,
+			// 	//   // pitch: 50,
+			// 	//   // bearing: -50,
+			// 	//   altitudeScale: 100000000,
+			// 	//   silent: true,
+			// 	//   style: "mapbox://styles/mapbox/dark-v9",
+			// 	//   postEffect: {
+			// 	//     enable: true,
+			// 	//     FXAA: {
+			// 	//       enable: true
+			// 	//     }
+			// 	//   },
+			// 	//   light: {
+			// 	//     main: {
+			// 	//       intensity: 1,
+			// 	//       shadow: true,
+			// 	//       shadowQuality: "high"
+			// 	//     },
+			// 	//     ambient: {
+			// 	//       intensity: 0
+			// 	//     }
+			// 	//   }
+			// 	// },
+			// 	series: [
+			// 		{
+			// 			id: 'sub',
+			// 			type: 'effectScatter',
+			// 			name: 'sub',
+			// 			coordinateSystem: 'leaflet',
+			// 			// coordinateSystem: 'bmap',
+			// 			symbol: 'circle',
+			// 			symbolSize: 8,
+			// 			showEffectOn: 'emphasis',
+			// 			progressive: 40,
+			// 			progressiveThreshold: 200,
+			// 			// zindex: 2,
+			// 			data: [],
+			// 			tooltip: {
+			// 				confine: true,
+			// 				formatter: function(params) {
+			// 					return 'Substation: ' + params.name;
+			// 				}
+			// 			},
+			// 			itemStyle: {
+			// 				color: 'rgb(200, 40, 0)'
+			// 			}
+			// 		},
+			// 		{
+			// 			id: 'lines',
+			// 			name: 'lines',
+			// 			type: 'lines',
+			// 			coordinateSystem: 'leaflet',
+			// 			animation: false,
+			// 			progressive: 100,
+			// 			progressiveThreshold: 200,
+			// 			zlevel: 1,
+			// 			// coordinateSystem: 'bmap',
+			// 			silent: false,
+			// 			// effect: {
+			// 			// 	show: true,
+			// 			// 	constantSpeed: 20,
+			// 			// 	symbol: 'arrow',
+			// 			// 	symbolSize: 7,
+			// 			// 	trailWidth: 2,
+			// 			// 	trailLength: 0,
+			// 			// 	trailOpacity: 1,
+			// 			// 	spotIntensity: 10
+			// 			// },
+			// 			label: {
+			// 				normal: {
+			// 					show: true,
+			// 					position: 'middle',
+			// 					// formatter: 'YES',
+			// 					formatter: function(params) {
+			// 						const limit = params.data.attributes.MVALimit;
+			// 						const value = params.data.attributes.MVA;
+			// 						const percentage = ((value * 100) / limit).toFixed(0);
+			// 						var richText;
+			// 						if (percentage >= 100) {
+			// 							richText = '{overload|' + percentage.toString() + '%}';
+			// 						} else if (percentage >= 90) {
+			// 							richText = '{indanger|' + percentage.toString() + '%}';
+			// 						} else {
+			// 							richText = '{safe|' + percentage.toString() + '%}';
+			// 						}
+			// 						return richText;
+			// 					},
+			// 					rich: {
+			// 						overload: {
+			// 							fontSize: 18,
+			// 							color: '#ba000d'
+			// 						},
+			// 						indanger: {
+			// 							fontSize: 15,
+			// 							color: '#ffd600'
+			// 						},
+			// 						safe: {
+			// 							fontSize: 8,
+			// 							color: '#1b5e20'
+			// 						}
+			// 					}
+			// 				}
+			// 			},
+			// 			// blendMode: 'lighter',
+			// 			// polyline: true,
+			// 			lineStyle: {
+			// 				width: 1,
+			// 				// color: 'rgb(200, 40, 0)',
+			// 				color: function(params) {
+			// 					let temp;
+			// 					// console.log(params.data.attributes.volt)
+			// 					switch (params.data.attributes.volt) {
+			// 						case 230:
+			// 							temp = '#3949ab';
+			// 							break;
+			// 						case 500:
+			// 							temp = '#e53935';
+			// 							break;
+			// 						case 115:
+			// 							temp = '#40c4ff';
+			// 							break;
+			// 						case 13.8:
+			// 							temp = '#7c4dff';
+			// 							break;
+			// 					}
+			// 					// console.log(params.data.attributes.volt);
+			// 					return temp;
+			// 				},
+			// 				opacity: 1
+			// 			},
+			// 			tooltip: {
+			// 				// position: [10, 10],
+			// 				confine: true,
+			// 				formatter: function(params) {
+			// 					return 'Branch: ' + params.name;
+			// 				}
+			// 			},
+			// 			emphasis: {
+			// 				lineStyle: {
+			// 					width: 2,
+			// 					shadowColor: 'rgba(144, 144, 255, 0.5)',
+			// 					shadowBlur: 10
+			// 				}
+			// 			},
+			// 			data: []
+			// 		},
+			// 		{
+			// 			id: 'openLines',
+			// 			name: 'openLines',
+			// 			type: 'lines',
+			// 			coordinateSystem: 'leaflet',
+			// 			zlevel: 1,
+			// 			// coordinateSystem: 'bmap',
+			// 			silent: false,
+			// 			// blendMode: 'lighter',
+			// 			// polyline: true,
+			// 			lineStyle: {
+			// 				width: 1,
+			// 				color: 'rgb(200, 40, 0)',
+			// 				type: 'dashed',
+			// 				opacity: 1
+			// 			},
+			// 			tooltip: {
+			// 				formatter: function(params) {
+			// 					return 'Branch: ' + params.name;
+			// 				}
+			// 			},
+			// 			emphasis: {
+			// 				lineStyle: {
+			// 					width: 2,
+			// 					shadowColor: 'rgba(144, 144, 255, 0.5)',
+			// 					shadowBlur: 10
+			// 				}
+			// 			},
+			// 			data: []
+			// 		},
+			// 		{
+			// 			id: 'violatedLines',
+			// 			name: 'violatedLines',
+			// 			type: 'lines',
+			// 			coordinateSystem: 'leaflet',
+			// 			silent: false,
+			// 			zlevel: 2,
+			// 			z: 2,
+			// 			symbol: 'pin',
+			// 			symbolSize: 30,
+			// 			lineStyle: {
+			// 				width: 10,
+			// 				color: '#bef67a',
+			// 				// type: 'dotted',
+			// 				shadowColor: '#ccff90',
+			// 				shadowBlur: 20,
+			// 				opacity: 1
+			// 			},
+			// 			label: {
+			// 				show: true,
+			// 				position: 'middle',
+			// 				color: 'black',
+			// 				// fontWeight: 'bold',
+			// 				formatter: function(params) {
+			// 					return 'Branch#' + params.name;
+			// 				}
+			// 			},
+			// 			data: []
+			// 		},
+			// 		{
+			// 			id: 'otherSub',
+			// 			type: 'scatter',
+			// 			coordinateSystem: 'leaflet',
+			// 			silent: true,
+			// 			large: true,
+			// 			largeThreshold: 1,
+			// 			blendMode: 'lighter',
+			// 			progressive: 100,
+			// 			progressiveThreshold: 500,
+			// 			symbolSize: 5,
+			// 			itemStyle: {
+			// 				color: '#616161'
+			// 			},
+			// 			data: this.$store.state.otherArea.Substation
+			// 		},
+			// 		{
+			// 			id: 'otherBranch',
+			// 			type: 'lines',
+			// 			coordinateSystem: 'leaflet',
+			// 			silent: true,
+			// 			large: true,
+			// 			largeThreshold: 1,
+			// 			blendMode: 'lighter',
+			// 			progressive: 100,
+			// 			progressiveThreshold: 500,
+			// 			// zindex: 5,
+			// 			lineStyle: {
+			// 				color: '#757575'
+			// 			},
+			// 			data: this.$store.state.otherArea.Branch
+			// 		}
+			// 	]
+			// });
 		},
 		getData() {
 			this.subdata = this.$store.state.subData;
@@ -509,10 +737,16 @@ export default {
 			// }
 		},
 		onDrawSub() {
-			let temp = this.chart.getOption();
-			temp.series[0].data = this.subdata;
-			temp.series[1].data = this.linedata;
-			this.chart.setOption(temp);
+			// console.log(L.supermap.echartsLayer);
+			// let temp = this.chart.getOption();
+			// temp.series[0].data = this.subdata;
+			// temp.series[1].data = this.linedata;
+			L.supermap.echartsLayer({
+				series: [{
+					id: 'sub',
+					data: this.subdata
+				}]
+			});
 			// this.chart.setOption({
 			// 	series: [
 			// 		{
@@ -719,40 +953,40 @@ export default {
 		this.getData();
 		this.initdraw('main');
 		this.onDrawSub();
-		// this.onDrawLines();
-		this.updateLinesCycle();
-		if (this.$store.state.showTour) {
-			var intro = introJs();
-			intro.setOptions({
-				showStepNumbers: false,
-				// overlayOpacity: 0.1,
-				steps: [
-					{
-						intro: 'Welcome to the 460 final lab!'
-					},
-					{
-						element: '#step3',
-						intro: 'This marquee shows the status of the current simulation.',
-						position: 'bottom'
-					},
-					{
-						element: '#step4',
-						intro:
-							'This digital clock shows the simulation time (not the actual local time).',
-						position: 'bottom',
-						highlightClass: 'customHighlightClass'
-					},
-					{
-						element: '#step5',
-						intro:
-							'Click the right-bottom button to toggle the dynamic plotting.',
-						position: 'right'
-					}
-				]
-			});
-			this.$store.commit('disableTour');
-			intro.start();
-		}
+		// // this.onDrawLines();
+		// this.updateLinesCycle();
+		// if (this.$store.state.showTour) {
+		// 	var intro = introJs();
+		// 	intro.setOptions({
+		// 		showStepNumbers: false,
+		// 		// overlayOpacity: 0.1,
+		// 		steps: [
+		// 			{
+		// 				intro: 'Welcome to the 460 final lab!'
+		// 			},
+		// 			{
+		// 				element: '#step3',
+		// 				intro: 'This marquee shows the status of the current simulation.',
+		// 				position: 'bottom'
+		// 			},
+		// 			{
+		// 				element: '#step4',
+		// 				intro:
+		// 					'This digital clock shows the simulation time (not the actual local time).',
+		// 				position: 'bottom',
+		// 				highlightClass: 'customHighlightClass'
+		// 			},
+		// 			{
+		// 				element: '#step5',
+		// 				intro:
+		// 					'Click the right-bottom button to toggle the dynamic plotting.',
+		// 				position: 'right'
+		// 			}
+		// 		]
+		// 	});
+		// 	this.$store.commit('disableTour');
+		// 	intro.start();
+		// }
 	},
 	beforeDestroy() {
 		clearInterval(this.Interval);
