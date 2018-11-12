@@ -94,7 +94,7 @@ export default {
 				const id = temp.id.split(',')[0];
 				this.$store.commit(
 					'addCost',
-					this.$store.state.casedetail.content.Gen[id]['OperationCost']
+					this.$store.state.areadetail.content.Gen[id]['OperationCost']
 				);
 			}
 		},

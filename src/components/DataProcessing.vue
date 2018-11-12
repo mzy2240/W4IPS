@@ -141,13 +141,13 @@ export default {
 					}
 					count_b++;
 				}
-				for (let i in this.$store.state.casedetail.content.Bus) {
+				for (let i in this.$store.state.areadetail.content.Bus) {
 					if (
-						this.$store.state.casedetail.content.Bus[i]['Int.Area Number'] ==
+						this.$store.state.areadetail.content.Bus[i]['Int.Area Number'] ==
 						+this.$store.state.area
 					) {
 						this.busArray.push(count);
-						this.areaBus[i] = this.$store.state.casedetail.content.Bus[i];
+						this.areaBus[i] = this.$store.state.areadetail.content.Bus[i];
 					}
 					count++;
 				}
@@ -186,7 +186,7 @@ export default {
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
-				keyCaseArr = Object.keys(this.$store.state.casedetail.content[ele]);
+				keyCaseArr = Object.keys(this.$store.state.areadetail.content[ele]);
 				valueFieldArr = Object.values(this.$store.state.fieldstore[ele]);
 				if (ele != 'Bus') {
 					this.busAnchor += arrlength * keyCaseArr.length;
@@ -218,10 +218,10 @@ export default {
 					this.violateBuses[key]['Min'] = val['Single.Max Limit'];
 					this.violateBuses[key]['SubID'] = val['Int.Sub Number'];
 					this.violateBuses[key]['value'] = [
-						this.$store.state.casedetail.content.Substation[
+						this.$store.state.areadetail.content.Substation[
 							val['Int.Sub Number'].toString()
 						]['Double.Longitude'],
-						this.$store.state.casedetail.content.Substation[
+						this.$store.state.areadetail.content.Substation[
 							val['Int.Sub Number'].toString()
 						]['Double.Latitude']
 					];
@@ -240,7 +240,7 @@ export default {
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
-				keyCaseArr = Object.keys(this.$store.state.casedetail.content[ele]);
+				keyCaseArr = Object.keys(this.$store.state.areadetail.content[ele]);
 				valueFieldArr = Object.values(this.$store.state.fieldstore[ele]);
 				if (ele != 'Branch') {
 					this.branchAnchor += arrlength * keyCaseArr.length;
@@ -286,42 +286,42 @@ export default {
 			let temp = [];
 			let subID;
 			let count = 0;
-			for (let i in this.$store.state.casedetail.content.Gen) {
+			for (let i in this.$store.state.areadetail.content.Gen) {
 				if (
-					this.$store.state.casedetail.content.Gen[i]['Int.Area Number'] ==
+					this.$store.state.areadetail.content.Gen[i]['Int.Area Number'] ==
 					+this.$store.state.area
 				) {
 					this.genArray.push(count);
-					subID = this.$store.state.casedetail.content.Bus[i]['Int.Sub Number'];
+					subID = this.$store.state.areadetail.content.Bus[i]['Int.Sub Number'];
 					temp.push({
 						value: [
-							this.$store.state.casedetail.content.Substation[subID.toString()][
+							this.$store.state.areadetail.content.Substation[subID.toString()][
 								'Double.Longitude'
 							],
-							this.$store.state.casedetail.content.Substation[subID.toString()][
+							this.$store.state.areadetail.content.Substation[subID.toString()][
 								'Double.Latitude'
 							]
 						],
 						name: i,
 						Status: 1,
-						MWMax: this.$store.state.casedetail.content.Gen[i][
+						MWMax: this.$store.state.areadetail.content.Gen[i][
 							'Single.MW Max Limit'
 						],
-						MWMin: this.$store.state.casedetail.content.Gen[i][
+						MWMin: this.$store.state.areadetail.content.Gen[i][
 							'Single.MW Min Limit'
 						],
 						MW: 0,
 						Mvar: 0,
 						MWSetpoint: 0,
 						VpuSetpoint: 1,
-						OperationCost: this.$store.state.casedetail.content.Gen[i][
+						OperationCost: this.$store.state.areadetail.content.Gen[i][
 							'OperationCost'
 						],
-						MarginalCostCoefficients: this.$store.state.casedetail.content.Gen[
+						MarginalCostCoefficients: this.$store.state.areadetail.content.Gen[
 							i
 						]['MarginalCostCoefficients'],
 						MarginalCost: 0,
-						id: this.$store.state.casedetail.content.Gen[i]['String.ID'],
+						id: this.$store.state.areadetail.content.Gen[i]['String.ID'],
 						AGC: false
 					});
 				}
@@ -341,7 +341,7 @@ export default {
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
-				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				keyarr = Object.keys(this.$store.state.areadetail.content[ele]);
 				if (ele != 'Gen') {
 					anchor += arrlength * keyarr.length;
 				} else {

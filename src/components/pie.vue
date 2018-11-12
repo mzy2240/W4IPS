@@ -38,7 +38,7 @@ export default {
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
-				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				keyarr = Object.keys(this.$store.state.areadetail.content[ele]);
 				if (ele != 'Gen') {
 					anchor += arrlength * keyarr.length;
 				} else {
@@ -127,12 +127,13 @@ export default {
 		},
 		updateData() {
 			try {
-				const temp = JSON.parse(this.$store.state.rawdata).Data;
+				// const temp = JSON.parse(this.$store.state.rawdata).Data;
+				const temp = this.$store.state.parsedData;
 				var status;
 				let offlineCapacity = 0;
 				let index = 0;
 				for (let [key, val] of Object.entries(
-					this.$store.state.casedetail.content.Gen
+					this.$store.state.areadetail.content.Gen
 				)) {
 					status = temp[this.anchor + 5 + index * this.genDataLength];
 					index += 1;

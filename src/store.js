@@ -4,6 +4,7 @@ import datafield from './assets/datafield.json';
 import tcmcommands from './assets/tcmcommands.json';
 // import casedetail from './assets/150G.json';
 import casedetail from './assets/460GA.json'
+import areadetail from './assets/460GAR.json'
 import notificationSystem from './assets/notificationsettings';
 // import casedetail from './assets/150.json'
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
 		fieldstore: datafield,
 		tcmcommands: tcmcommands,
 		casedetail: casedetail,
+		areadetail: areadetail,
 		rawdata: {},
 		newsubscribe: [],
 		newpublish: [],

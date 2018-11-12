@@ -675,66 +675,6 @@ export default {
 			this.subdata = this.$store.state.subData;
 			this.linedata = this.$store.state.lineData;
 			this.subdetail = this.$store.state.subDetail;
-			// const temp = this.$store.state.casedetail;
-			// if (temp.content.type == 'dsmDictionary') {
-			// 	for (let ele in temp.content.Substation) {
-			// 		this.subdata.push({
-			// 			id: ele,
-			// 			name: temp.content.Substation[ele]['String.Name'],
-			// 			value: [
-			// 				temp.content.Substation[ele]['Double.Longitude'],
-			// 				temp.content.Substation[ele]['Double.Latitude']
-			// 			],
-			// 			attributes: {},
-			// 			bus: []
-			// 		});
-			// 	}
-			// 	for (let ele in temp.content.Branch) {
-			// 		const fromid = ele.split(',')[0];
-			// 		const toid = ele.split(',')[1];
-			// 		const coords = [
-			// 			this.subdata[temp.content.Bus[fromid]['Int.Sub Number'] - 1].value,
-			// 			this.subdata[temp.content.Bus[toid]['Int.Sub Number'] - 1].value
-			// 		];
-			// 		this.linedata.push({
-			// 			id: ele,
-			// 			name:
-			// 				this.subdata[
-			// 					temp.content.Bus[fromid]['Int.Sub Number'] - 1
-			// 				].name.split('_')[0] +
-			// 				'-' +
-			// 				this.subdata[
-			// 					temp.content.Bus[toid]['Int.Sub Number'] - 1
-			// 				].name.split('_')[0],
-			// 			coords: coords,
-			// 			count: 1,
-			// 			attributes: {
-			// 				MVALimit: temp.content.Branch[ele]['Single.MVA Limit'],
-			// 				volt: temp.content.Bus[fromid]['Single.Nominal kV']
-			// 			}
-			// 		});
-			// 	}
-			// 	this.subdetail = temp.content.Substation;
-			// 	this.busdetail = temp.content.Bus;
-			// 	for (let ele in this.subdetail) {
-			// 		this.subdetail[ele].Bus = [];
-			// 	}
-			// 	for (let ele in temp.content.Gen) {
-			// 		this.busdetail[ele].Gen = temp.content.Gen[ele];
-			// 	}
-			// 	for (let ele in temp.content.Load) {
-			// 		this.busdetail[ele].Load = temp.content.Load[ele];
-			// 	}
-			// 	for (let ele in temp.content.Shunt) {
-			// 		this.busdetail[ele].Shunt = temp.content.Shunt[ele];
-			// 	}
-			// 	for (let ele in temp.content.Bus) {
-			// 		this.subdetail[temp.content.Bus[ele]['Int.Sub Number']].Bus.push(
-			// 			this.busdetail[ele]
-			// 		);
-			// 	}
-			// 	this.$store.commit('updateSubDetail', this.subdetail);
-			// }
 		},
 		onDrawSub() {
 			// console.log(L.supermap.echartsLayer);
@@ -791,28 +731,10 @@ export default {
 			});
 		},
 		initUpdateLines() {
-			// var arrlength;
-			// var keyCaseArr;
-			// var valueFieldArr;
-
-			// for (let ele in this.$store.state.fieldstore) {
-			// 	arrlength = this.$store.state.fieldstore[ele].length;
-			// 	keyCaseArr = Object.keys(this.$store.state.casedetail.content[ele]);
-			// 	valueFieldArr = Object.values(this.$store.state.fieldstore[ele]);
-			// 	if (ele != 'Branch') {
-			// 		this.anchor += arrlength * keyCaseArr.length;
-			// 	} else {
-			// 		this.dataLength = arrlength * keyCaseArr.length;
-			// 		// this.statusIndex = valueFieldArr.indexOf('Status');
-			// 		// this.mwfromIndex = valueFieldArr.indexOf('MWFrom');
-			// 		this.branchArrLength = arrlength;
-			// 		break;
-			// 	}
-			// }
 			this.anchor = this.$store.state.areaHelper.Branch.anchor;
 			this.branchArrLength = this.$store.state.areaHelper.Branch.length;
 			this.dataLength =
-				Object.keys(this.$store.state.casedetail.content['Branch']).length *
+				Object.keys(this.$store.state.areadetail.content['Branch']).length *
 				this.branchArrLength;
 			this.statusArray = Array(
 				this.$store.state.areaHelper.Branch.list.length
