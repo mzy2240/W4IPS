@@ -128,18 +128,17 @@ export default {
 		updateData() {
 			try {
 				// const temp = JSON.parse(this.$store.state.rawdata).Data;
-				const temp = this.$store.state.parsedData;
+				// console.log(this.$store.state.genData)
+				// const temp = this.$store.state.parsedData;
 				var status;
 				let offlineCapacity = 0;
 				let index = 0;
-				for (let [key, val] of Object.entries(
-					this.$store.state.areadetail.content.Gen
-				)) {
-					status = temp[this.anchor + 5 + index * this.genDataLength];
-					index += 1;
+				for (let i in this.$store.state.genData) {
+					status = this.$store.state.genData[i].Status;
+					// index += 1;
 					if (status == 0) {
 						// console.log(val);
-						offlineCapacity += val['Single.MW Max Limit'];
+						offlineCapacity += this.$store.state.genData[i].MWMax;
 					}
 				}
 				// console.log(this.areatotal);
