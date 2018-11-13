@@ -15,6 +15,11 @@
             <span style="background-color: #be9c91; padding-right:30px; box-sizing:border-box;">ABORTED</span>
         </marquee-text>
     </div>
+	<div v-show="$store.state.status==='finished'">
+        <marquee-text :repeat="30">
+            <span style="background-color: #ff5f52; padding-right:30px; box-sizing:border-box;">FINISHED</span>
+        </marquee-text>
+    </div>
     <div v-show="$store.state.status==='offline'">
         <marquee-text :repeat="30" :duration="30">
             <span style="background-color: #8e8e8e; padding-right:30px; box-sizing:border-box;">DISCONNECTED</span>
@@ -26,7 +31,7 @@
         </marquee-text>
     </div>
 </div>
-    
+
 </template>
 
 <script>
