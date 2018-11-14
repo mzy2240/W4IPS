@@ -826,7 +826,7 @@ export default {
 			// console.log(this.linedata);
 			// if (this.chart.getOption().series[1].data != this.linedata) {
 			//branchChanged
-			let tempOption = this.chart.getOption();
+			let tempOption = this.chart._echartsOptions;
 			tempOption.series[1].data = this.linedata;
 			tempOption.series[2].data = this.openLineData;
 			this.chart.setOption(tempOption);
@@ -889,7 +889,7 @@ export default {
 		this.initdraw('main');
 		this.onDrawSub();
 		// // this.onDrawLines();
-		// this.updateLinesCycle();
+		this.updateLinesCycle();
 		// if (this.$store.state.showTour) {
 		// 	var intro = introJs();
 		// 	intro.setOptions({
