@@ -173,8 +173,8 @@ export default {
 						symbol: 'circle',
 						symbolSize: 8,
 						showEffectOn: 'emphasis',
-						progressive: 40,
-						progressiveThreshold: 200,
+						// progressive: 40,
+						// progressiveThreshold: 200,
 						// zindex: 2,
 						data: [],
 						tooltip: {
@@ -193,8 +193,8 @@ export default {
 						type: 'lines',
 						coordinateSystem: 'leaflet',
 						animation: false,
-						progressive: 100,
-						progressiveThreshold: 200,
+						// progressive: 100,
+						// progressiveThreshold: 200,
 						zlevel: 1,
 						// coordinateSystem: 'bmap',
 						silent: false,
@@ -353,8 +353,8 @@ export default {
 						large: true,
 						largeThreshold: 1,
 						blendMode: 'lighter',
-						progressive: 100,
-						progressiveThreshold: 500,
+						// progressive: 100,
+						// progressiveThreshold: 500,
 						symbolSize: 5,
 						itemStyle: {
 							color: '#616161'
@@ -369,8 +369,8 @@ export default {
 						large: true,
 						largeThreshold: 1,
 						blendMode: 'lighter',
-						progressive: 100,
-						progressiveThreshold: 500,
+						// progressive: 100,
+						// progressiveThreshold: 500,
 						// zindex: 5,
 						lineStyle: {
 							color: '#757575'
@@ -681,7 +681,7 @@ export default {
 		},
 		getData() {
 			this.subdata = this.$store.state.subData;
-			this.linedata = this.$store.state.lineData;
+			this.linedata = _.cloneDeep(this.$store.state.lineData);
 			this.subdetail = this.$store.state.subDetail;
 		},
 		onDrawSub() {
@@ -766,8 +766,9 @@ export default {
 			}, 1500);
 		},
 		updateLines() {
-			const temp = this.$store.state.parsedData;
-			const branchData = temp.slice(this.anchor, this.anchor + this.dataLength);
+			// const temp = this.$store.state.parsedData;
+			// const branchData = temp.slice(this.anchor, this.anchor + this.dataLength);
+			const branchData = this.$store.state.branchData;
 			// let branchIndex;
 			let statusTemp = [];
 			let branchChanged = false;
@@ -777,20 +778,23 @@ export default {
 			var key;
 			for (let index in this.linedata) {
 				// statusTemp.push(branchData[i]);
-				statusTemp.push(branchData[branchArray[index] * branchArrLength]);
+				statusTemp.push(branchData[index * branchArrLength]);
 				// branchIndex = i / this.branchArrLength;
 				this.linedata[index].attributes.MVA =
-					branchData[branchArray[index] * branchArrLength + 3];
+					branchData[index * branchArrLength + 3];
+				// if ([0, 2, 3].includes(branchData[index * branchArrLength]))
+				// {
 				if (
 					this.statusArray[index] == 1 &&
-					[0, 2, 3].includes(branchData[branchArray[index] * branchArrLength])
+					[0, 2, 3].includes(branchData[index * branchArrLength])
 				) {
 					// Branch opened
 					this.updateLineOpen(index);
 					branchChanged = true;
+				// } else if (branchData[index * branchArrLength] == 1) {
 				} else if (
 					[0, 2, 3].includes(this.statusArray[index]) &&
-					branchData[branchArray[index] * branchArrLength] == 1
+					branchData[index * branchArrLength] == 1
 				) {
 					// Branch closed
 					this.updateLineClose(index);
@@ -799,16 +803,16 @@ export default {
 				key = this.linedata[index].id;
 				// console.log(key);
 				if (
-					branchData[branchArray[index] * branchArrLength + 3] >=
+					branchData[index * branchArrLength + 3] >=
 					0.85 * this.linedata[index].attributes.MVALimit
 				) {
 					// this.highRiskLines[key] = val;
 					this.highRiskLines[key] = {};
 					this.highRiskLines[key]['name'] = key;
 					this.highRiskLines[key]['MVA'] =
-						branchData[branchArray[index] * branchArrLength + 3];
+						branchData[index * branchArrLength + 3];
 					this.highRiskLines[key]['Ratio'] = (
-						(branchData[branchArray[index] * branchArrLength + 3] /
+						(branchData[index * branchArrLength + 3] /
 							this.linedata[index].attributes.MVALimit) *
 						100
 					).toFixed(2);
@@ -826,9 +830,11 @@ export default {
 			// console.log(this.linedata);
 			// if (this.chart.getOption().series[1].data != this.linedata) {
 			//branchChanged
+			// console.log("TEST")
 			let tempOption = this.chart._echartsOptions;
 			tempOption.series[1].data = this.linedata;
 			tempOption.series[2].data = this.openLineData;
+			// console.log(tempOption)
 			this.chart.setOption(tempOption);
 			// this.chart.setOption(
 			// 	{
@@ -855,6 +861,7 @@ export default {
 			// 	branchIndex.toString()
 			// ] = this.openLineData.length;
 			this.openLineData.push(temp);
+			console.log(this.openLineData);
 			// this.linedata[branchIndex]['coords'] = [[], []];
 			this.linedata[branchIndex]['coords'] = [temp.coords[0], temp.coords[0]];
 		},
@@ -876,7 +883,7 @@ export default {
 			// delete this.branchToOpenBranch[branchIndex.toString()];
 		},
 		restore() {
-			var temp = this.chart.getOption();
+			var temp = this.chart._echartsOptions;
 			temp.leaflet[0].center = this.$store.state.center;
 			temp.leaflet[0].zoom = 7;
 			this.chart.setOption(temp);
@@ -945,7 +952,7 @@ export default {
 	watch: {
 		ViolatedLines: function() {
 			// console.log(this.$store.state.violatedLines);
-			let temp = this.chart.getOption();
+			let temp = this.chart._echartsOptions;
 			temp.series[3].data = this.$store.state.violatedLines;
 			this.chart.setOption(temp);
 		}

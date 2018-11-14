@@ -258,16 +258,16 @@ export default {
 			for (let index in this.linedata) {
 				key = this.linedata[index].id;
 				if (
-					this.branchData[this.branchArray[i] * this.branchArrLength + 3] >=
+					this.branchData[index* this.branchArrLength + 3] >=
 					0.85 * this.linedata[index].attributes.MVALimit
 				) {
 					this.highRiskLines[key] = {};
 					this.highRiskLines[key]['name'] = key;
 					this.highRiskLines[key]['MVA'] = this.branchData[
-						this.branchArray[i] * this.branchArrLength + 3
+						index * this.branchArrLength + 3
 					];
 					this.highRiskLines[key]['Ratio'] = (
-						(this.branchData[this.branchArray[i] * this.branchArrLength + 3] /
+						(this.branchData[index * this.branchArrLength + 3] /
 							this.linedata[index].attributes.MVALimit) *
 						100
 					).toFixed(2);
