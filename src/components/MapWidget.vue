@@ -53,33 +53,36 @@ export default {
 			linedata: [],
 			subdetail: [],
 			busdetail: [],
-			mapCenter: [-99.9, 31.97]
+			mapCenter: [29.4241, -98.4936],
+			map: null
 		};
 	},
 	methods: {
 		initdraw() {
-			this.chart = echarts.init(document.getElementById('map'));
-			this.chart.setOption({
+			const url =
+				'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+			const options = {
+				// redirect: true,
+				// time: '',
+				// maxZoom: 8,
+				// tilematrixset: 'GoogleMapsCompatible_Level',
+				// format: 'jpg',
+				attribution:
+					'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+			};
+			this.map = L.map('map', {
+				// crs: L.CRS.EPSG4326,
+				center: this.mapCenter,//this.$store.state.center, //this.mapCenter,
+				maxZoom: 18,
+				zoom: 6
+			});
+			L.tileLayer(url, options).addTo(this.map)
+			// this.chart = echarts.init(document.getElementById('map'));
+			var option = {
 				animation: false,
 				tooltip: {
 					show: true,
 					trigger: 'item'
-				},
-				leaflet: {
-					center: this.$store.state.center,
-					zoom: 6,
-					roam: true,
-					tiles: [
-						{
-							label: 'OpenStreetMap',
-							urlTemplate:
-								'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-							options: {
-								attribution:
-									'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-							}
-						}
-					]
 				},
 				series: [
 					{
@@ -248,16 +251,18 @@ export default {
 						data: []
 					}
 				]
-			});
-			var ecModel = this.chart._model;
-			var leafletMap;
-			ecModel.eachComponent('leaflet', function(leafletModel) {
-				if (leafletMap == null) {
-					// console.log(leafletModel)
-					leafletMap = leafletModel.__map;
-				}
-			});
-			leafletMap.zoomControl.remove();
+			};
+			this.chart = L.supermap.echartsLayer(option);  // _ec is the echartsInstance
+			var EL = this.chart.addTo(this.map);
+			// var ecModel = this.chart._model;
+			// var leafletMap;
+			// ecModel.eachComponent('leaflet', function(leafletModel) {
+			// 	if (leafletMap == null) {
+			// 		// console.log(leafletModel)
+			// 		leafletMap = leafletModel.__map;
+			// 	}
+			// });
+			// leafletMap.zoomControl.remove();
 		},
 		getData() {
 			const temp = this.$store.state.casedetail;
@@ -354,7 +359,12 @@ export default {
 		// this.onDrawLines();
 	},
 	beforeDestroy(){
-		this.chart.clear();
+		try {
+			this.chart.clear();
+		}
+		catch(err) {
+			console.log("The chart instance cannot be cleared")
+		}
 	},
 	computed: {
 		...mapGetters({
@@ -366,7 +376,7 @@ export default {
 	},
 	watch: {
 		ViolatedBuses: function() {
-			let temp = this.chart.getOption();
+			let temp = this.chart._echartsOptions;
 			temp.series[2].data = this.$store.state.violatedBuses;
 			this.chart.setOption(temp);
 			// this.chart.setOption({series: [{
@@ -381,18 +391,18 @@ export default {
 			// 	name: 'shunt',
 			// 	data: this.$store.state.selectedShunts
 			// }]})
-			let temp = this.chart.getOption();
+			let temp = this.chart._echartsOptions;
 			temp.series[3].data = this.$store.state.selectedShunts;
 			this.chart.setOption(temp);
 		},
 		ViolatedLines: function() {
 			// console.log(this.$store.state.violatedLines);
-			let temp = this.chart.getOption();
+			let temp = this.chart._echartsOptions;
 			temp.series[4].data = this.$store.state.violatedLines;
 			this.chart.setOption(temp);
 		},
 		SelectedGens: function() {
-			let temp = this.chart.getOption();
+			let temp = this.chart._echartsOptions;
 			temp.series[5].data = this.$store.state.selectedGens;
 			this.chart.setOption(temp);
 		}

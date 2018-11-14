@@ -138,7 +138,8 @@ export default {
 			highRiskLines: {},
 			formatRiskLines: [],
 			mapCenter: [31.97, -99.9],
-			Interval: null
+			Interval: null,
+			map: null
 		};
 	},
 	methods: {
@@ -154,13 +155,13 @@ export default {
 				attribution:
 					'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 			};
-			var map = L.map('main', {
+			this.map = L.map('main', {
 				// crs: L.CRS.EPSG4326,
-				center: this.mapCenter, // this.$store.state.center, //this.mapCenter,
+				center: this.mapCenter,//this.$store.state.center, //this.mapCenter,
 				maxZoom: 18,
 				zoom: 5
 			});
-			L.tileLayer(url, options).addTo(map)
+			L.tileLayer(url, options).addTo(this.map)
 			// L.supermap.tiledMapLayer(url, option).addTo(map);
 			var option = {
 				series: [
@@ -379,8 +380,8 @@ export default {
 					}
 				]
 			};
-			this.chart = L.supermap.echartsLayer(option);
-			this.chart.addTo(map);
+			this.chart = L.supermap.echartsLayer(option);  // _ec is the echartsInstance
+			var EL = this.chart.addTo(this.map);
 			// this.chart = echarts.init(document.getElementById(id));
 			// this.chart.setOption({
 			// 	animation: false,
@@ -709,8 +710,13 @@ export default {
 			// 	]
 			// });
 			var self = this;
-			this.chart.on('click', function(params) {
-				console.log(params);
+			// this.map.events.on({
+			// 	"click": function(params) {
+			// 		console.log(params);
+			// 	}
+			// })
+			this.chart._ec.on('click', function(params) {
+				// console.log(params);
 				if (params.seriesName == 'sub') {
 					self.type = 'Substation';
 					self.name = params.name;
@@ -861,7 +867,7 @@ export default {
 			// 	branchIndex.toString()
 			// ] = this.openLineData.length;
 			this.openLineData.push(temp);
-			console.log(this.openLineData);
+			// console.log(this.openLineData);
 			// this.linedata[branchIndex]['coords'] = [[], []];
 			this.linedata[branchIndex]['coords'] = [temp.coords[0], temp.coords[0]];
 		},
@@ -936,7 +942,7 @@ export default {
 			this.chart.clear();
 		}
 		catch(err) {
-			console.log("chart instance cannot be cleared")
+			console.log("The chart instance cannot be cleared")
 		}
 	},
 	// watch: {

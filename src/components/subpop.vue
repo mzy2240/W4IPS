@@ -107,7 +107,7 @@ export default {
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
-				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				keyarr = Object.keys(this.$store.state.areadetail.content[ele]);
 				if (ele != this.type) {
 					anchor += arrlength * keyarr.length;
 				} else {

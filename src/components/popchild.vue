@@ -144,14 +144,15 @@ export default {
 		},
 		getData() {
 			this.type = this.activeObj;
-			const temp = JSON.parse(this.$store.state.rawdata).Data;
+			// const temp = JSON.parse(this.$store.state.rawdata).Data;
+			const temp = this.$store.state.parsedData;
 			let anchor = 0;
 			var arrlength;
 			var keyarr;
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
-				keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				keyarr = Object.keys(this.$store.state.areadetail.content[ele]);
 				if (ele != this.type) {
 					anchor += arrlength * keyarr.length;
 				} else {

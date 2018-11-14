@@ -103,7 +103,7 @@ export default {
 		init() {
 			for (let ele in this.$store.state.fieldstore) {
 				this.arrlength = this.$store.state.fieldstore[ele].length;
-				this.keyarr = Object.keys(this.$store.state.casedetail.content[ele]);
+				this.keyarr = Object.keys(this.$store.state.areadetail.content[ele]);
 				if (ele != this.type) {
 					this.anchor += this.arrlength * this.keyarr.length;
 				} else {
@@ -116,8 +116,9 @@ export default {
 			}
 		},
 		getData() {
-			// const temp = this.$store.state.parsedData;
+			const temp = this.$store.state.parsedData;
 			const spdata = this.$store.state.parsedData.slice(this.anchor, this.anchor + this.arrlength);
+			// const spdata = this.$store.state.branchData;
 			let container = {};
 			for (let e in spdata) {
 				container[this.$store.state.fieldstore[this.type][e]['value']] =
