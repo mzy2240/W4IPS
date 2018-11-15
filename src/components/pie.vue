@@ -133,6 +133,7 @@ export default {
 				var status;
 				let offlineCapacity = 0;
 				let index = 0;
+				// console.log(this.$store.state.genData)
 				for (let i in this.$store.state.genData) {
 					status = this.$store.state.genData[i].Status;
 					// index += 1;

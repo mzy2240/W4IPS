@@ -220,7 +220,8 @@ export default {
 		updateTable() {
 			// setInterval(() => {
 			try {
-				const temp = JSON.parse(this.$store.state.rawdata).Data;
+				// const temp = JSON.parse(this.$store.state.rawdata).Data;
+				const temp = this.$store.state.parsedData;
 				for (let i in this.gens) {
 					this.gens[i].MW = temp[this.anchor + 6 + i * this.genDataLength]; // MW is the 6th in the gen data
 					this.gens[i].Mvar = temp[this.anchor + 7 + i * this.genDataLength];

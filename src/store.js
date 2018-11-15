@@ -36,7 +36,7 @@ export default new Vuex.Store({
 		busDetail: {},
 		totalCapacity: (function() {
 			var temp = 0;
-			for (let ele in casedetail.content.Gen) {
+			for (let ele in areadetail.content.Gen) {
 				temp += casedetail.content.Gen[ele]['Single.MW Max Limit'];
 			}
 			return temp;

@@ -137,7 +137,7 @@ export default {
 			branchToOpenBranch: {},
 			highRiskLines: {},
 			formatRiskLines: [],
-			mapCenter: [31.97, -99.9],
+			mapCenter: [29.4241, -98.4936],
 			Interval: null,
 			map: null
 		};
@@ -159,7 +159,7 @@ export default {
 				// crs: L.CRS.EPSG4326,
 				center: this.mapCenter,//this.$store.state.center, //this.mapCenter,
 				maxZoom: 18,
-				zoom: 5
+				zoom: 8
 			});
 			L.tileLayer(url, options).addTo(this.map)
 			// L.supermap.tiledMapLayer(url, option).addTo(map);
@@ -687,7 +687,7 @@ export default {
 		},
 		onDrawSub() {
 			// console.log(L.supermap.echartsLayer);
-			console.log(this.chart)
+			// console.log(this.chart)
 			let temp = this.chart._echartsOptions;
 			temp.series[0].data = this.subdata;
 			temp.series[1].data = this.linedata;
@@ -890,8 +890,8 @@ export default {
 		},
 		restore() {
 			var temp = this.chart._echartsOptions;
-			temp.leaflet[0].center = this.$store.state.center;
-			temp.leaflet[0].zoom = 7;
+			temp.leaflet[0].center = this.mapCenter;
+			temp.leaflet[0].zoom = 8;
 			this.chart.setOption(temp);
 		}
 	},

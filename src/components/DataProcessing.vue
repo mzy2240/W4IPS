@@ -386,6 +386,11 @@ export default {
 					temp[this.anchor + 9 + this.genArray[i] * this.genDataLength];
 				this.gens[i].Status =
 					temp[this.anchor + 5 + this.genArray[i] * this.genDataLength];
+			}
+			this.$store.commit('updateGenData', this.gens);
+		},
+		updateMC(){
+			for(let i in this.gens) {
 				this.gens[i].MarginalCost = (
 					this.gens[i].MarginalCostCoefficients[0] +
 					this.gens[i].MarginalCostCoefficients[1] * 2 * this.gens[i].MW
@@ -466,7 +471,8 @@ export default {
 						Branch: this.formatRiskLines
 					});
 				}
-			}
+			};
+			this.updateMC();
 		}, 5000);
 	},
 	computed: {
