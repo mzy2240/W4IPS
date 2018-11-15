@@ -174,6 +174,7 @@ export default {
 						symbol: 'circle',
 						symbolSize: 8,
 						showEffectOn: 'emphasis',
+						zlevel: 5,
 						// progressive: 40,
 						// progressiveThreshold: 200,
 						// zindex: 2,
