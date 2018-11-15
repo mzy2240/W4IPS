@@ -10,6 +10,11 @@
             <span style="background-color: #ffff8b; padding-right:30px; box-sizing:border-box;">PAUSED</span>
         </marquee-text>
     </div>
+	<div v-show="$store.state.status==='initialized'">
+        <marquee-text :repeat="30">
+            <span style="background-color: #ffff8b; padding-right:30px; box-sizing:border-box;">INITIALIZED</span>
+        </marquee-text>
+    </div>
     <div v-show="$store.state.status==='aborted'">
         <marquee-text :repeat="30">
             <span style="background-color: #be9c91; padding-right:30px; box-sizing:border-box;">ABORTED</span>

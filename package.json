@@ -32,6 +32,7 @@
     "mqtt": "^2.18.3",
     "npm": "^6.4.1",
     "numeral": "^2.0.6",
+    "papaparse": "^4.6.2",
     "push.js": "^1.0.8",
     "register-service-worker": "^1.0.0",
     "vis": "^4.21.0",
