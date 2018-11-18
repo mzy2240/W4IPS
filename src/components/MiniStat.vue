@@ -22,7 +22,7 @@
               <v-layout row wrap>
                   <v-flex sm12 xs12>
                       <div class="text-sm-center pt-3">
-                        <div class="caption">{{ title }}</div>
+                        <div class="subheading">{{ title }}</div>
                         <span class="headline" style="color:white">{{ subTitle }}</span>
                     </div>
                   </v-flex>

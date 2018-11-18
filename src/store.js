@@ -3,8 +3,8 @@ import Vuex from 'vuex';
 import datafield from './assets/datafield.json';
 import tcmcommands from './assets/tcmcommands.json';
 // import casedetail from './assets/150G.json';
-import casedetail from './assets/460GA.json'
-import areadetail from './assets/460GAR.json'
+import casedetail from './assets/460GA.json';
+import areadetail from './assets/460GAR.json';
 import notificationSystem from './assets/notificationsettings';
 // import casedetail from './assets/150.json'
 
@@ -25,6 +25,7 @@ export default new Vuex.Store({
 		newpublish: [],
 		startsim: 0,
 		pausesim: 0,
+		continuesim: 0,
 		abortsim: 0,
 		ready4start: false,
 		page: 'Home',
@@ -37,7 +38,9 @@ export default new Vuex.Store({
 		totalCapacity: (function() {
 			var temp = 0;
 			for (let ele in areadetail.content.Gen) {
-				temp += casedetail.content.Gen[ele]['Single.MW Max Limit'];
+				if (casedetail.content.Gen[ele]['Single.MW Max Limit'] != 0) {
+					temp += casedetail.content.Gen[ele]['Single.MW Max Limit'];
+				}
 			}
 			return temp;
 		})(),
@@ -103,6 +106,9 @@ export default new Vuex.Store({
 		pausesimtrigger(state) {
 			return state.pausesim;
 		},
+		continuesimtrigger(state) {
+			return state.continuesim;
+		},
 		abortsimtrigger(state) {
 			return state.abortsim;
 		},
@@ -164,6 +170,9 @@ export default new Vuex.Store({
 		},
 		trigstartsim(state) {
 			state.startsim++;
+		},
+		trigcontinuesim(state) {
+			state.continuesim++;
 		},
 		trigsimtoseconds(state, payload) {
 			state.simtime = payload;
@@ -327,7 +336,7 @@ export default new Vuex.Store({
 		setParsedData(state, payload) {
 			state.parsedData = payload;
 		},
-		setCenter(state,payload){
+		setCenter(state, payload) {
 			state.center = payload;
 		},
 		disableTour(state) {

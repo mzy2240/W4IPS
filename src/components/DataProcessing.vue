@@ -290,7 +290,7 @@ export default {
 			for (let i in this.$store.state.areadetail.content.Gen) {
 				if (
 					this.$store.state.areadetail.content.Gen[i]['Int.Area Number'] ==
-					+this.$store.state.area
+					+this.$store.state.area && this.$store.state.areadetail.content.Gen[i]['Single.MW Max Limit'] != 0
 				) {
 					this.genArray.push(count);
 					subID = this.$store.state.areadetail.content.Bus[i]['Int.Sub Number'];

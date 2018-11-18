@@ -74,6 +74,7 @@ export default {
 			'getNewPublish',
 			'startsimtrigger',
 			'pausesimtrigger',
+			'continuesimtrigger',
 			'abortsimtrigger'
 		])
 	},
@@ -131,6 +132,12 @@ export default {
 				);
 				this.$store.commit('clearsimtime');
 			}
+		},
+		continuesimtrigger: function () {
+			this.client.publish(
+				this.simID +'/user/system',
+				this.$store.state.username + ':' + 'Continue'
+			);
 		},
 		pausesimtrigger: function() {
 			this.client.publish(

@@ -38,7 +38,7 @@
 					<mini-statistic :name="'ExportMW'" icon="fa fa-instagram" title="Export Power (MW)" :sub-title="$store.state.areaData[6]" color="purple" :img="require('../assets/export.png')">
 					</mini-statistic>
 				</v-flex>
-				<v-flex lg8 sm12 xs12>
+				<v-flex lg8 sm8 xs12>
 					<m-widget title="Interactive Site Map" content-bg="white" @clicked="restore">
 						<!-- <v-flex d-flex xs8 style="height: auto;"> -->
 						<div slot="widget-content">
@@ -46,7 +46,7 @@
 						</div>
 					</m-widget>
 				</v-flex>
-				<v-flex lg4 sm12 xs12>
+				<v-flex lg4 sm4 xs12>
 					<v-layout row wrap>
 						<v-flex lg12 sm12 xs12>
 							<chartStatistic id="TC" min="dataMin" max="dataMax" title="Total Cost" icon="attach_money" card-color="indigo" :chart-color="[color.indigo.lighten1]" :costData='$store.state.totalCost.toFixed(2)' type="line"></chartStatistic>
@@ -55,10 +55,6 @@
 							<v-widget title="Area Generation Overview" content-bg="white">
 								<div slot="widget-content">
 									<pie :areatotal="$store.state.areaData[0]"></pie>
-									<!-- <v-card dark color="light-blue">
-
-										<v-card-text class="px-0">Title</v-card-text>
-									</v-card> -->
 								</div>
 							</v-widget>
 						</v-flex>
@@ -323,7 +319,7 @@ export default {
 						name: 'violatedLines',
 						type: 'lines',
 						coordinateSystem: 'leaflet',
-						silent: false,
+						silent: true,
 						zlevel: 2,
 						z: 2,
 						symbol: 'pin',
@@ -337,7 +333,7 @@ export default {
 							opacity: 1
 						},
 						label: {
-							show: true,
+							show: false,
 							position: 'middle',
 							color: 'black',
 							// fontWeight: 'bold',
@@ -903,6 +899,7 @@ export default {
 		this.initdraw('main');
 		this.onDrawSub();
 		// // this.onDrawLines();
+		// this.updateLines();
 		this.updateLinesCycle();
 		// if (this.$store.state.showTour) {
 		// 	var intro = introJs();

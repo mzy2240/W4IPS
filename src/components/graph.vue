@@ -50,12 +50,12 @@ export default {
 				max = 60.1;
 				break;
 			case 'GenMW':
-				min = 10000;
-				max = 13000;
+				min = 4000;
+				max = 6000;
 				break;
 			case 'LoadMW':
-				min = 10000;
-				max = 13000;
+				min = 4000;
+				max = 6000;
 				break;
 			default:
 				min = -1000;

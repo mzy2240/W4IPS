@@ -112,7 +112,7 @@
 							<v-list-tile-title>Report</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
-					<v-list-tile avatar :key="'IkMap'" @click="$store.commit('setpage', 'IkView')">
+					<!-- <v-list-tile avatar :key="'IkMap'" @click="$store.commit('setpage', 'IkView')">
 						<v-list-tile-avatar>
 							<v-icon>highlight_off</v-icon>
 						</v-list-tile-avatar>
@@ -120,14 +120,14 @@
 						<v-list-tile-content>
 							<v-list-tile-title>DoNotClick</v-list-tile-title>
 						</v-list-tile-content>
-					</v-list-tile>
+					</v-list-tile> -->
 				</v-list>
 			</v-toolbar>
 		</v-navigation-drawer>
 		<v-toolbar color="blue darken-3" dark app clipped-left fixed>
 			<v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
 			<v-toolbar-title class="white--text">
-				<button v-on:click="$store.commit('setpage','Home')">PowerWeb</button>
+				<button v-on:click="$store.commit('setpage','Home')">PowerWeb Cloud</button>
 				<div class="subheading">Powered by PowerWorld Dynamics Studio and EMQ</div>
 			</v-toolbar-title>
 			<!-- <v-toolbar-items>

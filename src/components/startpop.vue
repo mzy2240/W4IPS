@@ -69,7 +69,11 @@ export default {
 	methods: {
 		activate() {
 			if(!this.time){
-				this.$store.commit('trigstartsim');
+				if(this.$store.state.status != 'paused'){
+					this.$store.commit('trigstartsim');
+				} else {
+					this.$store.commit('trigcontinuesim');
+				}
 			} else {
 				this.$store.commit('trigsimtoseconds', +this.time);
 			}

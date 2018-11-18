@@ -130,14 +130,16 @@ export default {
 				// const temp = JSON.parse(this.$store.state.rawdata).Data;
 				// console.log(this.$store.state.genData)
 				// const temp = this.$store.state.parsedData;
-				var status;
+				var status, mwmax;
 				let offlineCapacity = 0;
 				let index = 0;
 				// console.log(this.$store.state.genData)
 				for (let i in this.$store.state.genData) {
 					status = this.$store.state.genData[i].Status;
+					mwmax = this.$store.state.genData[i].MWMax;
+
 					// index += 1;
-					if (status == 0) {
+					if (status == 0 && mwmax != 0) {
 						// console.log(val);
 						offlineCapacity += this.$store.state.genData[i].MWMax;
 					}
@@ -152,11 +154,11 @@ export default {
 								name: 'Current Generation'
 							},
 							{
-								value: Math.round(
+								value: Math.abs(Math.round(
 									this.$store.state.totalCapacity -
 										offlineCapacity -
 										this.areatotal
-								),
+								)),
 								name: 'Online Capacity'
 							},
 							{

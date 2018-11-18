@@ -2,7 +2,7 @@
 	<v-card :color="cardColor" :dark="computeCardDark">
 		<v-card-title>
 			<div class="layout row ma-0">
-				<div class="subheading">{{title}}</div>
+				<div class="headline">{{title}}</div>
 				<v-spacer></v-spacer>
 				<div class="subheading">${{dispData}}</div>
 			</div>
@@ -177,4 +177,7 @@ export default {
 	height: 100px;
 	width: 100%;
 }
+/* .subheading {
+	color: white;
+} */
 </style>
