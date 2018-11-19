@@ -82,7 +82,9 @@ export default new Vuex.Store({
 		center: null,
 		showTour: true,
 		simID: null,
-		branchData: null
+		branchData: null,
+		aceCost: 100,
+		schedule: null
 	},
 	getters: {
 		getPubStatus(state) {
@@ -138,6 +140,9 @@ export default new Vuex.Store({
 		},
 		getStatus(state) {
 			return state.status;
+		},
+		getSchedule(state) {
+			return state.schedule;
 		}
 	},
 	mutations: {
@@ -347,6 +352,12 @@ export default new Vuex.Store({
 		},
 		setBranchData(state, payload) {
 			state.branchData = payload;
+		},
+		setSchedule(state, payload) {
+			state.schedule = payload;
+		},
+		setACE(state, payload) {
+			state.ACE = payload;
 		}
 	},
 	actions: {

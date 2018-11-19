@@ -31,10 +31,10 @@
 							<td class="text-xs-right">{{ props.item.MvarFrom }}</td>
 							<td class="text-xs-right">{{ props.item.MVAFrom }}</td>
 							<td class="text-xs-right">{{ props.item.AmpsFrom }}</td>
-							<td class="text-xs-right">{{ props.item.MWTo }}</td>
+							<!-- <td class="text-xs-right">{{ props.item.MWTo }}</td>
 							<td class="text-xs-right">{{ props.item.MvarTo }}</td>
 							<td class="text-xs-right">{{ props.item.MVATo }}</td>
-							<td class="text-xs-right">{{ props.item.AmpsTo }}</td>
+							<td class="text-xs-right">{{ props.item.AmpsTo }}</td> -->
 							<td class="text-xs-right">{{ props.item.MVALimit }}</td>
 							<td class="justify-center layout px-0">
 								<div class="my-2">
@@ -110,10 +110,10 @@ export default {
 				{ text: 'MvarFrom', value: 'MvarFrom' },
 				{ text: 'MVAFrom', value: 'MVAFrom' },
 				{ text: 'AmpsFrom', value: 'AmpsFrom' },
-				{ text: 'MWTo', value: 'MWTo' },
-				{ text: 'MvarTo', value: 'MvarTo' },
-				{ text: 'MVATo', value: 'MVATo' },
-				{ text: 'AmpsTo', value: 'AmpsTo' },
+				// { text: 'MWTo', value: 'MWTo' },
+				// { text: 'MvarTo', value: 'MvarTo' },
+				// { text: 'MVATo', value: 'MVATo' },
+				// { text: 'AmpsTo', value: 'AmpsTo' },
 				{ text: 'MVA Limit', value: 'MVALimit' },
 				// { text: 'MVA', value: 'MVA' },
 				// { text: 'MW setpoint', value: 'MWSet', sortable: false },

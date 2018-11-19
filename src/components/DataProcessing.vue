@@ -303,7 +303,9 @@ export default {
 								'Double.Latitude'
 							]
 						],
-						name: i,
+						name: this.$store.state.areadetail.content.Bus[i][
+						'String.Name'
+					],//i,
 						Status: 1,
 						MWMax: this.$store.state.areadetail.content.Gen[i][
 							'Single.MW Max Limit'
@@ -400,17 +402,26 @@ export default {
 		},
 		updateTotalCost() {
 			setInterval(() => {
+				let deltaACECost = 0;
+				if(this.$store.state.schedule){
+					deltaACECost = (+this.$store.state.schedule.split('@')[0]) * (+this.$store.state.schedule.split('@')[0]);
+					this.$store.commit('setACE', -(+this.$store.state.schedule.split('@')[0] + this.$store.state.areaData[6]))
+				} else {
+					this.$store.commit('setACE', -this.$store.state.areaData[6])
+				};
 				if (this.$store.state.status === 'running') {
 					let deltaCost = 0;
-					let deltaMWh = 0;
+					let deltaMWh = this.$store.state.areaData[2];
+					// let deltaMWh = 0;
 					for (let i in this.gens) {
 						deltaCost +=
 							this.gens[i].MarginalCostCoefficients[0] * this.gens[i].MW * 1 +
 							this.gens[i].MarginalCostCoefficients[1] *
 								this.gens[i].MW *
 								this.gens[i].MW;
-						deltaMWh += this.gens[i].MW;
+						// deltaMWh += this.gens[i].MW;
 					}
+					deltaCost += math.max(this.$store.state.ACE, 0) * this.$store.state.aceCost + deltaACECost;
 					this.$store.commit('updateUnitTimeCost', +deltaCost.toFixed(0));
 					deltaCost = deltaCost / 120;
 					deltaMWh = (deltaMWh * 1) / 120;

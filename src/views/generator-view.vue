@@ -20,17 +20,29 @@
 		<v-container grid-list-xl text-xs-center fluid>
 			<v-layout row wrap>
 				<v-flex lg8 sm8 xs12>
-					<!-- <v-widget title="Realtime Data" content-bg="white">
+					<v-layout row wrap>
+						<v-flex lg6 sm6 xs6>
+							<chartStatistic id="UTC" min=null max=null left="13%" title="Current Cost ($/h)" icon="attach_money" card-color="indigo" :chart-color="[color.indigo.lighten1]" :costData='$store.state.unitTimeCost' type="line"></chartStatistic>
+						</v-flex>
+						<v-flex lg6 sm6 xs6>
+							<chartStatistic id="ATC" min=null max=null left="8%" :precision=1 title="Average Total Cost ($/MWh)" icon="attach_money" card-color="pink" :chart-color="[color.pink.darken1, 'rgba(255,255,255,0.3)']" :costData='+($store.state.totalCost/$store.state.totalMWh).toFixed(2)' type="line"></chartStatistic>
+						</v-flex>
+					</v-layout>
+					<v-layout row wrap>
+						<v-flex lg12 sm12 xs12>
+							<!-- <v-widget title="Realtime Data" content-bg="white">
 						<div slot="widget-content"> -->
 							<gentable title="Realtime Data"></gentable>
-						<!-- </div>
+							<!-- </div>
 					</v-widget> -->
+						</v-flex>
+					</v-layout>
 				</v-flex>
 				<v-flex lg4 sm4 xs12>
 					<v-layout row wrap>
 						<v-flex>
-              				<v-layout row wrap>
-                  				<v-flex sm6 xs6 white--text>
+							<v-layout row wrap>
+								<v-flex sm6 xs6 white--text>
 									<div class="text-sm-center primary card">
 										<div class="headline pt-3">Total Cost</div>
 										<span class="headline" style="color:white">${{ $store.state.totalCost }}</span>
@@ -39,7 +51,7 @@
 								<v-flex sm6 xs6 white--text>
 									<div class="align-center text-sm-center green card">
 										<div class="headline pt-3">ACE</div>
-										<span class="headline" style="color:white">{{ $store.state.ACE }}MW</span>
+										<span class="headline" style="color:white">{{ $store.state.ACE.toFixed(2) }}MW</span>
 									</div>
 								</v-flex>
 							</v-layout>
@@ -47,7 +59,15 @@
 						<v-flex lg12 sm12 xs12>
 							<v-widget title="Power Import Schedule" content-bg="white">
 								<div slot="widget-content">
-
+									<!-- <v-container> -->
+									<v-radio-group v-model="$store.state.schedule" :mandatory="false">
+										<v-radio label="600MW @ $16/MW" value="600@16"></v-radio>
+										<v-radio label="800MW @ $18/MW" value="800@18"></v-radio>
+										<v-radio label="1200MW @ $24/MW" value="1200@24"></v-radio>
+										<v-radio label="1800MW @ $26/MW" value="1800@26"></v-radio>
+									</v-radio-group>
+									<p>ACE cost is $100/MW</p>
+									<!-- </v-container> -->
 								</div>
 							</v-widget>
 						</v-flex>
@@ -57,12 +77,6 @@
 									<pie :areatotal="$store.state.areaData[0]"></pie>
 								</div>
 							</v-widget>
-						</v-flex>
-						<v-flex lg12 sm12 xs12>
-							<chartStatistic id="UTC" min=null max=null left="13%" title="Current Cost ($/h)" icon="attach_money" card-color="indigo" :chart-color="[color.indigo.lighten1]" :costData='$store.state.unitTimeCost' type="line"></chartStatistic>
-						</v-flex>
-						<v-flex lg12 sm12 xs12>
-							<chartStatistic id="ATC" min=null max=null left="8%" :precision=1 title="Average Total Cost ($/MWh)" icon="attach_money" card-color="pink" :chart-color="[color.pink.darken1, 'rgba(255,255,255,0.3)']" :costData='+($store.state.totalCost/$store.state.totalMWh).toFixed(2)' type="line"></chartStatistic>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
 							<MapWidget title="Location Assist"></MapWidget>
@@ -106,7 +120,8 @@ export default {
 	name: 'generator',
 	data() {
 		return {
-			color: Material
+			color: Material,
+			radios: this.$store.state.schedule
 		};
 	},
 	components: {
@@ -118,6 +133,11 @@ export default {
 		chartStatistic,
 		MapWidget,
 		pie
+	},
+	watch: {
+		radios: function(newVal, oldVal){
+			this.$store.commit('setSchedule', newVal);
+		}
 	}
 };
 </script>

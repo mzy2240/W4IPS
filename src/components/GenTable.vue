@@ -27,7 +27,7 @@
 							<span slot="activator">
 								{{ props.header.text }}
 							</span>
-							<span>
+							<span style="color:white;">
 								{{ props.header.text }}
 							</span>
 						</v-tooltip>
@@ -42,7 +42,7 @@
 							<td class="text-xs-right">
 								<v-chip label small :color="getColorByValue(props.item.MW, props.item.MWMax)" text-color="black" class="chip">{{ props.item.MW }}</v-chip>
 							</td>
-							<td class="text-xs-right">{{ props.item.Mvar }}</td>
+							<!-- <td class="text-xs-right">{{ props.item.Mvar }}</td> -->
 							<td class="text-xs-right">{{ props.item.MarginalCost }}</td>
 							<td class="text-xs-right">
 								<v-edit-dialog :return-value.sync="props.item.MWSetpoint" large lazy @save="savemws(props.item)" @open="openmws(props.item)">
@@ -134,11 +134,12 @@ export default {
 					text: 'Generator',
 					align: 'left',
 					sortable: false,
-					value: 'name'
+					value: 'name',
+					width: '15%'
 				},
 				{ text: 'Status', value: 'Status' },
 				{ text: 'MW', value: 'MW' },
-				{ text: 'Mvar', value: 'Mvar' },
+				// { text: 'Mvar', value: 'Mvar' },
 				{ text: 'Marginal Cost', value: 'MarginalCost' },
 				{ text: 'MW Setpoint', value: 'MWSetpoint' },
 				{ text: 'Vpu Setpoint', value: 'VpuSetpoint' },

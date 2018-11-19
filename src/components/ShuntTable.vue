@@ -18,7 +18,7 @@
 							<span slot="activator">
 								{{ props.header.text }}
 							</span>
-							<span>
+							<span style="color:white;">
 								{{ props.header.text }}
 							</span>
 						</v-tooltip>
