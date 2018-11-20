@@ -337,13 +337,15 @@ export default {
 						Mvar: 0,
 						MWSetpoint: 0,
 						VpuSetpoint: 1,
-						OperationCost: this.$store.state.areadetail.content.Gen[i][
-							'OperationCost'
-						],
+						OperationCost: this.$store.state.areadetail.content.Gen[
+							i
+						]['MarginalCostCoefficients'][1],
 						MarginalCostCoefficients: this.$store.state.areadetail.content.Gen[
 							i
 						]['MarginalCostCoefficients'],
-						MarginalCost: 0,
+						MarginalCost: this.$store.state.areadetail.content.Gen[
+							i
+						]['MarginalCostCoefficients'][0],
 						id: this.$store.state.areadetail.content.Gen[i]['String.ID'],
 						AGC: false
 					});
@@ -414,8 +416,7 @@ export default {
 		updateMC() {
 			for (let i in this.gens) {
 				this.gens[i].MarginalCost = (
-					this.gens[i].MarginalCostCoefficients[0] +
-					this.gens[i].MarginalCostCoefficients[1] * 2 * this.gens[i].MW
+					this.gens[i].MarginalCostCoefficients[0]
 				).toFixed(2);
 			}
 			this.$store.commit('updateGenData', this.gens);
@@ -446,9 +447,7 @@ export default {
 					for (let i in this.gens) {
 						deltaCost +=
 							this.gens[i].MarginalCostCoefficients[0] * this.gens[i].MW * 1 +
-							this.gens[i].MarginalCostCoefficients[1] *
-								this.gens[i].MW *
-								this.gens[i].MW;
+							this.gens[i].MarginalCostCoefficients[1];
 						// temp += this.gens[i].MW;
 						// deltaMWh += this.gens[i].MW;
 						// console.log(this.gens[i].MarginalCostCoefficients[0]+this.gens[i].MarginalCostCoefficients[1] *this.gens[i].MW);
@@ -543,7 +542,7 @@ export default {
 					});
 				}
 			}
-			this.updateMC();
+			// this.updateMC();
 		}, 5000);
 		setInterval(() => {
 			if (this.$store.state.status === 'running') {

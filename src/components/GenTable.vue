@@ -44,6 +44,7 @@
 							</td>
 							<!-- <td class="text-xs-right">{{ props.item.Mvar }}</td> -->
 							<td class="text-xs-right">{{ props.item.MarginalCost }}</td>
+							<td class="text-xs-right">{{ props.item.OperationCost }}</td>
 							<td class="text-xs-right">
 								<v-edit-dialog :return-value.sync="props.item.MWSetpoint" large lazy @save="savemws(props.item)" @open="openmws(props.item)">
 									<div>{{ props.item.MWSetpoint }}</div>
@@ -51,15 +52,15 @@
 									<v-text-field slot="input" v-model="mws" label="Edit" single-line autofocus></v-text-field>
 								</v-edit-dialog>
 							</td>
-							<td class="text-xs-right">
+							<!-- <td class="text-xs-right">
 								<v-edit-dialog :return-value.sync="props.item.VpuSetpoint" large lazy @save="savevps(props.item)" @open="openvps(props.item)">
 									<div>{{ props.item.VpuSetpoint }}</div>
 									<div slot="input" class="mt-3 title">Update Vpu Setpoint</div>
 									<v-text-field slot="input" v-model="vps" label="Edit" single-line autofocus></v-text-field>
 								</v-edit-dialog>
-							</td>
+							</td> -->
 							<td class="text-xs-right">{{ props.item.MWMax }}</td>
-							<td class="text-xs-right">{{ props.item.MWMin }}</td>
+							<!-- <td class="text-xs-right">{{ props.item.MWMin }}</td> -->
 							<td class="text-xs-center">
 								<!-- <div class="mt-3 pa-0"> -->
 								<v-switch class="mt-3" v-model="props.item.Status" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
@@ -141,10 +142,11 @@ export default {
 				{ text: 'MW', value: 'MW' },
 				// { text: 'Mvar', value: 'Mvar' },
 				{ text: 'Marginal Cost', value: 'MarginalCost' },
+				{ text: 'Fixed Cost', value: 'OperationCost' },
 				{ text: 'MW Setpoint', value: 'MWSetpoint' },
-				{ text: 'Vpu Setpoint', value: 'VpuSetpoint' },
+				// { text: 'Vpu Setpoint', value: 'VpuSetpoint' },
 				{ text: 'MW Max Limit', value: 'MWMax' },
-				{ text: 'MW Min Limit', value: 'MWMin' },
+				// { text: 'MW Min Limit', value: 'MWMin' },
 				// { text: 'MW setpoint', value: 'MWSet', sortable: false },
 				// { text: 'Vpu setpoint', value: 'VpuSet', sortable: false },
 				{ text: 'Actions', value: 'Actions' },

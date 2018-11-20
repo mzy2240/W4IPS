@@ -44,7 +44,16 @@ export default {
 					sorted_units = _.orderBy(units, ['MarginalCost'], ['desc']);
 				}
 				for (let i in sorted_units) {
-					if (sorted_units[i].MWSetpoint < sorted_units[i].MWMax) {
+					if (
+						sorted_units[i].MWSetpoint < sorted_units[i].MWMax &&
+						this.$store.state.ACE > 0
+					) {
+						this.updateSingleAGC(sorted_units[i]);
+						break;
+					} else if (
+						sorted_units[i].MWSetpoint > sorted_units[i].MWMin &&
+						this.$store.state.ACE < 0
+					) {
 						this.updateSingleAGC(sorted_units[i]);
 						break;
 					}
@@ -54,13 +63,13 @@ export default {
 			}
 		},
 		updateSingleAGC(unit) {
-			if (unit.MWSetpoint < unit.MWMax) {
-				let new_setpoint, command;
-				new_setpoint = Math.min(
-					unit.MWMax,
-					Math.max(unit.MW + this.$store.state.ACE, 0)
-				);
-				command = 'Set Power ' + new_setpoint.toFixed(2) + ' MW';
+			let new_setpoint, command;
+			new_setpoint = Math.min(
+				unit.MWMax,
+				Math.max(unit.MW + this.$store.state.ACE, 0)
+			).toFixed(2);
+			if (new_setpoint != unit.MWSetpoint) {
+				command = 'Set Power ' + new_setpoint + ' MW';
 				this.$store.commit('setMessage', [
 					'Gen',
 					unit.key + ',' + unit.id,
