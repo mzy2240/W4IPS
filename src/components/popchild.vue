@@ -6,7 +6,7 @@
 					<v-card-title class='headline'>
 						Data
 					</v-card-title>
-					<v-data-table :headers=$store.state.fieldstore[item] :items="display" disable-initial-sort hide-actions class="elevation-1">
+					<v-data-table :headers='$store.state.fieldstore[item.split(" ")[0]]' :items="display" disable-initial-sort hide-actions class="elevation-1">
 						<template slot="items" slot-scope="props">
 								<td class="text-xs-right" v-for="item in props.item" :key=item.text>{{ item }}</td>
 						</template>
@@ -57,6 +57,9 @@ export default {
 			}
 		},
 		show: {
+		},
+		busnum: {
+			type: Number
 		}
 	},
 	data() {
@@ -68,7 +71,7 @@ export default {
 			type: "Bus",
 			display: [],
 			activeObj: "Bus",
-			id: this.detail["Int.Bus Number"]
+			id: this.detail["Int.Bus Number"].toString()
 		};
 	},
 	computed: {
@@ -78,11 +81,30 @@ export default {
 		tabs: function() {
 			const controllable = ['Gen', 'Load', 'Shunt'];
 			let temp = ['Bus'];
-			for (let ele in this.detail) {
-				if (controllable.includes(ele)) {
-					temp.push(ele);
+			for (let ele in this.$store.state.areadetail.content.Gen) {
+				// console.log(ele)
+				if (ele.includes(this.name.split(' ')[1])) {
+					temp.push('Gen ' + ele.split(',')[1])
 				}
 			}
+			for (let ele in this.$store.state.areadetail.content.Load) {
+				// console.log(ele)
+				if (ele.includes(this.name.split(' ')[1])) {
+					temp.push('Load ' + ele.split(',')[1])
+				}
+			}
+			for (let ele in this.$store.state.areadetail.content.Shunt) {
+				// console.log(ele)
+				if (ele.includes(this.name.split(' ')[1])) {
+					temp.push('Shunt ' + ele.split(',')[1])
+				}
+			}
+			// for (let ele in this.detail) {
+			// 	if (controllable.includes(ele)) {
+			// 		// console.log(this.name);
+			// 		temp.push(ele);
+			// 	}
+			// }
 			return temp;
 		}
 	},
@@ -107,20 +129,32 @@ export default {
 			let temp = [];
 			this.activeObj = ele.label;
 			if (this.activeObj == "Bus") {
-				this.id = this.detail["Int.Bus Number"]
+				this.id = this.detail["Int.Bus Number"].toString();
 			} else {
-				this.id = this.detail[this.activeObj]["Int.Bus Number"]
+				let key, strArray = ele.label.split(' ');
+				if(strArray.length == 2){
+					key = strArray[1]
+				} else {
+					key = strArray[1] + ' ' + strArray[2]
+				}
+				this.id = this.name.split(' ')[1]+','+key
+				// this.id = this.detail[this.activeObj]["Int.Bus Number"]
 			}
-			if (this.activeObj == 'Gen') {
+			if (this.activeObj.includes('Gen')) {
+				this.activeObj = 'Gen';
 				this.showInput = true;
+			} else if (this.activeObj.includes('Load')) {
+				this.activeObj = 'Load';
+			} else if (this.activeObj.includes('Shunt')) {
+				this.activeObj = 'Shunt';
 			}
 			for (var j in this.$store.state.tcmcommands[this.activeObj]) {
 				let jj = j;
 				temp.push({
 					text: this.$store.state.tcmcommands[this.activeObj][j],
 					callback: () => {
-						const temp = this.$store.state.casedetail.content[this.activeObj][
-							this.name.split(' ')[1]
+						const temp = this.$store.state.areadetail.content[this.activeObj][
+							this.id
 						];
 						var command = this.$store.state.tcmcommands[this.activeObj][jj];
 						if (!this.InputDisabled) {
@@ -131,7 +165,7 @@ export default {
 								command.split('xxx')[0] + this.value + command.split('xxx')[1];
 						}
 						this.$store.commit('setMessage', [
-							ele.label,
+							this.activeObj,
 							temp['Int.Bus Number'].toString() + ',' + temp['String.ID'],
 							this.subname + ' ' + this.name + ' ' + '#' + temp['String.ID'],
 							command
@@ -149,6 +183,7 @@ export default {
 			let anchor = 0;
 			var arrlength;
 			var keyarr;
+			console.log([this.type, this.id])
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;
@@ -156,7 +191,7 @@ export default {
 				if (ele != this.type) {
 					anchor += arrlength * keyarr.length;
 				} else {
-					anchor += arrlength * keyarr.indexOf(this.id.toString());
+					anchor += arrlength * keyarr.indexOf(this.id);
 					break;
 				}
 				// console.log(Object.keys(this.$store.state.fieldstore).indexOf(ele))
@@ -166,6 +201,7 @@ export default {
 			const spdata = temp.slice(anchor, anchor + arrlength);
 			let container = {};
 			for (let e in spdata) {
+				// console.log(this.$store.state.fieldstore[this.type][e]['value'])
 				container[
 					this.$store.state.fieldstore[this.type][e]['value']
 				] = +spdata[e];

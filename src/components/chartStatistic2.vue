@@ -124,31 +124,31 @@ export default {
 		},
 		updateATC() {
 			this.Process = setInterval(() => {
-				// console.log('?');
-				var today = new Date();
-				// var time = today.getTime();
-				var time =
-					today.getHours() +
-					':' +
-					today.getMinutes() +
-					':' +
-					today.getSeconds();
-				// console.log(this.dataSeries);
-				this.dataSeries.push({
-					name: this.index.toString(),
-					value: [this.index, this.costData]
-				});
-				this.index++;
-				if (this.dataSeries.length > 60) {
-					this.dataSeries.shift();
+				if (this.$store.state.status == 'running') {
+					var today = new Date();
+					var time =
+						today.getHours() +
+						':' +
+						today.getMinutes() +
+						':' +
+						today.getSeconds();
+					// console.log(this.dataSeries);
+					this.dataSeries.push({
+						name: this.index.toString(),
+						value: [this.index, this.costData]
+					});
+					this.index++;
+					if (this.dataSeries.length > 60) {
+						this.dataSeries.shift();
+					}
+					this.chart.setOption({
+						series: [
+							{
+								data: this.dataSeries
+							}
+						]
+					});
 				}
-				this.chart.setOption({
-					series: [
-						{
-							data: this.dataSeries
-						}
-					]
-				});
 			}, 1000);
 		},
 		resizeChart() {

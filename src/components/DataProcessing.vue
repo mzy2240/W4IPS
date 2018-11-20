@@ -79,7 +79,10 @@ export default {
 						});
 					}
 				}
-				this.$store.commit('setCenter', [math.median(longList), math.median(latList)]);
+				this.$store.commit('setCenter', [
+					math.median(longList),
+					math.median(latList)
+				]);
 				for (let ele in temp.content.Branch) {
 					const fromid = ele.split(',')[0];
 					const toid = ele.split(',')[1];
@@ -158,13 +161,13 @@ export default {
 					this.subdetail[ele].Bus = [];
 				}
 				for (let ele in temp.content.Gen) {
-					this.busdetail[ele].Gen = temp.content.Gen[ele];
+					this.busdetail[ele.split(',')[0]].Gen = temp.content.Gen[ele];
 				}
 				for (let ele in temp.content.Load) {
-					this.busdetail[ele].Load = temp.content.Load[ele];
+					this.busdetail[ele.split(',')[0]].Load = temp.content.Load[ele];
 				}
 				for (let ele in temp.content.Shunt) {
-					this.busdetail[ele].Shunt = temp.content.Shunt[ele];
+					this.busdetail[ele.split(',')[0]].Shunt = temp.content.Shunt[ele];
 				}
 				for (let ele in temp.content.Bus) {
 					this.subdetail[temp.content.Bus[ele]['Int.Sub Number']].Bus.push(
@@ -211,7 +214,9 @@ export default {
 				) {
 					// this.highRiskLines[key] = val;
 					this.violateBuses[key] = {};
-					this.violateBuses[key]['name'] = this.$store.state.areadetail.content.Bus[key]['String.Name'];
+					this.violateBuses[key][
+						'name'
+					] = this.$store.state.areadetail.content.Bus[key]['String.Name'];
 					this.violateBuses[key]['Vpu'] = this.busData[
 						this.busArray[i] * this.busArrLength
 					];
@@ -258,11 +263,18 @@ export default {
 			for (let index in this.linedata) {
 				key = this.linedata[index].id;
 				if (
-					this.branchData[index* this.branchArrLength + 3] >=
+					this.branchData[index * this.branchArrLength + 3] >=
 					0.85 * this.linedata[index].attributes.MVALimit
 				) {
 					this.highRiskLines[key] = {};
-					this.highRiskLines[key]['name'] = this.$store.state.casedetail.content.Bus[key.split(',')[0]]['String.Name'] + '-' + this.$store.state.casedetail.content.Bus[key.split(',')[1]]['String.Name'];
+					this.highRiskLines[key]['name'] =
+						this.$store.state.casedetail.content.Bus[key.split(',')[0]][
+							'String.Name'
+						] +
+						'-' +
+						this.$store.state.casedetail.content.Bus[key.split(',')[1]][
+							'String.Name'
+						];
 					this.highRiskLines[key]['MVA'] = this.branchData[
 						index * this.branchArrLength + 3
 					];
@@ -287,13 +299,20 @@ export default {
 			let temp = [];
 			let subID;
 			let count = 0;
+			// console.log(this.$store.state.casedetail.content.Gen)
 			for (let i in this.$store.state.areadetail.content.Gen) {
+				// if (
+				// 	this.$store.state.areadetail.content.Gen[i]['Int.Area Number'] ==
+				// 	+this.$store.state.area && this.$store.state.areadetail.content.Gen[i]['Single.MW Max Limit'] != 0
+				// ) {
 				if (
 					this.$store.state.areadetail.content.Gen[i]['Int.Area Number'] ==
-					+this.$store.state.area && this.$store.state.areadetail.content.Gen[i]['Single.MW Max Limit'] != 0
+					+this.$store.state.area
 				) {
 					this.genArray.push(count);
-					subID = this.$store.state.areadetail.content.Bus[i]['Int.Sub Number'];
+					subID = this.$store.state.areadetail.content.Bus[i.split(',')[0]][
+						'Int.Sub Number'
+					];
 					temp.push({
 						value: [
 							this.$store.state.areadetail.content.Substation[subID.toString()][
@@ -304,9 +323,9 @@ export default {
 							]
 						],
 						key: i,
-						name: this.$store.state.areadetail.content.Bus[i][
-						'String.Name'
-					],//i,
+						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]][
+							'String.Name'
+						], //i,
 						Status: 1,
 						MWMax: this.$store.state.areadetail.content.Gen[i][
 							'Single.MW Max Limit'
@@ -392,8 +411,8 @@ export default {
 			}
 			this.$store.commit('updateGenData', this.gens);
 		},
-		updateMC(){
-			for(let i in this.gens) {
+		updateMC() {
+			for (let i in this.gens) {
 				this.gens[i].MarginalCost = (
 					this.gens[i].MarginalCostCoefficients[0] +
 					this.gens[i].MarginalCostCoefficients[1] * 2 * this.gens[i].MW
@@ -403,26 +422,44 @@ export default {
 		},
 		updateTotalCost() {
 			setInterval(() => {
-				let deltaACECost = 0;
-				if(this.$store.state.schedule){
-					deltaACECost = (+this.$store.state.schedule.split('@')[0]) * (+this.$store.state.schedule.split('@')[0]);
-					this.$store.commit('setACE', -(+this.$store.state.schedule.split('@')[0] + this.$store.state.areaData[6]))
+				let deltaScheduleCost = 0;
+				if (this.$store.state.schedule) {
+					deltaScheduleCost =
+						+this.$store.state.schedule.split('@')[0] *
+						+this.$store.state.schedule.split('@')[1];
+					this.$store.commit(
+						'setACE',
+						-(
+							+this.$store.state.schedule.split('@')[0] +
+							this.$store.state.areaData[6]
+						)
+					);
 				} else {
-					this.$store.commit('setACE', -this.$store.state.areaData[6])
-				};
+					this.$store.commit('setACE', -this.$store.state.areaData[6]);
+				}
 				if (this.$store.state.status === 'running') {
 					let deltaCost = 0;
+					// let temp = 0;
 					let deltaMWh = this.$store.state.areaData[2];
 					// let deltaMWh = 0;
+					// console.log(this.gens);
 					for (let i in this.gens) {
 						deltaCost +=
 							this.gens[i].MarginalCostCoefficients[0] * this.gens[i].MW * 1 +
 							this.gens[i].MarginalCostCoefficients[1] *
 								this.gens[i].MW *
 								this.gens[i].MW;
+						// temp += this.gens[i].MW;
 						// deltaMWh += this.gens[i].MW;
+						// console.log(this.gens[i].MarginalCostCoefficients[0]+this.gens[i].MarginalCostCoefficients[1] *this.gens[i].MW);
 					}
-					deltaCost += math.max(this.$store.state.ACE, 0) * this.$store.state.aceCost + deltaACECost;
+					// deltaCost = 0;
+					// console.log([temp, this.$store.state.areaData[0]])
+					// console.log(deltaCost/this.$store.state.areaData[0])
+					deltaCost +=
+						math.max(this.$store.state.ACE, 0) * this.$store.state.aceCost +
+						deltaScheduleCost;
+					// console.log(deltaScheduleCost);
 					this.$store.commit('updateUnitTimeCost', +deltaCost.toFixed(0));
 					deltaCost = deltaCost / 120;
 					deltaMWh = (deltaMWh * 1) / 120;
@@ -468,6 +505,26 @@ export default {
 					areaData: this.areaData
 				});
 			}
+			var status, mwmax;
+			let offlineCapacity = 0;
+			let index = 0;
+			// console.log(this.$store.state.genData)
+			for (let i in this.$store.state.genData) {
+				status = this.$store.state.genData[i].Status;
+				mwmax = this.$store.state.genData[i].MWMax;
+
+				// index += 1;
+				if (status == 0 && mwmax != 0) {
+					// console.log(val);
+					offlineCapacity += this.$store.state.genData[i].MWMax;
+				}
+			}
+			const onlineCapacity = Math.abs(
+				Math.round(
+					this.$store.state.totalCapacity - offlineCapacity - this.$store.state.areaData[0]
+				)
+			);
+			this.$store.commit('setGenStat', [onlineCapacity, offlineCapacity]);
 		}, 1000);
 		setInterval(() => {
 			if (this.$store.state.status === 'running') {
@@ -483,9 +540,13 @@ export default {
 						Branch: this.formatRiskLines
 					});
 				}
-			};
+			}
 			this.updateMC();
 		}, 5000);
+		setInterval(()=>{
+			const RIndex = Math.round(100 - Math.min(40, (this.formatRiskBuses.length+this.formatRiskLines.length)/this.$store.state.genStat[0]*this.$store.state.genStat[1]))
+			this.$store.commit('setRIndex', RIndex);
+		}, 1000)
 	},
 	computed: {
 		...mapGetters({

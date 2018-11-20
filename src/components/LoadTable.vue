@@ -118,7 +118,7 @@ export default {
 					temp.push({
 						value: false,
 						key: i,
-						name: this.$store.state.areadetail.content.Bus[i]['String.Name'],
+						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]]['String.Name'],
 						Status: 1,
 						MW: 0,
 						Mvar: 0,

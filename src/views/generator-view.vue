@@ -137,6 +137,10 @@ export default {
 	watch: {
 		radios: function(newVal, oldVal){
 			this.$store.commit('setSchedule', newVal);
+			this.$store.commit('addReportUser', {
+					time: this.$store.state.currentTime,
+					event: ['Schedule', newVal]
+				});
 		}
 	}
 };

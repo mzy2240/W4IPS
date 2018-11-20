@@ -68,6 +68,10 @@ export default {
 					command
 				]);
 				this.$store.commit('setPublish');
+				this.$store.commit('addReportUser', {
+					time: this.$store.state.currentTime,
+					event: ['AGC', unit.key + ',' + unit.id, command]
+				});
 			}
 		}
 	},

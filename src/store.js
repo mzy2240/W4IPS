@@ -3,8 +3,9 @@ import Vuex from 'vuex';
 import datafield from './assets/datafield.json';
 import tcmcommands from './assets/tcmcommands.json';
 // import casedetail from './assets/150G.json';
-import casedetail from './assets/460GA.json';
-import areadetail from './assets/460GAR.json';
+import casedetail from './assets/460GA_rev.json';
+// import casedetail from './assets/test.json';
+import areadetail from './assets/460GAR_rev.json';
 import notificationSystem from './assets/notificationsettings';
 // import casedetail from './assets/150.json'
 
@@ -84,7 +85,9 @@ export default new Vuex.Store({
 		simID: null,
 		branchData: null,
 		aceCost: 100,
-		schedule: null
+		schedule: null,
+		genStat: [],
+		rIndex: 100
 	},
 	getters: {
 		getPubStatus(state) {
@@ -360,6 +363,12 @@ export default new Vuex.Store({
 		},
 		setACE(state, payload) {
 			state.ACE = payload;
+		},
+		setGenStat(state, payload) {
+			state.genStat = payload;
+		},
+		setRIndex(state, payload) {
+			state.rIndex = payload;
 		}
 	},
 	actions: {

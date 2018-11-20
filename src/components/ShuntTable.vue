@@ -133,7 +133,7 @@ export default {
 					+this.$store.state.area
 				) {
 					this.shuntArray.push(count);
-					subID = this.$store.state.areadetail.content.Bus[i]['Int.Sub Number'];
+					subID = this.$store.state.areadetail.content.Bus[i.split(',')[0]]['Int.Sub Number'];
 					temp.push({
 						value: [
 							this.$store.state.areadetail.content.Substation[subID.toString()][
@@ -144,7 +144,7 @@ export default {
 							]
 						],
 						key: i,
-						name: this.$store.state.areadetail.content.Bus[i]['String.Name'],
+						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]]['String.Name'],
 						Status: 1,
 						Mvar: 0,
 						MvarNom: 0,

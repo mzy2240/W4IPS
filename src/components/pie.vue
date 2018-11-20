@@ -113,7 +113,7 @@ export default {
 						labelLine: {
 							show: true
 						},
-						data: [],//[],
+						data: [], //[],
 						itemStyle: {
 							emphasis: {
 								shadowBlur: 10,
@@ -130,20 +130,25 @@ export default {
 				// const temp = JSON.parse(this.$store.state.rawdata).Data;
 				// console.log(this.$store.state.genData)
 				// const temp = this.$store.state.parsedData;
-				var status, mwmax;
-				let offlineCapacity = 0;
-				let index = 0;
-				// console.log(this.$store.state.genData)
-				for (let i in this.$store.state.genData) {
-					status = this.$store.state.genData[i].Status;
-					mwmax = this.$store.state.genData[i].MWMax;
+				// var status, mwmax;
+				// let offlineCapacity = 0;
+				// let index = 0;
+				// // console.log(this.$store.state.genData)
+				// for (let i in this.$store.state.genData) {
+				// 	status = this.$store.state.genData[i].Status;
+				// 	mwmax = this.$store.state.genData[i].MWMax;
 
-					// index += 1;
-					if (status == 0 && mwmax != 0) {
-						// console.log(val);
-						offlineCapacity += this.$store.state.genData[i].MWMax;
-					}
-				}
+				// 	// index += 1;
+				// 	if (status == 0 && mwmax != 0) {
+				// 		// console.log(val);
+				// 		offlineCapacity += this.$store.state.genData[i].MWMax;
+				// 	}
+				// }
+				// const onlineCapacity = Math.abs(
+				// 	Math.round(
+				// 		this.$store.state.totalCapacity - offlineCapacity - this.areatotal
+				// 	)
+				// );
 				// console.log(this.areatotal);
 				this.chart.setOption({
 					series: {
@@ -154,15 +159,11 @@ export default {
 								name: 'Current Generation'
 							},
 							{
-								value: Math.abs(Math.round(
-									this.$store.state.totalCapacity -
-										offlineCapacity -
-										this.areatotal
-								)),
+								value: this.$store.state.genStat[0],
 								name: 'Online Capacity'
 							},
 							{
-								value: Math.round(offlineCapacity),
+								value: Math.round(this.$store.state.genStat[1]),
 								name: 'Offline Capacity'
 							}
 						]
