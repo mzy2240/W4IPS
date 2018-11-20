@@ -268,7 +268,7 @@ export default {
 		},
 		toggle(item) {
 			var command;
-			if (item.Status == true) {
+			if (item.Status) {
 				command = 'CLOSE';
 			} else {
 				command = 'OPEN';
