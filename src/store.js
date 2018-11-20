@@ -3,9 +3,9 @@ import Vuex from 'vuex';
 import datafield from './assets/datafield.json';
 import tcmcommands from './assets/tcmcommands.json';
 // import casedetail from './assets/150G.json';
-import casedetail from './assets/460GA_rev.json';
+import casedetail from './assets/460labGA.json';
 // import casedetail from './assets/test.json';
-import areadetail from './assets/460GAR_rev.json';
+import areadetail from './assets/460labGAR.json';
 import notificationSystem from './assets/notificationsettings';
 // import casedetail from './assets/150.json'
 

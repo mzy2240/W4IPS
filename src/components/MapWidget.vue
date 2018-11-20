@@ -346,10 +346,7 @@ export default {
 			});
 		},
 		restore() {
-			var temp = this.chart._echartsOptions;
-			temp.leaflet[0].center = this.$store.state.center;
-			temp.leaflet[0].zoom = 6;
-			this.chart.setOption(temp);
+			this.map.setView(this.mapCenter, 6)
 		}
 	},
 	mounted() {
