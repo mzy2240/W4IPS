@@ -294,6 +294,7 @@ export default {
 			}
 			this.formatRiskLines = Object.values(this.highRiskLines);
 			this.$store.commit('setRiskBranches', this.formatRiskLines);
+			this.$store.commit('updateSelectedBranches', this.formatRiskLines);
 		},
 		initData() {
 			let temp = [];

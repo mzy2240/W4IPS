@@ -125,6 +125,7 @@ export default {
 	mounted() {},
 	watch: {
 		selected: function(newval, oldval) {
+			// console.log(newval)
 			this.$store.commit('updateSelectedBranches', newval);
 		},
 		tabledata: function(newval, oldval) {
