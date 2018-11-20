@@ -38,7 +38,7 @@
 							<td class="text-xs-right">{{ props.item.MVALimit }}</td>
 							<td class="justify-center layout px-0">
 								<div class="my-2">
-									<v-switch v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
+									<v-switch v-model="props.item.Status" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
 								</div>
 							</td>
 						</tr>
@@ -103,7 +103,8 @@ export default {
 					text: 'Branch',
 					align: 'left',
 					sortable: false,
-					value: 'name'
+					value: 'name',
+					width: '15%'
 				},
 				{ text: 'Status', value: 'Status' },
 				{ text: 'MWFrom', value: 'MWFrom' },
@@ -164,7 +165,8 @@ export default {
 				) {
 					temp.push({
 						value: false, //[this.$store.state.areadetail.content.Substation[subID.toString()]["Double.Longitude"], this.$store.state.areadetail.content.Substation[subID.toString()]["Double.Latitude"]],
-						name: i,
+						key: i,
+						name: this.$store.state.casedetail.content.Bus[i.split(',')[0]]['String.Name'] + '-' + this.$store.state.casedetail.content.Bus[i.split(',')[1]]['String.Name'],
 						id: this.$store.state.areadetail.content.Branch[i][
 							'String.CircuitID'
 						],
@@ -233,8 +235,8 @@ export default {
 			// console.log(item);
 			this.$store.commit('setMessage', [
 				'Branch',
-				item.name,
-				item.name,
+				item.key,
+				item.key,
 				command
 			]);
 			this.$store.commit('setPublish');
@@ -250,6 +252,15 @@ export default {
 	watch: {
 		selected: function(newval, oldval) {
 			this.$store.commit('updateSelectedShunts', newval);
+		}
+	},
+	computed: {
+		disable() {
+			if (this.$store.state.status == 'running') {
+				return false;
+			} else {
+				return true;
+			}
 		}
 	}
 };

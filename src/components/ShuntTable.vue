@@ -31,12 +31,12 @@
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-left">{{ props.item.Status }}</td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
-							<td class="text-xs-right">{{ props.item.MvarNom }}</td>
+							<!-- <td class="text-xs-right">{{ props.item.MvarNom }}</td> -->
 							<td class="text-xs-right">{{ props.item.Vpu }}</td>
 							<td class="text-xs-right">{{ props.item.FreqHz }}</td>
 							<td class="justify-center layout px-0">
 								<div class="my-2">
-									<v-switch v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
+									<v-switch v-model="props.item.Status" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
 								</div>
 							</td>
 						</tr>
@@ -84,7 +84,7 @@ export default {
 					value: 'name'
 				},
 				{ text: 'Status', value: 'Status' },
-				{ text: 'MvarNom', value: 'MvarNom' },
+				// { text: 'MvarNom', value: 'MvarNom' },
 				{ text: 'Mvar', value: 'Mvar' },
 				{ text: 'Vpu', value: 'Vpu' },
 				{ text: 'FreqHz', value: 'FreqHz' },
@@ -143,7 +143,8 @@ export default {
 								'Double.Latitude'
 							]
 						],
-						name: i,
+						key: i,
+						name: this.$store.state.areadetail.content.Bus[i]['String.Name'],
 						Status: 1,
 						Mvar: 0,
 						MvarNom: 0,
@@ -170,7 +171,8 @@ export default {
 							temp[this.anchor + 7 + this.shuntArray[i] * this.shuntDataLength]; // MW is the 6th in the load data
 						this.shunts[i].Mvar =
 							temp[this.anchor + 6 + this.shuntArray[i] * this.shuntDataLength];
-						this.shunts[i].Vpu = temp[this.anchor + this.shuntArray[i] * this.shuntDataLength];
+						this.shunts[i].Vpu =
+							temp[this.anchor + this.shuntArray[i] * this.shuntDataLength];
 						this.shunts[i].FreqHz =
 							temp[this.anchor + 3 + this.shuntArray[i] * this.shuntDataLength];
 						this.shunts[i].Status =
@@ -190,8 +192,8 @@ export default {
 			}
 			this.$store.commit('setMessage', [
 				'Shunt',
-				item.name + ',' + item.id,
-				item.name + '#' + item.id,
+				item.key + ',' + item.id,
+				item.key + '#' + item.id,
 				command
 			]);
 			this.$store.commit('setPublish');
@@ -207,6 +209,15 @@ export default {
 	watch: {
 		selected: function(newval, oldval) {
 			this.$store.commit('updateSelectedShunts', newval);
+		}
+	},
+	computed: {
+		disable() {
+			if (this.$store.state.status == 'running') {
+				return false;
+			} else {
+				return true;
+			}
 		}
 	}
 };

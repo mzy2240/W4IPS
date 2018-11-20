@@ -23,7 +23,7 @@
 							<td class="text-xs-right">{{ props.item.FreqHz }}</td>
 							<td class="justify-center layout px-0">
 								<div class="my-2">
-									<v-switch v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
+									<v-switch v-model="props.item.Status" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
 								</div>
 							</td>
 						</tr>
@@ -117,7 +117,8 @@ export default {
 					this.loadArray.push(count);
 					temp.push({
 						value: false,
-						name: i,
+						key: i,
+						name: this.$store.state.areadetail.content.Bus[i]['String.Name'],
 						Status: 1,
 						MW: 0,
 						Mvar: 0,
@@ -140,10 +141,12 @@ export default {
 				try {
 					const temp = this.$store.state.parsedData;
 					for (let i in this.loads) {
-						this.loads[i].MW = temp[this.anchor + 6 + this.loadArray[i] * this.loadDataLength]; // MW is the 6th in the load data
+						this.loads[i].MW =
+							temp[this.anchor + 6 + this.loadArray[i] * this.loadDataLength]; // MW is the 6th in the load data
 						this.loads[i].Mvar =
 							temp[this.anchor + 7 + this.loadArray[i] * this.loadDataLength];
-						this.loads[i].Vpu = temp[this.anchor + this.loadArray[i] * this.loadDataLength];
+						this.loads[i].Vpu =
+							temp[this.anchor + this.loadArray[i] * this.loadDataLength];
 						this.loads[i].FreqHz =
 							temp[this.anchor + 3 + this.loadArray[i] * this.loadDataLength];
 						this.loads[i].Status =
@@ -163,8 +166,8 @@ export default {
 			}
 			this.$store.commit('setMessage', [
 				'Load',
-				item.name + ',' + item.id,
-				item.name + '#' + item.id,
+				item.key + ',' + item.id,
+				item.key + '#' + item.id,
 				command
 			]);
 			this.$store.commit('setPublish');
@@ -176,6 +179,15 @@ export default {
 	},
 	mounted() {
 		this.initTable().then(() => this.updateTable());
+	},
+	computed: {
+		disable() {
+			if (this.$store.state.status == 'running') {
+				return false;
+			} else {
+				return true;
+			}
+		}
 	}
 };
 </script>

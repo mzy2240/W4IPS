@@ -62,7 +62,7 @@
 							<td class="text-xs-right">{{ props.item.MWMin }}</td>
 							<td class="text-xs-center">
 								<!-- <div class="mt-3 pa-0"> -->
-								<v-switch class="mt-3" v-model="props.item.Status" @click.native="toggle(props.item)"></v-switch>
+								<v-switch class="mt-3" v-model="props.item.Status" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
 								<!-- </div> -->
 							</td>
 							<td class="text-xs-center">
@@ -241,8 +241,8 @@ export default {
 			const command = 'Set Power ' + this.mws + ' MW';
 			this.$store.commit('setMessage', [
 				'Gen',
-				item.name + ',' + item.id,
-				item.name + '#' + item.id,
+				item.key + ',' + item.id,
+				item.key + '#' + item.id,
 				command
 			]);
 			this.$store.commit('setPublish');
@@ -254,8 +254,8 @@ export default {
 			const command = 'Set Exciter_Setpoint ' + this.vps + ' pu';
 			this.$store.commit('setMessage', [
 				'Gen',
-				item.name + ',' + item.id,
-				item.name + '#' + item.id,
+				item.key + ',' + item.id,
+				item.key + '#' + item.id,
 				command
 			]);
 			this.$store.commit('setPublish');
@@ -273,8 +273,8 @@ export default {
 			// console.log(item);
 			this.$store.commit('setMessage', [
 				'Gen',
-				item.name + ',' + item.id,
-				item.name + '#' + item.id,
+				item.key + ',' + item.id,
+				item.key + '#' + item.id,
 				command
 			]);
 			this.$store.commit('setPublish');
@@ -307,6 +307,15 @@ export default {
 	mounted() {
 		// this.initTable();
 		// this.initTable().then(() => this.updateTable());
+	},
+	computed: {
+		disable() {
+			if (this.$store.state.status == 'running') {
+				return false;
+			} else {
+				return true;
+			}
+		}
 	},
 	// computed: {
 	// 	...mapGetters({

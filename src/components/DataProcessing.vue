@@ -211,7 +211,7 @@ export default {
 				) {
 					// this.highRiskLines[key] = val;
 					this.violateBuses[key] = {};
-					this.violateBuses[key]['name'] = key;
+					this.violateBuses[key]['name'] = this.$store.state.areadetail.content.Bus[key]['String.Name'];
 					this.violateBuses[key]['Vpu'] = this.busData[
 						this.busArray[i] * this.busArrLength
 					];
@@ -262,7 +262,7 @@ export default {
 					0.85 * this.linedata[index].attributes.MVALimit
 				) {
 					this.highRiskLines[key] = {};
-					this.highRiskLines[key]['name'] = key;
+					this.highRiskLines[key]['name'] = this.$store.state.casedetail.content.Bus[key.split(',')[0]]['String.Name'] + '-' + this.$store.state.casedetail.content.Bus[key.split(',')[1]]['String.Name'];
 					this.highRiskLines[key]['MVA'] = this.branchData[
 						index * this.branchArrLength + 3
 					];
@@ -303,6 +303,7 @@ export default {
 								'Double.Latitude'
 							]
 						],
+						key: i,
 						name: this.$store.state.areadetail.content.Bus[i][
 						'String.Name'
 					],//i,
