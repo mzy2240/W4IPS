@@ -61,10 +61,11 @@
 								<div slot="widget-content">
 									<!-- <v-container> -->
 									<v-radio-group v-model="$store.state.schedule" :mandatory="false">
-										<v-radio label="600MW @ $16/MW" value="600@16"></v-radio>
+										<v-radio label="0MW @ $0/MW" value="0@0"></v-radio>
+										<v-radio label="600MW @ $13/MW" value="600@13"></v-radio>
 										<v-radio label="800MW @ $18/MW" value="800@18"></v-radio>
-										<v-radio label="1200MW @ $24/MW" value="1200@24"></v-radio>
-										<v-radio label="1800MW @ $26/MW" value="1800@26"></v-radio>
+										<v-radio label="1200MW @ $19/MW" value="1200@19"></v-radio>
+										<v-radio label="1800MW @ $24/MW" value="1800@24"></v-radio>
 									</v-radio-group>
 									<p>ACE cost is $100/MW</p>
 									<!-- </v-container> -->

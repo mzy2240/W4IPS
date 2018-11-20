@@ -85,7 +85,7 @@ export default new Vuex.Store({
 		simID: null,
 		branchData: null,
 		aceCost: 100,
-		schedule: null,
+		schedule: '0@0',
 		genStat: [],
 		rIndex: 100
 	},

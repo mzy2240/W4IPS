@@ -544,8 +544,9 @@ export default {
 			this.updateMC();
 		}, 5000);
 		setInterval(()=>{
-			const RIndex = Math.round(100 - Math.min(40, (this.formatRiskBuses.length+this.formatRiskLines.length)/this.$store.state.genStat[0]*this.$store.state.genStat[1]))
+			const RIndex = Math.round(50*(Math.exp(-0.05*this.formatRiskBuses.length) + Math.exp(-0.1*this.formatRiskLines.length)))
 			this.$store.commit('setRIndex', RIndex);
+			this.$store.commit('addReportData', {time: this.$store.state.currentTime, RIndex: RIndex})
 		}, 1000)
 	},
 	computed: {
