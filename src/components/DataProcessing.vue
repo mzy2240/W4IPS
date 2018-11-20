@@ -521,7 +521,9 @@ export default {
 			}
 			const onlineCapacity = Math.abs(
 				Math.round(
-					this.$store.state.totalCapacity - offlineCapacity - this.$store.state.areaData[0]
+					this.$store.state.totalCapacity -
+						offlineCapacity -
+						this.$store.state.areaData[0]
 				)
 			);
 			this.$store.commit('setGenStat', [onlineCapacity, offlineCapacity]);
@@ -543,11 +545,20 @@ export default {
 			}
 			this.updateMC();
 		}, 5000);
-		setInterval(()=>{
-			const RIndex = Math.round(50*(Math.exp(-0.05*this.formatRiskBuses.length) + Math.exp(-0.1*this.formatRiskLines.length)))
-			this.$store.commit('setRIndex', RIndex);
-			this.$store.commit('addReportData', {time: this.$store.state.currentTime, RIndex: RIndex})
-		}, 1000)
+		setInterval(() => {
+			if (this.$store.state.status === 'running') {
+				const RIndex = Math.round(
+					50 *
+						(Math.exp(-0.05 * this.formatRiskBuses.length) +
+							Math.exp(-0.1 * this.formatRiskLines.length))
+				);
+				this.$store.commit('setRIndex', RIndex);
+				this.$store.commit('addReportData', {
+					time: this.$store.state.currentTime,
+					RIndex: RIndex
+				});
+			}
+		}, 1000);
 	},
 	computed: {
 		...mapGetters({

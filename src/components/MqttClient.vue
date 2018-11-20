@@ -341,6 +341,9 @@ export default {
 					].includes(message.toString())
 				) {
 					this.$store.commit('setstartready');
+					if(message.toString().includes('blackout')) {
+						this.$store.commit('setRIndex', 0);
+					}
 				} else if (message.toString().includes('The simulation is started')) {
 					this.$store.commit('resetReport'); // Reset the report when the simulation starts
 					this.$store.commit('resetTotalCost'); // Reset the total cost when the simulation starts
