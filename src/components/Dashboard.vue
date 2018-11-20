@@ -113,8 +113,8 @@
 						</v-list-tile-content>
 					</v-list-tile>
 					<v-spacer></v-spacer>
-					<v-list-tile avatar :key="'index'">
-						<div class="clock">
+					<v-list-tile avatar :key="'index'" >
+						<div class="clock pt-5">
 							RIndex: {{$store.state.rIndex}}
 						</div>
 					</v-list-tile>
