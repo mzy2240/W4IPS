@@ -56,11 +56,11 @@ export default {
 		updateSingleAGC(unit) {
 			if (unit.MWSetpoint < unit.MWMax) {
 				let new_setpoint, command;
-				new_setpoint = math.min(
+				new_setpoint = Math.min(
 					unit.MWMax,
-					+(unit.MW + this.$store.state.ACE).toFixed(2)
+					Math.max(unit.MW + this.$store.state.ACE, 0)
 				);
-				command = 'Set Power ' + new_setpoint + ' MW';
+				command = 'Set Power ' + new_setpoint.toFixed(2) + ' MW';
 				this.$store.commit('setMessage', [
 					'Gen',
 					unit.key + ',' + unit.id,

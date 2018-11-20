@@ -16,7 +16,7 @@
 						</v-list-tile-avatar>
 
 						<v-list-tile-content>
-							<v-list-tile-title>Home</v-list-tile-title>
+							<v-list-tile-title>Transmission</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
 					<v-list-tile avatar :key="'generator'" @click="$store.commit('setpage', 'generator')">

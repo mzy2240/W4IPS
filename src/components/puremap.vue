@@ -48,7 +48,7 @@
 				</v-flex>
 				<v-flex lg4 sm4 xs12>
 					<v-layout row wrap>
-						<v-flex lg12 sm12 xs12>
+						<!-- <v-flex lg12 sm12 xs12>
 							<chartStatistic id="TC" min="dataMin" max="dataMax" title="Total Cost" icon="attach_money" card-color="indigo" :chart-color="[color.indigo.lighten1]" :costData='$store.state.totalCost.toFixed(2)' type="line"></chartStatistic>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
@@ -57,7 +57,7 @@
 									<pie :areatotal="$store.state.areaData[0]"></pie>
 								</div>
 							</v-widget>
-						</v-flex>
+						</v-flex> -->
 						<v-flex lg12 sm12 xs12>
 							<branchTable title="High-load Branches" :tabledata="$store.state.riskBranches"></branchTable>
 						</v-flex>
