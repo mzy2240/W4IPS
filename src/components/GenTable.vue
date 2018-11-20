@@ -67,7 +67,7 @@
 							</td>
 							<td class="text-xs-center">
 								<!-- <div class="mt-3 pa-0"> -->
-								<v-switch class="mt-3" v-model="props.item.AGC"></v-switch>
+								<v-switch class="mt-3" v-model="props.item.AGC" :disabled='!props.item.Status'></v-switch>
 								<!-- </div> -->
 							</td>
 						</tr>

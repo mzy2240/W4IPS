@@ -266,7 +266,9 @@ export default new Vuex.Store({
 		},
 		toggleALL(state, payload) {
 			for (let i in state.genData) {
-				state.genData[i].AGC = payload;
+				if (state.genData[i].Status) {
+					state.genData[i].AGC = payload;
+				}
 			}
 		},
 		onAdmin(state) {

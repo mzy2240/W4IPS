@@ -233,7 +233,7 @@ export default {
 							title: 'System',
 							message: this.usermessage,
 							position: 'topCenter',
-							timeout: 8000,
+							timeout: 6500,
 							buttons: [
 								[
 									'<button>What?!</button>',
@@ -331,7 +331,7 @@ export default {
 					message: message.toString(),
 					// color: 'yellow',
 					position: 'topCenter',
-					timeout: 8000
+					timeout: 6500
 				});
 				if (
 					[
