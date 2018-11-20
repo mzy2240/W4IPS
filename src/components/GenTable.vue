@@ -238,6 +238,7 @@ export default {
 			// }, 500);
 		},
 		savemws(item) {
+			this.mws = Math.min(Math.max(this.mws, 0), item.MWMax);
 			const command = 'Set Power ' + this.mws + ' MW';
 			this.$store.commit('setMessage', [
 				'Gen',
