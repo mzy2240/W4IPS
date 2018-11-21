@@ -36,7 +36,7 @@ export default {
 	props: {
 		subtopic: {
 			type: Array || String || Object,
-			default: () => ['ds/data', 'ds/note', 'ds/system']
+			default: () => ['ds/data', 'ds/note', 'ds/system', 'user/schedule']
 		},
 		pubtopic: {
 			type: String || Array || Object,
@@ -163,7 +163,7 @@ export default {
 		},
 		getSchedule: function(newVal, oldVal) {
 			this.client.publish(
-				this.simID + '/user/cmd',
+				this.simID + '/user/schedule',
 				JSON.stringify({
 					user: this.$store.state.username,
 					type: 'Import',
@@ -216,107 +216,94 @@ export default {
 				this.$store.commit('updateRawData', message);
 				this.backend_online = true;
 			} else if (topic.includes('ds/note')) {
-				if (message.toString().includes('schedule')) {
-					const temp = message.toString();
-					this.usermessage = temp;
-					this.$store.commit('setSchedule', temp.split('to ')[1]);
-					// iziToast.warning({
-					// 	title: 'System',
-					// 	message: this.usermessage,
-					// 	position: 'topCenter',
-					// 	timeout: 8000
-					// });
-				} else {
-					const temp = message.toString().split('@');
-					this.usermessage = temp[0];
-					if (this.$store.state.notMuted) {
-						iziToast.warning({
-							title: 'System',
-							message: this.usermessage,
-							position: 'topCenter',
-							timeout: 6500,
-							buttons: [
-								[
-									'<button>What?!</button>',
-									function() {
-										if (self.usermessage.includes('Branch')) {
-											self.id = temp[1];
-											self.name = temp[2];
-											self.type = 'Branch';
-											self.lineshowDialog = true;
-										} else if (
-											self.usermessage.includes('Load') ||
-											self.usermessage.includes('Gen') ||
-											self.usermessage.includes('Shunt')
-										) {
-											const busid = temp[1].split(',')[0];
-											self.name = temp[2].split('Bus')[0];
-											self.type = 'Substation';
-											var found;
-											// Base on the bus id, find the substation
-											for (let subidx in self.$store.state.subDetail) {
-												found = self.$store.state.subDetail[subidx].Bus.find(
-													function(ele) {
-														if (ele['Int.Bus Number'] == busid) {
-															self.id = subidx;
-															self.children =
-																self.$store.state.subDetail[subidx].Bus;
-															return true;
-														}
+				const temp = message.toString().split('@');
+				this.usermessage = temp[0];
+				if (this.$store.state.notMuted) {
+					iziToast.warning({
+						title: 'System',
+						message: this.usermessage,
+						position: 'topCenter',
+						timeout: 6500,
+						buttons: [
+							[
+								'<button>What?!</button>',
+								function() {
+									if (self.usermessage.includes('Branch')) {
+										self.id = temp[1];
+										self.name = temp[2];
+										self.type = 'Branch';
+										self.lineshowDialog = true;
+									} else if (
+										self.usermessage.includes('Load') ||
+										self.usermessage.includes('Gen') ||
+										self.usermessage.includes('Shunt')
+									) {
+										const busid = temp[1].split(',')[0];
+										self.name = temp[2].split('Bus')[0];
+										self.type = 'Substation';
+										var found;
+										// Base on the bus id, find the substation
+										for (let subidx in self.$store.state.subDetail) {
+											found = self.$store.state.subDetail[subidx].Bus.find(
+												function(ele) {
+													if (ele['Int.Bus Number'] == busid) {
+														self.id = subidx;
+														self.children =
+															self.$store.state.subDetail[subidx].Bus;
+														return true;
 													}
-												);
-												if (found) {
-													self.subshowDialog = true;
-													break;
 												}
+											);
+											if (found) {
+												self.subshowDialog = true;
+												break;
 											}
-										}
-									}
-								]
-							]
-						});
-						Push.create('System', {
-							body: this.usermessage,
-							icon: require('../assets/logo.png'),
-							timeout: 6000,
-							onClick: function() {
-								window.focus();
-								this.close();
-								if (self.usermessage.includes('Branch')) {
-									self.id = temp[1];
-									self.name = temp[2];
-									self.type = 'Branch';
-									self.lineshowDialog = true;
-								} else if (
-									self.usermessage.includes('Load') ||
-									self.usermessage.includes('Gen') ||
-									self.usermessage.includes('Shunt')
-								) {
-									const busid = temp[1].split(',')[0];
-									self.name = temp[2].split('Bus')[0];
-									self.type = 'Substation';
-									var found;
-									// Base on the bus id, find the substation
-									for (let subidx in self.$store.state.subDetail) {
-										found = self.$store.state.subDetail[subidx].Bus.find(
-											function(ele) {
-												if (ele['Int.Bus Number'] == busid) {
-													self.id = subidx;
-													self.children =
-														self.$store.state.subDetail[subidx].Bus;
-													return true;
-												}
-											}
-										);
-										if (found) {
-											self.subshowDialog = true;
-											break;
 										}
 									}
 								}
+							]
+						]
+					});
+					Push.create('System', {
+						body: this.usermessage,
+						icon: require('../assets/logo.png'),
+						timeout: 6000,
+						onClick: function() {
+							window.focus();
+							this.close();
+							if (self.usermessage.includes('Branch')) {
+								self.id = temp[1];
+								self.name = temp[2];
+								self.type = 'Branch';
+								self.lineshowDialog = true;
+							} else if (
+								self.usermessage.includes('Load') ||
+								self.usermessage.includes('Gen') ||
+								self.usermessage.includes('Shunt')
+							) {
+								const busid = temp[1].split(',')[0];
+								self.name = temp[2].split('Bus')[0];
+								self.type = 'Substation';
+								var found;
+								// Base on the bus id, find the substation
+								for (let subidx in self.$store.state.subDetail) {
+									found = self.$store.state.subDetail[subidx].Bus.find(function(
+										ele
+									) {
+										if (ele['Int.Bus Number'] == busid) {
+											self.id = subidx;
+											self.children = self.$store.state.subDetail[subidx].Bus;
+											return true;
+										}
+									});
+									if (found) {
+										self.subshowDialog = true;
+										break;
+									}
+								}
 							}
-						});
-					}
+						}
+					});
 				}
 
 				this.$store.commit('updatebadge');
@@ -341,7 +328,7 @@ export default {
 					].includes(message.toString())
 				) {
 					this.$store.commit('setstartready');
-					if(message.toString().includes('blackout')) {
+					if (message.toString().includes('blackout')) {
 						this.$store.commit('setRIndex', 0);
 					}
 				} else if (message.toString().includes('The simulation is started')) {
@@ -357,6 +344,10 @@ export default {
 					color: 'red',
 					time: Date.now()
 				});
+			} else if (topic.includes('user/schedule')) {
+				const temp = message.toString();
+				// this.usermessage = temp;
+				this.$store.commit('setSchedule', JSON.parse(temp)['schedule']);
 			} else {
 				iziToast.show({
 					title: message.toString().split(':')[0],
