@@ -338,15 +338,15 @@ export default {
 						Mvar: 0,
 						MWSetpoint: 0,
 						VpuSetpoint: 1,
-						OperationCost: this.$store.state.areadetail.content.Gen[
-							i
-						]['MarginalCostCoefficients'][1],
+						OperationCost: this.$store.state.areadetail.content.Gen[i][
+							'MarginalCostCoefficients'
+						][1],
 						MarginalCostCoefficients: this.$store.state.areadetail.content.Gen[
 							i
 						]['MarginalCostCoefficients'],
-						MarginalCost: this.$store.state.areadetail.content.Gen[
-							i
-						]['MarginalCostCoefficients'][0],
+						MarginalCost: this.$store.state.areadetail.content.Gen[i][
+							'MarginalCostCoefficients'
+						][0],
 						id: this.$store.state.areadetail.content.Gen[i]['String.ID'],
 						AGC: false
 					});
@@ -416,9 +416,9 @@ export default {
 		},
 		updateMC() {
 			for (let i in this.gens) {
-				this.gens[i].MarginalCost = (
-					this.gens[i].MarginalCostCoefficients[0]
-				).toFixed(2);
+				this.gens[i].MarginalCost = this.gens[
+					i
+				].MarginalCostCoefficients[0].toFixed(2);
 			}
 			this.$store.commit('updateGenData', this.gens);
 		},
@@ -547,10 +547,18 @@ export default {
 		}, 5000);
 		setInterval(() => {
 			if (this.$store.state.status === 'running') {
+				let count = 0;
+				if (this.formatRiskLines.length) {
+					for (let ele in this.formatRiskLines) {
+						if (+this.formatRiskLines[ele]['Ratio'] > 100) {
+							count++;
+						}
+					}
+				}
 				const RIndex = Math.round(
 					50 *
 						(Math.exp(-0.05 * this.formatRiskBuses.length) +
-							Math.exp(-0.1 * this.formatRiskLines.length))
+							Math.exp(-0.1 * count))
 				);
 				this.$store.commit('setRIndex', RIndex);
 				this.$store.commit('addReportData', {
