@@ -313,7 +313,7 @@ export default {
 										temp = '#e53935';
 										break;
 									case 115:
-										temp = '#40c4ff';
+										temp = '#1565c0';
 										break;
 									case 13.8:
 										temp = '#7c4dff';
@@ -378,15 +378,15 @@ export default {
 						silent: true,
 						zlevel: 2,
 						z: 2,
-						symbol: 'pin',
-						symbolSize: 30,
+						// symbol: 'pin',
+						// symbolSize: 30,
 						lineStyle: {
 							width: 10,
-							color: '#bef67a',
+							color: '#f44336',
 							// type: 'dotted',
-							shadowColor: '#ccff90',
+							shadowColor: '#ffcdd2',
 							shadowBlur: 20,
-							opacity: 1
+							opacity: 0.5
 						},
 						label: {
 							show: false,
@@ -835,12 +835,55 @@ export default {
 			const branchArray = this.$store.state.areaHelper.Branch.list;
 			const branchArrLength = this.$store.state.areaHelper.Branch.length;
 			var key;
+			let fromID, toID, coords;
 			for (let index in this.linedata) {
 				// statusTemp.push(branchData[i]);
 				statusTemp.push(branchData[index * branchArrLength]);
-				// branchIndex = i / this.branchArrLength;
 				this.linedata[index].attributes.MVA =
 					branchData[index * branchArrLength + 3];
+				// branchIndex = i / this.branchArrLength;
+				fromID = this.linedata[index].id.split(',')[0];
+				toID = this.linedata[index].id.split(',')[1];
+				if(this.linedata[index].attributes.MVA<0){
+					this.linedata[index].coords = [
+						[
+							this.$store.state.casedetail.content.Substation[
+								this.$store.state.casedetail.content.Bus[fromID]['Int.Sub Number'].toString()
+							]['Double.Longitude'],
+							this.$store.state.casedetail.content.Substation[
+								this.$store.state.casedetail.content.Bus[fromID]['Int.Sub Number'].toString()
+							]['Double.Latitude']
+						],
+						[
+							this.$store.state.casedetail.content.Substation[
+								this.$store.state.casedetail.content.Bus[toID]['Int.Sub Number'].toString()
+							]['Double.Longitude'],
+							this.$store.state.casedetail.content.Substation[
+								this.$store.state.casedetail.content.Bus[toID]['Int.Sub Number'].toString()
+							]['Double.Latitude']
+						]
+					];
+				} else {
+					this.linedata[index].coords = [
+						[
+							this.$store.state.casedetail.content.Substation[
+								this.$store.state.casedetail.content.Bus[toID]['Int.Sub Number'].toString()
+							]['Double.Longitude'],
+							this.$store.state.casedetail.content.Substation[
+								this.$store.state.casedetail.content.Bus[toID]['Int.Sub Number'].toString()
+							]['Double.Latitude']
+						],
+						[
+							this.$store.state.casedetail.content.Substation[
+								this.$store.state.casedetail.content.Bus[fromID]['Int.Sub Number'].toString()
+							]['Double.Longitude'],
+							this.$store.state.casedetail.content.Substation[
+								this.$store.state.casedetail.content.Bus[fromID]['Int.Sub Number'].toString()
+							]['Double.Latitude']
+						]
+					];
+
+				}
 				// if ([0, 2, 3].includes(branchData[index * branchArrLength]))
 				// {
 				if (
