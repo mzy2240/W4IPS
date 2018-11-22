@@ -350,6 +350,12 @@ export default {
 				const temp = message.toString();
 				// this.usermessage = temp;
 				this.$store.commit('setSchedule', JSON.parse(temp)['schedule']);
+				iziToast.show({
+					title: 'Schedule',
+					message: 'The import schedule has been changed to ' + JSON.parse(temp)['schedule'].split('@')[0] + 'MW @ $' + JSON.parse(temp)['schedule'].split('@')[1] + '/MW',
+					color: 'yellow',
+					position: 'topCenter'
+				});
 			} else {
 				iziToast.show({
 					title: message.toString().split(':')[0],
