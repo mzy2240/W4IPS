@@ -12,9 +12,12 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="loads" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
+				<v-data-table :headers="headers" :items="loads" :rows-per-page-items="defaultRowItems" v-model="selected" select-all disable-initial-sort item-key="name">
 					<template slot="items" slot-scope="props">
-						<tr @click="props.expanded = !props.expanded">
+						<tr :active="props.selected">
+							<td>
+								<v-checkbox v-model="props.selected" primary hide-details @click="props.selected = !props.selected"></v-checkbox>
+							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-left">{{ props.item.Status }}</td>
 							<td class="text-xs-right">{{ props.item.MW }}</td>
@@ -78,6 +81,7 @@ export default {
 				{ text: 'Actions', value: 'Actions', sortable: false }
 			],
 			loads: [],
+			selected: [],
 			anchor: 0,
 			loadDataLength: 0,
 			defaultRowItems: [
@@ -109,14 +113,23 @@ export default {
 		initTable() {
 			let temp = [];
 			let count = 0;
+			let subID;
 			for (let i in this.$store.state.areadetail.content.Load) {
 				if (
 					this.$store.state.areadetail.content.Load[i]['Int.Area Number'] ==
 					+this.$store.state.area
 				) {
 					this.loadArray.push(count);
+					subID = this.$store.state.areadetail.content.Bus[i.split(',')[0]]['Int.Sub Number'];
 					temp.push({
-						value: false,
+						value: [
+							this.$store.state.areadetail.content.Substation[subID.toString()][
+								'Double.Longitude'
+							],
+							this.$store.state.areadetail.content.Substation[subID.toString()][
+								'Double.Latitude'
+							]
+						],
 						key: i,
 						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]]['String.Name'],
 						Status: 1,
@@ -187,6 +200,11 @@ export default {
 			} else {
 				return true;
 			}
+		}
+	},
+	watch: {
+		selected: function(newval, oldval) {
+			this.$store.commit('updateSelectedLoads', newval);
 		}
 	}
 };

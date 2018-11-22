@@ -49,6 +49,7 @@ export default new Vuex.Store({
 		violatedBuses: [],
 		selectedShunts: [],
 		selectedGens: [],
+		selectedLoads: [],
 		alarm: [],
 		totalCost: 0,
 		genData: [],
@@ -134,6 +135,9 @@ export default new Vuex.Store({
 		},
 		getSelectedGens(state) {
 			return state.selectedGens;
+		},
+		getSelectedLoads(state) {
+			return state.selectedLoads;
 		},
 		getCurrentTime(state) {
 			return state.currentTime;
@@ -241,6 +245,9 @@ export default new Vuex.Store({
 		},
 		updateSelectedGens(state, payload) {
 			state.selectedGens = payload;
+		},
+		updateSelectedLoads(state, payload){
+			state.selectedLoads = payload;
 		},
 		triggerAlarm(state, payload) {
 			if (!(payload in state.alarm)) {

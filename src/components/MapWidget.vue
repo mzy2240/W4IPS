@@ -53,7 +53,7 @@ export default {
 			linedata: [],
 			subdetail: [],
 			busdetail: [],
-			mapCenter: [29.4241, -98.4936],
+			mapCenter: [27.4241, -98.4936],
 			map: null
 		};
 	},
@@ -74,7 +74,7 @@ export default {
 				// crs: L.CRS.EPSG4326,
 				center: this.mapCenter,//this.$store.state.center, //this.mapCenter,
 				maxZoom: 18,
-				zoom: 6
+				zoom: 7
 			});
 			L.tileLayer(url, options).addTo(this.map)
 			// this.chart = echarts.init(document.getElementById('map'));
@@ -249,6 +249,29 @@ export default {
 							}
 						},
 						data: []
+					},
+					{
+						id: 'load',
+						name: 'load',
+						type: 'scatter',
+						coordinateSystem: 'leaflet',
+						silent: false,
+						symbol: 'pin',
+						symbolSize: 50,
+						zlevel: 2,
+						itemStyle: {
+							color: '#303f9f'
+						},
+						label: {
+							show: true,
+							position: 'top',
+							color: 'black',
+							// fontWeight: 'bold',
+							formatter: function(params) {
+								return 'Gen#' + params.name;
+							}
+						},
+						data: []
 					}
 				]
 			};
@@ -368,7 +391,8 @@ export default {
 			ViolatedBuses: 'getViolatedBuses',
 			SelectedShunts: 'getSelectedShunts',
 			ViolatedLines: 'getViolatedLines',
-			SelectedGens: 'getSelectedGens'
+			SelectedGens: 'getSelectedGens',
+			SelectedLoads: 'getSelectedLoads'
 		})
 	},
 	watch: {
@@ -401,6 +425,11 @@ export default {
 		SelectedGens: function() {
 			let temp = this.chart._echartsOptions;
 			temp.series[5].data = this.$store.state.selectedGens;
+			this.chart.setOption(temp);
+		},
+		SelectedLoads: function(){
+			let temp = this.chart._echartsOptions;
+			temp.series[6].data = this.$store.state.selectedLoads;
 			this.chart.setOption(temp);
 		}
 	}
