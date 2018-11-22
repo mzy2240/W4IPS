@@ -183,7 +183,7 @@ export default {
 			let anchor = 0;
 			var arrlength;
 			var keyarr;
-			console.log([this.type, this.id])
+			// console.log([this.type, this.id])
 
 			for (let ele in this.$store.state.fieldstore) {
 				arrlength = this.$store.state.fieldstore[ele].length;

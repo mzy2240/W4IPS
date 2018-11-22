@@ -167,7 +167,15 @@ export default {
 						coordinateSystem: 'leaflet',
 						// coordinateSystem: 'bmap',
 						symbol: 'circle',
-						symbolSize: 8,
+						symbolSize: function(value, params) {
+							if (params.data.attributes.Gen) {
+								return 12;
+							} else if (params.data.attributes.Shunt) {
+								return 10;
+							} else {
+								return 8;
+							}
+						},
 						showEffectOn: 'emphasis',
 						zlevel: 5,
 						// progressive: 40,
@@ -181,7 +189,37 @@ export default {
 							}
 						},
 						itemStyle: {
-							color: 'rgb(200, 40, 0)'
+							color: function(params) {
+								if (
+									params.data.attributes.Gen &&
+									params.data.attributes.Shunt
+								) {
+									console.log('wow you are lucky!')
+									return {
+										type: 'radial',
+										x: 0.5,
+										y: 0.5,
+										r: 0.5,
+										colorStops: [
+											{
+												offset: 0,
+												color: '#ff5722'
+											},
+											{
+												offset: 1,
+												color: '#8d6e63'
+											}
+										],
+										globalCoord: false
+									};
+								} else if (params.data.attributes.Gen) {
+									return '#ff5722'
+								} else if (params.data.attributes.Shunt) {
+									return '#8d6e63'
+								} else {
+									return '#283593';
+								}
+							}
 						}
 					},
 					{
@@ -212,7 +250,7 @@ export default {
 								show: true,
 								position: 'middle',
 								// formatter: 'YES',
-								formatter: (params) => {
+								formatter: params => {
 									const limit = params.data.attributes.MVALimit;
 									const value = params.data.attributes.MVA;
 									const percentage = ((value * 100) / limit).toFixed(0);
@@ -220,14 +258,14 @@ export default {
 									if (percentage >= 100) {
 										richText = '{overload|' + percentage.toString() + '%}';
 									} else if (percentage >= 90) {
-										if(this.map.getZoom()>=10) {
-											richText = '{zoomInDanger|' + percentage.toString() + '%}';
+										if (this.map.getZoom() >= 10) {
+											richText =
+												'{zoomInDanger|' + percentage.toString() + '%}';
 										} else {
 											richText = '{indanger|' + percentage.toString() + '%}';
 										}
-
 									} else {
-										if (this.map.getZoom()>=10) {
+										if (this.map.getZoom() >= 10) {
 											richText = '{zoomInSafe|' + percentage.toString() + '%}';
 										} else {
 											richText = '{safe|' + percentage.toString() + '%}';

@@ -41,6 +41,7 @@ export default {
 	methods: {
 		before_init() {
 			const temp = this.$store.state.casedetail;
+			const areaTemp = this.$store.state.areadetail;
 			let count = 0;
 			let count_b = 0;
 			let otherSub = [];
@@ -66,7 +67,7 @@ export default {
 								temp.content.Substation[ele]['Double.Longitude'],
 								temp.content.Substation[ele]['Double.Latitude']
 							],
-							attributes: {},
+							attributes: {Gen: false, Shunt: false},
 							bus: []
 						});
 					} else {
@@ -155,22 +156,25 @@ export default {
 					}
 					count++;
 				}
-				this.subdetail = temp.content.Substation;
-				this.busdetail = temp.content.Bus;
+				this.subdetail = areaTemp.content.Substation;
+				this.busdetail = areaTemp.content.Bus;
+				const subIndexedArray = Object.keys(areaTemp.content.Substation)
 				for (let ele in this.subdetail) {
 					this.subdetail[ele].Bus = [];
 				}
-				for (let ele in temp.content.Gen) {
-					this.busdetail[ele.split(',')[0]].Gen = temp.content.Gen[ele];
+				for (let ele in areaTemp.content.Gen) {
+					this.busdetail[ele.split(',')[0]].Gen = areaTemp.content.Gen[ele];
+					this.subdata[subIndexedArray.indexOf(areaTemp.content.Bus[areaTemp.content.Gen[ele]['Int.Bus Number'].toString()]['Int.Sub Number'].toString())].attributes.Gen = true;
 				}
-				for (let ele in temp.content.Load) {
-					this.busdetail[ele.split(',')[0]].Load = temp.content.Load[ele];
+				for (let ele in areaTemp.content.Load) {
+					this.busdetail[ele.split(',')[0]].Load = areaTemp.content.Load[ele];
 				}
-				for (let ele in temp.content.Shunt) {
-					this.busdetail[ele.split(',')[0]].Shunt = temp.content.Shunt[ele];
+				for (let ele in areaTemp.content.Shunt) {
+					this.busdetail[ele.split(',')[0]].Shunt = areaTemp.content.Shunt[ele];
+					this.subdata[subIndexedArray.indexOf(areaTemp.content.Bus[areaTemp.content.Shunt[ele]['Int.Bus Number'].toString()]['Int.Sub Number'].toString())].attributes.Shunt = true;
 				}
-				for (let ele in temp.content.Bus) {
-					this.subdetail[temp.content.Bus[ele]['Int.Sub Number']].Bus.push(
+				for (let ele in areaTemp.content.Bus) {
+					this.subdetail[areaTemp.content.Bus[ele]['Int.Sub Number']].Bus.push(
 						this.busdetail[ele]
 					);
 				}
