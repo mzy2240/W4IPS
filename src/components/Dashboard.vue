@@ -172,6 +172,7 @@
 
 <script>
 // import Home from './views/Home';
+
 import generator from '../views/generator-view';
 import load from '../views/load-view';
 import shunt from '../views/shunt-view';
@@ -185,6 +186,7 @@ import DataProcessing from './DataProcessing';
 import AGCBot from './AGCBot';
 import marquee from './marquee';
 import Clock from './Clock';
+import { mapGetters } from 'vuex';
 // import NotificationList from './components/NotificationList';
 
 export default {
@@ -198,6 +200,9 @@ export default {
 		};
 	},
 	computed: {
+		...mapGetters({
+			simOverFlag: 'getSimOver'
+		}),
 		page() {
 			return this.$store.getters.page;
 		}
@@ -231,6 +236,9 @@ export default {
 			if (newVal == false) {
 				this.$store.commit('resetbadgelist');
 			}
+		},
+		simOverFlag: function(){
+			this.reportDialog = true;
 		}
 	},
 	mounted() {

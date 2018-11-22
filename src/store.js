@@ -88,7 +88,8 @@ export default new Vuex.Store({
 		aceCost: 100,
 		schedule: '0@0',
 		genStat: [],
-		rIndex: 100
+		rIndex: 100,
+		simOver: 0
 	},
 	getters: {
 		getPubStatus(state) {
@@ -150,6 +151,9 @@ export default new Vuex.Store({
 		},
 		getSchedule(state) {
 			return state.schedule;
+		},
+		getSimOver(state) {
+			return state.simOver;
 		}
 	},
 	mutations: {
@@ -376,6 +380,9 @@ export default new Vuex.Store({
 		},
 		setRIndex(state, payload) {
 			state.rIndex = payload;
+		},
+		setSimOver(state) {
+			state.simOver ++;
 		}
 	},
 	actions: {

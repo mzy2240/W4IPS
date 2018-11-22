@@ -336,6 +336,8 @@ export default {
 					this.$store.commit('resetTotalCost'); // Reset the total cost when the simulation starts
 					this.$store.commit('setStartTime', +message.toString().split('@')[1]);
 					this.$store.commit('setstartdisable');
+				} else if (message.toString().includes('The simulation has finished')){
+					this.$store.commit('setSimOver');
 				}
 				this.$store.commit('updatebadge');
 				this.$store.commit('updatebadgelist', {

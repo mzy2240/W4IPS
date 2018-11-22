@@ -2,9 +2,9 @@
 	<v-layout row justify-center>
 		<v-dialog v-model="show" max-width="500px">
 			<v-card>
-				<!-- <v-card-title>
-					<span class="headline">Comment (Optional)</span>
-				</v-card-title> -->
+				<v-card-title>
+					<span class="title">Report</span>
+				</v-card-title>
 				<v-card-text>
 					<v-textarea name="input-7-1" v-model="comment" box label="Comment (optional)" auto-grow></v-textarea>
 				</v-card-text>
