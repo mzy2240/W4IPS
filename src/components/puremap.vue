@@ -140,8 +140,7 @@ export default {
 	},
 	methods: {
 		initdraw(id) {
-			const url =
-				'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+			const url = 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 			const options = {
 				// redirect: true,
 				// time: '',
@@ -153,11 +152,11 @@ export default {
 			};
 			this.map = L.map('main', {
 				// crs: L.CRS.EPSG4326,
-				center: this.mapCenter,//this.$store.state.center, //this.mapCenter,
+				center: this.mapCenter, //this.$store.state.center, //this.mapCenter,
 				maxZoom: 18,
 				zoom: 8
 			});
-			L.tileLayer(url, options).addTo(this.map)
+			L.tileLayer(url, options).addTo(this.map);
 			// L.supermap.tiledMapLayer(url, option).addTo(map);
 			var option = {
 				series: [
@@ -193,6 +192,8 @@ export default {
 						animation: false,
 						// progressive: 100,
 						// progressiveThreshold: 200,
+						symbol: ['none', 'arrow'],
+						symbolSize: 10,
 						zlevel: 1,
 						// coordinateSystem: 'bmap',
 						silent: false,
@@ -211,7 +212,7 @@ export default {
 								show: true,
 								position: 'middle',
 								// formatter: 'YES',
-								formatter: function(params) {
+								formatter: (params) => {
 									const limit = params.data.attributes.MVALimit;
 									const value = params.data.attributes.MVA;
 									const percentage = ((value * 100) / limit).toFixed(0);
@@ -219,9 +220,18 @@ export default {
 									if (percentage >= 100) {
 										richText = '{overload|' + percentage.toString() + '%}';
 									} else if (percentage >= 90) {
-										richText = '{indanger|' + percentage.toString() + '%}';
+										if(this.map.getZoom()>=10) {
+											richText = '{zoomInDanger|' + percentage.toString() + '%}';
+										} else {
+											richText = '{indanger|' + percentage.toString() + '%}';
+										}
+
 									} else {
-										richText = '{safe|' + percentage.toString() + '%}';
+										if (this.map.getZoom()>=10) {
+											richText = '{zoomInSafe|' + percentage.toString() + '%}';
+										} else {
+											richText = '{safe|' + percentage.toString() + '%}';
+										}
 									}
 									return richText;
 								},
@@ -237,6 +247,14 @@ export default {
 									safe: {
 										fontSize: 8,
 										color: '#1b5e20'
+									},
+									zoomInSafe: {
+										fontSize: 16,
+										color: '#1b5e20'
+									},
+									zoomInDanger: {
+										fontSize: 16,
+										color: '#ffd600'
 									}
 								}
 							}
@@ -377,7 +395,7 @@ export default {
 					}
 				]
 			};
-			this.chart = L.supermap.echartsLayer(option);  // _ec is the echartsInstance
+			this.chart = L.supermap.echartsLayer(option); // _ec is the echartsInstance
 			var EL = this.chart.addTo(this.map);
 			// this.chart = echarts.init(document.getElementById(id));
 			// this.chart.setOption({
@@ -794,7 +812,7 @@ export default {
 					// Branch opened
 					this.updateLineOpen(index);
 					branchChanged = true;
-				// } else if (branchData[index * branchArrLength] == 1) {
+					// } else if (branchData[index * branchArrLength] == 1) {
 				} else if (
 					[0, 2, 3].includes(this.statusArray[index]) &&
 					branchData[index * branchArrLength] == 1
@@ -938,9 +956,8 @@ export default {
 		clearInterval(this.Interval);
 		try {
 			this.chart.clear();
-		}
-		catch(err) {
-			console.log("The chart instance cannot be cleared")
+		} catch (err) {
+			console.log('The chart instance cannot be cleared');
 		}
 	},
 	// watch: {
