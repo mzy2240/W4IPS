@@ -576,7 +576,8 @@ export default {
 				this.$store.commit('setRIndex', RIndex);
 				this.$store.commit('addReportData', {
 					time: this.$store.state.currentTime,
-					RIndex: RIndex
+					RIndex: RIndex,
+					TCost: this.$store.state.totalCost
 				});
 			}
 		}, 1000);
