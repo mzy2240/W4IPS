@@ -5,6 +5,9 @@
 				<v-card-title>
 					<span class="title">Report</span>
 				</v-card-title>
+				<v-card-media>
+					<div id='chart' class="chart"></div>
+				</v-card-media>
 				<v-card-text>
 					<v-textarea name="input-7-1" v-model="comment" box label="Comment (optional)" auto-grow></v-textarea>
 				</v-card-text>
@@ -17,10 +20,16 @@
 	</v-layout>
 </template>
 
-<style>
+<style scoped>
+.chart {
+	height: 300px;
+	width: 100%;
+}
 </style>
 
 <script>
+import echarts from 'echarts';
+
 export default {
 	props: {
 		visible: {
@@ -43,6 +52,9 @@ export default {
 			}
 		};
 	},
+	mounted() {
+		this.initChart();
+	},
 	computed: {
 		show: {
 			get() {
@@ -58,11 +70,113 @@ export default {
 		}
 	},
 	methods: {
+		initChart() {
+			const timeArray = this.$store.state.report.score.map(function(item) {
+				return item['time'] - 1280941800;
+			});
+			const RIndexArray = this.$store.state.report.score.map(function(item) {
+				return item['RIndex'];
+			});
+			var chart = echarts.init(document.getElementById('chart'));
+			chart.setOption({
+				title: {
+					text: 'RIndex',
+					left: 'left'
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				xAxis: {
+					data: timeArray
+				},
+				yAxis: {
+					splitLine: {
+						show: false
+					}
+				},
+				toolbox: {
+					left: 'center',
+					feature: {
+						dataZoom: {
+							yAxisIndex: 'none'
+						},
+						restore: {},
+						saveAsImage: {}
+					}
+				},
+				dataZoom: [
+					{
+						startValue: '0'
+					},
+					{
+						type: 'inside'
+					}
+				],
+				visualMap: {
+					top: 10,
+					right: 10,
+					pieces: [
+						{
+							gt: 0,
+							lte: 60,
+							color: '#7e0023'
+						},
+						{
+							gt: 60,
+							lte: 80,
+							color: '#f57c00'
+						},
+						{
+							gt: 80,
+							lte: 90,
+							color: '#ffeb3b'
+						},
+						{
+							gt: 90,
+							lte: 100,
+							color: '#1b5e20'
+						}
+					],
+					outOfRange: {
+						color: '#999'
+					}
+				},
+				series: [
+					{
+						name: 'RIndex',
+						type: 'line',
+						id: 'line',
+						data: RIndexArray,
+						markLine: {
+							silent: true,
+							symbol:'none',
+							data: [
+								{
+									yAxis: 60
+								},
+								{
+									yAxis: 80
+								},
+								{
+									yAxis: 90
+								},
+								{
+									yAxis: 100
+								}
+							]
+						}
+					}
+				]
+			});
+		},
 		activate() {
 			this.$store.commit('setReportName', this.$store.state.username);
 			this.$store.commit('setReportComment', this.comment);
 
-			const report = JSON.stringify({Time: new Date(), Content: this.$store.state.report});
+			const report = JSON.stringify({
+				Time: new Date(),
+				Content: this.$store.state.report
+			});
 			const blob = new Blob([report], { type: 'text/plain' });
 			const e = document.createEvent('MouseEvents'),
 				a = document.createElement('a');
