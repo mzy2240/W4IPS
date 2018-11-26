@@ -391,6 +391,9 @@ export default new Vuex.Store({
 			} else {
 				state.genAction[payload[0]][payload[1]] = [state.currentTime]
 			}
+		},
+		resetAction(state) {
+			state.genAction = {Gen: {}, Load: {}, Shunt: {}, Branch: {}}
 		}
 	},
 	actions: {

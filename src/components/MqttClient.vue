@@ -333,6 +333,7 @@ export default {
 					}
 				} else if (message.toString().includes('The simulation is started')) {
 					this.$store.commit('resetReport'); // Reset the report when the simulation starts
+					this.$store.commit('resetAction');
 					this.$store.commit('resetTotalCost'); // Reset the total cost when the simulation starts
 					this.$store.commit('setStartTime', +message.toString().split('@')[1]);
 					this.$store.commit('setstartdisable');
