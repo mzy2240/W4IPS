@@ -159,6 +159,16 @@ export default {
 			L.tileLayer(url, options).addTo(this.map);
 			// L.supermap.tiledMapLayer(url, option).addTo(map);
 			var option = {
+				// legend:{
+				// 	oritent: 'vertical',
+				// 	data:[{
+				// 		name: 'sub',
+				// 		icon: 'circle',
+				// 		textStyle: {
+				// 			color: 'red'
+				// 		}
+				// 	}]
+				// },
 				series: [
 					{
 						id: 'sub',
@@ -844,7 +854,7 @@ export default {
 				// branchIndex = i / this.branchArrLength;
 				fromID = this.linedata[index].id.split(',')[0];
 				toID = this.linedata[index].id.split(',')[1];
-				if(this.linedata[index].attributes.MVA<0){
+				if(this.linedata[index].attributes.MVA>=0){
 					this.linedata[index].coords = [
 						[
 							this.$store.state.casedetail.content.Substation[

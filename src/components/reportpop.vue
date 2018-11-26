@@ -29,6 +29,7 @@
 
 <script>
 import echarts from 'echarts';
+import math from 'mathjs';
 
 export default {
 	props: {
@@ -80,7 +81,7 @@ export default {
 			var chart = echarts.init(document.getElementById('chart'));
 			chart.setOption({
 				title: {
-					text: 'RIndex',
+					text: 'Average RIndex: ' + math.mean(RIndexArray).toFixed(0).toString(),
 					left: 'left'
 				},
 				tooltip: {
@@ -96,6 +97,7 @@ export default {
 				},
 				toolbox: {
 					left: 'center',
+					showTitle: false,
 					feature: {
 						dataZoom: {
 							yAxisIndex: 'none'

@@ -42,16 +42,22 @@
 					<v-layout row wrap>
 						<v-flex>
 							<v-layout row wrap>
-								<v-flex sm6 xs6 white--text>
+								<v-flex sm4 xs4 white--text>
 									<div class="text-sm-center primary card">
-										<div class="headline pt-3">Total Cost</div>
-										<span class="headline" style="color:white">${{ $store.state.totalCost }}</span>
+										<div class="title pt-4">Total Cost</div>
+										<span class="title" style="color:white">${{ $store.state.totalCost }}</span>
 									</div>
 								</v-flex>
-								<v-flex sm6 xs6 white--text>
+								<v-flex sm4 xs4 white--text>
 									<div class="align-center text-sm-center green card">
-										<div class="headline pt-3">ACE</div>
-										<span class="headline" style="color:white">{{ $store.state.ACE.toFixed(2) }}MW</span>
+										<div class="title pt-4">ACE</div>
+										<span class="title" style="color:white">{{ $store.state.ACE.toFixed(2) }}MW</span>
+									</div>
+								</v-flex>
+								<v-flex sm4 xs4 white--text>
+									<div class="align-center text-sm-center pink card">
+										<div class="title pt-4">Total Load</div>
+										<span class="title" style="color:white">{{ $store.state.areaData[2] }}MW</span>
 									</div>
 								</v-flex>
 							</v-layout>

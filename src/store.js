@@ -273,6 +273,7 @@ export default new Vuex.Store({
 		},
 		resetTotalCost(state) {
 			state.totalCost = 0;
+			state.totalMWh = 0;
 		},
 		addMWh(state, payload) {
 			state.totalMWh = state.totalMWh + payload;
