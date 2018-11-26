@@ -38,7 +38,7 @@
 								<v-checkbox v-model="props.selected" primary hide-details @click="props.selected = !props.selected"></v-checkbox>
 							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
-							<td class="text-xs-left">{{ props.item.Status }}</td>
+							<td class="text-xs-left">{{ props.item.vStatus }}</td>
 							<td class="text-xs-right">
 								<v-chip label small :color="getColorByValue(props.item.MW, props.item.MWMax)" text-color="black" class="chip">{{ props.item.MW }}</v-chip>
 							</td>
@@ -63,7 +63,7 @@
 							<!-- <td class="text-xs-right">{{ props.item.MWMin }}</td> -->
 							<td class="text-xs-center">
 								<!-- <div class="mt-3 pa-0"> -->
-								<v-switch class="mt-3" v-model="props.item.Status" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
+								<v-switch class="mt-3" v-model="props.item.vStatus" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
 								<!-- </div> -->
 							</td>
 							<td class="text-xs-center">
@@ -268,9 +268,11 @@ export default {
 		},
 		toggle(item) {
 			var command;
-			if (item.Status) {
+			if (item.vStatus) {
+				item.vStatus = 1;
 				command = 'CLOSE';
 			} else {
+				item.vStatus = 0;
 				command = 'OPEN';
 			}
 			// console.log(item);
@@ -280,6 +282,7 @@ export default {
 				item.key + '#' + item.id,
 				command
 			]);
+			this.$store.commit('recordAction', ['Gen', item.key]);
 			this.$store.commit('setPublish');
 		},
 		toggleAGC(item) {

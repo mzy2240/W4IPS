@@ -29,14 +29,14 @@
 								<v-checkbox v-model="props.selected" primary hide-details @click="props.selected = !props.selected"></v-checkbox>
 							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
-							<td class="text-xs-left">{{ props.item.Status }}</td>
+							<td class="text-xs-left">{{ props.item.vStatus }}</td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
 							<!-- <td class="text-xs-right">{{ props.item.MvarNom }}</td> -->
 							<td class="text-xs-right">{{ props.item.Vpu }}</td>
 							<td class="text-xs-right">{{ props.item.FreqHz }}</td>
 							<td class="justify-center layout px-0">
 								<div class="my-2">
-									<v-switch v-model="props.item.Status" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
+									<v-switch v-model="props.item.vStatus" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
 								</div>
 							</td>
 						</tr>
@@ -146,6 +146,7 @@ export default {
 						key: i,
 						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]]['String.Name'],
 						Status: 1,
+						vStatus: 1,
 						Mvar: 0,
 						MvarNom: 0,
 						Vpu: 1,
@@ -177,6 +178,22 @@ export default {
 							temp[this.anchor + 3 + this.shuntArray[i] * this.shuntDataLength];
 						this.shunts[i].Status =
 							temp[this.anchor + 5 + this.shuntArray[i] * this.shuntDataLength];
+						if (
+							this.$store.state.genAction['Shunt'][this.shunts[i].key] !=
+							undefined
+						) {
+							if (
+								this.$store.state.currentTime >=
+								Math.max(
+									this.$store.state.genAction['Shunt'][this.shunts[i].key]
+								) +
+									3
+							) {
+								this.shunts[i].vStatus = this.shunts[i].Status;
+							}
+						} else {
+							this.shunts[i].vStatus = this.shunts[i].Status;
+						}
 					}
 				} catch (e) {
 					console.log('The raw data are not ready');
@@ -185,9 +202,11 @@ export default {
 		},
 		toggle(item) {
 			var command;
-			if (item.Status == true) {
+			if (item.vStatus) {
+				item.vStatus = 1;
 				command = 'CLOSE';
 			} else {
+				item.vStatus = 0;
 				command = 'OPEN';
 			}
 			this.$store.commit('setMessage', [
@@ -196,6 +215,7 @@ export default {
 				item.key + '#' + item.id,
 				command
 			]);
+			this.$store.commit('recordAction', ['Shunt', item.key]);
 			this.$store.commit('setPublish');
 		}
 	},

@@ -19,14 +19,14 @@
 								<v-checkbox v-model="props.selected" primary hide-details @click="props.selected = !props.selected"></v-checkbox>
 							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
-							<td class="text-xs-left">{{ props.item.Status }}</td>
+							<td class="text-xs-left">{{ props.item.vStatus }}</td>
 							<td class="text-xs-right">{{ props.item.MW }}</td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
 							<td class="text-xs-right">{{ props.item.Vpu }}</td>
 							<td class="text-xs-right">{{ props.item.FreqHz }}</td>
 							<td class="justify-center layout px-0">
 								<div class="my-2">
-									<v-switch v-model="props.item.Status" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
+									<v-switch v-model="props.item.vStatus" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
 								</div>
 							</td>
 						</tr>
@@ -120,7 +120,9 @@ export default {
 					+this.$store.state.area
 				) {
 					this.loadArray.push(count);
-					subID = this.$store.state.areadetail.content.Bus[i.split(',')[0]]['Int.Sub Number'];
+					subID = this.$store.state.areadetail.content.Bus[i.split(',')[0]][
+						'Int.Sub Number'
+					];
 					temp.push({
 						value: [
 							this.$store.state.areadetail.content.Substation[subID.toString()][
@@ -131,8 +133,11 @@ export default {
 							]
 						],
 						key: i,
-						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]]['String.Name'],
+						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]][
+							'String.Name'
+						],
 						Status: 1,
+						vStatus: 1,
 						MW: 0,
 						Mvar: 0,
 						Vpu: 1,
@@ -164,6 +169,22 @@ export default {
 							temp[this.anchor + 3 + this.loadArray[i] * this.loadDataLength];
 						this.loads[i].Status =
 							temp[this.anchor + 5 + this.loadArray[i] * this.loadDataLength];
+						if (
+							this.$store.state.genAction['Load'][this.loads[i].key] !=
+							undefined
+						) {
+							if (
+								this.$store.state.currentTime >=
+								Math.max(
+									this.$store.state.genAction['Load'][this.loads[i].key]
+								) +
+									3
+							) {
+								this.loads[i].vStatus = this.loads[i].Status;
+							}
+						} else {
+							this.loads[i].vStatus = this.loads[i].Status;
+						}
 					}
 				} catch (e) {
 					console.log('The raw data are not ready');
@@ -172,9 +193,11 @@ export default {
 		},
 		toggle(item) {
 			var command;
-			if (item.Status == true) {
+			if (item.vStatus) {
+				item.vStatus = 1;
 				command = 'CLOSE';
 			} else {
+				item.vStatus = 0;
 				command = 'OPEN';
 			}
 			this.$store.commit('setMessage', [
@@ -183,6 +206,7 @@ export default {
 				item.key + '#' + item.id,
 				command
 			]);
+			this.$store.commit('recordAction', ['Load', item.key]);
 			this.$store.commit('setPublish');
 		}
 	},

@@ -26,7 +26,7 @@
 								<v-checkbox v-model="props.selected" primary hide-details @click="props.selected = !props.selected"></v-checkbox>
 							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
-							<td class="text-xs-left">{{ props.item.Status }}</td>
+							<td class="text-xs-left">{{ props.item.vStatus }}</td>
 							<td class="text-xs-right">{{ props.item.MWFrom }}</td>
 							<td class="text-xs-right">{{ props.item.MvarFrom }}</td>
 							<td class="text-xs-right">{{ props.item.MVAFrom }}</td>
@@ -38,7 +38,7 @@
 							<td class="text-xs-right">{{ props.item.MVALimit }}</td>
 							<td class="justify-center layout px-0">
 								<div class="my-2">
-									<v-switch v-model="props.item.Status" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
+									<v-switch v-model="props.item.vStatus" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
 								</div>
 							</td>
 						</tr>
@@ -171,6 +171,7 @@ export default {
 							'String.CircuitID'
 						],
 						Status: 1,
+						vStatus: 1,
 						MWFrom: 0,
 						MvarFrom: 0,
 						MVAFrom: 0,
@@ -219,6 +220,22 @@ export default {
 							this.$store.state.branchData[7 + i * this.branchDataLength];
 						this.branches[i].AmpsTo =
 							this.$store.state.branchData[8 + i * this.branchDataLength];
+						if (
+							this.$store.state.genAction['Branch'][this.branches[i].key] !=
+							undefined
+						) {
+							if (
+								this.$store.state.currentTime >=
+								Math.max(
+									this.$store.state.genAction['Branch'][this.branches[i].key]
+								) +
+									3
+							) {
+								this.branches[i].vStatus = this.branches[i].Status;
+							}
+						} else {
+							this.branches[i].vStatus = this.branches[i].Status;
+						}
 					}
 				} catch (e) {
 					console.log('The raw data are not ready');
@@ -227,9 +244,11 @@ export default {
 		},
 		toggle(item) {
 			var command;
-			if (item.Status == true) {
+			if (item.vStatus) {
+				item.vStatus = 1;
 				command = 'CLOSE BOTH';
 			} else {
+				item.vStatus = 0;
 				command = 'OPEN BOTH';
 			}
 			// console.log(item);
@@ -239,6 +258,7 @@ export default {
 				item.key,
 				command
 			]);
+			this.$store.commit('recordAction', ['Branch', item.key]);
 			this.$store.commit('setPublish');
 		}
 	},

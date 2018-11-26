@@ -89,7 +89,8 @@ export default new Vuex.Store({
 		schedule: '0@0',
 		genStat: [],
 		rIndex: 100,
-		simOver: 0
+		simOver: 0,
+		genAction: {Gen: {}, Load: {}, Shunt: {}, Branch: {}}
 	},
 	getters: {
 		getPubStatus(state) {
@@ -383,6 +384,13 @@ export default new Vuex.Store({
 		},
 		setSimOver(state) {
 			state.simOver ++;
+		},
+		recordAction(state, payload) {
+			if(state.genAction[payload[0]][payload[1]]){
+				state.genAction[payload[0]][payload[1]].push(state.currentTime)
+			} else {
+				state.genAction[payload[0]][payload[1]] = [state.currentTime]
+			}
 		}
 	},
 	actions: {

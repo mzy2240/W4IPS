@@ -332,6 +332,7 @@ export default {
 							'String.Name'
 						], //i,
 						Status: 1,
+						vStatus: 1,
 						MWMax: this.$store.state.areadetail.content.Gen[i][
 							'Single.MW Max Limit'
 						],
@@ -415,7 +416,15 @@ export default {
 					temp[this.anchor + 9 + this.genArray[i] * this.genDataLength];
 				this.gens[i].Status =
 					temp[this.anchor + 5 + this.genArray[i] * this.genDataLength];
+				if(this.$store.state.genAction['Gen'][this.gens[i].key] != undefined){
+					if(this.$store.state.currentTime >= Math.max(this.$store.state.genAction['Gen'][this.gens[i].key])+3){
+						this.gens[i].vStatus = this.gens[i].Status;
+					}
+				} else {
+					this.gens[i].vStatus = this.gens[i].Status;
+				}
 			}
+			// console.log(this.$store.state.genAction)
 			this.$store.commit('updateGenData', this.gens);
 		},
 		updateMC() {
