@@ -67,6 +67,7 @@ export default new Vuex.Store({
 			name: null,
 			user: [],
 			data: [],
+			score: [],
 			violate: [],
 			comment: null
 		},
@@ -307,6 +308,9 @@ export default new Vuex.Store({
 		addReportData(state, payload) {
 			state.report.data.push(payload);
 		},
+		addReportScore(state, payload) {
+			state.report.score.push(payload);
+		},
 		addReportUser(state, payload) {
 			state.report.user.push(payload);
 		},
@@ -321,6 +325,7 @@ export default new Vuex.Store({
 				name: null,
 				user: [],
 				data: [],
+				score: [],
 				violate: [],
 				comment: null
 			};

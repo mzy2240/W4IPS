@@ -62,7 +62,7 @@ export default {
 			this.$store.commit('setReportName', this.$store.state.username);
 			this.$store.commit('setReportComment', this.comment);
 
-			const report = JSON.stringify(this.$store.state.report);
+			const report = JSON.stringify({Time: new Date(), Content: this.$store.state.report});
 			const blob = new Blob([report], { type: 'text/plain' });
 			const e = document.createEvent('MouseEvents'),
 				a = document.createElement('a');

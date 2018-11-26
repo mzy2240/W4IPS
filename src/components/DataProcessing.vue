@@ -574,7 +574,7 @@ export default {
 							Math.exp(-0.1 * count))
 				);
 				this.$store.commit('setRIndex', RIndex);
-				this.$store.commit('addReportData', {
+				this.$store.commit('addReportScore', {
 					time: this.$store.state.currentTime,
 					RIndex: RIndex,
 					TCost: this.$store.state.totalCost
