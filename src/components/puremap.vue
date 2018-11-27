@@ -159,10 +159,10 @@ export default {
 			L.tileLayer(url, options).addTo(this.map);
 			// L.supermap.tiledMapLayer(url, option).addTo(map);
 			var option = {
-				legend: {
-					formatter: 'Substation',
-					data: []
-				},
+				// legend: {
+				// 	formatter: 'Substation',
+				// 	data: []
+				// },
 				series: [
 					{
 						id: 'sub',
@@ -748,14 +748,14 @@ export default {
 			let temp = this.chart._echartsOptions;
 			temp.series[0].data = this.subdata;
 			temp.series[1].data = this.linedata;
-			temp.legend.data = [{
-				name: 'sub',
-				icon: 'circle'
-			},{
-				name: 'sub',
-				icon: 'rect'
-			}
-			]
+			// temp.legend.data = [{
+			// 	name: 'sub',
+			// 	icon: 'circle'
+			// },{
+			// 	name: 'sub',
+			// 	icon: 'rect'
+			// }
+			// ]
 			this.chart.setOption(temp);
 			// console.log(temp);
 			// this.chart.setOption({
