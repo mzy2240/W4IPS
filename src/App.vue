@@ -75,6 +75,15 @@ export default {
 	bottom: 0;
 	right: 0;
 }
+.circle {
+	height: 10px;
+	width: 10px;
+	border-radius: 50%;
+	display: inline-block;
+}
+.legend-background {
+	background: rgba(255,255,255,0.8)
+}
 /* .dashboard {
 	filter:blur(5px);
 } */

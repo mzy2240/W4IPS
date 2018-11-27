@@ -42,6 +42,9 @@
 					<m-widget title="Interactive Site Map" content-bg="white" @clicked="restore">
 						<!-- <v-flex d-flex xs8 style="height: auto;"> -->
 						<div slot="widget-content">
+							<!-- <div class="legend">
+								<status-indicator></status-indicator>Substation &nbsp; <status-indicator active></status-indicator>Substation with generator  &nbsp; <status-indicator intermediary></status-indicator>Substation with shunt
+							</div> -->
 							<div id="main" class="chart"></div>
 						</div>
 					</m-widget>
@@ -76,10 +79,21 @@
 	height: 700px;
 	width: 100%;
 }
+/* .legend {
+	z-index: 0;
+	height: 30px;
+	width: 100%;
+} */
 .cardiv {
 	height: 300px;
 	width: 100%;
 }
+.status-indicator {
+	--status-indicator-color: rgb(34, 47, 151);
+	--status-indicator-color-active: rgb(197, 62, 21);
+	--status-indicator-color-intermediary: rgb(119, 93, 86);
+}
+
 </style>
 
 <script>
@@ -133,7 +147,7 @@ export default {
 			branchToOpenBranch: {},
 			highRiskLines: {},
 			formatRiskLines: [],
-			mapCenter: [29.4241, -98.4936],
+			mapCenter: [27.4241, -98.4936],
 			Interval: null,
 			map: null
 		};
@@ -157,6 +171,24 @@ export default {
 				zoom: 8
 			});
 			L.tileLayer(url, options).addTo(this.map);
+			var legend = L.control({ position: 'topright' });
+			legend.onAdd = function(map) {
+				var div = L.DomUtil.create('div', 'legend legend-background');
+				let labels = ['<strong>Categories</strong>']
+				const categories = [
+						'Substation',
+						'Substation w/ generator',
+						'Substation w/ shunt'
+					];
+				const color = ['rgb(34, 47, 151)', 'rgb(197, 62, 21)', 'rgb(119, 93, 86)']
+				for (var i = 0; i < categories.length; i++) {
+					div.innerHTML += '<span class="circle" style="background:' + color[i] + '"></span>' + categories[i] + '<br>';
+				}
+				// div.innerHTML = labels.join('<br>');
+				console.log(div)
+				return div;
+			};
+			legend.addTo(this.map);
 			// L.supermap.tiledMapLayer(url, option).addTo(map);
 			var option = {
 				// legend: {
@@ -198,7 +230,7 @@ export default {
 									params.data.attributes.Gen &&
 									params.data.attributes.Shunt
 								) {
-									console.log('wow you are lucky!')
+									console.log('wow you are lucky!');
 									return {
 										type: 'radial',
 										x: 0.5,
@@ -217,9 +249,9 @@ export default {
 										globalCoord: false
 									};
 								} else if (params.data.attributes.Gen) {
-									return '#ff5722'
+									return '#ff5722';
 								} else if (params.data.attributes.Shunt) {
-									return '#8d6e63'
+									return '#8d6e63';
 								} else {
 									return '#283593';
 								}
@@ -856,22 +888,30 @@ export default {
 				// branchIndex = i / this.branchArrLength;
 				fromID = this.linedata[index].id.split(',')[0];
 				toID = this.linedata[index].id.split(',')[1];
-				if(this.linedata[index].attributes.MVA>=0){
+				if (this.linedata[index].attributes.MVA >= 0) {
 					this.linedata[index].coords = [
 						[
 							this.$store.state.casedetail.content.Substation[
-								this.$store.state.casedetail.content.Bus[fromID]['Int.Sub Number'].toString()
+								this.$store.state.casedetail.content.Bus[fromID][
+									'Int.Sub Number'
+								].toString()
 							]['Double.Longitude'],
 							this.$store.state.casedetail.content.Substation[
-								this.$store.state.casedetail.content.Bus[fromID]['Int.Sub Number'].toString()
+								this.$store.state.casedetail.content.Bus[fromID][
+									'Int.Sub Number'
+								].toString()
 							]['Double.Latitude']
 						],
 						[
 							this.$store.state.casedetail.content.Substation[
-								this.$store.state.casedetail.content.Bus[toID]['Int.Sub Number'].toString()
+								this.$store.state.casedetail.content.Bus[toID][
+									'Int.Sub Number'
+								].toString()
 							]['Double.Longitude'],
 							this.$store.state.casedetail.content.Substation[
-								this.$store.state.casedetail.content.Bus[toID]['Int.Sub Number'].toString()
+								this.$store.state.casedetail.content.Bus[toID][
+									'Int.Sub Number'
+								].toString()
 							]['Double.Latitude']
 						]
 					];
@@ -879,22 +919,29 @@ export default {
 					this.linedata[index].coords = [
 						[
 							this.$store.state.casedetail.content.Substation[
-								this.$store.state.casedetail.content.Bus[toID]['Int.Sub Number'].toString()
+								this.$store.state.casedetail.content.Bus[toID][
+									'Int.Sub Number'
+								].toString()
 							]['Double.Longitude'],
 							this.$store.state.casedetail.content.Substation[
-								this.$store.state.casedetail.content.Bus[toID]['Int.Sub Number'].toString()
+								this.$store.state.casedetail.content.Bus[toID][
+									'Int.Sub Number'
+								].toString()
 							]['Double.Latitude']
 						],
 						[
 							this.$store.state.casedetail.content.Substation[
-								this.$store.state.casedetail.content.Bus[fromID]['Int.Sub Number'].toString()
+								this.$store.state.casedetail.content.Bus[fromID][
+									'Int.Sub Number'
+								].toString()
 							]['Double.Longitude'],
 							this.$store.state.casedetail.content.Substation[
-								this.$store.state.casedetail.content.Bus[fromID]['Int.Sub Number'].toString()
+								this.$store.state.casedetail.content.Bus[fromID][
+									'Int.Sub Number'
+								].toString()
 							]['Double.Latitude']
 						]
 					];
-
 				}
 				// if ([0, 2, 3].includes(branchData[index * branchArrLength]))
 				// {
@@ -1019,7 +1066,8 @@ export default {
 				// overlayOpacity: 0.1,
 				steps: [
 					{
-						intro: 'Welcome to the final lab! For better performance, please use Chrome or Firefox.'
+						intro:
+							'Welcome to the final lab! For better performance, please use Chrome or Firefox.'
 					}
 				]
 			});
