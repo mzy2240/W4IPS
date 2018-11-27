@@ -152,17 +152,21 @@ export default {
 			}, 1000);
 		},
 		resizeChart() {
-			window.onresize = () => {
-				if (this.chart) {
-					this.chart.resize();
-				}
-			};
+			window.addEventListener("resize", () => { this.chart.resize();});
+			// window.onresize = () => {
+			// 	console.log('resizing!')
+			// 	console.log(this.chart)
+			// 	if (this.chart) {
+			// 		console.log('YES')
+			// 		this.chart.resize();
+			// 	}
+			// };
 		}
 	},
 	mounted() {
 		this.initChart();
-		this.updateATC();
 		this.resizeChart();
+		this.updateATC();
 	},
 	beforeDestroy() {
 		clearInterval(this.Process);
