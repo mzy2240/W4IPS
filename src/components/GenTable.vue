@@ -134,7 +134,7 @@ export default {
 				{
 					text: 'Generator',
 					align: 'left',
-					sortable: false,
+					// sortable: false,
 					value: 'name',
 					width: '15%'
 				},

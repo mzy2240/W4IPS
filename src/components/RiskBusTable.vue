@@ -81,7 +81,7 @@ export default {
 				{
 					text: 'Bus',
 					align: 'left',
-					sortable: false,
+					// sortable: false,
 					value: 'name'
 				},
 				{ text: 'Vpu', value: 'Vpu' },

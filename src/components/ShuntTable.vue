@@ -80,7 +80,7 @@ export default {
 				{
 					text: 'Shunt',
 					align: 'left',
-					sortable: false,
+					// sortable: false,
 					value: 'name'
 				},
 				{ text: 'Status', value: 'Status' },

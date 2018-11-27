@@ -80,7 +80,7 @@ export default {
 				{
 					text: 'Branch',
 					align: 'left',
-					sortable: false,
+					// sortable: false,
 					value: 'name'
 				},
 				{ text: 'Ratio (%)', value: 'Ratio' },
