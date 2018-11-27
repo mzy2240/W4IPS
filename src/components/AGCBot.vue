@@ -32,7 +32,7 @@ export default {
 						}
 					}
 				}
-			}, 5000);
+			}, 3000);
 		},
 		dispatchAGC(units) {
 			if (units.length > 1) {
