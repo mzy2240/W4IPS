@@ -36,7 +36,7 @@ export default new Vuex.Store({
 		badgeShow: false,
 		subDetail: {},
 		busDetail: {},
-		totalCapacity: (function() {
+		totalCapacity: (function () {
 			var temp = 0;
 			for (let ele in areadetail.content.Gen) {
 				if (casedetail.content.Gen[ele]['Single.MW Max Limit'] != 0) {
@@ -91,7 +91,7 @@ export default new Vuex.Store({
 		genStat: [],
 		rIndex: 100,
 		simOver: 0,
-		genAction: {Gen: {}, Load: {}, Shunt: {}, Branch: {}}
+		genAction: { Gen: {}, Load: {}, Shunt: {}, Branch: {} }
 	},
 	getters: {
 		getPubStatus(state) {
@@ -252,7 +252,7 @@ export default new Vuex.Store({
 		updateSelectedGens(state, payload) {
 			state.selectedGens = payload;
 		},
-		updateSelectedLoads(state, payload){
+		updateSelectedLoads(state, payload) {
 			state.selectedLoads = payload;
 		},
 		triggerAlarm(state, payload) {
@@ -274,6 +274,10 @@ export default new Vuex.Store({
 		resetTotalCost(state) {
 			state.totalCost = 0;
 			state.totalMWh = 0;
+			state.genData = state.genData.map(e => {
+				e.AGC = false;
+				return e;
+			});
 		},
 		addMWh(state, payload) {
 			state.totalMWh = state.totalMWh + payload;
@@ -389,17 +393,17 @@ export default new Vuex.Store({
 			state.rIndex = payload;
 		},
 		setSimOver(state) {
-			state.simOver ++;
+			state.simOver++;
 		},
 		recordAction(state, payload) {
-			if(state.genAction[payload[0]][payload[1]]){
+			if (state.genAction[payload[0]][payload[1]]) {
 				state.genAction[payload[0]][payload[1]].push(state.currentTime)
 			} else {
 				state.genAction[payload[0]][payload[1]] = [state.currentTime]
 			}
 		},
 		resetAction(state) {
-			state.genAction = {Gen: {}, Load: {}, Shunt: {}, Branch: {}}
+			state.genAction = { Gen: {}, Load: {}, Shunt: {}, Branch: {} }
 		}
 	},
 	actions: {
