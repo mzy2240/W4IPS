@@ -181,7 +181,7 @@ export default {
 						data: RIndexArray,
 						markPoint: {
 							symbol: 'triangle',
-							symbolSize: 10,
+							symbolSize: 8,
 							itemStyle: {
 								color: 'blue'
 							},
