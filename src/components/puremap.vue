@@ -1000,38 +1000,20 @@ export default {
 		// // this.onDrawLines();
 		// this.updateLines();
 		this.updateLinesCycle();
-		// if (this.$store.state.showTour) {
-		// 	var intro = introJs();
-		// 	intro.setOptions({
-		// 		showStepNumbers: false,
-		// 		// overlayOpacity: 0.1,
-		// 		steps: [
-		// 			{
-		// 				intro: 'Welcome to the 460 final lab!'
-		// 			},
-		// 			{
-		// 				element: '#step3',
-		// 				intro: 'This marquee shows the status of the current simulation.',
-		// 				position: 'bottom'
-		// 			},
-		// 			{
-		// 				element: '#step4',
-		// 				intro:
-		// 					'This digital clock shows the simulation time (not the actual local time).',
-		// 				position: 'bottom',
-		// 				highlightClass: 'customHighlightClass'
-		// 			},
-		// 			{
-		// 				element: '#step5',
-		// 				intro:
-		// 					'Click the right-bottom button to toggle the dynamic plotting.',
-		// 				position: 'right'
-		// 			}
-		// 		]
-		// 	});
-		// 	this.$store.commit('disableTour');
-		// 	intro.start();
-		// }
+		if (this.$store.state.showTour) {
+			var intro = introJs();
+			intro.setOptions({
+				showStepNumbers: false,
+				// overlayOpacity: 0.1,
+				steps: [
+					{
+						intro: 'Welcome to the final lab! For better performance, please use Chrome or Firefox.'
+					}
+				]
+			});
+			this.$store.commit('disableTour');
+			intro.start();
+		}
 	},
 	beforeDestroy() {
 		clearInterval(this.Interval);
