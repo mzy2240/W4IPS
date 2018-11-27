@@ -12,7 +12,7 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="tabledata" v-model="selected" select-all hide-actions item-key="name">
+				<v-data-table :headers="headers" :items="tabledata" v-model="selected" select-all hide-actions disable-initial-sort item-key="name">
 					<template slot="headerCell" slot-scope="props">
 						<v-tooltip bottom>
 							<span slot="activator">
