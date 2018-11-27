@@ -78,10 +78,40 @@ export default {
 			const RIndexArray = this.$store.state.report.score.map(function(item) {
 				return item['RIndex'];
 			});
+			const userTimeArray = this.$store.state.report.user.map(function(item) {
+				return item['time'] - 1280941800;
+			});
+			const userEventArray = this.$store.state.report.user.map((item) => {
+				return item['event'][0] + ' ' + this.findName([item['event'][0], item['event'][1].split(",")[0]+','+item['event'][1].split(",")[1]]) + ': ' + item['event'][2];
+			});
+			let x,y,
+				markPointData = [];
+			for (let i in userTimeArray) {
+				x = timeArray.indexOf(userTimeArray[i]);
+				y = RIndexArray[x];
+				markPointData.push({
+					name: 'User',
+					xAxis: x,
+					yAxis: y,
+					emphasis: {
+						label: {
+							show: true,
+							position: 'top',
+							color: 'auto',
+							formatter: userEventArray[i]
+						}
+					}
+				});
+			}
 			var chart = echarts.init(document.getElementById('chart'));
 			chart.setOption({
 				title: {
-					text: 'Average RIndex: ' + math.mean(RIndexArray).toFixed(0).toString(),
+					text:
+						'Average RIndex: ' +
+						math
+							.mean(RIndexArray)
+							.toFixed(0)
+							.toString(),
 					left: 'left'
 				},
 				tooltip: {
@@ -149,9 +179,17 @@ export default {
 						type: 'line',
 						id: 'line',
 						data: RIndexArray,
+						markPoint: {
+							symbol: 'triangle',
+							symbolSize: 10,
+							itemStyle: {
+								color: 'blue'
+							},
+							data: markPointData
+						},
 						markLine: {
 							silent: true,
-							symbol:'none',
+							symbol: 'none',
 							data: [
 								{
 									yAxis: 60
@@ -204,6 +242,13 @@ export default {
 			);
 			a.dispatchEvent(e);
 			this.show = false;
+		},
+		findName([type, id]){
+			if(type!= 'Branch') {
+				return this.$store.state.casedetail.content.Bus[this.$store.state.casedetail.content[type][id]['Int.Bus Number'].toString()]["String.Name"];
+			} else {
+				return id;
+			}	
 		}
 		// enterClicked() {
 		// 	this.activate();
