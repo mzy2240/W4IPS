@@ -159,16 +159,6 @@ export default {
 			L.tileLayer(url, options).addTo(this.map);
 			// L.supermap.tiledMapLayer(url, option).addTo(map);
 			var option = {
-				// legend:{
-				// 	oritent: 'vertical',
-				// 	data:[{
-				// 		name: 'sub',
-				// 		icon: 'circle',
-				// 		textStyle: {
-				// 			color: 'red'
-				// 		}
-				// 	}]
-				// },
 				series: [
 					{
 						id: 'sub',
