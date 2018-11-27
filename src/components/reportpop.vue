@@ -244,8 +244,10 @@ export default {
 			this.show = false;
 		},
 		findName([type, id]){
-			if(type!= 'Branch') {
+			if(['Gen', 'Shunt'].includes(type)) {
 				return this.$store.state.casedetail.content.Bus[this.$store.state.casedetail.content[type][id]['Int.Bus Number'].toString()]["String.Name"];
+			} else if (type == 'Load') {
+				return id;
 			} else {
 				return id;
 			}	
