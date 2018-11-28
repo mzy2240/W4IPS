@@ -206,15 +206,15 @@ export default {
 						silent: false,
 						zlevel: 10,
 						z: 10,
-						symbol: 'pin',
-						symbolSize: 30,
+						// symbol: 'pin',
+						// symbolSize: 30,
 						lineStyle: {
 							width: 10,
-							color: '#bef67a',
+							color: '#f44336',
 							// type: 'dotted',
 							shadowColor: '#ccff90',
 							shadowBlur: 20,
-							opacity: 1
+							opacity: 0.5
 						},
 						label: {
 							show: true,
