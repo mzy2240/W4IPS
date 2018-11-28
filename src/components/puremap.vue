@@ -871,6 +871,7 @@ export default {
 		updateLines() {
 			// const temp = this.$store.state.parsedData;
 			// const branchData = temp.slice(this.anchor, this.anchor + this.dataLength);
+			// console.log('AAA')
 			const branchData = this.$store.state.branchData;
 			// let branchIndex;
 			let statusTemp = [];
@@ -885,10 +886,13 @@ export default {
 				statusTemp.push(branchData[index * branchArrLength]);
 				this.linedata[index].attributes.MVA =
 					branchData[index * branchArrLength + 3];
+				this.linedata[index].attributes.MVFrom =
+					branchData[index * branchArrLength + 1];
 				// branchIndex = i / this.branchArrLength;
 				fromID = this.linedata[index].id.split(',')[0];
 				toID = this.linedata[index].id.split(',')[1];
-				if (this.linedata[index].attributes.MVA >= 0) {
+				if (this.linedata[index].attributes.MVFrom >= 0) {
+					// console.log(this.linedata[index].attributes.MVA)
 					this.linedata[index].coords = [
 						[
 							this.$store.state.casedetail.content.Substation[
@@ -916,6 +920,7 @@ export default {
 						]
 					];
 				} else {
+					// console.log('NO')
 					this.linedata[index].coords = [
 						[
 							this.$store.state.casedetail.content.Substation[
