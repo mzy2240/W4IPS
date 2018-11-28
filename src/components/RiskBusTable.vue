@@ -12,7 +12,7 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table :headers="headers" :items="$store.state.riskBuses" v-model="selected" select-all disable-initial-sort item-key="name">
+				<v-data-table :headers="headers" :items="$store.state.riskBuses" :rows-per-page-items="defaultRowItems" v-model="selected" select-all disable-initial-sort item-key="name">
 				<!-- <v-data-table :headers="headers" :items="formatRiskBuses" v-model="selected" hide-actions select-all item-key="name"> -->
 					<template slot="headerCell" slot-scope="props">
 						<v-tooltip bottom>
@@ -96,7 +96,7 @@ export default {
 			violateBuses: [],
 			selected: [],
 			defaultRowItems: [
-				15,
+				10,
 				30,
 				{ text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
 			]

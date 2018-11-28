@@ -185,7 +185,7 @@ export default {
 					div.innerHTML += '<span class="circle" style="background:' + color[i] + '"></span>' + categories[i] + '<br>';
 				}
 				// div.innerHTML = labels.join('<br>');
-				console.log(div)
+				// console.log(div)
 				return div;
 			};
 			legend.addTo(this.map);

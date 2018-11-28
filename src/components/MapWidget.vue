@@ -170,7 +170,11 @@ export default {
 							color: 'black',
 							// fontWeight: 'bold',
 							formatter: function(params) {
-								return 'Bus#' + params.name;
+								if(params.user != undefined) {
+									return params.user + ": Bus#" + params.name
+								} else {
+									return 'Bus#' + params.name;
+								}
 							}
 						},
 						data: []

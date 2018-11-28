@@ -36,7 +36,7 @@ export default {
 	props: {
 		subtopic: {
 			type: Array || String || Object,
-			default: () => ['ds/data', 'ds/note', 'ds/system', 'user/schedule']
+			default: () => ['ds/data', 'ds/note', 'ds/system', 'user/schedule', 'user/share']
 		},
 		pubtopic: {
 			type: String || Array || Object,
@@ -76,7 +76,8 @@ export default {
 			'pausesimtrigger',
 			'continuesimtrigger',
 			'abortsimtrigger',
-			'getSchedule'
+			'getSchedule',
+			'ViolatedBuses'
 		])
 	},
 	watch: {
