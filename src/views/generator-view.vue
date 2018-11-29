@@ -84,6 +84,13 @@
 								</div>
 							</v-widget>
 						</v-flex>
+						<v-flex xs12>
+							<m-widget title="Load Forecast" content-bg="white">
+								<div slot="widget-content">
+									<loadForecast></loadForecast>
+								</div>
+							</m-widget>
+						</v-flex>
 						<v-flex lg12 sm12 xs12>
 							<v-widget title="Area Generation Overview" content-bg="white">
 								<div slot="widget-content">
@@ -124,6 +131,8 @@
 // import mapchart from '@/components/map';
 import gentable from '@/components/GenTable';
 import VWidget from '@/components/VWidget';
+import MWidget from '@/components/MWidget';
+import loadForecast from '@/components/loadForecast';
 import chartStatistic from '@/components/chartStatistic2';
 import Material from 'vuetify/es5/util/colors';
 import MapWidget from '@/components/MapWidget';
@@ -145,7 +154,9 @@ export default {
 		VWidget,
 		chartStatistic,
 		MapWidget,
-		pie
+		pie,
+		MWidget,
+		loadForecast
 	},
 	watch: {
 		radios: function(newVal, oldVal){

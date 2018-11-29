@@ -141,7 +141,7 @@ export default {
 				{ text: 'Status', value: 'Status' },
 				{ text: 'MW', value: 'MW' },
 				// { text: 'Mvar', value: 'Mvar' },
-				{ text: 'Marginal Cost', value: 'MarginalCost' },
+				{ text: 'Operation Cost', value: 'MarginalCost' },
 				{ text: 'Fixed Cost', value: 'OperationCost' },
 				{ text: 'MW Setpoint', value: 'MWSetpoint' },
 				// { text: 'Vpu Setpoint', value: 'VpuSetpoint' },

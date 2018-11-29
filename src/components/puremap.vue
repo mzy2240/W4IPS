@@ -61,6 +61,13 @@
 								</div>
 							</v-widget>
 						</v-flex> -->
+						<v-flex xs12>
+							<m-widget title="Load Forecast" content-bg="white">
+								<div slot="widget-content">
+									<loadForecast></loadForecast>
+								</div>
+							</m-widget>
+						</v-flex>
 						<v-flex lg12 sm12 xs12>
 							<branchTable title="High-load Branches" :tabledata="$store.state.riskBranches"></branchTable>
 						</v-flex>
@@ -111,6 +118,7 @@ import pie from '@/components/pie';
 import branchTable from '@/components/RiskBranchTable';
 import chartStatistic from '@/components/chartStatistic';
 import Material from 'vuetify/es5/util/colors';
+import loadForecast from '@/components/loadForecast';
 // import L from 'leaflet';
 // import {tiledMapLayer} from '@supermap/iclient-leaflet';
 // import _ from 'lodash';
@@ -1114,7 +1122,8 @@ export default {
 		MiniStatistic,
 		pie,
 		branchTable,
-		chartStatistic
+		chartStatistic,
+		loadForecast
 	}
 };
 </script>
