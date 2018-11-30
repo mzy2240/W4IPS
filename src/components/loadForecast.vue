@@ -43,6 +43,7 @@ export default {
 				xAxis: {
 					type: 'category',
 					boundaryGap: false,
+					// minInterval:600*1000,
 					data: this.date
 				},
 				yAxis: {

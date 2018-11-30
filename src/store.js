@@ -72,6 +72,7 @@ export default new Vuex.Store({
 			comment: null
 		},
 		areaData: [],
+		areaLoad: [[], []],
 		data: [],
 		riskBuses: [],
 		riskBranches: [],
@@ -404,6 +405,13 @@ export default new Vuex.Store({
 		},
 		resetAction(state) {
 			state.genAction = { Gen: {}, Load: {}, Shunt: {}, Branch: {} }
+		},
+		setAreaLoad(state, payload) {
+			state.areaLoad[0].push(payload[0]);
+			state.areaLoad[1].push(payload[1]);
+		},
+		resetAreaLoad(state) {
+			state.areaLoad = [[],[]];
 		}
 	},
 	actions: {
