@@ -99,7 +99,7 @@
 							</v-widget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<MapWidget title="Location Assist"></MapWidget>
+							<MapWidget title="Location Assist (Gen)" focus='Gen'></MapWidget>
 						</v-flex>
 					</v-layout>
 				</v-flex>

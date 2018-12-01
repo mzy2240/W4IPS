@@ -30,7 +30,7 @@
 					<v-layout row wrap>
 						<v-flex lg12 sm12 xs12>
 							<v-flex lg12 sm12 xs12>
-								<MapWidget title="Location Assist"></MapWidget>
+								<MapWidget title="Location Assist (Load)" focus='Load'></MapWidget>
 							</v-flex>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>

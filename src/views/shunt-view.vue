@@ -12,7 +12,7 @@
 			<v-spacer></v-spacer>
 			<div class="page-header-right">
 				<h4 class="pr-1">
-					Hi {{$store.state.username}}  
+					Hi {{$store.state.username}}
 					<status-indicator :negative="$store.state.alarm" :positive="!$store.state.alarm" pulse></status-indicator>
 				</h4>
 			</div>
@@ -32,7 +32,7 @@
 							<bustable title="Violating Buses"></bustable>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<MapWidget title="Location Assist"></MapWidget>
+							<MapWidget title="Location Assist (Shunt)" focus='Shunt'></MapWidget>
 						</v-flex>
 					</v-layout>
 				</v-flex>

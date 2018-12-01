@@ -83,15 +83,15 @@ export default {
 					// sortable: false,
 					value: 'name'
 				},
-				{ text: 'Status', value: 'Status' },
+				{ text: 'Status', value: 'Status',align: 'left' },
 				// { text: 'MvarNom', value: 'MvarNom' },
-				{ text: 'Mvar', value: 'Mvar' },
-				{ text: 'Vpu', value: 'Vpu' },
-				{ text: 'FreqHz', value: 'FreqHz' },
+				{ text: 'Mvar', value: 'Mvar',align: 'right' },
+				{ text: 'Vpu', value: 'Vpu',align: 'right' },
+				{ text: 'FreqHz', value: 'FreqHz',align: 'right' },
 				// { text: 'MVA', value: 'MVA' },
 				// { text: 'MW setpoint', value: 'MWSet', sortable: false },
 				// { text: 'Vpu setpoint', value: 'VpuSet', sortable: false },
-				{ text: 'Actions', value: 'Actions', sortable: false }
+				{ text: 'Actions', value: 'Actions', sortable: false,align: 'right' }
 			],
 			shunts: [],
 			selected: [],

@@ -44,6 +44,9 @@ export default {
 		contentBg: {
 			type: String,
 			default: 'white'
+		},
+		focus: {
+			type: String
 		}
 	},
 	data() {
@@ -91,7 +94,17 @@ export default {
 						name: 'sub',
 						coordinateSystem: 'leaflet',
 						symbol: 'circle',
-						symbolSize: 7,
+						symbolSize: (value, params) => {
+							if (params.data.attributes.Gen && this.focus == 'Gen') {
+								return 10;
+							} else if (params.data.attributes.Shunt && this.focus == 'Shunt') {
+								return 10;
+							} else if(this.focus == 'Load') {
+								return 7;
+							} else {
+								return 0;
+							}
+						},
 						// showEffectOn: 'emphasis',
 						// zindex: 2,
 						zlevel: 3,
@@ -115,6 +128,8 @@ export default {
 						coordinateSystem: 'leaflet',
 						progressive: 100,
 						progressiveThreshold: 200,
+						// symbol: ['none', 'arrow'],
+						// symbolSize: 6,
 						silent: false,
 						lineStyle: {
 							width: 1,
@@ -294,43 +309,6 @@ export default {
 		getData() {
 			const temp = this.$store.state.casedetail;
 			if (temp.content.type == 'dsmDictionary') {
-				for (let ele in temp.content.Substation) {
-					this.subdata.push({
-						id: ele,
-						name: temp.content.Substation[ele]['String.Name'],
-						value: [
-							temp.content.Substation[ele]['Double.Longitude'],
-							temp.content.Substation[ele]['Double.Latitude']
-						],
-						attributes: {},
-						bus: []
-					});
-				}
-				for (let ele in temp.content.Branch) {
-					const fromid = ele.split(',')[0];
-					const toid = ele.split(',')[1];
-					const coords = [
-						this.subdata[temp.content.Bus[fromid]['Int.Sub Number'] - 1].value,
-						this.subdata[temp.content.Bus[toid]['Int.Sub Number'] - 1].value
-					];
-					this.linedata.push({
-						id: ele,
-						name:
-							this.subdata[
-								temp.content.Bus[fromid]['Int.Sub Number'] - 1
-							].name.split('_')[0] +
-							'-' +
-							this.subdata[
-								temp.content.Bus[toid]['Int.Sub Number'] - 1
-							].name.split('_')[0],
-						coords: coords,
-						count: 1,
-						attributes: {
-							MVALimit: temp.content.Branch[ele]['Single.MVA Limit'],
-							volt: temp.content.Bus[fromid]['Single.Nominal kV']
-						}
-					});
-				}
 				this.subdetail = temp.content.Substation;
 				this.busdetail = temp.content.Bus;
 				for (let ele in this.subdetail) {
@@ -357,7 +335,7 @@ export default {
 				series: [
 					{
 						id: 'sub',
-						data: this.subdata
+						data: this.$store.state.subData
 					}
 				]
 			});
@@ -367,7 +345,7 @@ export default {
 				series: [
 					{
 						id: 'lines',
-						data: this.linedata
+						data: this.$store.state.lineData
 					}
 				]
 			});
