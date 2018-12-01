@@ -405,7 +405,7 @@ export default {
 			this.$store.commit('setBranchData', this.branchData);
 			this.$store.commit('setData', temp);
 			this.$store.commit('setAreaData', this.areaData);
-			this.$store.commit('setAreaLoad', [this.$store.state.currentTime, this.areaData[2]]);
+			this.$store.commit('setAreaLoad', ['2018/11/29 ' + this.$store.state.clockTime, this.areaData[2]]);
 			for (let i in this.gens) {
 				this.gens[i].MW =
 					temp[this.anchor + 6 + this.genArray[i] * this.genDataLength]; // MW is the 6th in the gen data

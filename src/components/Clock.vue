@@ -22,6 +22,7 @@ export default {
 				s = (s < 10) ? "0" + s : s;
 
 				var time = m + ":" + s + ":" + "00";  // In this case, if the m goes from 59 to 0, the display will goes from 11 to 0 which is not what we want
+				this.$store.commit('setClock', time);
 
                 // var time = h + ":" + m + ":" + s;
                 document.getElementById("MyClockDisplay").innerText = time;

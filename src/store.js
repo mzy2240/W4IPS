@@ -36,7 +36,7 @@ export default new Vuex.Store({
 		badgeShow: false,
 		subDetail: {},
 		busDetail: {},
-		totalCapacity: (function () {
+		totalCapacity: (function() {
 			var temp = 0;
 			for (let ele in areadetail.content.Gen) {
 				if (casedetail.content.Gen[ele]['Single.MW Max Limit'] != 0) {
@@ -72,7 +72,7 @@ export default new Vuex.Store({
 			comment: null
 		},
 		areaData: [],
-		areaLoad: [[], []],
+		areaLoad: [],
 		data: [],
 		riskBuses: [],
 		riskBranches: [],
@@ -92,7 +92,8 @@ export default new Vuex.Store({
 		genStat: [],
 		rIndex: 100,
 		simOver: 0,
-		genAction: { Gen: {}, Load: {}, Shunt: {}, Branch: {} }
+		genAction: { Gen: {}, Load: {}, Shunt: {}, Branch: {} },
+		clockTime: null
 	},
 	getters: {
 		getPubStatus(state) {
@@ -398,20 +399,27 @@ export default new Vuex.Store({
 		},
 		recordAction(state, payload) {
 			if (state.genAction[payload[0]][payload[1]]) {
-				state.genAction[payload[0]][payload[1]].push(state.currentTime)
+				state.genAction[payload[0]][payload[1]].push(state.currentTime);
 			} else {
-				state.genAction[payload[0]][payload[1]] = [state.currentTime]
+				state.genAction[payload[0]][payload[1]] = [state.currentTime];
 			}
 		},
 		resetAction(state) {
-			state.genAction = { Gen: {}, Load: {}, Shunt: {}, Branch: {} }
+			state.genAction = { Gen: {}, Load: {}, Shunt: {}, Branch: {} };
 		},
 		setAreaLoad(state, payload) {
-			state.areaLoad[0].push(payload[0]);
-			state.areaLoad[1].push(payload[1]);
+			if (state.status == 'running') {
+				state.areaLoad.push(payload);
+			}
 		},
 		resetAreaLoad(state) {
-			state.areaLoad = [[],[]];
+			state.areaLoad = [];
+		},
+		setClock(state, payload) {
+			state.clockTime = payload;
+		},
+		resetClock(state, payload) {
+			state.clockTime = "10:00:00";
 		}
 	},
 	actions: {
