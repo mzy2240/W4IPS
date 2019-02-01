@@ -69,7 +69,7 @@
 							</v-layout>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<v-widget title="Power Import Schedule" content-bg="white">
+							<v-widget title="Power Import Schedule" content-bg="dark">
 								<div slot="widget-content">
 									<!-- <v-container> -->
 									<v-radio-group v-model="$store.state.schedule" :mandatory="false">

@@ -34,7 +34,7 @@
 							</v-flex>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<v-widget title="Tool2" content-bg="white">
+							<v-widget title="Tool2" content-bg="dark">
 								<div slot="widget-content" class='cardiv'>
 									<v-card dark color="light-blue">
 										<v-card-text class="px-0">Tool2</v-card-text>

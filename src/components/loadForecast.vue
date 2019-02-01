@@ -100,7 +100,7 @@ export default {
 					].join(':');
 				this.formatData.push([dateString, this.data[i - 1]]);
 			}
-			this.chart = echarts.init(document.getElementById('chart'));
+			this.chart = echarts.init(document.getElementById('chart'), 'dark');
 			var self = this;
 			this.chart.setOption({
 				tooltip: {

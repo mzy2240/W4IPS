@@ -1,10 +1,10 @@
 <template>
 	<div>
-		<v-app v-if="showDash" class="app">
+		<v-app dark v-if="showDash" class="app">
 			<dashboard v-if="showDash"></dashboard>
 		</v-app>
 		<!-- <v-app class="app"></v-app> -->
-		<v-app v-else id="login" class="primary">
+		<v-app dark v-else id="login" class="primary">
 			<v-content>
 				<v-container fluid fill-height>
 					<v-layout align-center justify-center>

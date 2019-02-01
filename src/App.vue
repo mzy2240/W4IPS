@@ -1,7 +1,7 @@
 // App.vue
 
 <template>
-	<v-app>
+	<v-app dark>
 		<Login></Login>
 		<!-- <Spinner v-if="loading" name="pacman" color="#2243a5" class="loading" />
 		<dashboard v-bind:style="styleDashboard"></dashboard> -->

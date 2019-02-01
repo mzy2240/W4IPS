@@ -28,7 +28,7 @@
 							<MapWidget title="Location Assist"></MapWidget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<v-widget title="GMD" content-bg="white">
+							<v-widget title="GMD" content-bg="dark">
 								<div slot="widget-header-action">
 									<v-switch class="mt-3" v-model="GMDSwitch"></v-switch>
 								</div>
