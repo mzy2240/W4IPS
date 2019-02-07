@@ -85,14 +85,14 @@
 							</v-widget>
 						</v-flex>
 						<v-flex xs12>
-							<m-widget title="Load Forecast" content-bg="white">
+							<m-widget title="Load Forecast" content-bg="dark">
 								<div slot="widget-content">
 									<loadForecast></loadForecast>
 								</div>
 							</m-widget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<v-widget title="Area Generation Overview" content-bg="white">
+							<v-widget title="Area Generation Overview" content-bg="dark">
 								<div slot="widget-content">
 									<pie :areatotal="$store.state.areaData[0]"></pie>
 								</div>

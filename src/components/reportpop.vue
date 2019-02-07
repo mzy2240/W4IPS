@@ -103,7 +103,7 @@ export default {
 					}
 				});
 			}
-			var chart = echarts.init(document.getElementById('chart'));
+			var chart = echarts.init(document.getElementById('chart'), 'dark');
 			chart.setOption({
 				title: {
 					text:
@@ -250,7 +250,7 @@ export default {
 				return id;
 			} else {
 				return id;
-			}	
+			}
 		}
 		// enterClicked() {
 		// 	this.activate();

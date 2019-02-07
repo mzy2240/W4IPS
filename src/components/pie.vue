@@ -49,7 +49,7 @@ export default {
 			this.genDataLength = arrlength;
 		},
 		initdraw() {
-			this.chart = echarts.init(document.getElementById('pie'));
+			this.chart = echarts.init(document.getElementById('pie'), 'dark');
 			this.chart.setOption({
 				legend: { bottom: '0' },
 				color: [
@@ -74,7 +74,7 @@ export default {
 							borderRadius: 4,
 							rich: {
 								a: {
-									// color: '#999',
+									color: '#000',
 									lineHeight: 22,
 									align: 'center'
 								},
