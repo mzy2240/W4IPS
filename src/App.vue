@@ -82,7 +82,7 @@ export default {
 	display: inline-block;
 }
 .legend-background {
-	background: rgba(255,255,255,0.8)
+	background: rgba(0,0,0,0.5)
 }
 /* .dashboard {
 	filter:blur(5px);

@@ -41,11 +41,11 @@
 				<v-flex lg8 sm8 xs12>
 					<m-widget title="Interactive Site Map" content-bg="white" @clicked="restore">
 						<!-- <v-flex d-flex xs8 style="height: auto;"> -->
-						<div slot="widget-content">
+						<div slot="widget-content" id="main" class="chart">
 							<!-- <div class="legend">
 								<status-indicator></status-indicator>Substation &nbsp; <status-indicator active></status-indicator>Substation with generator  &nbsp; <status-indicator intermediary></status-indicator>Substation with shunt
 							</div> -->
-							<div id="main" class="chart"></div>
+							<!-- <div id="main" class="chart"></div> -->
 						</div>
 					</m-widget>
 				</v-flex>
