@@ -44,8 +44,8 @@ export default {
 		},
 		address: {
 			type: String,
-			// default: '165.91.214.236:8083/mqtt'
-			default: '104.254.244.143:8083/mqtt'
+			default: '165.91.215.105:8083/mqtt'
+			//default: '104.254.244.143:8083/mqtt'
 		},
 		qos: {
 			type: Number,
