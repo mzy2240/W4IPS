@@ -40,7 +40,7 @@
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-left">{{ props.item.vStatus }}</td>
 							<td class="text-xs-right">
-								<v-chip label small :color="getColorByValue(props.item.MW, props.item.MWMax)" text-color="black" class="chip">{{ props.item.MW }}</v-chip>
+								<v-chip label small :color="getColorByValue(props.item.MW, props.item.MWMax)" text-color="white" class="chip">{{ props.item.MW }}</v-chip>
 							</td>
 							<!-- <td class="text-xs-right">{{ props.item.Mvar }}</td> -->
 							<td class="text-xs-right">{{ props.item.MarginalCost }}</td>
