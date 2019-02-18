@@ -71,6 +71,13 @@
 						<v-flex lg12 sm12 xs12>
 							<branchTable title="High-load Branches" :tabledata="$store.state.riskBranches"></branchTable>
 						</v-flex>
+						<v-flex xs12>
+							<m-widget title="Substation OneLine Diagram" content-bg="white">
+								<div slot="widget-content">
+									<highTopo></highTopo>
+								</div>
+							</m-widget>
+						</v-flex>
 					</v-layout>
 				</v-flex>
 			</v-layout>
@@ -119,6 +126,7 @@ import branchTable from '@/components/RiskBranchTable';
 import chartStatistic from '@/components/chartStatistic';
 import Material from 'vuetify/es5/util/colors';
 import loadForecast from '@/components/loadForecast';
+import highTopo from '@/components/highTopo';
 // import L from 'leaflet';
 // import {tiledMapLayer} from '@supermap/iclient-leaflet';
 // import _ from 'lodash';
@@ -1123,7 +1131,8 @@ export default {
 		pie,
 		branchTable,
 		chartStatistic,
-		loadForecast
+		loadForecast,
+		highTopo
 	}
 };
 </script>
