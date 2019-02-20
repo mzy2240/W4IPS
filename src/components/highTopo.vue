@@ -1,5 +1,8 @@
 <template>
-  <div id="testTopo" class="orangetest">
+  <div
+    id="testTopo"
+    class="orangetest"
+  >
   </div>
 </template>
 
@@ -20,7 +23,9 @@ export default {
 
 			var view = gv.getView();
 			view.className = 'topo';
-			document.getElementById('testTopo').appendChild(view);
+			var parent = document.getElementById('testTopo');
+			console.log(parent);
+			parent.appendChild(view);
 
 			gv.addBottomPainter(function(g) {
 				var viewRect = gv.getViewRect();
@@ -45,7 +50,7 @@ export default {
 
 				g.restore();
 			});
-			console.log("Finish rendering")
+			console.log('Finish rendering');
 		}
 	},
 	created() {},
@@ -57,8 +62,13 @@ export default {
 
 <style>
 .topo {
-	height: 200px;
-	width: 100%;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	/* height: 200px;
+	width: 100%; */
 }
 .orangetest {
 	height: 300px;
