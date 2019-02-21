@@ -3,7 +3,8 @@ const path = require('path')
 
 module.exports = {
 	// options...
-	baseUrl: '/~zeyumao2/',
+	baseUrl: './~zeyumao2/',
+	// assetsDir: '/static/',
 	chainWebpack: config => {
 		const types = ['vue-modules', 'vue', 'normal-modules', 'normal'];
 		types.forEach(type =>

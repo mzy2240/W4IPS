@@ -1,14 +1,14 @@
 <template>
-  <div
-    id="testTopo"
-    class="orangetest"
-  >
-    <!-- <div class="topo"></div> -->
+  <div>
+    <div id="testTopo" class="orangetest">
+      <!-- <div class="topo"></div> -->
+    </div>
   </div>
 </template>
 
 <script>
-require('../../static/utils/core/ht.js');
+// import * as ht from "../../static/utils/core/ht";
+
 export default {
 	data() {
 		return {};
@@ -19,24 +19,19 @@ export default {
 			var node = new ht.Node();
 			node.setPosition(20, 20);
 			node.setName('node');
-
 			gv.getDataModel().add(node);
-
 			var view = gv.getView();
 			view.className = 'topo';
 			var parent = document.getElementById('testTopo');
 			console.log(parent);
 			parent.appendChild(view);
-
 			gv.addBottomPainter(function(g) {
 				var viewRect = gv.getViewRect();
 				var zoom = gv.getZoom();
-
 				var startX = viewRect.x;
 				var endX = startX + viewRect.width;
 				var startY = viewRect.y;
 				var endY = startY + viewRect.height;
-
 				g.save();
 				g.beginPath();
 				g.fillStyle = '#ddd';
@@ -48,9 +43,9 @@ export default {
 					}
 				}
 				g.fill();
-
 				g.restore();
 			});
+			gv.getCanvas().style.left = '0';
 			console.log('Finish rendering');
 		}
 	},
