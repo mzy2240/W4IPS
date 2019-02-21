@@ -51,6 +51,7 @@ export default {
 
 				g.restore();
 			});
+			gv.getCanvas().style.left = '0';
 			console.log('Finish rendering');
 		}
 	},
@@ -72,6 +73,7 @@ export default {
 	height: 200px;
 	width: 100%;
 }
+
 .orangetest {
 	height: 300px;
 	width: 100%;
