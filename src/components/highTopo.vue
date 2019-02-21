@@ -67,6 +67,7 @@ export default {
 	height: 200px;
 	width: 100%;
 }
+
 .orangetest {
 	height: 300px;
 	width: 100%;
