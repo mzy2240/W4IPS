@@ -3,6 +3,7 @@
     id="testTopo"
     class="orangetest"
   >
+    <!-- <div class="topo"></div> -->
   </div>
 </template>
 
@@ -63,12 +64,13 @@ export default {
 <style>
 .topo {
 	position: absolute;
-	left: 0;
+	/* left: 0;
 	right: 0;
 	top: 0;
-	bottom: 0;
-	/* height: 200px;
-	width: 100%; */
+	bottom: 0; */
+	/* background-color: rgb(255, 255, 255); */
+	height: 200px;
+	width: 100%;
 }
 .orangetest {
 	height: 300px;
