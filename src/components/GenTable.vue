@@ -45,9 +45,9 @@
 							<!-- <td class="text-xs-right">{{ props.item.Mvar }}</td> -->
 							<td class="text-xs-right">{{ props.item.MarginalCost }}</td>
 							<td class="text-xs-right">{{ props.item.OperationCost }}</td>
-							<td class="text-xs-right">
+							<td>
 								<v-edit-dialog :return-value.sync="props.item.MWSetpoint" large lazy @save="savemws(props.item)" @open="openmws(props.item)">
-									<div>{{ props.item.MWSetpoint }}</div>
+									{{ props.item.MWSetpoint }}
 									<div slot="input" class="mt-3 title">Update MW Setpoint</div>
 									<v-text-field slot="input" v-model="mws" label="Edit" single-line autofocus></v-text-field>
 								</v-edit-dialog>
