@@ -9,7 +9,7 @@
 				</v-tabs>
 			</v-toolbar>
 			<v-tabs-items v-model="currentItem">
-				<v-tab-item :id="'tab-General'" :key="'General'" lazy>
+				<v-tab-item :value="'tab-General'" :key="'General'" lazy>
 					<v-card>
 						<v-card-title class='headline'>
 							Data
@@ -27,7 +27,7 @@
 						</v-data-table>
 					</v-card>
 				</v-tab-item>
-				<v-tab-item v-for="(item, index) in tabs" :id="'tab-' + item" :key="item" lazy>
+				<v-tab-item v-for="(item, index) in tabs" :value="'tab-' + item" :key="item" lazy>
 					<popchild v-if="show" :name="item" :detail="children[index]" :subname="name" :show="currentItem" lazy></popchild>
 				</v-tab-item>
 			</v-tabs-items>

@@ -5,9 +5,10 @@
 				<v-card-title>
 					<span class="title">Report</span>
 				</v-card-title>
-				<v-card-media>
+				<!-- <v-card-media>
 					<div id='chart' class="chart"></div>
-				</v-card-media>
+				</v-card-media> -->
+				<div id='chart' class="chart"></div>
 				<v-card-text>
 					<v-textarea name="input-7-1" v-model="comment" box label="Comment (optional)" auto-grow></v-textarea>
 				</v-card-text>

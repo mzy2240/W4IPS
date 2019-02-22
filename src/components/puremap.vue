@@ -5,11 +5,7 @@
 			<div class="page-header-left">
 				<h3 class="pr-3">Overview</h3>
 			</div>
-			<v-breadcrumbs divider="-">
-				<v-breadcrumbs-item>
-					<v-icon larg>home</v-icon>
-				</v-breadcrumbs-item>
-			</v-breadcrumbs>
+			<v-icon larg>home</v-icon>
 			<v-spacer></v-spacer>
 			<div class="page-header-right">
 				<h4 class="pr-1">
