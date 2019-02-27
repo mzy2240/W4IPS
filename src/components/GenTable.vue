@@ -136,14 +136,14 @@ export default {
 					align: 'left',
 					// sortable: false,
 					value: 'name',
-					width: '15%'
+					width: '10%'
 				},
 				{ text: 'Status', value: 'Status' },
 				{ text: 'MW', value: 'MW' },
 				// { text: 'Mvar', value: 'Mvar' },
-				{ text: 'Operation Cost', value: 'MarginalCost' },
+				{ text: 'Operation Cost', value: 'MarginalCost', align: 'left' },
 				{ text: 'Fixed Cost', value: 'OperationCost' },
-				{ text: 'MW Setpoint', value: 'MWSetpoint' },
+				{ text: 'MW Setpoint', value: 'MWSetpoint', align: 'right' },
 				// { text: 'Vpu Setpoint', value: 'VpuSetpoint' },
 				{ text: 'MW Max Limit', value: 'MWMax' },
 				// { text: 'MW Min Limit', value: 'MWMin' },
