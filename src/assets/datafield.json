@@ -284,5 +284,15 @@
 			"text": "AmpsTo",
 			"value": "AmpsTo"
 		}
+	],
+	"Transformer": [
+		{
+			"text": "Phase",
+			"value": "Degree"
+		},
+		{
+			"text": "Tap",
+			"value": "Ratio"
+		}
 	]
 }
