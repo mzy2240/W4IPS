@@ -22,20 +22,26 @@ export default {
 			busData: [],
 			violateBuses: [],
 			branchData: [],
+			transformerData: [],
 			branchAnchor: 0,
 			branchDataLength: 0,
 			branchArrLength: 0,
+			transformerAnchor: 0,
+			transformerDataLength: 0,
+			transformerArrLength: 0,
 			highRiskLines: {},
 			formatRiskLines: [],
 			subdata: [],
 			linedata: [],
+			transformerDict: [],
 			subdetail: [],
 			busdetail: [],
 			area_index: 0,
 			genArray: [],
 			busArray: [],
 			areaBus: {},
-			branchArray: []
+			branchArray: [],
+			transformerArray: []
 		};
 	},
 	methods: {
@@ -146,6 +152,52 @@ export default {
 					}
 					count_b++;
 				}
+				for (let ele in temp.content.Transformer) {
+					const fromid = ele.split(',')[0];
+					const toid = ele.split(',')[1];
+					const coords = [
+						[
+							temp.content.Substation[
+								temp.content.Bus[fromid]['Int.Sub Number'].toString()
+							]['Double.Longitude'],
+							temp.content.Substation[
+								temp.content.Bus[fromid]['Int.Sub Number'].toString()
+							]['Double.Latitude']
+						],
+						[
+							temp.content.Substation[
+								temp.content.Bus[toid]['Int.Sub Number'].toString()
+							]['Double.Longitude'],
+							temp.content.Substation[
+								temp.content.Bus[toid]['Int.Sub Number'].toString()
+							]['Double.Latitude']
+						]
+					];
+					if (
+						[
+							temp.content.Transformer[ele]['FromArea'],
+							temp.content.Transformer[ele]['ToArea']
+						].includes(+this.$store.state.area)
+					) {
+						this.transformerArray.push(count_b);
+						this.transformerDict.push({
+							id: ele,
+							name:
+								temp.content.Substation[
+									temp.content.Bus[fromid]['Int.Sub Number'].toString()
+								]['String.Name'].split('_')[0] +
+								'-' +
+								temp.content.Substation[
+									temp.content.Bus[toid]['Int.Sub Number'].toString()
+								]['String.Name'].split('_')[0],
+							coords: coords,
+							count: 1,
+							attributes: {
+							}
+						});
+					}
+					count_b++;
+				}
 				for (let i in this.$store.state.areadetail.content.Bus) {
 					if (
 						this.$store.state.areadetail.content.Bus[i]['Int.Area Number'] ==
@@ -180,6 +232,7 @@ export default {
 				}
 				this.$store.commit('setSubData', this.subdata);
 				this.$store.commit('setLineData', this.linedata);
+				this.$store.commit('setTransformerDict', this.transformerDict);
 				this.$store.commit('setOtherArea', {
 					Substation: otherSub,
 					Branch: otherBranch
@@ -257,6 +310,24 @@ export default {
 				} else {
 					this.branchDataLength = arrlength * keyCaseArr.length;
 					this.branchArrLength = arrlength;
+					break;
+				}
+			}
+		},
+		initRiskTransformer() {
+			var arrlength;
+			var keyCaseArr;
+			var valueFieldArr;
+
+			for (let ele in this.$store.state.fieldstore) {
+				arrlength = this.$store.state.fieldstore[ele].length;
+				keyCaseArr = Object.keys(this.$store.state.areadetail.content[ele]);
+				valueFieldArr = Object.values(this.$store.state.fieldstore[ele]);
+				if (ele != 'Transformer') {
+					this.transformerAnchor += arrlength * keyCaseArr.length;
+				} else {
+					this.transformerDataLength = arrlength * keyCaseArr.length;
+					this.transformerArrLength = arrlength;
 					break;
 				}
 			}
@@ -402,7 +473,12 @@ export default {
 				this.branchAnchor,
 				this.branchAnchor + this.branchDataLength
 			);
+			this.transformerData = temp.slice(
+				this.transformerAnchor,
+				this.transformerAnchor + this.transformerDataLength
+			);
 			this.$store.commit('setBranchData', this.branchData);
+			this.$store.commit('setTransformerData', this.transformerData);
 			this.$store.commit('setData', temp);
 			this.$store.commit('setAreaData', this.areaData);
 			this.$store.commit('setAreaLoad', ['2018/11/29 ' + this.$store.state.clockTime, this.areaData[2]]);
@@ -499,6 +575,11 @@ export default {
 					anchor: this.branchAnchor,
 					length: this.branchArrLength,
 					list: this.branchArray
+				},
+				Transformer: {
+					anchor: this.transformerAnchor,
+					length: this.transformerArrLength,
+					list: this.transformerArray
 				}
 			};
 			this.$store.commit('setAreaHelper', areaHelper);
@@ -510,6 +591,7 @@ export default {
 		this.initData();
 		this.initRiskBus();
 		this.initRiskBranch();
+		this.initRiskTransformer();
 		this.addAreaHelper();
 		this.updateTotalCost();
 		setInterval(() => {

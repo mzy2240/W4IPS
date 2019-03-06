@@ -3,7 +3,7 @@
 		<v-card>
 			<v-toolbar color="transparent" flat dense card v-if="enableHeader">
 				<v-toolbar-title>
-					<h4>{{title}}</h4>
+					<h4>{{ title }}</h4>
 				</v-toolbar-title>
 				<v-spacer></v-spacer>
 				<slot name="widget-header-action"></slot>
@@ -13,17 +13,17 @@
 			</v-toolbar>
 			<v-divider v-if="enableHeader"></v-divider>
 			<slot name="widget-content"></slot>
-			<div id="map" class="chart"></div>
+			<div id="map" v-bind:style="mapStyle"></div>
 		</v-card>
 	</div>
 </template>
 
 <style scoped>
-.chart {
+/* .chart {
 	z-index: 0;
 	height: 300px;
 	width: 100%;
-}
+} */
 </style>
 
 
@@ -47,6 +47,10 @@ export default {
 		},
 		focus: {
 			type: String
+		},
+		height: {
+			type: String,
+			default: '300px'
 		}
 	},
 	data() {
@@ -57,13 +61,21 @@ export default {
 			subdetail: [],
 			busdetail: [],
 			mapCenter: [27.4241, -98.4936],
-			map: null
+			map: null,
+			mapStyle: {
+				width: '100%',
+				height: this.height
+			}
 		};
 	},
 	methods: {
 		initdraw() {
-			const url =
-				'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+			let heatmapData = [];
+			for(let ele in this.$store.state.transformerDict) {
+				heatmapData.push([this.$store.state.transformerDict[ele].coords[0][0], this.$store.state.transformerDict[ele].coords[0][1], 100])
+			}
+			// console.log(this.$store.state.transformerDict)
+			const url = 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 			const options = {
 				// redirect: true,
 				// time: '',
@@ -75,17 +87,28 @@ export default {
 			};
 			this.map = L.map('map', {
 				// crs: L.CRS.EPSG4326,
-				center: this.mapCenter,//this.$store.state.center, //this.mapCenter,
+				center: this.mapCenter, //this.$store.state.center, //this.mapCenter,
 				maxZoom: 18,
 				zoom: 7
 			});
-			L.tileLayer(url, options).addTo(this.map)
+			L.tileLayer(url, options).addTo(this.map);
 			// this.chart = echarts.init(document.getElementById('map'));
 			var option = {
 				animation: false,
 				tooltip: {
 					show: true,
 					trigger: 'item'
+				},
+				visualMap: {
+					show: false,
+					top: 'top',
+					min: 50,
+					max: 300,
+					seriesIndex: 7,
+					calculable: true,
+					inRange: {
+						color: ['#000080', 'blue', 'green', 'yellow', 'red']
+					}
 				},
 				series: [
 					{
@@ -97,9 +120,12 @@ export default {
 						symbolSize: (value, params) => {
 							if (params.data.attributes.Gen && this.focus == 'Gen') {
 								return 10;
-							} else if (params.data.attributes.Shunt && this.focus == 'Shunt') {
+							} else if (
+								params.data.attributes.Shunt &&
+								this.focus == 'Shunt'
+							) {
 								return 10;
-							} else if(this.focus == 'Load') {
+							} else if (this.focus == 'Load') {
 								return 7;
 							} else {
 								return 0;
@@ -185,8 +211,8 @@ export default {
 							color: 'black',
 							// fontWeight: 'bold',
 							formatter: function(params) {
-								if(params.user != undefined) {
-									return params.user + ": Bus#" + params.name
+								if (params.user != undefined) {
+									return params.user + ': Bus#' + params.name;
 								} else {
 									return 'Bus#' + params.name;
 								}
@@ -291,10 +317,18 @@ export default {
 							}
 						},
 						data: []
+					},
+					{
+						id: 'heatmap',
+						type: 'heatmap',
+						coordinateSystem: 'leaflet',
+						data: heatmapData, //[[-98.4, 27.6, 5]],
+						pointSize: 10,
+						blurSize: 20
 					}
 				]
 			};
-			this.chart = L.supermap.echartsLayer(option);  // _ec is the echartsInstance
+			this.chart = L.supermap.echartsLayer(option); // _ec is the echartsInstance
 			var EL = this.chart.addTo(this.map);
 			// var ecModel = this.chart._model;
 			// var leafletMap;
@@ -350,22 +384,33 @@ export default {
 				]
 			});
 		},
+		onDrawTransformers() {
+			console.log(this.$store.state.areaDetail)
+			this.chart.setOption({
+				series: [
+					{
+						id: 'heatmap',
+						data: []
+					}
+				]
+			});
+		},
 		restore() {
-			this.map.setView(this.mapCenter, 6)
+			this.map.setView(this.mapCenter, 6);
 		}
 	},
 	mounted() {
 		this.initdraw();
+		// this.onDrawTransformers();
 		// this.getData();
 		// this.onDrawSub();
 		// this.onDrawLines();
 	},
-	beforeDestroy(){
+	beforeDestroy() {
 		try {
 			this.chart.clear();
-		}
-		catch(err) {
-			console.log("The chart instance cannot be cleared")
+		} catch (err) {
+			console.log('The chart instance cannot be cleared');
 		}
 	},
 	computed: {
@@ -409,7 +454,7 @@ export default {
 			temp.series[5].data = this.$store.state.selectedGens;
 			this.chart.setOption(temp);
 		},
-		SelectedLoads: function(){
+		SelectedLoads: function() {
 			let temp = this.chart._echartsOptions;
 			temp.series[6].data = this.$store.state.selectedLoads;
 			this.chart.setOption(temp);

@@ -15,27 +15,20 @@
 		</v-layout>
 		<v-container grid-list-xl text-xs-center fluid>
 			<v-layout row wrap>
-				<v-flex lg8 sm12 xs12>
+				<v-flex lg5 sm5 xs12>
 					<!-- <v-widget title="Realtime Data" content-bg="white">
 						<div slot="widget-content"> -->
-					<loadtable title="Realtime Data"></loadtable>
+					<transformertable title="Realtime Data"></transformertable>
 					<!-- </div>
 					</v-widget> -->
 				</v-flex>
-				<v-flex lg4 sm12 xs12>
+				<v-flex lg7 sm7 xs12>
 					<v-layout row wrap>
 						<v-flex lg12 sm12 xs12>
-							<v-flex lg12 sm12 xs12>
-								<MapWidget title="Location Assist (Transformer)" focus='Load'></MapWidget>
-							</v-flex>
+							<MapWidget title="Location Assist" height="400px" focus="Transformer"></MapWidget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<v-widget title="Tool2" content-bg="dark">
-								<div slot="widget-content" class='cardiv'>
-									<v-card dark color="light-blue">
-										<v-card-text class="px-0">Tool2</v-card-text>
-									</v-card>
-								</div>
+							<v-widget title="GMD" content-bg="dark">
 							</v-widget>
 						</v-flex>
 					</v-layout>
@@ -55,14 +48,14 @@
 </style>
 
 <script>
-import loadtable from '@/components/LoadTable';
+import transformertable from '@/components/TransformerTable';
 import VWidget from '@/components/VWidget';
-import MapWidget from '@/components/MapWidget'
+import MapWidget from '@/components/MapWidget';
 
 export default {
 	name: 'generator',
 	components: {
-		loadtable,
+		transformertable,
 		VWidget,
 		MapWidget
 	}

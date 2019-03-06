@@ -80,6 +80,7 @@ export default new Vuex.Store({
 		area: null,
 		subData: null,
 		lineData: null,
+		transformerDict: null,
 		areaHelper: null,
 		otherArea: null,
 		parsedData: null,
@@ -87,6 +88,7 @@ export default new Vuex.Store({
 		showTour: true,
 		simID: null,
 		branchData: null,
+		transformerData: null,
 		aceCost: 100,
 		schedule: '0@0',
 		genStat: [],
@@ -361,6 +363,9 @@ export default new Vuex.Store({
 		setLineData(state, payload) {
 			state.lineData = payload;
 		},
+		setTransformerDict(state, payload) {
+			state.transformerDict = payload;
+		},
 		setAreaHelper(state, payload) {
 			state.areaHelper = payload;
 		},
@@ -381,6 +386,9 @@ export default new Vuex.Store({
 		},
 		setBranchData(state, payload) {
 			state.branchData = payload;
+		},
+		setTransformerData(state, payload) {
+			state.transformerData = payload;
 		},
 		setSchedule(state, payload) {
 			state.schedule = payload;
