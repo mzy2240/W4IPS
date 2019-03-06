@@ -52,7 +52,16 @@
 						</v-list-tile-avatar>
 
 						<v-list-tile-content>
-							<v-list-tile-title>Branch</v-list-tile-title>
+							<v-list-tile-title>Line</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
+					<v-list-tile avatar :key="'transformer'" @click="$store.commit('setpage', 'transformer')">
+						<v-list-tile-avatar>
+							<v-icon>view_carousel</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>Transformer</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
 					<v-list-tile avatar :key="'chat'" @click="dialog=true">
@@ -178,6 +187,7 @@ import load from '../views/load-view';
 import shunt from '../views/shunt-view';
 import admin from '../views/admin-view';
 import branch from '../views/branch-view';
+import transformer from '../views/transformer-view';
 // import chatpop from './components/chatpop';
 import MqttClient from './MqttClient';
 import Util from '../util';
@@ -222,6 +232,7 @@ export default {
 		// CostBot,
 		AGCBot,
 		branch,
+		transformer,
 		marquee,
 		Clock,
 		DataProcessing
