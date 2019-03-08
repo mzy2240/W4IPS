@@ -18,7 +18,7 @@ export default {
 	},
 	methods: {
 		init() {
-			let displayUrl = 'test.json';
+			let displayUrl = 'json/一次系统图.json';
 			let fitContent = true;
 			var gv = new ht.graph.GraphView();
 			let dataModel = gv.dm();
