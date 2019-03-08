@@ -22,7 +22,7 @@
     "hierarchicalRendering": true
   },
   "a": {
-    "width": 1440,
+    "width": 1600,
     "height": 900
   },
   "d": [
@@ -3311,7 +3311,7 @@
         }
       },
       "s": {
-        "text": "站用变",
+        "text": "Auxiliary Transformer",
         "text.color": "#ffea00",
         "text.font": "16px arial, sans-serif"
       }
@@ -3362,7 +3362,7 @@
         "width": 48.30671
       },
       "s": {
-        "text": "外部电源",
+        "text": "External Power",
         "text.color": "#FFFFFF",
         "text.font": "14px arial, sans-serif"
       }
@@ -3378,7 +3378,7 @@
         "width": 48.30671
       },
       "s": {
-        "text": "手动切换",
+        "text": "Manual Switch",
         "text.color": "#FFFFFF",
         "text.font": "14px arial, sans-serif"
       }
@@ -3549,7 +3549,7 @@
         }
       },
       "s": {
-        "text": "380V母线",
+        "text": "380V Bus",
         "text.color": "#ffea00",
         "text.font": "16px arial, sans-serif"
       }
@@ -3581,7 +3581,7 @@
         }
       },
       "s": {
-        "text": "1#光伏线",
+        "text": "1#PV",
         "text.color": "#ffea00",
         "text.font": "16px arial, sans-serif"
       }
@@ -3597,7 +3597,7 @@
         }
       },
       "s": {
-        "text": "2#光伏线",
+        "text": "2#PV",
         "text.color": "#ffea00",
         "text.font": "16px arial, sans-serif"
       }

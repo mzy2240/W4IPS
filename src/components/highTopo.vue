@@ -1,12 +1,7 @@
 <template>
-  <div>
-    <div
-      id="testTopo"
-      class="orangetest"
-    >
-      <!-- <div class="topo"></div> -->
-    </div>
-  </div>
+	<div id="testTopo" class="orangetest">
+		<!-- <div class="topo"></div> -->
+	</div>
 </template>
 
 <script>
@@ -27,8 +22,8 @@ export default {
 			var parent = document.getElementById('testTopo');
 			console.log(parent);
 			parent.appendChild(view);
-			dataModel.enableDataBindings();
-			dataModel.enableAnimat();
+			// dataModel.enableDataBindings();
+			// dataModel.enableAnimat();
 			gv.setMovableFunc(function(data) {
 				return false;
 			});
@@ -104,13 +99,13 @@ export default {
 	top: 0;
 	bottom: 0; */
 	/* background-color: rgb(255, 255, 255); */
-	height: 200px;
+	height: 500px;
 	width: 100%;
 }
 
 .orangetest {
-	height: 300px;
+	height: 500px;
 	width: 100%;
-	background-color: rgb(218, 105, 22);
+	background-color: rgb(0, 0, 0);
 }
 </style>

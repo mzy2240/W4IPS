@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-dialog v-model="show" :key='id' max-width="900px">
+		<v-dialog v-model="show" :key='id' max-width="1000px">
 			<v-toolbar color="cyan" dark tabs>
 				<v-toolbar-title>{{name}} {{volt}} {{type}}</v-toolbar-title>
 				<v-tabs slot="extension" v-model="currentItem" centered color="cyan" slider-color="yellow">
@@ -26,6 +26,12 @@
 							</template>
 						</v-data-table>
 					</v-card>
+					<v-card>
+						<v-card-title class='headline'>
+							Oneline Diagram
+						</v-card-title>
+						<highTopo></highTopo>
+					</v-card>
 				</v-tab-item>
 				<v-tab-item v-for="(item, index) in tabs" :value="'tab-' + item" :key="item" lazy>
 					<popchild v-if="show" :name="item" :detail="children[index]" :subname="name" :show="currentItem" lazy></popchild>
@@ -42,6 +48,7 @@
 <script>
 // import popchild from './popchild';
 import { mapGetters } from 'vuex';
+import highTopo from '@/components/highTopo';
 
 export default {
 	data() {
@@ -136,7 +143,8 @@ export default {
 		}
 	},
 	components: {
-		popchild: () => import("./popchild")
+		popchild: () => import("./popchild"),
+		highTopo
 	}
 };
 </script>

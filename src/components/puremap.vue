@@ -67,13 +67,13 @@
 						<v-flex lg12 sm12 xs12>
 							<branchTable title="High-load Branches" :tabledata="$store.state.riskBranches"></branchTable>
 						</v-flex>
-						<v-flex xs12>
+						<!-- <v-flex xs12>
 							<m-widget title="Substation OneLine Diagram" content-bg="white">
 								<div slot="widget-content">
 									<highTopo></highTopo>
 								</div>
 							</m-widget>
-						</v-flex>
+						</v-flex> -->
 					</v-layout>
 				</v-flex>
 			</v-layout>
