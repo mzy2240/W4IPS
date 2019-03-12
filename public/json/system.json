@@ -22,7 +22,7 @@
     "hierarchicalRendering": true
   },
   "a": {
-    "width": 1440,
+    "width": 1600,
     "height": 900
   },
   "d": [
@@ -30,8 +30,8 @@
       "c": "ht.Node",
       "i": 1052,
       "p": {
-        "displayName": "电压互感器3",
-        "image": "symbols/ht/电力/互感器/电压互感器3.json",
+        "displayName": "PT3",
+        "image": "json/PT3.json",
         "position": {
           "x": 604.93151,
           "y": 55.16784
@@ -47,8 +47,8 @@
       "c": "ht.Node",
       "i": 1053,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 645.52042,
           "y": 110.43785
@@ -64,8 +64,8 @@
       "c": "ht.Node",
       "i": 1054,
       "p": {
-        "displayName": "电阻",
-        "image": "symbols/ht/电力/一次设备/电阻.json",
+        "displayName": "Resistor",
+        "image": "json/Resistor.json",
         "position": {
           "x": 625.22597,
           "y": 82.80284
@@ -81,8 +81,8 @@
       "c": "ht.Node",
       "i": 1055,
       "p": {
-        "displayName": "电阻",
-        "image": "symbols/ht/电力/一次设备/电阻.json",
+        "displayName": "Resistor",
+        "image": "json/Resistor.json",
         "position": {
           "x": 584.63705,
           "y": 82.80284
@@ -98,8 +98,8 @@
       "c": "ht.Node",
       "i": 1056,
       "p": {
-        "displayName": "开关",
-        "image": "symbols/ht/电力/一次设备/开关.json",
+        "displayName": "Switch",
+        "image": "json/Switch.json",
         "rotation": 1.5708,
         "position": {
           "x": 520.55974,
@@ -116,8 +116,8 @@
       "c": "ht.Node",
       "i": 1057,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 492.92473,
           "y": 110.43785
@@ -211,8 +211,8 @@
       "c": "ht.Node",
       "i": 1059,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "position": {
           "x": 512.6879,
           "y": 203.71722
@@ -229,8 +229,8 @@
       "c": "ht.Node",
       "i": 1060,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "position": {
           "x": 563.27278,
           "y": 203.71722
@@ -247,8 +247,8 @@
       "c": "ht.Node",
       "i": 1061,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "position": {
           "x": 612.42761,
           "y": 203.71722
@@ -265,8 +265,8 @@
       "c": "ht.Node",
       "i": 1062,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "rotation": 3.14159,
         "position": {
           "x": 612.42761,
@@ -346,8 +346,8 @@
       "c": "ht.Node",
       "i": 1064,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 512.6879,
           "y": 256.39645
@@ -363,8 +363,8 @@
       "c": "ht.Node",
       "i": 1065,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "position": {
           "x": 563.27278,
           "y": 371.87185
@@ -380,8 +380,8 @@
       "c": "ht.Node",
       "i": 1066,
       "p": {
-        "displayName": "带有载调压俩圈自耦变压器",
-        "image": "symbols/ht/电力/一次设备/带有载调压俩圈自耦变压器.json",
+        "displayName": "Autotransformer",
+        "image": "json/Autotransformer.json",
         "position": {
           "x": 563.27278,
           "y": 432.75523
@@ -495,8 +495,8 @@
       "c": "ht.Node",
       "i": 1068,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 524.9566,
           "y": 709.2579
@@ -512,8 +512,8 @@
       "c": "ht.Node",
       "i": 1069,
       "p": {
-        "displayName": "电阻",
-        "image": "symbols/ht/电力/一次设备/电阻.json",
+        "displayName": "Resistor",
+        "image": "json/Resistor.json",
         "rotation": 1.5708,
         "position": {
           "x": 524.9566,
@@ -530,8 +530,8 @@
       "c": "ht.Node",
       "i": 1070,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "position": {
           "x": 347.93846,
           "y": 513.89635
@@ -547,11 +547,11 @@
       "c": "ht.Node",
       "i": 1071,
       "p": {
-        "displayName": "手车刀闸",
+        "displayName": "CB",
         "parent": {
           "__i": 1070
         },
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "image": "json/CB.json",
         "position": {
           "x": 500.30894,
           "y": 513.89635
@@ -567,11 +567,11 @@
       "c": "ht.Node",
       "i": 1072,
       "p": {
-        "displayName": "手车刀闸",
+        "displayName": "CB",
         "parent": {
           "__i": 1070
         },
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "image": "json/CB.json",
         "rotation": 3.14159,
         "position": {
           "x": 500.30894,
@@ -588,8 +588,8 @@
       "c": "ht.Node",
       "i": 1073,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "position": {
           "x": 187.25379,
           "y": 513.89635
@@ -605,8 +605,8 @@
       "c": "ht.Node",
       "i": 1074,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "rotation": 3.14159,
         "position": {
           "x": 187.25379,
@@ -623,8 +623,8 @@
       "c": "ht.Node",
       "i": 1075,
       "p": {
-        "displayName": "开关",
-        "image": "symbols/ht/电力/一次设备/开关.json",
+        "displayName": "Switch",
+        "image": "json/Switch.json",
         "position": {
           "x": 187.25379,
           "y": 553.18546
@@ -640,8 +640,8 @@
       "c": "ht.Node",
       "i": 1076,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 217.47336,
           "y": 707.76878
@@ -657,8 +657,8 @@
       "c": "ht.Node",
       "i": 1077,
       "p": {
-        "displayName": "电阻",
-        "image": "symbols/ht/电力/一次设备/电阻.json",
+        "displayName": "Resistor",
+        "image": "json/Resistor.json",
         "rotation": 1.5708,
         "position": {
           "x": 217.47336,
@@ -675,8 +675,8 @@
       "c": "ht.Node",
       "i": 1078,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 156.02863,
           "y": 707.76878
@@ -692,8 +692,8 @@
       "c": "ht.Node",
       "i": 1079,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "position": {
           "x": 156.02863,
           "y": 655.08955
@@ -792,8 +792,8 @@
       "c": "ht.Node",
       "i": 1081,
       "p": {
-        "displayName": "高压熔断器",
-        "image": "symbols/ht/电力/一次设备/高压熔断器.json",
+        "displayName": "HVFuse",
+        "image": "json/HVFuse.json",
         "position": {
           "x": 500.30894,
           "y": 553.18546
@@ -912,8 +912,8 @@
       "c": "ht.Node",
       "i": 1086,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "rotation": 3.14159,
         "position": {
           "x": 347.93846,
@@ -930,8 +930,8 @@
       "c": "ht.Node",
       "i": 1087,
       "p": {
-        "displayName": "开关",
-        "image": "symbols/ht/电力/一次设备/开关.json",
+        "displayName": "Switch",
+        "image": "json/Switch.json",
         "position": {
           "x": 347.93846,
           "y": 553.18546
@@ -947,8 +947,8 @@
       "c": "ht.Node",
       "i": 1088,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 378.15803,
           "y": 707.76878
@@ -964,8 +964,8 @@
       "c": "ht.Node",
       "i": 1089,
       "p": {
-        "displayName": "电阻",
-        "image": "symbols/ht/电力/一次设备/电阻.json",
+        "displayName": "Resistor",
+        "image": "json/Resistor.json",
         "rotation": 1.5708,
         "position": {
           "x": 378.15803,
@@ -982,8 +982,8 @@
       "c": "ht.Node",
       "i": 1090,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 316.71329,
           "y": 707.76878
@@ -999,8 +999,8 @@
       "c": "ht.Node",
       "i": 1091,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "position": {
           "x": 316.71329,
           "y": 655.08955
@@ -1202,8 +1202,8 @@
       "c": "ht.Node",
       "i": 1097,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "position": {
           "x": 656.88293,
           "y": 513.89635
@@ -1219,8 +1219,8 @@
       "c": "ht.Node",
       "i": 1098,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "rotation": 3.14159,
         "position": {
           "x": 656.88293,
@@ -1237,8 +1237,8 @@
       "c": "ht.Node",
       "i": 1099,
       "p": {
-        "displayName": "开关",
-        "image": "symbols/ht/电力/一次设备/开关.json",
+        "displayName": "Switch",
+        "image": "json/Switch.json",
         "position": {
           "x": 656.88293,
           "y": 553.18546
@@ -1254,8 +1254,8 @@
       "c": "ht.Node",
       "i": 1100,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 687.1025,
           "y": 707.76878
@@ -1271,8 +1271,8 @@
       "c": "ht.Node",
       "i": 1101,
       "p": {
-        "displayName": "电阻",
-        "image": "symbols/ht/电力/一次设备/电阻.json",
+        "displayName": "Resistor",
+        "image": "json/Resistor.json",
         "rotation": 1.5708,
         "position": {
           "x": 687.1025,
@@ -1289,8 +1289,8 @@
       "c": "ht.Node",
       "i": 1102,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 625.65776,
           "y": 707.76878
@@ -1306,8 +1306,8 @@
       "c": "ht.Node",
       "i": 1103,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "position": {
           "x": 625.65776,
           "y": 655.08955
@@ -1515,8 +1515,8 @@
       "c": "ht.Node",
       "i": 1109,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "rotation": 1.5708,
         "position": {
           "x": 717.84083,
@@ -1534,8 +1534,8 @@
       "c": "ht.Node",
       "i": 1110,
       "p": {
-        "displayName": "站用变",
-        "image": "symbols/ht/电力/一次设备/站用变.json",
+        "displayName": "ATransformer",
+        "image": "json/ATransformer.json",
         "rotation": 1.5708,
         "position": {
           "x": 756.27296,
@@ -1552,8 +1552,8 @@
       "c": "ht.Node",
       "i": 1111,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "rotation": 1.5708,
         "position": {
           "x": 795.96308,
@@ -1571,8 +1571,8 @@
       "c": "ht.Node",
       "i": 1112,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 812.86059,
           "y": 796.11411
@@ -1588,8 +1588,8 @@
       "c": "ht.Node",
       "i": 1113,
       "p": {
-        "displayName": "电力电感器",
-        "image": "symbols/ht/电力/一次设备/电力电感器.json",
+        "displayName": "Inductor",
+        "image": "json/Inductor.json",
         "position": {
           "x": 847.0323,
           "y": 753.06495
@@ -1605,8 +1605,8 @@
       "c": "ht.Node",
       "i": 1114,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "rotation": 1.5708,
         "position": {
           "x": 846.05153,
@@ -1624,8 +1624,8 @@
       "c": "ht.Node",
       "i": 1115,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "position": {
           "x": 1013.58778,
           "y": 513.89635
@@ -1641,8 +1641,8 @@
       "c": "ht.Node",
       "i": 1116,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "rotation": 3.14159,
         "position": {
           "x": 1013.58778,
@@ -1659,8 +1659,8 @@
       "c": "ht.Node",
       "i": 1117,
       "p": {
-        "displayName": "开关",
-        "image": "symbols/ht/电力/一次设备/开关.json",
+        "displayName": "Switch",
+        "image": "json/Switch.json",
         "position": {
           "x": 1013.58778,
           "y": 553.18546
@@ -1676,8 +1676,8 @@
       "c": "ht.Node",
       "i": 1118,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 1043.80735,
           "y": 707.76878
@@ -1693,8 +1693,8 @@
       "c": "ht.Node",
       "i": 1119,
       "p": {
-        "displayName": "电阻",
-        "image": "symbols/ht/电力/一次设备/电阻.json",
+        "displayName": "Resistor",
+        "image": "json/Resistor.json",
         "rotation": 1.5708,
         "position": {
           "x": 1043.80735,
@@ -1711,8 +1711,8 @@
       "c": "ht.Node",
       "i": 1120,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 982.36262,
           "y": 707.76878
@@ -1728,8 +1728,8 @@
       "c": "ht.Node",
       "i": 1121,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "position": {
           "x": 982.36262,
           "y": 655.08955
@@ -1936,8 +1936,8 @@
       "c": "ht.Node",
       "i": 1127,
       "p": {
-        "displayName": "电压互感器1",
-        "image": "symbols/ht/电力/互感器/电压互感器1.json",
+        "displayName": "PT1",
+        "image": "json/PT1.json",
         "rotation": 4.71239,
         "position": {
           "x": 1069.6425,
@@ -1954,8 +1954,8 @@
       "c": "ht.Node",
       "i": 1128,
       "p": {
-        "displayName": "避雷器",
-        "image": "symbols/ht/电力/一次设备/避雷器.json",
+        "displayName": "SurgeArrester",
+        "image": "json/SurgeArrester.json",
         "rotation": 4.71239,
         "position": {
           "x": 1123.66003,
@@ -1972,8 +1972,8 @@
       "c": "ht.Node",
       "i": 1129,
       "p": {
-        "displayName": "开关",
-        "image": "symbols/ht/电力/一次设备/开关.json",
+        "displayName": "Switch",
+        "image": "json/Switch.json",
         "position": {
           "x": 1057.19305,
           "y": 802.28981
@@ -1989,8 +1989,8 @@
       "c": "ht.Node",
       "i": 1130,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 1057.19305,
           "y": 848.17962
@@ -2006,8 +2006,8 @@
       "c": "ht.Node",
       "i": 1131,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "position": {
           "x": 1151.29503,
           "y": 656.81673
@@ -2023,8 +2023,8 @@
       "c": "ht.Node",
       "i": 1132,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "rotation": 3.14159,
         "position": {
           "x": 1151.29503,
@@ -2041,8 +2041,8 @@
       "c": "ht.Node",
       "i": 1133,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "position": {
           "x": 1151.29503,
           "y": 701.52962
@@ -2116,8 +2116,8 @@
       "c": "ht.Node",
       "i": 1135,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "position": {
           "x": 1229.48597,
           "y": 656.81673
@@ -2133,8 +2133,8 @@
       "c": "ht.Node",
       "i": 1136,
       "p": {
-        "displayName": "手车刀闸",
-        "image": "symbols/ht/电力/一次设备/手车刀闸.json",
+        "displayName": "CB",
+        "image": "json/CB.json",
         "rotation": 3.14159,
         "position": {
           "x": 1229.48597,
@@ -2151,8 +2151,8 @@
       "c": "ht.Node",
       "i": 1137,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "position": {
           "x": 1229.48597,
           "y": 701.52962
@@ -2168,8 +2168,8 @@
       "c": "ht.Node",
       "i": 1138,
       "p": {
-        "displayName": "电压互感器1",
-        "image": "symbols/ht/电力/互感器/电压互感器1.json",
+        "displayName": "PT1",
+        "image": "json/PT1.json",
         "position": {
           "x": 1229.48597,
           "y": 605.86469
@@ -2185,8 +2185,8 @@
       "c": "ht.Node",
       "i": 1139,
       "p": {
-        "displayName": "避雷器",
-        "image": "symbols/ht/电力/一次设备/避雷器.json",
+        "displayName": "SurgeArrester",
+        "image": "json/SurgeArrester.json",
         "rotation": 4.71239,
         "position": {
           "x": 1257.12098,
@@ -2203,8 +2203,8 @@
       "c": "ht.Node",
       "i": 1140,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 1283.97137,
           "y": 580.06953
@@ -2258,8 +2258,8 @@
       "c": "ht.Node",
       "i": 1142,
       "p": {
-        "displayName": "T接线",
-        "image": "symbols/ht/电力/一次设备/T接线.json",
+        "displayName": "TConnection",
+        "image": "json/TConnection.json",
         "rotation": 3.14159,
         "position": {
           "x": 1229.00128,
@@ -2276,8 +2276,8 @@
       "c": "ht.Node",
       "i": 1143,
       "p": {
-        "displayName": "熔断开关",
-        "image": "symbols/ht/电力/二次元件/熔断开关.json",
+        "displayName": "Fuse",
+        "image": "json/Fuse.json",
         "position": {
           "x": 1229.00128,
           "y": 525.55045
@@ -2294,8 +2294,8 @@
       "c": "ht.Node",
       "i": 1144,
       "p": {
-        "displayName": "避雷器",
-        "image": "symbols/ht/电力/一次设备/避雷器.json",
+        "displayName": "SurgeArrester",
+        "image": "json/SurgeArrester.json",
         "position": {
           "x": 1078.27844,
           "y": 661.1347
@@ -2311,8 +2311,8 @@
       "c": "ht.Node",
       "i": 1145,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 1078.27844,
           "y": 707.76878
@@ -2328,8 +2328,8 @@
       "c": "ht.Node",
       "i": 1146,
       "p": {
-        "displayName": "避雷器",
-        "image": "symbols/ht/电力/一次设备/避雷器.json",
+        "displayName": "SurgeArrester",
+        "image": "json/SurgeArrester.json",
         "position": {
           "x": 721.57359,
           "y": 661.1347
@@ -2345,8 +2345,8 @@
       "c": "ht.Node",
       "i": 1147,
       "p": {
-        "displayName": "接地",
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "displayName": "Ground",
+        "image": "json/Ground.json",
         "position": {
           "x": 721.57359,
           "y": 707.76878
@@ -2377,11 +2377,11 @@
       "c": "ht.Node",
       "i": 1149,
       "p": {
-        "displayName": "避雷器",
+        "displayName": "SurgeArrester",
         "parent": {
           "__i": 1148
         },
-        "image": "symbols/ht/电力/一次设备/避雷器.json",
+        "image": "json/SurgeArrester.json",
         "position": {
           "x": 474.8242,
           "y": 668.66898
@@ -2394,11 +2394,11 @@
       "c": "ht.Node",
       "i": 1150,
       "p": {
-        "displayName": "接地",
+        "displayName": "Ground",
         "parent": {
           "__i": 1148
         },
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "image": "json/Ground.json",
         "position": {
           "x": 474.8242,
           "y": 715.30305
@@ -2426,11 +2426,11 @@
       "c": "ht.Node",
       "i": 1152,
       "p": {
-        "displayName": "避雷器",
+        "displayName": "SurgeArrester",
         "parent": {
           "__i": 1151
         },
-        "image": "symbols/ht/电力/一次设备/避雷器.json",
+        "image": "json/SurgeArrester.json",
         "position": {
           "x": 412.62912,
           "y": 661.1347
@@ -2443,11 +2443,11 @@
       "c": "ht.Node",
       "i": 1153,
       "p": {
-        "displayName": "接地",
+        "displayName": "Ground",
         "parent": {
           "__i": 1151
         },
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "image": "json/Ground.json",
         "position": {
           "x": 412.62912,
           "y": 707.76878
@@ -2475,11 +2475,11 @@
       "c": "ht.Node",
       "i": 1155,
       "p": {
-        "displayName": "避雷器",
+        "displayName": "SurgeArrester",
         "parent": {
           "__i": 1154
         },
-        "image": "symbols/ht/电力/一次设备/避雷器.json",
+        "image": "json/SurgeArrester.json",
         "position": {
           "x": 251.94445,
           "y": 661.1347
@@ -2492,11 +2492,11 @@
       "c": "ht.Node",
       "i": 1156,
       "p": {
-        "displayName": "接地",
+        "displayName": "Ground",
         "parent": {
           "__i": 1154
         },
-        "image": "symbols/ht/电力/一次设备/接地.json",
+        "image": "json/Ground.json",
         "position": {
           "x": 251.94445,
           "y": 707.76878
@@ -2617,8 +2617,8 @@
       "c": "ht.Node",
       "i": 1158,
       "p": {
-        "displayName": "开关",
-        "image": "symbols/ht/电力/一次设备/开关.json",
+        "displayName": "Switch",
+        "image": "json/Switch.json",
         "rotation": 1.5708,
         "position": {
           "x": 928.57249,
@@ -2635,8 +2635,8 @@
       "c": "ht.Node",
       "i": 1159,
       "p": {
-        "displayName": "站用变",
-        "image": "symbols/ht/电力/一次设备/站用变.json",
+        "displayName": "ATransformer",
+        "image": "json/ATransformer.json",
         "position": {
           "x": 887.37308,
           "y": 787.60871
@@ -2652,8 +2652,8 @@
       "c": "ht.Node",
       "i": 1160,
       "p": {
-        "displayName": "站用变",
-        "image": "symbols/ht/电力/一次设备/站用变.json",
+        "displayName": "ATransformer",
+        "image": "json/ATransformer.json",
         "position": {
           "x": 887.37308,
           "y": 743.56542
@@ -2669,8 +2669,8 @@
       "c": "ht.Node",
       "i": 1161,
       "p": {
-        "displayName": "电抗",
-        "image": "symbols/ht/电力/一次设备/电抗.json",
+        "displayName": "Reactance",
+        "image": "json/Reactance.json",
         "rotation": 1.5708,
         "position": {
           "x": 928.57249,
@@ -2687,8 +2687,8 @@
       "c": "ht.Node",
       "i": 1162,
       "p": {
-        "displayName": "阻波器",
-        "image": "symbols/ht/电力/一次设备/阻波器.json",
+        "displayName": "WaveTrapper",
+        "image": "json/WaveTrapper.json",
         "position": {
           "x": 928.39379,
           "y": 750.90597
@@ -2725,8 +2725,8 @@
       "c": "ht.Node",
       "i": 1164,
       "p": {
-        "displayName": "刀闸",
-        "image": "symbols/ht/电力/一次设备/刀闸.json",
+        "displayName": "DLink",
+        "image": "json/DLink.json",
         "position": {
           "x": 707.82875,
           "y": 361.91608
@@ -2741,8 +2741,8 @@
       "c": "ht.Node",
       "i": 1165,
       "p": {
-        "displayName": "开关",
-        "image": "symbols/ht/电力/一次设备/开关.json",
+        "displayName": "Switch",
+        "image": "json/Switch.json",
         "position": {
           "x": 751.76651,
           "y": 361.91608
@@ -2758,8 +2758,8 @@
       "c": "ht.Node",
       "i": 1166,
       "p": {
-        "displayName": "站用变",
-        "image": "symbols/ht/电力/一次设备/站用变.json",
+        "displayName": "ATransformer",
+        "image": "json/ATransformer.json",
         "position": {
           "x": 681.05199,
           "y": 367.66466
@@ -2777,8 +2777,8 @@
       "c": "ht.Node",
       "i": 1167,
       "p": {
-        "displayName": "站用变",
-        "image": "symbols/ht/电力/一次设备/站用变.json",
+        "displayName": "ATransformer",
+        "image": "json/ATransformer.json",
         "rotation": 1.5708,
         "position": {
           "x": 633.40809,
@@ -3051,9 +3051,9 @@
       "c": "ht.Node",
       "i": 2821,
       "p": {
-        "displayName": "其它遥测",
+        "displayName": "OTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/其它遥测.json",
+        "image": "json/OTelemeter.json",
         "position": {
           "x": 404.67121,
           "y": 519.1333
@@ -3068,9 +3068,9 @@
       "c": "ht.Node",
       "i": 2836,
       "p": {
-        "displayName": "无功遥测",
+        "displayName": "QTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/无功遥测.json",
+        "image": "json/QTelemeter.json",
         "position": {
           "x": 404.67121,
           "y": 544.97688
@@ -3085,9 +3085,9 @@
       "c": "ht.Node",
       "i": 2837,
       "p": {
-        "displayName": "有功遥测",
+        "displayName": "PTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/有功遥测.json",
+        "image": "json/PTelemeter.json",
         "position": {
           "x": 404.67121,
           "y": 570.82047
@@ -3102,9 +3102,9 @@
       "c": "ht.Node",
       "i": 2838,
       "p": {
-        "displayName": "其它遥测",
+        "displayName": "OTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/其它遥测.json",
+        "image": "json/OTelemeter.json",
         "position": {
           "x": 241.58133,
           "y": 518.28972
@@ -3119,9 +3119,9 @@
       "c": "ht.Node",
       "i": 2839,
       "p": {
-        "displayName": "无功遥测",
+        "displayName": "QTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/无功遥测.json",
+        "image": "json/QTelemeter.json",
         "position": {
           "x": 241.58133,
           "y": 544.1333
@@ -3136,9 +3136,9 @@
       "c": "ht.Node",
       "i": 2840,
       "p": {
-        "displayName": "有功遥测",
+        "displayName": "PTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/有功遥测.json",
+        "image": "json/PTelemeter.json",
         "position": {
           "x": 241.58133,
           "y": 569.97688
@@ -3185,9 +3185,9 @@
       "c": "ht.Node",
       "i": 2859,
       "p": {
-        "displayName": "其它遥测",
+        "displayName": "OTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/其它遥测.json",
+        "image": "json/OTelemeter.json",
         "position": {
           "x": 453.88429,
           "y": 374.65906
@@ -3202,9 +3202,9 @@
       "c": "ht.Node",
       "i": 2860,
       "p": {
-        "displayName": "无功遥测",
+        "displayName": "QTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/无功遥测.json",
+        "image": "json/QTelemeter.json",
         "position": {
           "x": 453.88429,
           "y": 400.50264
@@ -3219,9 +3219,9 @@
       "c": "ht.Node",
       "i": 2861,
       "p": {
-        "displayName": "有功遥测",
+        "displayName": "PTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/有功遥测.json",
+        "image": "json/PTelemeter.json",
         "position": {
           "x": 453.88429,
           "y": 426.34623
@@ -3253,9 +3253,9 @@
       "c": "ht.Node",
       "i": 2863,
       "p": {
-        "displayName": "其它遥测",
+        "displayName": "OTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/其它遥测.json",
+        "image": "json/OTelemeter.json",
         "position": {
           "x": 1069.6425,
           "y": 519.1333
@@ -3270,9 +3270,9 @@
       "c": "ht.Node",
       "i": 2864,
       "p": {
-        "displayName": "无功遥测",
+        "displayName": "QTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/无功遥测.json",
+        "image": "json/QTelemeter.json",
         "position": {
           "x": 1069.6425,
           "y": 544.97688
@@ -3287,9 +3287,9 @@
       "c": "ht.Node",
       "i": 2865,
       "p": {
-        "displayName": "有功遥测",
+        "displayName": "PTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/有功遥测.json",
+        "image": "json/PTelemeter.json",
         "position": {
           "x": 1069.6425,
           "y": 570.82047
@@ -3311,7 +3311,7 @@
         }
       },
       "s": {
-        "text": "站用变",
+        "text": "Auxiliary Transformer",
         "text.color": "#ffea00",
         "text.font": "16px arial, sans-serif"
       }
@@ -3362,7 +3362,7 @@
         "width": 48.30671
       },
       "s": {
-        "text": "外部电源",
+        "text": "External Power",
         "text.color": "#FFFFFF",
         "text.font": "14px arial, sans-serif"
       }
@@ -3378,7 +3378,7 @@
         "width": 48.30671
       },
       "s": {
-        "text": "手动切换",
+        "text": "Manual Switch",
         "text.color": "#FFFFFF",
         "text.font": "14px arial, sans-serif"
       }
@@ -3387,8 +3387,8 @@
       "c": "ht.Node",
       "i": 8783,
       "p": {
-        "displayName": "其它遥测",
-        "image": "symbols/ht/电力/数字框/其它遥测.json",
+        "displayName": "OTelemeter",
+        "image": "json/OTelemeter.json",
         "position": {
           "x": 725,
           "y": 524.97688
@@ -3403,8 +3403,8 @@
       "c": "ht.Node",
       "i": 8784,
       "p": {
-        "displayName": "无功遥测",
-        "image": "symbols/ht/电力/数字框/无功遥测.json",
+        "displayName": "QTelemeter",
+        "image": "json/QTelemeter.json",
         "position": {
           "x": 725,
           "y": 550.82047
@@ -3419,8 +3419,8 @@
       "c": "ht.Node",
       "i": 8785,
       "p": {
-        "displayName": "有功遥测",
-        "image": "symbols/ht/电力/数字框/有功遥测.json",
+        "displayName": "PTelemeter",
+        "image": "json/PTelemeter.json",
         "position": {
           "x": 725,
           "y": 576.66405
@@ -3523,9 +3523,9 @@
       "c": "ht.Node",
       "i": 17789,
       "p": {
-        "displayName": "其它遥测",
+        "displayName": "OTelemeter",
         "layer": "1",
-        "image": "symbols/ht/电力/数字框/其它遥测.json",
+        "image": "json/OTelemeter.json",
         "position": {
           "x": 453.88429,
           "y": 451.74306
@@ -3549,7 +3549,7 @@
         }
       },
       "s": {
-        "text": "380V母线",
+        "text": "380V Bus",
         "text.color": "#ffea00",
         "text.font": "16px arial, sans-serif"
       }
@@ -3581,7 +3581,7 @@
         }
       },
       "s": {
-        "text": "1#光伏线",
+        "text": "1#PV",
         "text.color": "#ffea00",
         "text.font": "16px arial, sans-serif"
       }
@@ -3597,7 +3597,7 @@
         }
       },
       "s": {
-        "text": "2#光伏线",
+        "text": "2#PV",
         "text.color": "#ffea00",
         "text.font": "16px arial, sans-serif"
       }
@@ -3606,9 +3606,9 @@
       "c": "ht.Node",
       "i": 28992,
       "p": {
-        "displayName": "禁止操作",
+        "displayName": "ProhibitedOperation",
         "layer": "1",
-        "image": "symbols/ht/电力/标志牌/禁止操作.json",
+        "image": "json/ProhibitedOperation.json",
         "position": {
           "x": 1308.27502,
           "y": 353.0725
