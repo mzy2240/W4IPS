@@ -18,7 +18,7 @@
 
 									<v-form id="step1">
 										<v-text-field append-icon="person" name="login" label="Name" type="text" v-model="model.username"></v-text-field>
-										<v-text-field append-icon="build" name="simID" label="Simulation ID" :rules="[rules.id]" v-model="simID"></v-text-field>
+										<v-text-field append-icon="build" name="simID" label="Simulation ID" :rules="[rules.id]" v-model="simID" v-on:keyup.enter="login"></v-text-field>
 										<v-text-field append-icon="lock" name="password" label="Access Code" v-model="accessCode"></v-text-field>
 										<v-select disabled :items="items" label="Area" v-model="area" menu-props="auto"></v-select>
 									</v-form>
