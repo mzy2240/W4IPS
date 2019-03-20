@@ -39,9 +39,9 @@
 </template>
 
 <style>
-.el-tabs__item {
+/* .el-tabs__item {
 	color: #fff;
-}
+} */
 </style>
 
 <script>

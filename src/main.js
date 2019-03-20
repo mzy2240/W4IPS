@@ -8,7 +8,8 @@ import 'vuetify/dist/vuetify.min.css';
 import '@mdi/font/css/materialdesignicons.css';
 // import ECharts from 'vue-echarts';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import 'element-theme-dark';
+// import 'element-ui/lib/theme-chalk/index.css';
 import 'izitoast/dist/css/iziToast.css';
 import './assets/default.styl';
 import 'vue-status-indicator/styles.css'

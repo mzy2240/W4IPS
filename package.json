@@ -57,6 +57,7 @@
     "@vue/eslint-config-prettier": "^3.0.0-rc.10",
     "babel-plugin-component": "^1.1.1",
     "css-loader": "^1.0.0",
+    "element-theme-dark": "^1.0.3",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.23.0",

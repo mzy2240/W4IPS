@@ -1,21 +1,21 @@
 <template>
-  <div id="v-widget">
-    <v-card>
-      <v-toolbar color="transparent" flat dense card v-if="enableHeader">
-        <v-toolbar-title>
-          <h4>{{ title }}</h4>
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-        <slot name="widget-header-action"></slot>
-        <v-btn icon @click="restore">
-          <v-icon>restore</v-icon>
-        </v-btn>
-      </v-toolbar>
-      <v-divider v-if="enableHeader"></v-divider>
-      <slot name="widget-content"></slot>
-      <div id="map" v-bind:style="mapStyle"></div>
-    </v-card>
-  </div>
+	<div id="v-widget">
+		<v-card>
+			<v-toolbar color="transparent" flat dense card v-if="enableHeader">
+				<v-toolbar-title>
+					<h4>{{ title }}</h4>
+				</v-toolbar-title>
+				<v-spacer></v-spacer>
+				<slot name="widget-header-action"></slot>
+				<v-btn icon @click="restore">
+					<v-icon>restore</v-icon>
+				</v-btn>
+			</v-toolbar>
+			<v-divider v-if="enableHeader"></v-divider>
+			<slot name="widget-content"></slot>
+			<div id="map" v-bind:style="mapStyle"></div>
+		</v-card>
+	</div>
 </template>
 
 <style scoped>
@@ -327,7 +327,7 @@ export default {
 						id: 'heatmap',
 						type: 'heatmap',
 						coordinateSystem: 'leaflet',
-						data: heatmapData, //[[-98.4, 27.6, 5]],
+						data: [], //heatmapData, //[[-98.4, 27.6, 5]],
 						pointSize: 10,
 						blurSize: 20
 					}
@@ -340,45 +340,48 @@ export default {
 			this.chart = L.supermap.echartsLayer(echartsOptions, layerOptions); // _ec is the echartsInstance
 			var EL = this.chart.addTo(this.map);
 
-			var ramdompts_ipl = turf.randomPoint(25, {
-				bbox: [-98, 28.0, -94, 31.0]
-			});
+			// var ramdompts_ipl = turf.randomPoint(25, {
+			// 	bbox: [-98, 28.0, -94, 31.0]
+			// });
 
-			turf.featureEach(ramdompts_ipl, function(point) {
-				point.properties.obs = Math.random() * 25;
-			});
-			var tin = turf.tin(ramdompts_ipl, 'obs');
-			function getColor(x) {
-				return x < 5
-					? '#bd0026'
-					: x < 10
-					? '#f03b20'
-					: x < 15
-					? '#fd8d3c'
-					: x < 20
-					? '#fecc5c'
-					: '#ffffb2';
-			}
-			// var tinLayer = L.geoJson(tin, {
-			// 	onEachFeature: function(feature, layer) {
-			// 		var obs =
-			// 			feature.properties.a + feature.properties.b + feature.properties.c;
-			// 		feature.properties.obs = obs / 3;
-			// 		// layer.bindPopup(feature.properties.obs.toFixed(3).toString());
-			// 	},
+			// turf.featureEach(ramdompts_ipl, function(point) {
+			// 	point.properties.obs = Math.random() * 25;
+			// });
+			// // var tin = turf.tin(ramdompts_ipl, 'obs');
+			// var contours_pts = turf.interpolate(ramdompts_ipl, 2, {
+			// 	gridType: 'points',
+			// 	property: 'obs',
+			// 	units: 'kilometers'
+			// });
+			// var contours = turf.isobands(contours_pts, [0, 5, 10, 15, 20, 25, 30], {
+			// 	zProperty: 'obs'
+			// });
+			// function getColor(x) {
+			// 	return x < 5
+			// 		? '#bd0026'
+			// 		: x < 10
+			// 		? '#f03b20'
+			// 		: x < 15
+			// 		? '#fd8d3c'
+			// 		: x < 20
+			// 		? '#fecc5c'
+			// 		: '#ffffb2';
+			// }
+			// var contoursLayer = L.geoJson(contours, {
+			// 	// onEachFeature: function(feature, layer) {
+			// 	// 	layer.bindPopup(feature.properties.obs);
+			// 	// },
 			// 	style: function(feature) {
-			// 		var obs =
-			// 			feature.properties.a + feature.properties.b + feature.properties.c;
-
 			// 		return {
-			// 			fillColor: getColor(obs),
+			// 			interactive: false,
+			// 			fillColor: getColor(parseInt(feature.properties.obs.split('-')[0])),
 			// 			weight: 0.5,
 			// 			color: '#bd0026',
 			// 			opacity: 1
 			// 		};
 			// 	}
 			// }).addTo(this.map);
-			console.log(tin);
+			// console.log(tin);
 			// var ecModel = this.chart._model;
 			// var leafletMap;
 			// ecModel.eachComponent('leaflet', function(leafletModel) {
