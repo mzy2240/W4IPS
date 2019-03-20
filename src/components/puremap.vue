@@ -173,8 +173,8 @@ export default {
 				// maxZoom: 8,
 				// tilematrixset: 'GoogleMapsCompatible_Level',
 				// format: 'jpg',
-				attribution:
-					'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+				// attribution:
+				// 	'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 			};
 			this.map = L.map('main', {
 				// crs: L.CRS.EPSG4326,
@@ -202,7 +202,7 @@ export default {
 			};
 			legend.addTo(this.map);
 			// L.supermap.tiledMapLayer(url, option).addTo(map);
-			var option = {
+			var echartsOptions = {
 				// legend: {
 				// 	formatter: 'Substation',
 				// 	data: []
@@ -481,7 +481,11 @@ export default {
 					}
 				]
 			};
-			this.chart = L.supermap.echartsLayer(option); // _ec is the echartsInstance
+			var layerOptions = {
+				loadWhileAnimating: false,
+				attribution: ''
+			};
+			this.chart = L.supermap.echartsLayer(echartsOptions, layerOptions); // _ec is the echartsInstance
 			var EL = this.chart.addTo(this.map);
 			// this.chart = echarts.init(document.getElementById(id));
 			// this.chart.setOption({
@@ -1061,10 +1065,15 @@ export default {
 			// delete this.branchToOpenBranch[branchIndex.toString()];
 		},
 		restore() {
-			var temp = this.chart._echartsOptions;
-			temp.leaflet[0].center = this.mapCenter;
-			temp.leaflet[0].zoom = 8;
-			this.chart.setOption(temp);
+			this.map.flyTo(this.mapCenter, 8, {
+				animate: true,
+				duration: 1.5
+			});
+			// var temp = this.chart._echartsOptions;
+			// console.log(temp);
+			// temp.leaflet[0].center = this.mapCenter;
+			// temp.leaflet[0].zoom = 8;
+			// this.chart.setOption(temp);
 		}
 	},
 	created() {},

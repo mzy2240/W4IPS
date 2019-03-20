@@ -1,21 +1,21 @@
 <template>
-	<div id="v-widget">
-		<v-card>
-			<v-toolbar color="transparent" flat dense card v-if="enableHeader">
-				<v-toolbar-title>
-					<h4>{{ title }}</h4>
-				</v-toolbar-title>
-				<v-spacer></v-spacer>
-				<slot name="widget-header-action"></slot>
-				<v-btn icon @click="restore">
-					<v-icon>restore</v-icon>
-				</v-btn>
-			</v-toolbar>
-			<v-divider v-if="enableHeader"></v-divider>
-			<slot name="widget-content"></slot>
-			<div id="map" v-bind:style="mapStyle"></div>
-		</v-card>
-	</div>
+  <div id="v-widget">
+    <v-card>
+      <v-toolbar color="transparent" flat dense card v-if="enableHeader">
+        <v-toolbar-title>
+          <h4>{{ title }}</h4>
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <slot name="widget-header-action"></slot>
+        <v-btn icon @click="restore">
+          <v-icon>restore</v-icon>
+        </v-btn>
+      </v-toolbar>
+      <v-divider v-if="enableHeader"></v-divider>
+      <slot name="widget-content"></slot>
+      <div id="map" v-bind:style="mapStyle"></div>
+    </v-card>
+  </div>
 </template>
 
 <style scoped>
@@ -31,6 +31,7 @@
 import echarts from 'echarts';
 import 'echarts-leaflet';
 import { mapGetters } from 'vuex';
+import Math from 'mathjs';
 
 export default {
 	props: {
@@ -71,8 +72,12 @@ export default {
 	methods: {
 		initdraw() {
 			let heatmapData = [];
-			for(let ele in this.$store.state.transformerDict) {
-				heatmapData.push([this.$store.state.transformerDict[ele].coords[0][0], this.$store.state.transformerDict[ele].coords[0][1], 100])
+			for (let ele in this.$store.state.transformerDict) {
+				heatmapData.push([
+					this.$store.state.transformerDict[ele].coords[0][0],
+					this.$store.state.transformerDict[ele].coords[0][1],
+					100
+				]);
 			}
 			// console.log(this.$store.state.transformerDict)
 			const url = 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -82,8 +87,8 @@ export default {
 				// maxZoom: 8,
 				// tilematrixset: 'GoogleMapsCompatible_Level',
 				// format: 'jpg',
-				attribution:
-					'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
+				// attribution:
+				// 	'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 			};
 			this.map = L.map('map', {
 				// crs: L.CRS.EPSG4326,
@@ -93,7 +98,7 @@ export default {
 			});
 			L.tileLayer(url, options).addTo(this.map);
 			// this.chart = echarts.init(document.getElementById('map'));
-			var option = {
+			var echartsOptions = {
 				animation: false,
 				tooltip: {
 					show: true,
@@ -328,8 +333,52 @@ export default {
 					}
 				]
 			};
-			this.chart = L.supermap.echartsLayer(option); // _ec is the echartsInstance
+			var layerOptions = {
+				loadWhileAnimating: false,
+				attribution: ''
+			};
+			this.chart = L.supermap.echartsLayer(echartsOptions, layerOptions); // _ec is the echartsInstance
 			var EL = this.chart.addTo(this.map);
+
+			var ramdompts_ipl = turf.randomPoint(25, {
+				bbox: [-98, 28.0, -94, 31.0]
+			});
+
+			turf.featureEach(ramdompts_ipl, function(point) {
+				point.properties.obs = Math.random() * 25;
+			});
+			var tin = turf.tin(ramdompts_ipl, 'obs');
+			function getColor(x) {
+				return x < 5
+					? '#bd0026'
+					: x < 10
+					? '#f03b20'
+					: x < 15
+					? '#fd8d3c'
+					: x < 20
+					? '#fecc5c'
+					: '#ffffb2';
+			}
+			// var tinLayer = L.geoJson(tin, {
+			// 	onEachFeature: function(feature, layer) {
+			// 		var obs =
+			// 			feature.properties.a + feature.properties.b + feature.properties.c;
+			// 		feature.properties.obs = obs / 3;
+			// 		// layer.bindPopup(feature.properties.obs.toFixed(3).toString());
+			// 	},
+			// 	style: function(feature) {
+			// 		var obs =
+			// 			feature.properties.a + feature.properties.b + feature.properties.c;
+
+			// 		return {
+			// 			fillColor: getColor(obs),
+			// 			weight: 0.5,
+			// 			color: '#bd0026',
+			// 			opacity: 1
+			// 		};
+			// 	}
+			// }).addTo(this.map);
+			console.log(tin);
 			// var ecModel = this.chart._model;
 			// var leafletMap;
 			// ecModel.eachComponent('leaflet', function(leafletModel) {
@@ -385,7 +434,7 @@ export default {
 			});
 		},
 		onDrawTransformers() {
-			console.log(this.$store.state.areaDetail)
+			console.log(this.$store.state.areaDetail);
 			this.chart.setOption({
 				series: [
 					{
@@ -396,7 +445,10 @@ export default {
 			});
 		},
 		restore() {
-			this.map.setView(this.mapCenter, 6);
+			this.map.flyTo(this.mapCenter, 6, {
+				animate: true,
+				duration: 1.5
+			});
 		}
 	},
 	mounted() {
