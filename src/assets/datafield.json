@@ -82,74 +82,31 @@
 	"Bus": [
 		{
 			"text": "Vpu",
-			"value": "Vpu"
+			"value": "Vpu",
+			"align": "right"
 		},
 		{
 			"text": "Vangle",
-			"value": "Vangle"
+			"value": "Vangle",
+			"align": "right"
 		},
 		{
 			"text": "FreqHz",
-			"value": "FreqHz"
+			"value": "FreqHz",
+			"align": "right"
 		},
 		{
 			"text": "ROCOFHz",
-			"value": "ROCOFHz"
+			"value": "ROCOFHz",
+			"align": "right"
 		},
 		{
 			"text": "Status",
-			"value": "Status"
-		},
-		{
-			"text": "GenMW",
-			"value": "GenMW"
-		},
-		{
-			"text": "GenMvar",
-			"value": "GenMvar"
-		},
-		{
-			"text": "LoadMW",
-			"value": "LoadMW"
-		},
-		{
-			"text": "LoadMvar",
-			"value": "LoadMvar"
-		},
-		{
-			"text": "ShuntMW",
-			"value": "ShuntMW"
-		},
-		{
-			"text": "ShuntMvar",
-			"value": "ShuntMvar"
-		},
-		{
-			"text": "IslandNumber",
-			"value": "IslandNumber"
+			"value": "Status",
+			"align": "right"
 		}
 	],
 	"Gen": [
-		{
-			"text": "Vpu",
-			"value": "Vpu"
-		},
-		{
-			"text": "Vangle",
-			"value": "Vangle"
-		},
-		{
-			"text": "KV",
-			"value": "KV"
-		},
-		{
-			"text": "FreqHz",
-			"value": "FreqHz"
-		},
-		{
-			"text": "BusStatus",
-			"value": "BusStatus"
-		},
 		{
 			"text": "Status",
 			"value": "Status"
@@ -177,26 +134,6 @@
 	],
 	"Load": [
 		{
-			"text": "Vpu",
-			"value": "Vpu"
-		},
-		{
-			"text": "Vangle",
-			"value": "Vangle"
-		},
-		{
-			"text": "KV",
-			"value": "KV"
-		},
-		{
-			"text": "FreqHz",
-			"value": "FreqHz"
-		},
-		{
-			"text": "BusStatus",
-			"value": "BusStatus"
-		},
-		{
 			"text": "Status",
 			"value": "Status"
 		},
@@ -214,26 +151,6 @@
 		}
 	],
 	"Shunt": [
-		{
-			"text": "Vpu",
-			"value": "Vpu"
-		},
-		{
-			"text": "Vangle",
-			"value": "Vangle"
-		},
-		{
-			"text": "KV",
-			"value": "KV"
-		},
-		{
-			"text": "FreqHz",
-			"value": "FreqHz"
-		},
-		{
-			"text": "BusStatus",
-			"value": "BusStatus"
-		},
 		{
 			"text": "Status",
 			"value": "Status"
@@ -267,22 +184,6 @@
 		{
 			"text": "AmpsFrom",
 			"value": "AmpsFrom"
-		},
-		{
-			"text": "MWTo",
-			"value": "MWTo"
-		},
-		{
-			"text": "MvarTo",
-			"value": "MvarTo"
-		},
-		{
-			"text": "MVATo",
-			"value": "MVATo"
-		},
-		{
-			"text": "AmpsTo",
-			"value": "AmpsTo"
 		}
 	],
 	"Transformer": [

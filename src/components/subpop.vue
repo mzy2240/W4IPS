@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-dialog v-model="show" :key='id' max-width="1000px">
+		<v-dialog v-model="show" :key='id' max-width="700px">
 			<v-toolbar color="cyan" dark tabs>
 				<v-toolbar-title>{{name}} {{volt}} {{type}}</v-toolbar-title>
 				<v-tabs slot="extension" v-model="currentItem" centered color="cyan" slider-color="yellow">
@@ -17,12 +17,6 @@
 						<v-data-table :headers=$store.state.fieldstore.Substation :items="display" disable-initial-sort hide-actions class="elevation-1" lazy>
 							<template slot="items" slot-scope="props">
 								<td class="text-xs-right" v-for="item in props.item" :key=item.text>{{ item }}</td>
-								<!-- <td class="text-xs-right">{{ props.item.GenMvar }}</td>
-								<td class="text-xs-right">{{ props.item.LoadMW }}</td>
-								<td class="text-xs-right">{{ props.item.LoadMvar }}</td>
-								<td class="text-xs-right">{{ props.item.ShuntMW }}</td>
-								<td class="text-xs-right">{{ props.item.ShuntMvar }}</td>
-								<td class="text-xs-right">{{ props.item.FrequencyAve }}</td> -->
 							</template>
 						</v-data-table>
 					</v-card>

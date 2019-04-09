@@ -144,7 +144,9 @@ export default {
 					temp.push({
 						value: false, //[this.$store.state.areadetail.content.Substation[subID.toString()]["Double.Longitude"], this.$store.state.areadetail.content.Substation[subID.toString()]["Double.Latitude"]],
 						key: i,
-						name: this.$store.state.casedetail.content.Bus[i.split(',')[0]]['String.Name'] + '-' + this.$store.state.casedetail.content.Bus[i.split(',')[1]]['String.Name'],
+						name: this.$store.state.casedetail.content.Bus[i.split(',')[0]]['String.Name'] + '-' + this.$store.state.casedetail.content.Bus[i.split(',')[1]]['String.Name']+'-'+this.$store.state.areadetail.content.Transformer[i][
+							'String.CircuitID'
+						],
 						id: this.$store.state.areadetail.content.Transformer[i][
 							'String.CircuitID'
 						],
