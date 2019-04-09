@@ -53,7 +53,7 @@ export default {
 		},
 		protocol: {
 			type: String,
-			define: 'ws'
+			default: 'ws'
 		},
 		username: {
 			type: String,
@@ -61,7 +61,7 @@ export default {
 		},
 		password: {
 			type: String,
-			define: ''
+			default: ''
 		}
 	},
 	created() {
@@ -184,6 +184,7 @@ export default {
 					password: this.password
 				}
 			);
+			console.log(this.protocol + '://' + this.address)
 			this.client.on('connect', this.onConnect);
 			this.client.on('message', this.onMessage);
 			this.client.on('close', this.onClose);
