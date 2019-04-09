@@ -13,17 +13,15 @@
 			</v-toolbar>
 			<v-divider v-if="enableHeader"></v-divider>
 			<slot name="widget-content"></slot>
-			<div id="map" v-bind:style="mapStyle"></div>
+			<div id="map" class="chart"></div>
 		</v-card>
 	</div>
 </template>
 
 <style scoped>
-/* .chart {
+.chart {
 	z-index: 0;
-	height: 300px;
-	width: 100%;
-} */
+}
 </style>
 
 
