@@ -21,6 +21,7 @@
 <style scoped>
 .chart {
 	z-index: 0;
+	height: 300px;
 }
 </style>
 
