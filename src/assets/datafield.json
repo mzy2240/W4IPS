@@ -194,6 +194,18 @@
 		{
 			"text": "Tap",
 			"value": "Ratio"
+		},
+		{
+			"text": "GICNeutralCurrent",
+			"value": "Amps"
+		},
+		{
+			"text": "GICMvarLosses",
+			"value": "Mvar"
+		},
+		{
+			"text": "GICIEff",
+			"value": "Amps"
 		}
 	]
 }

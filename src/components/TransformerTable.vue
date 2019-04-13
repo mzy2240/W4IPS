@@ -29,6 +29,9 @@
 							<td class="text-xs-left">{{ props.item.Phase }}</td>
 							<td class="text-xs-right">{{ props.item.Tap }}</td>
 							<td class="text-xs-right">{{ props.item.Temperature }}</td>
+							<td class="text-xs-right">{{ props.item.GICNeutralCurrent }}</td>
+							<td class="text-xs-right">{{ props.item.GICMvarLosses }}</td>
+							<td class="text-xs-right">{{ props.item.GICIEff }}</td>
 						</tr>
 					</template>
 					<!-- <template slot="expand" slot-scope="props">
@@ -96,7 +99,10 @@ export default {
 				},
 				{ text: 'Phase', align: 'left', value: 'Degree' },
 				{ text: 'Tap', align: 'left', value: 'Ratio' },
-				{ text: 'Temperature', value: 'Fahrenheit' }
+				{ text: 'Temperature', value: 'Fahrenheit'},
+				{ text: 'GICNeutralCurrent', value: 'Amps'},
+				{ text: 'GICMvarLosses', value: 'Mvar'},
+				{ text: 'GICIEff', value: 'Amps'}
 			],
 			Transformers: [],
 			selected: [],
@@ -152,7 +158,10 @@ export default {
 						],
 						Phase: 0,
 						Tap: 1,
-						Temperature: null
+						Temperature: null,
+						GICNeutralCurrent: null,
+						GICMvarLosses: null,
+						GICIEff: null
 					});
 				}
 			}
@@ -179,6 +188,9 @@ export default {
 						this.Transformers[i].Tap =
 							this.$store.state.transformerData[1 + i * this.TransformerDataLength]; // MW is the 6th in the load data
 						this.Transformers[i].Temperature = 100;
+						this.Transformers[i].GICNeutralCurrent = this.$store.state.transformerData[2 + i * this.TransformerDataLength];
+						this.Transformers[i].GICMvarLosses = this.$store.state.transformerData[3 + i * this.TransformerDataLength];
+						this.Transformers[i].GICIEff = this.$store.state.transformerData[4 + i * this.TransformerDataLength];
 					}
 				} catch (e) {
 					console.log(e)
