@@ -22,8 +22,7 @@
 							<td class="text-xs-left">{{ props.item.vStatus }}</td>
 							<td class="text-xs-right">{{ props.item.MW }}</td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
-							<td class="text-xs-right">{{ props.item.Vpu }}</td>
-							<td class="text-xs-right">{{ props.item.FreqHz }}</td>
+							<td class="text-xs-right">{{ props.item.MVA }}</td>
 							<td class="justify-center layout px-0">
 								<div class="my-2">
 									<v-switch v-model="props.item.vStatus" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
@@ -73,8 +72,7 @@ export default {
 				{ text: 'Status', value: 'Status' },
 				{ text: 'MW', value: 'MW' },
 				{ text: 'Mvar', value: 'Mvar' },
-				{ text: 'Vpu', value: 'Vpu' },
-				{ text: 'FreqHz', value: 'FreqHz' },
+				{ text: 'MVA', value: 'MVA' },
 				// { text: 'MVA', value: 'MVA' },
 				// { text: 'MW setpoint', value: 'MWSet', sortable: false },
 				// { text: 'Vpu setpoint', value: 'VpuSet', sortable: false },
@@ -89,7 +87,13 @@ export default {
 				30,
 				{ text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
 			],
-			loadArray: []
+			loadArray: [],
+			loadFieldIndex: {
+				"Status": this.$store.state.fieldstore['Load'].findIndex(x => x.text ==="Status"),
+				"MW": this.$store.state.fieldstore['Load'].findIndex(x => x.text ==="MW"),
+				"Mvar": this.$store.state.fieldstore['Load'].findIndex(x => x.text ==="Mvar"),
+				"MVA": this.$store.state.fieldstore['Load'].findIndex(x => x.text ==="MVA")
+			}
 		};
 	},
 	methods: {
@@ -140,8 +144,7 @@ export default {
 						vStatus: 1,
 						MW: 0,
 						Mvar: 0,
-						Vpu: 1,
-						FreqHz: 60,
+						MVA: 0,
 						id: this.$store.state.areadetail.content.Load[i]['String.ID']
 					});
 				}
@@ -160,15 +163,13 @@ export default {
 					const temp = this.$store.state.parsedData;
 					for (let i in this.loads) {
 						this.loads[i].MW =
-							temp[this.anchor + 6 + this.loadArray[i] * this.loadDataLength]; // MW is the 6th in the load data
+							temp[this.anchor + this.loadFieldIndex['MW'] + this.loadArray[i] * this.loadDataLength]; // MW is the 6th in the load data
 						this.loads[i].Mvar =
-							temp[this.anchor + 7 + this.loadArray[i] * this.loadDataLength];
-						this.loads[i].Vpu =
-							temp[this.anchor + this.loadArray[i] * this.loadDataLength];
-						this.loads[i].FreqHz =
-							temp[this.anchor + 3 + this.loadArray[i] * this.loadDataLength];
+							temp[this.anchor + this.loadFieldIndex['Mvar'] + this.loadArray[i] * this.loadDataLength];
+						this.loads[i].MVA =
+							temp[this.anchor + this.loadFieldIndex['MVA'] + this.loadArray[i] * this.loadDataLength];
 						this.loads[i].Status =
-							temp[this.anchor + 5 + this.loadArray[i] * this.loadDataLength];
+							temp[this.anchor + this.loadFieldIndex['Status'] + this.loadArray[i] * this.loadDataLength];
 						if (
 							this.$store.state.genAction['Load'][this.loads[i].key] !=
 							undefined

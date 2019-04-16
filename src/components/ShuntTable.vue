@@ -32,8 +32,7 @@
 							<td class="text-xs-left">{{ props.item.vStatus }}</td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
 							<!-- <td class="text-xs-right">{{ props.item.MvarNom }}</td> -->
-							<td class="text-xs-right">{{ props.item.Vpu }}</td>
-							<td class="text-xs-right">{{ props.item.FreqHz }}</td>
+							<td class="text-xs-right">{{ props.item.MvarNom }}</td>
 							<td class="justify-center layout px-0">
 								<div class="my-2">
 									<v-switch v-model="props.item.vStatus" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
@@ -86,8 +85,7 @@ export default {
 				{ text: 'Status', value: 'Status',align: 'left' },
 				// { text: 'MvarNom', value: 'MvarNom' },
 				{ text: 'Mvar', value: 'Mvar',align: 'right' },
-				{ text: 'Vpu', value: 'Vpu',align: 'right' },
-				{ text: 'FreqHz', value: 'FreqHz',align: 'right' },
+				{ text: 'MvarNom', value: 'Mvar',align: 'right' },
 				// { text: 'MVA', value: 'MVA' },
 				// { text: 'MW setpoint', value: 'MWSet', sortable: false },
 				// { text: 'Vpu setpoint', value: 'VpuSet', sortable: false },
@@ -102,7 +100,12 @@ export default {
 				30,
 				{ text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
 			],
-			shuntArray: []
+			shuntArray: [],
+			shuntFieldIndex: {
+				"Status": this.$store.state.fieldstore['Load'].findIndex(x => x.text ==="Status"),
+				"Mvar": this.$store.state.fieldstore['Load'].findIndex(x => x.text ==="Mvar"),
+				"MvarNom": this.$store.state.fieldstore['Load'].findIndex(x => x.text ==="MvarNom")
+			}
 		};
 	},
 	methods: {
@@ -169,15 +172,11 @@ export default {
 					const temp = this.$store.state.parsedData;
 					for (let i in this.shunts) {
 						this.shunts[i].MvarNom =
-							temp[this.anchor + 7 + this.shuntArray[i] * this.shuntDataLength]; // MW is the 6th in the load data
+							temp[this.anchor + this.shuntFieldIndex['MvarNom'] + this.shuntArray[i] * this.shuntDataLength]; // MW is the 6th in the load data
 						this.shunts[i].Mvar =
-							temp[this.anchor + 6 + this.shuntArray[i] * this.shuntDataLength];
-						this.shunts[i].Vpu =
-							temp[this.anchor + this.shuntArray[i] * this.shuntDataLength];
-						this.shunts[i].FreqHz =
-							temp[this.anchor + 3 + this.shuntArray[i] * this.shuntDataLength];
+							temp[this.anchor + this.shuntFieldIndex['Mvar'] + this.shuntArray[i] * this.shuntDataLength];
 						this.shunts[i].Status =
-							temp[this.anchor + 5 + this.shuntArray[i] * this.shuntDataLength];
+							temp[this.anchor + this.shuntFieldIndex['Status'] + this.shuntArray[i] * this.shuntDataLength];
 						if (
 							this.$store.state.genAction['Shunt'][this.shunts[i].key] !=
 							undefined

@@ -15,17 +15,17 @@
 		</v-layout>
 		<v-container grid-list-xl text-xs-center fluid>
 			<v-layout row wrap>
-				<v-flex lg5 sm5 xs12>
+				<v-flex lg6 sm6 xs12>
 					<!-- <v-widget title="Realtime Data" content-bg="white">
 						<div slot="widget-content"> -->
 					<transformertable title="Realtime Data"></transformertable>
 					<!-- </div>
 					</v-widget> -->
 				</v-flex>
-				<v-flex lg7 sm7 xs12>
+				<v-flex lg6 sm6 xs12>
 					<v-layout row wrap>
 						<v-flex lg12 sm12 xs12>
-							<MapWidget title="Location Assist" height="400px" focus="Transformer"></MapWidget>
+							<MapWidget title="Location Assist" height="600px" focus="Transformer"></MapWidget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
 							<v-widget title="GMD" content-bg="dark">

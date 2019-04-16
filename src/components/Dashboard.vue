@@ -140,7 +140,7 @@
 		<v-toolbar color="blue darken-3" dark app clipped-left fixed>
 			<v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
 			<v-toolbar-title class="white--text">
-				<button v-on:click="$store.commit('setpage','Home')">PowerWeb Cloud</button>
+				<button v-on:click="$store.commit('setpage','Home')">W4IPS</button>
 				<div class="subheading">Powered by PowerWorld Dynamics Studio and EMQ</div>
 			</v-toolbar-title>
 			<!-- <v-toolbar-items>
@@ -187,7 +187,8 @@ import load from '../views/load-view';
 import shunt from '../views/shunt-view';
 import admin from '../views/admin-view';
 import branch from '../views/branch-view';
-import transformer from '../views/transformer-view';
+// import transformer from '../views/transformer-view';
+import transformer from '../views/new-transformer-view';
 // import chatpop from './components/chatpop';
 import MqttClient from './MqttClient';
 import Util from '../util';

@@ -8,7 +8,7 @@
 					</v-card-title>
 					<v-data-table :headers='$store.state.fieldstore[item.split(" ")[0]]' :items="display" disable-initial-sort hide-actions class="elevation-1">
 						<template slot="items" slot-scope="props">
-								<td class="text-xs-right" v-for="item in props.item" :key=item.text>{{ item }}</td>
+								<td class="text-xs-center" v-for="item in props.item" :key=item.text>{{ item }}</td>
 						</template>
 					</v-data-table>
 				</v-card>

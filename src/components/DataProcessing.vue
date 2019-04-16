@@ -41,7 +41,14 @@ export default {
 			busArray: [],
 			areaBus: {},
 			branchArray: [],
-			transformerArray: []
+			transformerArray: [],
+			genFieldIndex: {
+				"MW": this.$store.state.fieldstore['Gen'].findIndex(x => x.text ==="MW"),
+				"Mvar": this.$store.state.fieldstore['Gen'].findIndex(x => x.text ==="Mvar"),
+				"MWSetpoint": this.$store.state.fieldstore['Gen'].findIndex(x => x.text ==="MWSetpoint"),
+				"VpuSetpoint": this.$store.state.fieldstore['Gen'].findIndex(x => x.text ==="VpuSetpoint"),
+				"Status": this.$store.state.fieldstore['Gen'].findIndex(x => x.text ==="Status"),
+			}
 		};
 	},
 	methods: {
@@ -484,15 +491,15 @@ export default {
 			this.$store.commit('setAreaLoad', ['2018/11/29 ' + this.$store.state.clockTime, this.areaData[2]]);
 			for (let i in this.gens) {
 				this.gens[i].MW =
-					temp[this.anchor + 6 + this.genArray[i] * this.genDataLength]; // MW is the 6th in the gen data
+					temp[this.anchor + this.genFieldIndex["MW"] + this.genArray[i] * this.genDataLength]; // MW is the 6th in the gen data
 				this.gens[i].Mvar =
-					temp[this.anchor + 7 + this.genArray[i] * this.genDataLength];
+					temp[this.anchor + this.genFieldIndex["Mvar"] + this.genArray[i] * this.genDataLength];
 				this.gens[i].MWSetpoint =
-					temp[this.anchor + 10 + this.genArray[i] * this.genDataLength];
+					temp[this.anchor + this.genFieldIndex["MWSetpoint"] + this.genArray[i] * this.genDataLength];
 				this.gens[i].VpuSetpoint =
-					temp[this.anchor + 9 + this.genArray[i] * this.genDataLength];
+					temp[this.anchor + this.genFieldIndex["VpuSetpoint"] + this.genArray[i] * this.genDataLength];
 				this.gens[i].Status =
-					temp[this.anchor + 5 + this.genArray[i] * this.genDataLength];
+					temp[this.anchor + this.genFieldIndex["Status"] + this.genArray[i] * this.genDataLength];
 				if(this.$store.state.genAction['Gen'][this.gens[i].key] != undefined){
 					if(this.$store.state.currentTime >= Math.max(this.$store.state.genAction['Gen'][this.gens[i].key])+3){
 						this.gens[i].vStatus = this.gens[i].Status;

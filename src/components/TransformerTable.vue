@@ -12,33 +12,17 @@
 		<v-divider></v-divider>
 		<v-card-text class="pa-0">
 			<template>
-				<v-data-table class="fixed-header" :headers="headers" :items="Transformers" :rows-per-page-items="defaultRowItems" v-model="selected" select-all disable-initial-sort item-key="name">
-					<template slot="headerCell" slot-scope="props">
-						<!-- <v-tooltip bottom> -->
-						<span slot="activator">
-							{{ props.header.text }}
-						</span>
-						<!-- </v-tooltip> -->
+				<v-data-table class="fixed-header" :headers="headers" :items="Transformers" :rows-per-page-items="defaultRowItems" disable-initial-sort item-key="name">
+					<template v-slot:items="props">
+						<td class="text-xs-left">{{ props.item.name }}</td>
+						<td class="text-xs-center">{{ props.item.kv }}</td>
+						<!-- <td class="text-xs-left">{{ props.item.Phase }}</td>
+						<td class="text-xs-center">{{ props.item.Tap }}</td> -->
+						<td class="text-xs-center">{{ props.item.Temperature }}</td>
+						<td class="text-xs-center">{{ props.item.GICNeutralCurrent }}</td>
+						<td class="text-xs-center">{{ props.item.GICMvarLosses }}</td>
+						<td class="text-xs-center">{{ props.item.GICIEff }}</td>
 					</template>
-					<template slot="items" slot-scope="props">
-						<tr :active="props.selected">
-							<td>
-								<v-checkbox v-model="props.selected" primary hide-details @click="props.selected = !props.selected"></v-checkbox>
-							</td>
-							<td class="text-xs-left">{{ props.item.name }}</td>
-							<td class="text-xs-left">{{ props.item.Phase }}</td>
-							<td class="text-xs-right">{{ props.item.Tap }}</td>
-							<td class="text-xs-right">{{ props.item.Temperature }}</td>
-							<td class="text-xs-right">{{ props.item.GICNeutralCurrent }}</td>
-							<td class="text-xs-right">{{ props.item.GICMvarLosses }}</td>
-							<td class="text-xs-right">{{ props.item.GICIEff }}</td>
-						</tr>
-					</template>
-					<!-- <template slot="expand" slot-scope="props">
-				<v-card flat>
-					<v-card-text>Peek-a-boo!</v-card-text>
-				</v-card>
-			</template> -->
 				</v-data-table>
 			</template>
 			<v-divider></v-divider>
@@ -97,12 +81,13 @@ export default {
 					value: 'name',
 					width: '15%'
 				},
-				{ text: 'Phase', align: 'left', value: 'Degree' },
-				{ text: 'Tap', align: 'left', value: 'Ratio' },
-				{ text: 'Temperature', value: 'Fahrenheit'},
-				{ text: 'GICNeutralCurrent', value: 'Amps'},
-				{ text: 'GICMvarLosses', value: 'Mvar'},
-				{ text: 'GICIEff', value: 'Amps'}
+				// { text: 'Phase', align: 'left', value: 'Degree' },
+				// { text: 'Tap', align: 'left', value: 'Ratio' },
+				{ text: 'kV', value: 'kV'},
+				{ text: 'Temperature', value: 'Temperature'},
+				{ text: 'GICNeutralCurrent', value: 'GICNeutralCurrent'},
+				{ text: 'GICMvarLosses', value: 'GICMvarLosses'},
+				{ text: 'GICIEff', value: 'GICIEff'}
 			],
 			Transformers: [],
 			selected: [],
@@ -153,6 +138,7 @@ export default {
 						name: this.$store.state.casedetail.content.Bus[i.split(',')[0]]['String.Name'] + '-' + this.$store.state.casedetail.content.Bus[i.split(',')[1]]['String.Name']+'-'+this.$store.state.areadetail.content.Transformer[i][
 							'String.CircuitID'
 						],
+						kv:this.$store.state.casedetail.content.Bus[i.split(',')[0]]['Single.Nominal kV'] + '/' + this.$store.state.casedetail.content.Bus[i.split(',')[1]]['Single.Nominal kV'],
 						id: this.$store.state.areadetail.content.Transformer[i][
 							'String.CircuitID'
 						],
@@ -183,10 +169,10 @@ export default {
 					// console.log(this.$store.state.transformerData)
 					// console.log(this.TransformerDataLength)
 					for (let i in this.Transformers) {
-						this.Transformers[i].Phase =
-							this.$store.state.transformerData[0 + i * this.TransformerDataLength];
-						this.Transformers[i].Tap =
-							this.$store.state.transformerData[1 + i * this.TransformerDataLength]; // MW is the 6th in the load data
+						// this.Transformers[i].Phase =
+						// 	this.$store.state.transformerData[0 + i * this.TransformerDataLength];
+						// this.Transformers[i].Tap =
+						// 	this.$store.state.transformerData[1 + i * this.TransformerDataLength]; // MW is the 6th in the load data
 						this.Transformers[i].Temperature = 100;
 						this.Transformers[i].GICNeutralCurrent = this.$store.state.transformerData[2 + i * this.TransformerDataLength];
 						this.Transformers[i].GICMvarLosses = this.$store.state.transformerData[3 + i * this.TransformerDataLength];
