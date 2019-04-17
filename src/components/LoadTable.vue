@@ -132,7 +132,7 @@ export default {
 								'Double.Latitude'
 							]
 						],
-						key: i,
+						// key: i,
 						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]][
 							'String.Name'
 						]+' '+i.split(',')[1],
@@ -142,7 +142,7 @@ export default {
 						Mvar: 0,
 						Vpu: 1,
 						FreqHz: 60,
-						id: this.$store.state.areadetail.content.Load[i]['String.ID']
+						// id: this.$store.state.areadetail.content.Load[i]['String.ID']
 					});
 				}
 				count++;
