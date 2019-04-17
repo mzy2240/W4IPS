@@ -207,6 +207,10 @@ export default {
 				// 	formatter: 'Substation',
 				// 	data: []
 				// },
+				tooltip: {
+					show: true,
+					trigger: 'item'
+				},
 				series: [
 					{
 						id: 'sub',
