@@ -1,101 +1,87 @@
 <template>
-	<div>
-		<v-layout row class="align-center layout px-4 pt-4 app--page-header">
-			<div class="page-header-left">
-				<h3 class="pr-3">Transformer</h3>
-			</div>
-			<v-icon larg>view_carousel</v-icon>
-			<v-spacer></v-spacer>
-			<div class="page-header-right">
-				<h4 class="pr-1">
-					Hi {{ $store.state.username }}
-					<status-indicator
-						:negative="$store.state.alarm"
-						:positive="!$store.state.alarm"
-						pulse
-					></status-indicator>
-				</h4>
-			</div>
-		</v-layout>
-		<v-container grid-list-xl text-xs-center fluid>
-			<v-layout row wrap>
-				<v-flex lg6 sm6 xs12>
-					<!-- <v-widget title="Realtime Data" content-bg="white">
-						<div slot="widget-content"> -->
-					<v-card>
-						<v-toolbar card dense color="transparent">
-							<v-toolbar-title>
-								<h4>{{ title }}</h4>
-							</v-toolbar-title>
-							<v-spacer></v-spacer>
-							<v-btn icon>
-								<v-icon>more_vert</v-icon>
-							</v-btn>
-						</v-toolbar>
-						<v-divider></v-divider>
-						<v-card-text class="pa-0">
-							<template>
-								<v-data-table
-									class="fixed-header"
-									:headers="headers"
-									:items="Transformers"
-									:rows-per-page-items="defaultRowItems"
-									disable-initial-sort
-									item-key="name"
-								>
-									<template v-slot:items="props">
-										<td class="text-xs-left">{{ props.item.name }}</td>
-										<td class="text-xs-center">{{ props.item.kv }}</td>
-										<!-- <td class="text-xs-left">{{ props.item.Phase }}</td>
-						<td class="text-xs-center">{{ props.item.Tap }}</td> -->
-										<td class="text-xs-center">{{ props.item.Temperature }}</td>
-										<td class="text-xs-center">
-											{{ props.item.GICNeutralCurrent }}
-										</td>
-										<td class="text-xs-center">
-											{{ props.item.GICMvarLosses }}
-										</td>
-										<td class="text-xs-center">{{ props.item.GICIEff }}</td>
-									</template>
-								</v-data-table>
-							</template>
-							<v-divider></v-divider>
-						</v-card-text>
-					</v-card>
-					<!-- </div>
-					</v-widget> -->
-				</v-flex>
-				<v-flex lg6 sm6 xs12>
-					<v-layout row wrap>
-						<v-flex lg12 sm12 xs12>
-							<div id="v-widget">
-								<v-card>
-									<v-toolbar
-										color="transparent"
-										flat
-										dense
-										card
-										v-if="enableHeader"
-									>
-										<v-toolbar-title>
-											<h4>{{ chartTitle }}</h4>
-										</v-toolbar-title>
-										<v-spacer></v-spacer>
-									</v-toolbar>
-									<v-divider v-if="enableHeader"></v-divider>
-									<slot name="widget-content"></slot>
-									<div id="map" class="chart"></div>
-								</v-card>
-							</div>
-						</v-flex>
-						<!-- <v-flex lg12 sm12 xs12>
+  <div>
+    <v-layout row class="align-center layout px-4 pt-4 app--page-header">
+      <div class="page-header-left">
+        <h3 class="pr-3">Transformer</h3>
+      </div>
+      <v-icon larg>view_carousel</v-icon>
+      <v-spacer></v-spacer>
+      <div class="page-header-right">
+        <h4 class="pr-1">
+          Hi {{ $store.state.username }}
+          <status-indicator :negative="$store.state.alarm" :positive="!$store.state.alarm" pulse></status-indicator>
+        </h4>
+      </div>
+    </v-layout>
+    <v-container grid-list-xl text-xs-center fluid>
+      <v-layout row wrap>
+        <v-flex lg6 sm6 xs12>
+          <!-- <v-widget title="Realtime Data" content-bg="white">
+          <div slot="widget-content">-->
+          <v-card>
+            <v-toolbar card dense color="transparent">
+              <v-toolbar-title>
+                <h4>{{ title }}</h4>
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn icon>
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+            </v-toolbar>
+            <v-divider></v-divider>
+            <v-card-text class="pa-0">
+              <template>
+                <v-data-table
+                  class="fixed-header"
+                  :headers="headers"
+                  :items="Transformers"
+                  :rows-per-page-items="defaultRowItems"
+                  disable-initial-sort
+                  item-key="name"
+                >
+                  <template v-slot:items="props">
+                    <td class="text-xs-left">{{ props.item.name }}</td>
+                    <td class="text-xs-center">{{ props.item.kv }}</td>
+                    <!-- <td class="text-xs-left">{{ props.item.Phase }}</td>
+                    <td class="text-xs-center">{{ props.item.Tap }}</td>-->
+                    <td class="text-xs-center">{{ props.item.Temperature }}</td>
+                    <td class="text-xs-center">{{ props.item.GICNeutralCurrent }}</td>
+                    <td class="text-xs-center">{{ props.item.GICMvarLosses }}</td>
+                    <td class="text-xs-center">{{ props.item.GICIEff }}</td>
+                  </template>
+                </v-data-table>
+              </template>
+              <v-divider></v-divider>
+            </v-card-text>
+          </v-card>
+          <!-- </div>
+          </v-widget>-->
+        </v-flex>
+        <v-flex lg6 sm6 xs12>
+          <v-layout row wrap>
+            <v-flex lg12 sm12 xs12>
+              <div id="v-widget">
+                <v-card>
+                  <v-toolbar color="transparent" flat dense card v-if="enableHeader">
+                    <v-toolbar-title>
+                      <h4>{{ chartTitle }}</h4>
+                    </v-toolbar-title>
+                    <v-spacer></v-spacer>
+                  </v-toolbar>
+                  <v-divider v-if="enableHeader"></v-divider>
+                  <slot name="widget-content"></slot>
+                  <div id="map" class="chart"></div>
+                </v-card>
+              </div>
+            </v-flex>
+            <!-- <v-flex lg12 sm12 xs12>
 							<v-widget title="GMD" content-bg="dark"> </v-widget>
-						</v-flex> -->
-					</v-layout>
-				</v-flex>
-			</v-layout>
-		</v-container>
-	</div>
+            </v-flex>-->
+          </v-layout>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <style>
@@ -203,7 +189,8 @@ export default {
 			mapStyle: {
 				width: '100%',
 				height: this.height
-			}
+			},
+			transData: []
 		};
 	},
 	methods: {
@@ -227,13 +214,13 @@ export default {
 				// attribution:
 				// 	'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 			};
-			this.map = L.map('map', {
+			this.map = window.L.map('map', {
 				// crs: L.CRS.EPSG4326,
 				center: this.mapCenter, //this.$store.state.center, //this.mapCenter,
 				maxZoom: 18,
 				zoom: 7
 			});
-			L.tileLayer(url, options).addTo(this.map);
+			window.L.tileLayer(url, options).addTo(this.map);
 			// this.chart = echarts.init(document.getElementById('map'));
 			var echartsOptions = {
 				animation: false,
@@ -254,270 +241,79 @@ export default {
 				},
 				series: [
 					{
-						id: 'sub',
-						type: 'scatter',
-						name: 'sub',
+						id: 'transformer',
+						type: 'effectScatter',
+						name: 'transformer',
 						coordinateSystem: 'leaflet',
 						symbol: 'circle',
-						symbolSize: (value, params) => {
-							if (params.data.attributes.Gen && this.focus == 'Gen') {
-								return 10;
-							} else if (
-								params.data.attributes.Shunt &&
-								this.focus == 'Shunt'
-							) {
-								return 10;
-							} else if (this.focus == 'Load') {
-								return 7;
-							} else {
-								return 0;
-							}
-						},
 						// showEffectOn: 'emphasis',
 						// zindex: 2,
 						zlevel: 3,
 						progressive: 100,
 						progressiveThreshold: 200,
-						data: this.$store.state.subData,
-						tooltip: {
-							confine: true,
-							formatter: function(params) {
-								return 'Substation: ' + params.name;
-							}
-						},
+						data: this.transData, //this.$store.state.subData,
 						itemStyle: {
 							color: 'rgb(200, 40, 0)'
 						}
 					},
-					{
-						id: 'lines',
-						name: 'lines',
-						type: 'lines',
-						coordinateSystem: 'leaflet',
-						progressive: 100,
-						progressiveThreshold: 200,
-						// symbol: ['none', 'arrow'],
-						// symbolSize: 6,
-						silent: false,
-						lineStyle: {
-							width: 1,
-							// color: 'rgb(200, 40, 0)',
-							color: function(params) {
-								let temp;
-								// console.log(params.data.attributes.volt)
-								switch (params.data.attributes.volt) {
-									case 230:
-										temp = '#3949ab';
-										break;
-									case 500:
-										temp = '#e53935';
-										break;
-								}
-								// console.log(params.data.attributes.volt);
-								return temp;
-							},
-							opacity: 1
-						},
-						tooltip: {
-							// position: [10, 10],
-							confine: true,
-							formatter: function(params) {
-								return 'Branch: ' + params.name;
-							}
-						},
-						emphasis: {
-							lineStyle: {
-								width: 2,
-								shadowColor: 'rgba(144, 144, 255, 0.5)',
-								shadowBlur: 10
-							}
-						},
-						zlevel: 3,
-						data: this.$store.state.lineData
-					},
-					{
-						id: 'vbus',
-						name: 'vbus',
-						type: 'scatter',
-						coordinateSystem: 'leaflet',
-						silent: false,
-						symbol: 'pin',
-						symbolSize: 50,
-						zlevel: 1,
-						itemStyle: {
-							color: '#ff6d00'
-						},
-						label: {
-							show: true,
-							position: 'top',
-							color: 'black',
-							// fontWeight: 'bold',
-							formatter: function(params) {
-								if (params.user != undefined) {
-									return params.user + ': Bus#' + params.name;
-								} else {
-									return 'Bus#' + params.name;
-								}
-							}
-						},
-						data: []
-					},
-					{
-						id: 'shunt',
-						name: 'shunt',
-						type: 'scatter',
-						coordinateSystem: 'leaflet',
-						silent: false,
-						symbol: 'pin',
-						symbolSize: 50,
-						zlevel: 2,
-						itemStyle: {
-							color: '#4caf50'
-						},
-						label: {
-							show: true,
-							position: 'top',
-							color: 'black',
-							// fontWeight: 'bold',
-							formatter: function(params) {
-								return 'Shunt#' + params.name;
-							}
-						},
-						data: []
-					},
-					{
-						id: 'violatedLines',
-						name: 'violatedLines',
-						type: 'lines',
-						coordinateSystem: 'leaflet',
-						silent: false,
-						zlevel: 10,
-						z: 10,
-						// symbol: 'pin',
-						// symbolSize: 30,
-						lineStyle: {
-							width: 10,
-							color: '#f44336',
-							// type: 'dotted',
-							shadowColor: '#ccff90',
-							shadowBlur: 20,
-							opacity: 0.5
-						},
-						label: {
-							show: true,
-							position: 'middle',
-							color: 'black',
-							// fontWeight: 'bold',
-							formatter: function(params) {
-								return 'Branch#' + params.name;
-							}
-						},
-						data: []
-					},
-					{
-						id: 'gen',
-						name: 'gen',
-						type: 'scatter',
-						coordinateSystem: 'leaflet',
-						silent: false,
-						symbol: 'pin',
-						symbolSize: 50,
-						zlevel: 2,
-						itemStyle: {
-							color: '#1565c0'
-						},
-						label: {
-							show: true,
-							position: 'top',
-							color: 'black',
-							// fontWeight: 'bold',
-							formatter: function(params) {
-								return 'Gen#' + params.name;
-							}
-						},
-						data: []
-					},
-					{
-						id: 'load',
-						name: 'load',
-						type: 'scatter',
-						coordinateSystem: 'leaflet',
-						silent: false,
-						symbol: 'pin',
-						symbolSize: 50,
-						zlevel: 2,
-						itemStyle: {
-							color: '#303f9f'
-						},
-						label: {
-							show: true,
-							position: 'top',
-							color: 'black',
-							// fontWeight: 'bold',
-							formatter: function(params) {
-								return 'Gen#' + params.name;
-							}
-						},
-						data: []
-					},
-					{
-						id: 'heatmap',
-						type: 'heatmap',
-						coordinateSystem: 'leaflet',
-						data: [], //heatmapData, //[[-98.4, 27.6, 5]],
-						pointSize: 10,
-						blurSize: 20
-					}
+					// {
+					// 	id: 'heatmap',
+					// 	type: 'heatmap',
+					// 	coordinateSystem: 'leaflet',
+					// 	data: [], //heatmapData, //[[-98.4, 27.6, 5]],
+					// 	pointSize: 10,
+					// 	blurSize: 20
+					// }
 				]
 			};
 			var layerOptions = {
 				loadWhileAnimating: false,
 				attribution: ''
 			};
-			this.chart = L.supermap.echartsLayer(echartsOptions, layerOptions); // _ec is the echartsInstance
+			this.chart = window.L.supermap.echartsLayer(echartsOptions, layerOptions); // _ec is the echartsInstance
 			var EL = this.chart.addTo(this.map);
 
-			var ramdompts_ipl = window.turf.randomPoint(25, {
-				bbox: [-98, 28.0, -94, 31.0]
-			});
+			// var ramdompts_ipl = window.turf.randomPoint(25, {
+			// 	bbox: [-98, 28.0, -94, 31.0]
+			// });
 
-			window.turf.featureEach(ramdompts_ipl, function(point) {
-				point.properties.obs = Math.random() * 25;
-			});
-			// var tin = turf.tin(ramdompts_ipl, 'obs');
-			var contours_pts = window.turf.interpolate(ramdompts_ipl, 2, {
-				gridType: 'points',
-				property: 'obs',
-				units: 'kilometers'
-			});
-			var contours = window.turf.isobands(contours_pts, [0, 5, 10, 15, 20, 25, 30], {
-				zProperty: 'obs'
-			});
-			function getColor(x) {
-				return x < 5
-					? '#bd0026'
-					: x < 10
-					? '#f03b20'
-					: x < 15
-					? '#fd8d3c'
-					: x < 20
-					? '#fecc5c'
-					: '#ffffb2';
-			}
-			var contoursLayer = L.geoJson(contours, {
-				// onEachFeature: function(feature, layer) {
-				// 	layer.bindPopup(feature.properties.obs);
-				// },
-				style: function(feature) {
-					return {
-						interactive: false,
-						fillColor: getColor(parseInt(feature.properties.obs.split('-')[0])),
-						weight: 0.5,
-						color: '#bd0026',
-						opacity: 1
-					};
-				}
-			}).addTo(this.map);
+			// window.turf.featureEach(ramdompts_ipl, function(point) {
+			// 	point.properties.obs = Math.random() * 25;
+			// });
+			// // var tin = turf.tin(ramdompts_ipl, 'obs');
+			// var contours_pts = window.turf.interpolate(ramdompts_ipl, 2, {
+			// 	gridType: 'points',
+			// 	property: 'obs',
+			// 	units: 'kilometers'
+			// });
+			// var contours = window.turf.isobands(contours_pts, [0, 5, 10, 15, 20, 25, 30], {
+			// 	zProperty: 'obs'
+			// });
+			// function getColor(x) {
+			// 	return x < 5
+			// 		? '#bd0026'
+			// 		: x < 10
+			// 		? '#f03b20'
+			// 		: x < 15
+			// 		? '#fd8d3c'
+			// 		: x < 20
+			// 		? '#fecc5c'
+			// 		: '#ffffb2';
+			// }
+			// var contoursLayer = L.geoJson(contours, {
+			// 	// onEachFeature: function(feature, layer) {
+			// 	// 	layer.bindPopup(feature.properties.obs);
+			// 	// },
+			// 	style: function(feature) {
+			// 		return {
+			// 			interactive: false,
+			// 			fillColor: getColor(parseInt(feature.properties.obs.split('-')[0])),
+			// 			weight: 0.5,
+			// 			color: '#bd0026',
+			// 			opacity: 1
+			// 		};
+			// 	}
+			// }).addTo(this.map);
 			// console.log(tin);
 			// var ecModel = this.chart._model;
 			// var leafletMap;
@@ -549,6 +345,7 @@ export default {
 		},
 		initTable() {
 			let temp = [];
+			let subid;
 			this.anchor = this.$store.state.areaHelper.Transformer.anchor;
 			this.TransformerDataLength = this.$store.state.areaHelper.Transformer.length;
 			// let subID;
@@ -592,6 +389,22 @@ export default {
 						GICMvarLosses: null,
 						GICIEff: null
 					});
+					subid = this.$store.state.casedetail.content.Bus[i.split(',')[0]][
+						'Int.Sub Number'
+					].toString();
+					this.transData.push({
+						value: [
+							this.$store.state.areadetail.content.Substation[subid][
+								'Double.Longitude'
+							],
+							this.$store.state.areadetail.content.Substation[subid][
+								'Double.Latitude'
+							]
+						],
+						attribute: {
+							GICNeutralCurrent: 0
+						}
+					});
 				}
 			}
 			this.Transformers = temp;
@@ -630,6 +443,9 @@ export default {
 						this.Transformers[i].GICIEff = this.$store.state.transformerData[
 							4 + i * this.TransformerDataLength
 						];
+						this.transData[i].attribute[
+							'GICNeutralCurrent'
+						] = this.Transformers[i].GICNeutralCurrent;
 					}
 				} catch (e) {
 					console.log(e);
@@ -663,21 +479,9 @@ export default {
 	},
 	mounted() {
 		this.initTable().then(() => this.updateTable());
-		this.initdraw()
+		this.initdraw();
 	},
-	watch: {
-		selected: function(newval, oldval) {
-			this.$store.commit('updateSelectedShunts', newval);
-		}
-	},
-	computed: {
-		disable() {
-			if (this.$store.state.status == 'running') {
-				return false;
-			} else {
-				return true;
-			}
-		}
-	}
+	watch: {},
+	computed: {}
 };
 </script>
