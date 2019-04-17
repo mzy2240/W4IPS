@@ -13,17 +13,17 @@
 		<v-card-text class="pa-0">
 			<template>
 				<v-data-table :headers="headers" :items="loads" :rows-per-page-items="defaultRowItems" v-model="selected" select-all disable-initial-sort item-key="name">
-					<template slot="items" slot-scope="props">
-						<tr :active="props.selected">
+					<template v-slot:items="props">
+						<tr :active="props.selected" @click="props.selected = !props.selected">
 							<td>
-								<v-checkbox v-model="props.selected" primary hide-details @click="props.selected = !props.selected"></v-checkbox>
+								<v-checkbox :input-value="props.selected" primary hide-details></v-checkbox>
 							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-left">{{ props.item.vStatus }}</td>
-							<td class="text-xs-right">{{ props.item.MW }}</td>
-							<td class="text-xs-right">{{ props.item.Mvar }}</td>
-							<td class="text-xs-right">{{ props.item.Vpu }}</td>
-							<td class="text-xs-right">{{ props.item.FreqHz }}</td>
+							<td class="text-xs-center">{{ props.item.MW }}</td>
+							<td class="text-xs-center">{{ props.item.Mvar }}</td>
+							<td class="text-xs-center">{{ props.item.Vpu }}</td>
+							<td class="text-xs-center">{{ props.item.FreqHz }}</td>
 							<td class="justify-center layout px-0">
 								<div class="my-2">
 									<v-switch v-model="props.item.vStatus" @click.native="toggle(props.item)" :disabled='disable'></v-switch>
@@ -135,7 +135,7 @@ export default {
 						key: i,
 						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]][
 							'String.Name'
-						],
+						]+' '+i.split(',')[1],
 						Status: 1,
 						vStatus: 1,
 						MW: 0,

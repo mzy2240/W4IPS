@@ -23,10 +23,10 @@
 							</span>
 						</v-tooltip>
 					</template>
-					<template slot="items" slot-scope="props">
+					<template v-slot:items="props">
 						<tr :active="props.selected" @click="props.selected = !props.selected">
 							<td>
-								<v-checkbox v-model="props.selected" primary hide-details></v-checkbox>
+								<v-checkbox :input-value="props.selected" primary hide-details></v-checkbox>
 							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-right">

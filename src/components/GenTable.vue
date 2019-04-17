@@ -32,10 +32,10 @@
 							</span>
 						</v-tooltip>
 					</template>
-					<template slot="items" slot-scope="props">
-						<tr :active="props.selected">
+					<template v-slot:items="props">
+						<tr :active="props.selected" @click="props.selected = !props.selected">
 							<td>
-								<v-checkbox v-model="props.selected" primary hide-details @click="props.selected = !props.selected"></v-checkbox>
+								<v-checkbox :input-value="props.selected" primary hide-details></v-checkbox>
 							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-left">{{ props.item.vStatus }}</td>
@@ -43,9 +43,9 @@
 								<v-chip label small :color="getColorByValue(props.item.MW, props.item.MWMax)" text-color="white" class="chip">{{ props.item.MW }}</v-chip>
 							</td>
 							<!-- <td class="text-xs-right">{{ props.item.Mvar }}</td> -->
-							<td class="text-xs-right">{{ props.item.MarginalCost }}</td>
-							<td class="text-xs-right">{{ props.item.OperationCost }}</td>
-							<td>
+							<td class="text-xs-center">{{ props.item.MarginalCost }}</td>
+							<td class="text-xs-center">{{ props.item.OperationCost }}</td>
+							<td class="text-xs-center">
 								<v-edit-dialog :return-value.sync="props.item.MWSetpoint" large lazy @save="savemws(props.item)" @open="openmws(props.item)">
 									{{ props.item.MWSetpoint }}
 									<div slot="input" class="mt-3 title">Update MW Setpoint</div>
@@ -59,7 +59,7 @@
 									<v-text-field slot="input" v-model="vps" label="Edit" single-line autofocus></v-text-field>
 								</v-edit-dialog>
 							</td> -->
-							<td class="text-xs-right">{{ props.item.MWMax }}</td>
+							<td class="text-xs-center">{{ props.item.MWMax }}</td>
 							<!-- <td class="text-xs-right">{{ props.item.MWMin }}</td> -->
 							<td class="text-xs-center">
 								<!-- <div class="mt-3 pa-0"> -->
@@ -143,7 +143,7 @@ export default {
 				// { text: 'Mvar', value: 'Mvar' },
 				{ text: 'Operation Cost', value: 'MarginalCost', align: 'left' },
 				{ text: 'Fixed Cost', value: 'OperationCost' },
-				{ text: 'MW Setpoint', value: 'MWSetpoint', align: 'right' },
+				{ text: 'MW Setpoint', value: 'MWSetpoint', align: 'left' },
 				// { text: 'Vpu Setpoint', value: 'VpuSetpoint' },
 				{ text: 'MW Max Limit', value: 'MWMax' },
 				// { text: 'MW Min Limit', value: 'MWMin' },
