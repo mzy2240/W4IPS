@@ -120,7 +120,7 @@ table.v-table thead th:not(:first-child) {
 }
 .chart {
 	z-index: 0;
-	height: 300px;
+	height: 600px;
 }
 </style>
 
@@ -137,7 +137,7 @@ export default {
 	data() {
 		return {
 			title: 'Realtime Data',
-			chartTitle: 'Map',
+			chartTitle: 'Transformer GICNeutralCurrent Map',
 			enableHeader: {
 				type: Boolean,
 				default: true
@@ -246,6 +246,22 @@ export default {
 						name: 'transformer',
 						coordinateSystem: 'leaflet',
 						symbol: 'circle',
+						symbolSize: (value, params)=>{
+							const current = Math.abs(params.data.attribute.GICNeutralCurrent)
+							if(current<1) {
+								return 5
+							} else if (current<5) {
+								return 10
+							} else if (current<10) {
+								return 15
+							} else if (current<20) {
+								return 20
+							} else if (current<50) {
+								return 25
+							} else {
+								return 50
+							}
+						},
 						// showEffectOn: 'emphasis',
 						// zindex: 2,
 						zlevel: 3,
@@ -253,7 +269,13 @@ export default {
 						progressiveThreshold: 200,
 						data: this.transData, //this.$store.state.subData,
 						itemStyle: {
-							color: 'rgb(200, 40, 0)'
+							color: (params)=>{
+								if(params.data.attribute.GICNeutralCurrent>0) {
+									return 'rgba(0, 200, 0, 0.5)'
+								} else {
+									return 'rgba(0, 0, 200, 0.5)'
+								}
+							}
 						}
 					},
 					// {
@@ -424,6 +446,7 @@ export default {
 					// console.log(this.branches)
 					// console.log(this.$store.state.transformerData)
 					// console.log(this.TransformerDataLength)
+					let temp = this.chart._echartsOptions;
 					for (let i in this.Transformers) {
 						// this.Transformers[i].Phase =
 						// 	this.$store.state.transformerData[0 + i * this.TransformerDataLength];
@@ -443,10 +466,14 @@ export default {
 						this.Transformers[i].GICIEff = this.$store.state.transformerData[
 							4 + i * this.TransformerDataLength
 						];
-						this.transData[i].attribute[
+						temp.series[0].data[i].attribute[
 							'GICNeutralCurrent'
 						] = this.Transformers[i].GICNeutralCurrent;
+						// this.transData[i].attribute[
+						// 	'GICNeutralCurrent'
+						// ] = this.Transformers[i].GICNeutralCurrent;
 					}
+					this.chart.setOption(temp);
 				} catch (e) {
 					console.log(e);
 					console.log('The raw data are not ready');
