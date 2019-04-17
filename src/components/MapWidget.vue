@@ -19,11 +19,11 @@
 </template>
 
 <style scoped>
-/* .chart {
+.chart {
 	z-index: 0;
-	height: 300px;
-	width: 100%;
-} */
+	/* height: 300px;
+	width: 100%; */
+}
 </style>
 
 
@@ -65,7 +65,7 @@ export default {
 			map: null,
 			mapStyle: {
 				width: '100%',
-				height: this.height
+				height: this.height,
 			}
 		};
 	},

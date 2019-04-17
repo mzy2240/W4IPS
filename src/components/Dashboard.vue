@@ -55,7 +55,7 @@
 							<v-list-tile-title>Line</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
-					<v-list-tile avatar :key="'transformer'" @click="$store.commit('setpage', 'transformer')">
+					<!-- <v-list-tile avatar :key="'transformer'" @click="$store.commit('setpage', 'transformer')">
 						<v-list-tile-avatar>
 							<v-icon>view_carousel</v-icon>
 						</v-list-tile-avatar>
@@ -63,7 +63,7 @@
 						<v-list-tile-content>
 							<v-list-tile-title>Transformer</v-list-tile-title>
 						</v-list-tile-content>
-					</v-list-tile>
+					</v-list-tile> -->
 					<v-list-tile avatar :key="'chat'" @click="dialog=true">
 						<v-list-tile-avatar>
 							<v-icon>chat</v-icon>
