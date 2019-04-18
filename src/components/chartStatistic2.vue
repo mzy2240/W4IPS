@@ -7,7 +7,7 @@
 				<div class="subheading">${{dispData}}</div>
 			</div>
 		</v-card-title>
-		<div :id="id" class="chart"></div>
+		<div :id="id" class="sparkline"></div>
 		<!-- <v-card-media class="white--text">
 			<div :id="id" class="chart"></div>
 		</v-card-media> -->
@@ -177,8 +177,8 @@ export default {
 };
 </script>
 
-<style>
-.chart {
+<style scoped>
+.sparkline {
 	height: 100px;
 	width: 100%;
 }
