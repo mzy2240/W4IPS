@@ -179,23 +179,23 @@ export default {
 				zoom: 7
 			});
 			window.L.tileLayer(url, options).addTo(this.map);
-			var legend = window.L.control({ position: 'bottomleft' });
-			legend.onAdd = function(map) {
-				var div = window.L.DomUtil.create('div', 'legend legend-background');
-				let labels = ['<strong>Categories</strong>']
-				const categories = [
-						'Positive Neutral Current',
-						'Negative Neutral Current'
-					];
-				const color = ['rgba(0, 200, 0, 0.5)', 'rgba(0, 0, 200, 0.5)']
-				for (var i = 0; i < categories.length; i++) {
-					div.innerHTML += '<span class="circle" style="background:' + color[i] + '"></span>' + categories[i] + '<br>';
-				}
-				// div.innerHTML = labels.join('<br>');
-				// console.log(div)
-				return div;
-			};
-			legend.addTo(this.map);
+			// var legend = window.L.control({ position: 'bottomleft' });
+			// legend.onAdd = function(map) {
+			// 	var div = window.L.DomUtil.create('div', 'legend legend-background');
+			// 	let labels = ['<strong>Categories</strong>']
+			// 	const categories = [
+			// 			'Positive Neutral Current',
+			// 			'Negative Neutral Current'
+			// 		];
+			// 	const color = ['rgba(0, 200, 0, 0.5)', 'rgba(0, 0, 200, 0.5)']
+			// 	for (var i = 0; i < categories.length; i++) {
+			// 		div.innerHTML += '<span class="circle" style="background:' + color[i] + '"></span>' + categories[i] + '<br>';
+			// 	}
+			// 	// div.innerHTML = labels.join('<br>');
+			// 	// console.log(div)
+			// 	return div;
+			// };
+			// legend.addTo(this.map);
 			// this.chart = echarts.init(document.getElementById('map'));
 			var echartsOptions = {
 				animation: false,
@@ -222,7 +222,7 @@ export default {
 						coordinateSystem: 'leaflet',
 						symbol: 'circle',
 						symbolSize: (value, params)=>{
-							const current = Math.abs(params.data.attribute.GICNeutralCurrent)
+							const current = Math.abs(params.data.attribute.GICElectricFieldVKM)
 							if(current<1) {
 								return 5
 							} else if (current<5) {
@@ -245,7 +245,7 @@ export default {
 						data: this.transData, //this.$store.state.subData,
 						itemStyle: {
 							color: (params)=>{
-								if(params.data.attribute.GICNeutralCurrent>0) {
+								if(params.data.attribute.GICElectricFieldVKM>0) {
 									return 'rgba(0, 200, 0, 0.5)'
 								} else {
 									return 'rgba(0, 0, 200, 0.5)'
@@ -343,69 +343,23 @@ export default {
 		initTable() {
 			let temp = [];
 			let subid;
-			this.anchor = this.$store.state.areaHelper.Transformer.anchor;
-			this.TransformerDataLength = this.$store.state.areaHelper.Transformer.length;
+			// this.anchor = this.$store.state.areaHelper.Transformer.anchor;
+			this.SubstationDataLength = this.$store.state.areaHelper.Transformer.length;
 			// let subID;
-			for (let i in this.$store.state.areadetail.content.Transformer) {
-				if (
-					[
-						this.$store.state.areadetail.content.Transformer[i]['FromArea'],
-						this.$store.state.areadetail.content.Transformer[i]['ToArea']
-					].includes(+this.$store.state.area)
-				) {
+			for (let i in this.$store.state.areadetail.content.Substation) {
+				if (this.$store.state.areadetail.content.Substation[i]['Int.Area Number'] == +this.$store.state.area) {
 					temp.push({
-						value: false, //[this.$store.state.areadetail.content.Substation[subID.toString()]["Double.Longitude"], this.$store.state.areadetail.content.Substation[subID.toString()]["Double.Latitude"]],
-						key: i,
-						name:
-							this.$store.state.casedetail.content.Bus[i.split(',')[0]][
-								'String.Name'
-							] +
-							'-' +
-							this.$store.state.casedetail.content.Bus[i.split(',')[1]][
-								'String.Name'
-							] +
-							'-' +
-							this.$store.state.areadetail.content.Transformer[i][
-								'String.CircuitID'
-							],
-						kv:
-							this.$store.state.casedetail.content.Bus[i.split(',')[0]][
-								'Single.Nominal kV'
-							] +
-							'/' +
-							this.$store.state.casedetail.content.Bus[i.split(',')[1]][
-								'Single.Nominal kV'
-							],
-						id: this.$store.state.areadetail.content.Transformer[i][
-							'String.CircuitID'
-						],
-						Phase: 0,
-						Tap: 1,
-						Temperature: null,
-						GICNeutralCurrent: null,
-						GICMvarLosses: null,
-						GICIEff: null
-					});
-					subid = this.$store.state.casedetail.content.Bus[i.split(',')[0]][
-						'Int.Sub Number'
-					].toString();
-					this.transData.push({
-						value: [
-							this.$store.state.areadetail.content.Substation[subid][
-								'Double.Longitude'
-							],
-							this.$store.state.areadetail.content.Substation[subid][
-								'Double.Latitude'
-							]
-						],
+						value: [this.$store.state.areadetail.content.Substation[i]["Double.Longitude"], this.$store.state.areadetail.content.Substation[i]["Double.Latitude"]],
+						// key: i,
+						name:this.$store.state.areadetail.content.Substation[i]["String.Name"],
 						attribute: {
-							GICNeutralCurrent: 0
+							GICElectricFieldVKM: 0
 						}
 					});
 				}
 			}
-			this.Transformers = temp;
-			if (this.Transformers.length > 1) {
+			this.Substations = temp;
+			if (this.Substations.length > 1) {
 				return Promise.resolve('Table initialized properly');
 			} else {
 				return Promise.reject('Error in initialization');
@@ -422,28 +376,14 @@ export default {
 					// console.log(this.$store.state.transformerData)
 					// console.log(this.TransformerDataLength)
 					let temp = this.chart._echartsOptions;
-					for (let i in this.Transformers) {
+					for (let i in this.Substations) {
 						// this.Transformers[i].Phase =
 						// 	this.$store.state.transformerData[0 + i * this.TransformerDataLength];
 						// this.Transformers[i].Tap =
 						// 	this.$store.state.transformerData[1 + i * this.TransformerDataLength]; // MW is the 6th in the load data
-						this.Transformers[i].Temperature = 100;
-						this.Transformers[
-							i
-						].GICNeutralCurrent = this.$store.state.transformerData[
-							2 + i * this.TransformerDataLength
-						];
-						this.Transformers[
-							i
-						].GICMvarLosses = this.$store.state.transformerData[
-							3 + i * this.TransformerDataLength
-						];
-						this.Transformers[i].GICIEff = this.$store.state.transformerData[
-							4 + i * this.TransformerDataLength
-						];
 						temp.series[0].data[i].attribute[
-							'GICNeutralCurrent'
-						] = this.Transformers[i].GICNeutralCurrent;
+							'GICElectricFieldVKM'
+						] = temp[this.anchor + this.loadFieldIndex['Status'] + this.loadArray[i] * this.loadDataLength];;
 						// this.transData[i].attribute[
 						// 	'GICNeutralCurrent'
 						// ] = this.Transformers[i].GICNeutralCurrent;
