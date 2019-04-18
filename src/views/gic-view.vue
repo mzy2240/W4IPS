@@ -148,7 +148,11 @@ export default {
 				width: '100%',
 				height: this.height
 			},
-			transData: []
+			transData: [],
+			substationArray: [],
+			substationFieldIndex: {
+				"GICElectricFieldVKM": this.$store.state.fieldstore['Substation'].findIndex(x => x.text ==="GICElectricFieldVKM")
+			}
 		};
 	},
 	methods: {
@@ -222,27 +226,15 @@ export default {
 						coordinateSystem: 'leaflet',
 						symbol: 'circle',
 						symbolSize: (value, params)=>{
-							const current = Math.abs(params.data.attribute.GICElectricFieldVKM)
-							if(current<1) {
-								return 5
-							} else if (current<5) {
-								return 10
-							} else if (current<10) {
-								return 15
-							} else if (current<20) {
-								return 20
-							} else if (current<50) {
-								return 25
-							} else {
-								return 50
-							}
+							// console.log(params.data.attribute.GICElectricFieldVKM)
+							return params.data.attribute.GICElectricFieldVKM
 						},
 						// showEffectOn: 'emphasis',
 						// zindex: 2,
 						zlevel: 3,
 						progressive: 100,
 						progressiveThreshold: 200,
-						data: this.transData, //this.$store.state.subData,
+						data: this.Substations, //this.$store.state.subData,
 						itemStyle: {
 							color: (params)=>{
 								if(params.data.attribute.GICElectricFieldVKM>0) {
@@ -331,20 +323,20 @@ export default {
 				arrlength = this.$store.state.fieldstore[ele].length;
 				keyarr = Object.keys(this.$store.state.areadetail.content[ele]);
 				console.log(ele);
-				if (ele != 'Transformer') {
+				if (ele != 'Substation') {
 					anchor += arrlength * keyarr.length;
 				} else {
 					break;
 				}
 			}
 			this.anchor = anchor;
-			this.transformerDataLength = arrlength;
+			this.substationDataLength = arrlength;
 		},
 		initTable() {
 			let temp = [];
 			let subid;
 			// this.anchor = this.$store.state.areaHelper.Transformer.anchor;
-			this.SubstationDataLength = this.$store.state.areaHelper.Transformer.length;
+			// this.SubstationDataLength = this.$store.state.areaHelper.Transformer.length;
 			// let subID;
 			for (let i in this.$store.state.areadetail.content.Substation) {
 				if (this.$store.state.areadetail.content.Substation[i]['Int.Area Number'] == +this.$store.state.area) {
@@ -368,25 +360,12 @@ export default {
 		updateTable() {
 			setInterval(() => {
 				try {
-					// const temp = JSON.parse(this.$store.state.rawdata).Data;
-					// const message = JSON.parse(this.$store.state.rawdata)
-					// console.log(message);
-					// const temp = this.$store.state.data;
-					// console.log(this.branches)
-					// console.log(this.$store.state.transformerData)
-					// console.log(this.TransformerDataLength)
+					const tempData = this.$store.state.parsedData;
 					let temp = this.chart._echartsOptions;
 					for (let i in this.Substations) {
-						// this.Transformers[i].Phase =
-						// 	this.$store.state.transformerData[0 + i * this.TransformerDataLength];
-						// this.Transformers[i].Tap =
-						// 	this.$store.state.transformerData[1 + i * this.TransformerDataLength]; // MW is the 6th in the load data
 						temp.series[0].data[i].attribute[
 							'GICElectricFieldVKM'
-						] = temp[this.anchor + this.loadFieldIndex['Status'] + this.loadArray[i] * this.loadDataLength];;
-						// this.transData[i].attribute[
-						// 	'GICNeutralCurrent'
-						// ] = this.Transformers[i].GICNeutralCurrent;
+						] = tempData[this.anchor + this.substationFieldIndex['GICElectricFieldVKM'] + i * this.substationDataLength];
 					}
 					this.chart.setOption(temp);
 				} catch (e) {
@@ -416,7 +395,7 @@ export default {
 		}
 	},
 	created() {
-		// this.preProcess();
+		this.preProcess();
 		// this.initTable();
 	},
 	mounted() {

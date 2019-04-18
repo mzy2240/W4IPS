@@ -88,6 +88,7 @@ export default new Vuex.Store({
 		showTour: true,
 		simID: null,
 		branchData: null,
+		substationData: null,
 		transformerData: null,
 		aceCost: 100,
 		schedule: '0@0',
@@ -344,6 +345,9 @@ export default new Vuex.Store({
 		},
 		setData(state, payload) {
 			state.data = payload;
+		},
+		setSubstationData(state, payload) {
+			state.substationData = payload;
 		},
 		setRiskBuses(state, payload) {
 			state.riskBuses = payload;

@@ -18,6 +18,9 @@ export default {
 			busAnchor: 0,
 			busDataLength: 0,
 			busArrLength: 0,
+			substationAnchor: 0,
+			substationDataLength: 0,
+			substationArrLength: 0,
 			formatRiskBuses: [],
 			busData: [],
 			violateBuses: [],
@@ -247,6 +250,25 @@ export default {
 				this.$store.commit('updateSubDetail', this.subdetail);
 			}
 		},
+		initSubstation() {
+			var arrlength;
+			var keyCaseArr;
+			var valueFieldArr;
+
+			for (let ele in this.$store.state.fieldstore) {
+				arrlength = this.$store.state.fieldstore[ele].length;
+				keyCaseArr = Object.keys(this.$store.state.areadetail.content[ele]);
+				valueFieldArr = Object.values(this.$store.state.fieldstore[ele]);
+				if (ele != 'Substation') {
+					this.substationAnchor += arrlength * keyCaseArr.length;
+				} else {
+					this.substationDataLength = arrlength * keyCaseArr.length;
+					this.substationArrLength = arrlength;
+					break;
+				}
+			}
+			// this.statusArray = Array(keyCaseArr.length).fill(1);
+		},
 		initRiskBus() {
 			var arrlength;
 			var keyCaseArr;
@@ -472,6 +494,10 @@ export default {
 				this.area_index * this.areaDataLength + this.areaDataLength
 			);
 			// this.areaData = temp.slice(0, this.areaDataLength);
+			// this.substationData = temp.slice(
+			// 	this.substationAnchor,
+			// 	this.substationAnchor + this.substationDataLength
+			// );
 			this.busData = temp.slice(
 				this.busAnchor,
 				this.busAnchor + this.busDataLength
@@ -484,6 +510,7 @@ export default {
 				this.transformerAnchor,
 				this.transformerAnchor + this.transformerDataLength
 			);
+			// this.$store.commit('setSubstationData', this.substationData)
 			this.$store.commit('setBranchData', this.branchData);
 			this.$store.commit('setTransformerData', this.transformerData);
 			this.$store.commit('setData', temp);
@@ -596,6 +623,7 @@ export default {
 		this.before_init();
 		this.preProcess();
 		this.initData();
+		this.initSubstation();
 		this.initRiskBus();
 		this.initRiskBranch();
 		this.initRiskTransformer();
