@@ -77,6 +77,10 @@
 		{
 			"text": "FrequencyAve",
 			"value": "FrequencyAve"
+		},
+		{
+			"text": "GICElectricFieldVKM",
+			"value": "GICElectricFieldVKM"
 		}
 	],
 	"Bus": [

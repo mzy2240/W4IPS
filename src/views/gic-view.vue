@@ -2,9 +2,9 @@
   <div>
     <v-layout row class="align-center layout px-4 pt-4 app--page-header">
       <div class="page-header-left">
-        <h3 class="pr-3">Transformer</h3>
+        <h3 class="pr-3">GIC</h3>
       </div>
-      <v-icon larg>view_carousel</v-icon>
+      <v-icon larg>wifi_tethering</v-icon>
       <v-spacer></v-spacer>
       <div class="page-header-right">
         <h4 class="pr-1">
@@ -15,49 +15,7 @@
     </v-layout>
     <v-container grid-list-xl text-xs-center fluid>
       <v-layout row wrap>
-        <v-flex lg6 sm6 xs12>
-          <!-- <v-widget title="Realtime Data" content-bg="white">
-          <div slot="widget-content">-->
-          <v-card>
-            <v-toolbar card dense color="transparent">
-              <v-toolbar-title>
-                <h4>{{ title }}</h4>
-              </v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>more_vert</v-icon>
-              </v-btn>
-            </v-toolbar>
-            <v-divider></v-divider>
-            <v-card-text class="pa-0">
-              <template>
-                <v-data-table
-                  class="fixed-header"
-                  :headers="headers"
-                  :items="Transformers"
-                  :rows-per-page-items="defaultRowItems"
-                  disable-initial-sort
-                  item-key="name"
-                >
-                  <template v-slot:items="props">
-                    <td class="text-xs-left">{{ props.item.name }}</td>
-                    <td class="text-xs-center">{{ props.item.kv }}</td>
-                    <!-- <td class="text-xs-left">{{ props.item.Phase }}</td>
-                    <td class="text-xs-center">{{ props.item.Tap }}</td>-->
-                    <td class="text-xs-center">{{ props.item.Temperature }}</td>
-                    <td class="text-xs-center">{{ props.item.GICNeutralCurrent }}</td>
-                    <td class="text-xs-center">{{ props.item.GICMvarLosses }}</td>
-                    <td class="text-xs-center">{{ props.item.GICIEff }}</td>
-                  </template>
-                </v-data-table>
-              </template>
-              <v-divider></v-divider>
-            </v-card-text>
-          </v-card>
-          <!-- </div>
-          </v-widget>-->
-        </v-flex>
-        <v-flex lg6 sm6 xs12>
+        <v-flex lg12 sm12 xs12>
           <v-layout row wrap>
             <v-flex lg12 sm12 xs12>
               <div id="v-widget">
@@ -137,7 +95,7 @@ export default {
 	data() {
 		return {
 			title: 'Realtime Data',
-			chartTitle: 'Transformer GICNeutralCurrent Map',
+			chartTitle: 'GIC Electric Field',
 			enableHeader: {
 				type: Boolean,
 				default: true

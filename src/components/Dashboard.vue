@@ -64,6 +64,15 @@
 							<v-list-tile-title>Transformer</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
+					<v-list-tile avatar :key="'gic'" @click="$store.commit('setpage', 'gic')">
+						<v-list-tile-avatar>
+							<v-icon>wifi_tethering</v-icon>
+						</v-list-tile-avatar>
+
+						<v-list-tile-content>
+							<v-list-tile-title>GIC</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
 					<v-list-tile avatar :key="'chat'" @click="dialog=true">
 						<v-list-tile-avatar>
 							<v-icon>chat</v-icon>
@@ -189,6 +198,7 @@ import admin from '../views/admin-view';
 import branch from '../views/branch-view';
 // import transformer from '../views/transformer-view';
 import transformer from '../views/new-transformer-view';
+import gic from '../views/gic-view';
 // import chatpop from './components/chatpop';
 import MqttClient from './MqttClient';
 import Util from '../util';
@@ -234,6 +244,7 @@ export default {
 		AGCBot,
 		branch,
 		transformer,
+		gic,
 		marquee,
 		Clock,
 		DataProcessing
