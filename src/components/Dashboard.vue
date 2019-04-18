@@ -120,11 +120,11 @@
 						</v-list-tile-content>
 					</v-list-tile>
 					<v-spacer></v-spacer>
-					<v-list-tile avatar :key="'index'" >
+					<!-- <v-list-tile avatar :key="'index'" >
 						<div class="clock pt-5">
 							RIndex: {{$store.state.rIndex}}
 						</div>
-					</v-list-tile>
+					</v-list-tile> -->
 					<!-- <v-list-tile avatar :key="'IkMap'" @click="$store.commit('setpage', 'IkView')">
 						<v-list-tile-avatar>
 							<v-icon>highlight_off</v-icon>
