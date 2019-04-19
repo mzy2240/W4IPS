@@ -70,7 +70,7 @@
                   </v-toolbar>
                   <v-divider v-if="enableHeader"></v-divider>
                   <slot name="widget-content"></slot>
-                  <div id="map" class="chart"></div>
+                  <div id="map" class="transformerChart"></div>
                 </v-card>
               </div>
             </v-flex>
@@ -84,7 +84,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 table.v-table tbody td:first-child,
 table.v-table tbody td:not(:first-child),
 table.v-table tbody th:first-child,
@@ -118,7 +118,7 @@ table.v-table thead th:not(:first-child) {
 	overflow: auto;
 	height: 100%;
 }
-.chart {
+.transformerChart {
 	z-index: 0;
 	height: 600px;
 }
