@@ -227,7 +227,7 @@ export default {
 						symbol: 'circle',
 						symbolSize: (value, params)=>{
 							// console.log(params.data.attribute.GICElectricFieldVKM)
-							return params.data.attribute.GICElectricFieldVKM
+							return params.data.attribute.GICElectricFieldVKM+5
 						},
 						// showEffectOn: 'emphasis',
 						// zindex: 2,
