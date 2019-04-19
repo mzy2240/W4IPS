@@ -496,6 +496,8 @@ export default {
 					this.chart.setOption(temp);
 					if(this.$store.state.status === 'running'){
 						this.count += 1;
+					} else {
+						this.count = 0;
 					}
 					
 				} catch (e) {
