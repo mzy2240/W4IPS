@@ -7,6 +7,7 @@ import casedetail from './assets/2019GA.json';
 // import casedetail from './assets/test.json';
 import areadetail from './assets/2019GAR.json';
 import notificationSystem from './assets/notificationsettings';
+import temperatureData from './assets/jsontest_edited.json';
 // import casedetail from './assets/150.json'
 
 Vue.use(Vuex);
@@ -21,6 +22,7 @@ export default new Vuex.Store({
 		tcmcommands: tcmcommands,
 		casedetail: casedetail,
 		areadetail: areadetail,
+		temperatureData: temperatureData,
 		rawdata: {},
 		newsubscribe: [],
 		newpublish: [],

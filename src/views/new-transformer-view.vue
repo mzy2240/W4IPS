@@ -190,7 +190,8 @@ export default {
 				width: '100%',
 				height: this.height
 			},
-			transData: []
+			transData: [],
+			count: 0
 		};
 	},
 	methods: {
@@ -447,6 +448,7 @@ export default {
 				}
 			}
 			this.Transformers = temp;
+			console.log(this.Transformers);
 			if (this.Transformers.length > 1) {
 				return Promise.resolve('Table initialized properly');
 			} else {
@@ -464,12 +466,13 @@ export default {
 					// console.log(this.$store.state.transformerData)
 					// console.log(this.TransformerDataLength)
 					let temp = this.chart._echartsOptions;
+					const keys = Object.keys(this.$store.state.temperatureData);
 					for (let i in this.Transformers) {
 						// this.Transformers[i].Phase =
 						// 	this.$store.state.transformerData[0 + i * this.TransformerDataLength];
 						// this.Transformers[i].Tap =
 						// 	this.$store.state.transformerData[1 + i * this.TransformerDataLength]; // MW is the 6th in the load data
-						this.Transformers[i].Temperature = 100;
+						this.Transformers[i].Temperature = this.$store.state.temperatureData[keys[i]][this.count];
 						this.Transformers[
 							i
 						].GICNeutralCurrent = this.$store.state.transformerData[
@@ -491,6 +494,10 @@ export default {
 						// ] = this.Transformers[i].GICNeutralCurrent;
 					}
 					this.chart.setOption(temp);
+					if(this.$store.state.status === 'running'){
+						this.count += 1;
+					}
+					
 				} catch (e) {
 					console.log(e);
 					console.log('The raw data are not ready');
