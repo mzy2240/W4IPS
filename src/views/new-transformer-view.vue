@@ -542,6 +542,9 @@ export default {
 		this.initdraw();
 	},
 	watch: {},
-	computed: {}
+	computed: {},
+	beforeDestroy() {
+		this.updateTable = () => {};
+	},
 };
 </script>
