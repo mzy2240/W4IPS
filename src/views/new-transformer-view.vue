@@ -64,19 +64,18 @@
                 <v-card>
                   <v-toolbar color="transparent" flat dense card v-if="enableHeader">
                     <v-toolbar-title>
-                      <h4>{{ chartTitle }}</h4>
+                      <h4>{{ transformerChartTitle }}</h4>
                     </v-toolbar-title>
                     <v-spacer></v-spacer>
+					<v-btn depressed small color="primary">GICNeutralCurrent</v-btn>
+					<v-btn depressed small color="primary">Temperature</v-btn>
                   </v-toolbar>
                   <v-divider v-if="enableHeader"></v-divider>
                   <slot name="widget-content"></slot>
-                  <div id="map" class="transformerChart"></div>
+                  <div id="transMap" class="transformerChart"></div>
                 </v-card>
               </div>
             </v-flex>
-            <!-- <v-flex lg12 sm12 xs12>
-							<v-widget title="GMD" content-bg="dark"> </v-widget>
-            </v-flex>-->
           </v-layout>
         </v-flex>
       </v-layout>
@@ -122,6 +121,10 @@ table.v-table thead th:not(:first-child) {
 	z-index: 0;
 	height: 600px;
 }
+.temperatureChart {
+	z-index: 0;
+	height: 400px;
+}
 </style>
 
 <script>
@@ -137,7 +140,7 @@ export default {
 	data() {
 		return {
 			title: 'Realtime Data',
-			chartTitle: 'Transformer GICNeutralCurrent Map',
+			transformerChartTitle: 'Transformer Monitor',
 			enableHeader: {
 				type: Boolean,
 				default: true
@@ -179,13 +182,15 @@ export default {
 				{ text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
 			],
 			TransformerArray: this.$store.state.areaHelper.Transformer.list,
-			chart: {},
+			transformerChart: {},
+			temperatureChart: {},
 			subdata: [],
 			linedata: [],
 			subdetail: [],
 			busdetail: [],
 			mapCenter: [27.4241, -98.4936],
-			map: null,
+			transformerMap: null,
+			temperatureMap: null,
 			mapStyle: {
 				width: '100%',
 				height: this.height
@@ -215,13 +220,14 @@ export default {
 				// attribution:
 				// 	'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 			};
-			this.map = window.L.map('map', {
+			this.transformerMap = new window.L.map('transMap', {
 				// crs: L.CRS.EPSG4326,
 				center: this.mapCenter, //this.$store.state.center, //this.mapCenter,
 				maxZoom: 18,
 				zoom: 7
 			});
-			window.L.tileLayer(url, options).addTo(this.map);
+			const tran_bg = new window.L.tileLayer(url, options);
+			tran_bg.addTo(this.transformerMap);
 			var legend = window.L.control({ position: 'bottomleft' });
 			legend.onAdd = function(map) {
 				var div = window.L.DomUtil.create('div', 'legend legend-background');
@@ -238,7 +244,7 @@ export default {
 				// console.log(div)
 				return div;
 			};
-			legend.addTo(this.map);
+			legend.addTo(this.transformerMap);
 			// this.chart = echarts.init(document.getElementById('map'));
 			var echartsOptions = {
 				animation: false,
@@ -306,12 +312,12 @@ export default {
 					// }
 				]
 			};
-			var layerOptions = {
+			const layerOptions = {
 				loadWhileAnimating: false,
 				attribution: ''
 			};
-			this.chart = window.L.supermap.echartsLayer(echartsOptions, layerOptions); // _ec is the echartsInstance
-			var EL = this.chart.addTo(this.map);
+			this.transformerChart = new window.L.supermap.echartsLayer(echartsOptions, layerOptions); // _ec is the echartsInstance
+			this.transformerChart.addTo(this.transformerMap);
 
 			// var ramdompts_ipl = window.turf.randomPoint(25, {
 			// 	bbox: [-98, 28.0, -94, 31.0]
@@ -465,7 +471,7 @@ export default {
 					// console.log(this.branches)
 					// console.log(this.$store.state.transformerData)
 					// console.log(this.TransformerDataLength)
-					let temp = this.chart._echartsOptions;
+					let temp = this.transformerChart._echartsOptions;
 					const keys = Object.keys(this.$store.state.temperatureData);
 					for (let i in this.Transformers) {
 						// this.Transformers[i].Phase =
@@ -493,7 +499,7 @@ export default {
 						// 	'GICNeutralCurrent'
 						// ] = this.Transformers[i].GICNeutralCurrent;
 					}
-					this.chart.setOption(temp);
+					this.transformerChart.setOption(temp);
 					if(this.$store.state.status === 'running'){
 						this.count += 1;
 					} else {
@@ -531,6 +537,7 @@ export default {
 		// this.initTable();
 	},
 	mounted() {
+		// this.initTable();
 		this.initTable().then(() => this.updateTable());
 		this.initdraw();
 	},
