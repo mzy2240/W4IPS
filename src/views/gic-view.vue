@@ -87,6 +87,7 @@ import echarts from 'echarts';
 import 'echarts-leaflet';
 import { mapGetters } from 'vuex';
 import Math from 'mathjs';
+import GeoJSON from 'geojson';
 
 export default {
 	// props: {
@@ -151,8 +152,12 @@ export default {
 			transData: [],
 			substationArray: [],
 			substationFieldIndex: {
-				"GICElectricFieldVKM": this.$store.state.fieldstore['Substation'].findIndex(x => x.text ==="GICElectricFieldVKM")
-			}
+				GICElectricFieldVKM: this.$store.state.fieldstore[
+					'Substation'
+				].findIndex(x => x.text === 'GICElectricFieldVKM')
+			},
+			contoursLayer: {},
+			interval: {}
 		};
 	},
 	methods: {
@@ -225,10 +230,7 @@ export default {
 						name: 'transformer',
 						coordinateSystem: 'leaflet',
 						symbol: 'circle',
-						symbolSize: (value, params)=>{
-							// console.log(params.data.attribute.GICElectricFieldVKM)
-							return params.data.attribute.GICElectricFieldVKM+5
-						},
+						symbolSize: 4,
 						// showEffectOn: 'emphasis',
 						// zindex: 2,
 						zlevel: 3,
@@ -236,15 +238,9 @@ export default {
 						progressiveThreshold: 200,
 						data: this.Substations, //this.$store.state.subData,
 						itemStyle: {
-							color: (params)=>{
-								if(params.data.attribute.GICElectricFieldVKM>0) {
-									return 'rgba(0, 200, 0, 0.5)'
-								} else {
-									return 'rgba(0, 0, 200, 0.5)'
-								}
-							}
+							color: 'rgba(0,0,200,0.6)'
 						}
-					},
+					}
 					// {
 					// 	id: 'heatmap',
 					// 	type: 'heatmap',
@@ -265,44 +261,61 @@ export default {
 			// var ramdompts_ipl = window.turf.randomPoint(25, {
 			// 	bbox: [-98, 28.0, -94, 31.0]
 			// });
-
+			// console.log(ramdompts_ipl)
 			// window.turf.featureEach(ramdompts_ipl, function(point) {
-			// 	point.properties.obs = Math.random() * 25;
+			// 	point.properties.GICElectricFieldVKM = Math.random() * 25;
 			// });
-			// // var tin = turf.tin(ramdompts_ipl, 'obs');
-			// var contours_pts = window.turf.interpolate(ramdompts_ipl, 2, {
-			// 	gridType: 'points',
-			// 	property: 'obs',
-			// 	units: 'kilometers'
-			// });
-			// var contours = window.turf.isobands(contours_pts, [0, 5, 10, 15, 20, 25, 30], {
-			// 	zProperty: 'obs'
-			// });
-			// function getColor(x) {
-			// 	return x < 5
-			// 		? '#bd0026'
-			// 		: x < 10
-			// 		? '#f03b20'
-			// 		: x < 15
-			// 		? '#fd8d3c'
-			// 		: x < 20
-			// 		? '#fecc5c'
-			// 		: '#ffffb2';
-			// }
-			// var contoursLayer = L.geoJson(contours, {
-			// 	// onEachFeature: function(feature, layer) {
-			// 	// 	layer.bindPopup(feature.properties.obs);
-			// 	// },
-			// 	style: function(feature) {
-			// 		return {
-			// 			interactive: false,
-			// 			fillColor: getColor(parseInt(feature.properties.obs.split('-')[0])),
-			// 			weight: 0.5,
-			// 			color: '#bd0026',
-			// 			opacity: 1
-			// 		};
-			// 	}
-			// }).addTo(this.map);
+			var t0 = performance.now();
+			let ramdompts_ipl = GeoJSON.parse(this.Substations, { Point: 'value' });
+			var t1 = performance.now();
+			console.log('JSON TO GEOJSON: ' + (t1 - t0));
+			console.log(ramdompts_ipl);
+			// var tin = turf.tin(ramdompts_ipl, 'obs');
+			var contours_pts = window.turf.interpolate(ramdompts_ipl, 4, {
+				gridType: 'points',
+				property: 'GICElectricFieldVKM',
+				units: 'miles'
+			});
+			t1 = performance.now();
+			console.log('JSON TO INTERPOLATION: ' + (t1 - t0));
+			var contours = window.turf.isobands(
+				contours_pts,
+				[0, 1, 2, 3, 4, 5, 10],
+				{
+					zProperty: 'GICElectricFieldVKM'
+				}
+			);
+			t1 = performance.now();
+			console.log('JSON TO ISOBANDS: ' + (t1 - t0));
+			function getColor(x) {
+				return x < 1
+					? '#bd0026'
+					: x < 2
+					? '#f03b20'
+					: x < 3
+					? '#fd8d3c'
+					: x < 4
+					? '#fecc5c'
+					: '#ffffb2';
+			}
+			this.contoursLayer = window.L.geoJson(contours, {
+				// onEachFeature: function(feature, layer) {
+				// 	layer.bindPopup(feature.properties.obs);
+				// },
+				style: function(feature) {
+					return {
+						interactive: false,
+						fillColor: getColor(
+							parseInt(feature.properties.GICElectricFieldVKM.split('-')[0])
+						),
+						weight: 0.5,
+						color: '#bd0026',
+						opacity: 1
+					};
+				}
+			}).addTo(this.map);
+			t1 = performance.now();
+			console.log('JSON TO CONTOUR IN MAP: ' + (t1 - t0));
 			// console.log(tin);
 			// var ecModel = this.chart._model;
 			// var leafletMap;
@@ -339,14 +352,25 @@ export default {
 			// this.SubstationDataLength = this.$store.state.areaHelper.Transformer.length;
 			// let subID;
 			for (let i in this.$store.state.areadetail.content.Substation) {
-				if (this.$store.state.areadetail.content.Substation[i]['Int.Area Number'] == +this.$store.state.area) {
+				if (
+					this.$store.state.areadetail.content.Substation[i][
+						'Int.Area Number'
+					] == +this.$store.state.area
+				) {
 					temp.push({
-						value: [this.$store.state.areadetail.content.Substation[i]["Double.Longitude"], this.$store.state.areadetail.content.Substation[i]["Double.Latitude"]],
+						value: [
+							this.$store.state.areadetail.content.Substation[i][
+								'Double.Longitude'
+							],
+							this.$store.state.areadetail.content.Substation[i][
+								'Double.Latitude'
+							]
+						],
 						// key: i,
-						name:this.$store.state.areadetail.content.Substation[i]["String.Name"],
-						attribute: {
-							GICElectricFieldVKM: 0
-						}
+						name: this.$store.state.areadetail.content.Substation[i][
+							'String.Name'
+						],
+						GICElectricFieldVKM: Math.random() * 25 //0
 					});
 				}
 			}
@@ -358,16 +382,82 @@ export default {
 			}
 		},
 		updateTable() {
-			setInterval(() => {
+			this.interval = setInterval(() => {
 				try {
 					const tempData = this.$store.state.parsedData;
-					let temp = this.chart._echartsOptions;
+					// let temp = this.chart._echartsOptions;
 					for (let i in this.Substations) {
-						temp.series[0].data[i].attribute[
-							'GICElectricFieldVKM'
-						] = tempData[this.anchor + this.substationFieldIndex['GICElectricFieldVKM'] + i * this.substationDataLength];
+						// console.log(tempData[this.anchor + this.substationFieldIndex['GICElectricFieldVKM'] - 1 + i * this.substationDataLength])
+						// console.log(tempData[this.anchor + this.substationFieldIndex['GICElectricFieldVKM'] + i * this.substationDataLength])
+						// temp.series[0].data[i]['GICElectricFieldVKM'] =
+						// 	tempData[
+						// 		this.anchor +
+						// 			this.substationFieldIndex['GICElectricFieldVKM'] +
+						// 			i * this.substationDataLength
+						// 	];
+						this.Substations[i]['GICElectricFieldVKM'] =
+							tempData[
+								this.anchor +
+									this.substationFieldIndex['GICElectricFieldVKM'] +
+									i * this.substationDataLength
+							] * 10;
 					}
-					this.chart.setOption(temp);
+					// this.chart.setOption(temp);
+					var t0 = performance.now();
+					let ramdompts_ipl = GeoJSON.parse(this.Substations, {
+						Point: 'value'
+					});
+					var t1 = performance.now();
+					console.log('JSON TO GEOJSON: ' + (t1 - t0));
+					console.log(ramdompts_ipl);
+					// var contours_pts = turf.tin(ramdompts_ipl, 'GICElectricFieldVKM');
+					var contours_pts = window.turf.interpolate(ramdompts_ipl, 4, {
+						gridType: 'points',
+						property: 'GICElectricFieldVKM',
+						units: 'miles'
+					});
+					t1 = performance.now();
+					console.log('JSON TO INTERPOLATION: ' + (t1 - t0));
+					var contours = window.turf.isobands(
+						contours_pts,
+						[0, 1, 2, 3, 4, 5, 10],
+						{
+							zProperty: 'GICElectricFieldVKM'
+						}
+					);
+					t1 = performance.now();
+					console.log('JSON TO ISOBANDS: ' + (t1 - t0));
+					function getColor(x) {
+						return x < 1
+							? '#bd0026'
+							: x < 2
+							? '#f03b20'
+							: x < 3
+							? '#fd8d3c'
+							: x < 4
+							? '#fecc5c'
+							: '#ffffb2';
+					}
+					this.map.removeLayer(this.contoursLayer);
+					this.contoursLayer = window.L.geoJson(contours, {
+						// onEachFeature: function(feature, layer) {
+						// 	layer.bindPopup(feature.properties.obs);
+						// },
+						style: function(feature) {
+							return {
+								interactive: false,
+								fillColor: getColor(
+									parseInt(feature.properties.GICElectricFieldVKM.split('-')[0])
+								),
+								fillOpacity: 0.5,
+								weight: 0.5,
+								color: '#bd0026',
+								opacity: 0
+							};
+						}
+					}).addTo(this.map);
+					t1 = performance.now();
+					console.log('JSON TO CONTOUR IN MAP: ' + (t1 - t0));
 				} catch (e) {
 					console.log(e);
 					console.log('The raw data are not ready');
@@ -402,7 +492,8 @@ export default {
 		this.initTable().then(() => this.updateTable());
 		this.initdraw();
 	},
-	beforeDestroy(){
+	beforeDestroy() {
+		clearInterval(this.interval);
 		this.updateTable = () => {};
 	},
 	watch: {},

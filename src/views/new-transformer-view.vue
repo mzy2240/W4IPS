@@ -496,7 +496,7 @@ export default {
 				}
 			}
 			this.Transformers = temp;
-			console.log(this.Transformers);
+			// console.log(this.Transformers);
 			if (this.Transformers.length > 1) {
 				return Promise.resolve('Table initialized properly');
 			} else {
