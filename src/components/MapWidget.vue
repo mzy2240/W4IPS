@@ -339,47 +339,47 @@ export default {
 			this.chart = L.supermap.echartsLayer(echartsOptions, layerOptions); // _ec is the echartsInstance
 			var EL = this.chart.addTo(this.map);
 
-			var ramdompts_ipl = window.turf.randomPoint(25, {
-				bbox: [-98, 28.0, -94, 31.0]
-			});
+			// var ramdompts_ipl = window.turf.randomPoint(25, {
+			// 	bbox: [-98, 28.0, -94, 31.0]
+			// });
 
-			window.turf.featureEach(ramdompts_ipl, function(point) {
-				point.properties.obs = Math.random() * 25;
-			});
-			// var tin = turf.tin(ramdompts_ipl, 'obs');
-			var contours_pts = window.turf.interpolate(ramdompts_ipl, 2, {
-				gridType: 'points',
-				property: 'obs',
-				units: 'kilometers'
-			});
-			var contours = window.turf.isobands(contours_pts, [0, 5, 10, 15, 20, 25, 30], {
-				zProperty: 'obs'
-			});
-			function getColor(x) {
-				return x < 5
-					? '#bd0026'
-					: x < 10
-					? '#f03b20'
-					: x < 15
-					? '#fd8d3c'
-					: x < 20
-					? '#fecc5c'
-					: '#ffffb2';
-			}
-			var contoursLayer = L.geoJson(contours, {
-				// onEachFeature: function(feature, layer) {
-				// 	layer.bindPopup(feature.properties.obs);
-				// },
-				style: function(feature) {
-					return {
-						interactive: false,
-						fillColor: getColor(parseInt(feature.properties.obs.split('-')[0])),
-						weight: 0.5,
-						color: '#bd0026',
-						opacity: 1
-					};
-				}
-			}).addTo(this.map);
+			// window.turf.featureEach(ramdompts_ipl, function(point) {
+			// 	point.properties.obs = Math.random() * 25;
+			// });
+			// // var tin = turf.tin(ramdompts_ipl, 'obs');
+			// var contours_pts = window.turf.interpolate(ramdompts_ipl, 2, {
+			// 	gridType: 'points',
+			// 	property: 'obs',
+			// 	units: 'kilometers'
+			// });
+			// var contours = window.turf.isobands(contours_pts, [0, 5, 10, 15, 20, 25, 30], {
+			// 	zProperty: 'obs'
+			// });
+			// function getColor(x) {
+			// 	return x < 5
+			// 		? '#bd0026'
+			// 		: x < 10
+			// 		? '#f03b20'
+			// 		: x < 15
+			// 		? '#fd8d3c'
+			// 		: x < 20
+			// 		? '#fecc5c'
+			// 		: '#ffffb2';
+			// }
+			// var contoursLayer = L.geoJson(contours, {
+			// 	// onEachFeature: function(feature, layer) {
+			// 	// 	layer.bindPopup(feature.properties.obs);
+			// 	// },
+			// 	style: function(feature) {
+			// 		return {
+			// 			interactive: false,
+			// 			fillColor: getColor(parseInt(feature.properties.obs.split('-')[0])),
+			// 			weight: 0.5,
+			// 			color: '#bd0026',
+			// 			opacity: 1
+			// 		};
+			// 	}
+			// }).addTo(this.map);
 			// console.log(tin);
 			// var ecModel = this.chart._model;
 			// var leafletMap;
@@ -461,11 +461,12 @@ export default {
 		// this.onDrawLines();
 	},
 	beforeDestroy() {
-		try {
-			this.chart.clear();
-		} catch (err) {
-			console.log('The chart instance cannot be cleared');
-		}
+		this.chart = {}
+		// try {
+		// 	this.chart.clear();
+		// } catch (err) {
+		// 	console.log('The chart instance cannot be cleared');
+		// }
 	},
 	computed: {
 		...mapGetters({

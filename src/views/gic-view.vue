@@ -402,6 +402,9 @@ export default {
 		this.initTable().then(() => this.updateTable());
 		this.initdraw();
 	},
+	beforeDestroy(){
+		this.updateTable = () => {};
+	},
 	watch: {},
 	computed: {}
 };

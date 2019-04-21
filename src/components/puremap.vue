@@ -1103,11 +1103,9 @@ export default {
 	},
 	beforeDestroy() {
 		clearInterval(this.Interval);
-		try {
-			this.chart.clear();
-		} catch (err) {
-			console.log('The chart instance cannot be cleared');
-		}
+		this.updateLinesCycle = () => {};
+		this.chart = {};
+
 	},
 	// watch: {
 	// 	highRiskLines: function() {
