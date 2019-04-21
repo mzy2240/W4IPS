@@ -67,8 +67,20 @@
                       <h4>{{ transformerChartTitle }}</h4>
                     </v-toolbar-title>
                     <v-spacer></v-spacer>
-					<v-btn depressed small color="primary">GICNeutralCurrent</v-btn>
-					<v-btn depressed small color="primary">Temperature</v-btn>
+                    <v-btn
+                      outline
+                      small
+                      :disabled="gicEnabled"
+                      color="primary"
+                      @click="enableGIC"
+                    >GICNeutralCurrent</v-btn>
+                    <v-btn
+                      outline
+                      small
+                      :disabled="tempEnabled"
+                      color="primary"
+                      @click="enableTemp"
+                    >Temperature</v-btn>
                   </v-toolbar>
                   <v-divider v-if="enableHeader"></v-divider>
                   <slot name="widget-content"></slot>
@@ -196,7 +208,8 @@ export default {
 				height: this.height
 			},
 			transData: [],
-			count: 0
+			count: 0,
+			gicEnabled: true
 		};
 	},
 	methods: {
@@ -231,14 +244,19 @@ export default {
 			var legend = window.L.control({ position: 'bottomleft' });
 			legend.onAdd = function(map) {
 				var div = window.L.DomUtil.create('div', 'legend legend-background');
-				let labels = ['<strong>Categories</strong>']
+				let labels = ['<strong>Categories</strong>'];
 				const categories = [
-						'Positive Neutral Current',
-						'Negative Neutral Current'
-					];
-				const color = ['rgba(0, 200, 0, 0.5)', 'rgba(0, 0, 200, 0.5)']
+					'Positive Neutral Current',
+					'Negative Neutral Current'
+				];
+				const color = ['rgba(0, 200, 0, 0.5)', 'rgba(0, 0, 200, 0.5)'];
 				for (var i = 0; i < categories.length; i++) {
-					div.innerHTML += '<span class="circle" style="background:' + color[i] + '"></span>' + categories[i] + '<br>';
+					div.innerHTML +=
+						'<span class="circle" style="background:' +
+						color[i] +
+						'"></span>' +
+						categories[i] +
+						'<br>';
 				}
 				// div.innerHTML = labels.join('<br>');
 				// console.log(div)
@@ -270,20 +288,24 @@ export default {
 						name: 'transformer',
 						coordinateSystem: 'leaflet',
 						symbol: 'circle',
-						symbolSize: (value, params)=>{
-							const current = Math.abs(params.data.attribute.GICNeutralCurrent)
-							if(current<1) {
-								return 5
-							} else if (current<5) {
-								return 10
-							} else if (current<10) {
-								return 15
-							} else if (current<20) {
-								return 20
-							} else if (current<50) {
-								return 25
-							} else {
-								return 50
+						symbolSize: (value, params) => {
+							if (params.data.attribute.GICNeutralCurrent) {
+								const current = Math.abs(
+									params.data.attribute.GICNeutralCurrent
+								);
+								if (current < 1) {
+									return 5;
+								} else if (current < 5) {
+									return 10;
+								} else if (current < 10) {
+									return 15;
+								} else if (current < 20) {
+									return 20;
+								} else if (current < 50) {
+									return 25;
+								} else {
+									return 50;
+								}
 							}
 						},
 						// showEffectOn: 'emphasis',
@@ -293,30 +315,49 @@ export default {
 						progressiveThreshold: 200,
 						data: this.transData, //this.$store.state.subData,
 						itemStyle: {
-							color: (params)=>{
-								if(params.data.attribute.GICNeutralCurrent>0) {
-									return 'rgba(0, 200, 0, 0.5)'
-								} else {
-									return 'rgba(0, 0, 200, 0.5)'
+							color: params => {
+								if (params.data.attribute.GICNeutralCurrent) {
+									if (params.data.attribute.GICNeutralCurrent > 0) {
+										return 'rgba(0, 200, 0, 0.5)';
+									} else {
+										return 'rgba(0, 0, 200, 0.5)';
+									}
 								}
 							}
 						}
 					},
-					// {
-					// 	id: 'heatmap',
-					// 	type: 'heatmap',
-					// 	coordinateSystem: 'leaflet',
-					// 	data: [], //heatmapData, //[[-98.4, 27.6, 5]],
-					// 	pointSize: 10,
-					// 	blurSize: 20
-					// }
+					{
+						id: 'temperature',
+						type: 'scatter',
+						coordinateSystem: 'leaflet',
+						data: this.transData,
+						symbolSize: 0,
+						itemStyle: {
+							color: params => {
+								if (params.data.attribute.Temperature) {
+									if (params.data.attribute.Temperature < 60) {
+										return 'rgba(0, 0, 200, 0.8)';
+									} else if (params.data.attribute.Temperature < 80) {
+										return 'rgba(0, 200, 0, 0.8)';
+									} else if (params.data.attribute.Temperature < 100) {
+										return 'rgba(200,200,0,0.8)'
+									} else {
+										return 'rgba(255, 0, 0, 1)'
+									}
+								}
+							}
+						}
+					}
 				]
 			};
 			const layerOptions = {
 				loadWhileAnimating: false,
 				attribution: ''
 			};
-			this.transformerChart = new window.L.supermap.echartsLayer(echartsOptions, layerOptions); // _ec is the echartsInstance
+			this.transformerChart = new window.L.supermap.echartsLayer(
+				echartsOptions,
+				layerOptions
+			); // _ec is the echartsInstance
 			this.transformerChart.addTo(this.transformerMap);
 
 			// var ramdompts_ipl = window.turf.randomPoint(25, {
@@ -448,7 +489,8 @@ export default {
 							]
 						],
 						attribute: {
-							GICNeutralCurrent: 0
+							GICNeutralCurrent: null,
+							Temperature: null
 						}
 					});
 				}
@@ -478,7 +520,11 @@ export default {
 						// 	this.$store.state.transformerData[0 + i * this.TransformerDataLength];
 						// this.Transformers[i].Tap =
 						// 	this.$store.state.transformerData[1 + i * this.TransformerDataLength]; // MW is the 6th in the load data
-						this.Transformers[i].Temperature = this.$store.state.temperatureData[keys[i]][this.count];
+						this.Transformers[
+							i
+						].Temperature = this.$store.state.temperatureData[keys[i]][
+							this.count
+						];
 						this.Transformers[
 							i
 						].GICNeutralCurrent = this.$store.state.transformerData[
@@ -492,25 +538,93 @@ export default {
 						this.Transformers[i].GICIEff = this.$store.state.transformerData[
 							4 + i * this.TransformerDataLength
 						];
-						temp.series[0].data[i].attribute[
-							'GICNeutralCurrent'
-						] = this.Transformers[i].GICNeutralCurrent;
-						// this.transData[i].attribute[
+						// temp.series[0].data[i].attribute['Temperature'] = this.Transformers[
+						// 	i
+						// ].Temperature;
+						// temp.series[0].data[i].attribute[
 						// 	'GICNeutralCurrent'
 						// ] = this.Transformers[i].GICNeutralCurrent;
+						this.transData[i].attribute[
+							'GICNeutralCurrent'
+						] = this.Transformers[i].GICNeutralCurrent;
+						this.transData[i].attribute['Temperature'] = this.Transformers[
+							i
+						].Temperature;
 					}
-					this.transformerChart.setOption(temp);
-					if(this.$store.state.status === 'running'){
+					// this.transformerChart.setOption(temp);
+					this.transformerChart.setOption({
+						series: [
+							{
+								id: 'transformer',
+								data: this.transData
+							},
+							{
+								id: 'temperature',
+								data: this.transData
+							}
+						]
+					});
+					if (this.$store.state.status === 'running') {
 						this.count += 1;
 					} else {
 						this.count = 0;
 					}
-					
 				} catch (e) {
 					console.log(e);
 					console.log('The raw data are not ready');
 				}
 			}, 500);
+		},
+		enableGIC() {
+			this.gicEnabled = true;
+			let tempOption = {
+				series: [
+					{
+						id: 'transformer',
+						symbolSize: (value, params) => {
+							if (params.data.attribute.GICNeutralCurrent) {
+								const current = Math.abs(
+									params.data.attribute.GICNeutralCurrent
+								);
+								if (current < 1) {
+									return 5;
+								} else if (current < 5) {
+									return 10;
+								} else if (current < 10) {
+									return 15;
+								} else if (current < 20) {
+									return 20;
+								} else if (current < 50) {
+									return 25;
+								} else {
+									return 50;
+								}
+							}
+						}
+					},
+					{
+						id: 'temperature',
+						symbolSize: 0
+					}
+				]
+			};
+			this.transformerChart.setOption(tempOption);
+		},
+		enableTemp() {
+			this.gicEnabled = false;
+			let tempOption = {
+				series: [
+					{
+						id: 'transformer',
+						symbolSize: 0
+					},
+					{
+						id: 'temperature',
+						symbolSize: 10
+					}
+				]
+			};
+			this.transformerChart.setOption(tempOption);
 		},
 		toggle(item) {
 			var command;
@@ -542,9 +656,13 @@ export default {
 		this.initdraw();
 	},
 	watch: {},
-	computed: {},
+	computed: {
+		tempEnabled() {
+			return !this.gicEnabled;
+		}
+	},
 	beforeDestroy() {
 		this.updateTable = () => {};
-	},
+	}
 };
 </script>
