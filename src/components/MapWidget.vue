@@ -66,6 +66,7 @@ export default {
 			mapStyle: {
 				width: '100%',
 				height: this.height,
+				"z-index": 0
 			}
 		};
 	},

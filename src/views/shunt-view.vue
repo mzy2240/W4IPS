@@ -25,10 +25,10 @@
 				<v-flex lg4 sm12 xs12>
 					<v-layout row wrap>
 						<v-flex lg12 sm12 xs12>
-							<bustable title="Violating Buses"></bustable>
+							<MapWidget title="Location Assist (Shunt)" focus='Shunt'></MapWidget>
 						</v-flex>
 						<v-flex lg12 sm12 xs12>
-							<MapWidget title="Location Assist (Shunt)" focus='Shunt'></MapWidget>
+							<bustable title="Violating Buses"></bustable>
 						</v-flex>
 					</v-layout>
 				</v-flex>
