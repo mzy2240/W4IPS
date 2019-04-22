@@ -384,80 +384,84 @@ export default {
 		updateTable() {
 			this.interval = setInterval(() => {
 				try {
-					const tempData = this.$store.state.parsedData;
-					// let temp = this.chart._echartsOptions;
-					for (let i in this.Substations) {
-						// console.log(tempData[this.anchor + this.substationFieldIndex['GICElectricFieldVKM'] - 1 + i * this.substationDataLength])
-						// console.log(tempData[this.anchor + this.substationFieldIndex['GICElectricFieldVKM'] + i * this.substationDataLength])
-						// temp.series[0].data[i]['GICElectricFieldVKM'] =
-						// 	tempData[
-						// 		this.anchor +
-						// 			this.substationFieldIndex['GICElectricFieldVKM'] +
-						// 			i * this.substationDataLength
-						// 	];
-						this.Substations[i]['GICElectricFieldVKM'] =
-							tempData[
-								this.anchor +
-									this.substationFieldIndex['GICElectricFieldVKM'] +
-									i * this.substationDataLength
-							] * 10;
-					}
-					// this.chart.setOption(temp);
-					var t0 = performance.now();
-					let ramdompts_ipl = GeoJSON.parse(this.Substations, {
-						Point: 'value'
-					});
-					var t1 = performance.now();
-					console.log('JSON TO GEOJSON: ' + (t1 - t0));
-					console.log(ramdompts_ipl);
-					// var contours_pts = turf.tin(ramdompts_ipl, 'GICElectricFieldVKM');
-					var contours_pts = window.turf.interpolate(ramdompts_ipl, 4, {
-						gridType: 'points',
-						property: 'GICElectricFieldVKM',
-						units: 'miles'
-					});
-					t1 = performance.now();
-					console.log('JSON TO INTERPOLATION: ' + (t1 - t0));
-					var contours = window.turf.isobands(
-						contours_pts,
-						[0, 1, 2, 3, 4, 5, 10],
-						{
-							zProperty: 'GICElectricFieldVKM'
+					if (this.$store.state.status === 'running') {
+						const tempData = this.$store.state.parsedData;
+						// let temp = this.chart._echartsOptions;
+						for (let i in this.Substations) {
+							// console.log(tempData[this.anchor + this.substationFieldIndex['GICElectricFieldVKM'] - 1 + i * this.substationDataLength])
+							// console.log(tempData[this.anchor + this.substationFieldIndex['GICElectricFieldVKM'] + i * this.substationDataLength])
+							// temp.series[0].data[i]['GICElectricFieldVKM'] =
+							// 	tempData[
+							// 		this.anchor +
+							// 			this.substationFieldIndex['GICElectricFieldVKM'] +
+							// 			i * this.substationDataLength
+							// 	];
+							this.Substations[i]['GICElectricFieldVKM'] =
+								tempData[
+									this.anchor +
+										this.substationFieldIndex['GICElectricFieldVKM'] +
+										i * this.substationDataLength
+								] * 10;
 						}
-					);
-					t1 = performance.now();
-					console.log('JSON TO ISOBANDS: ' + (t1 - t0));
-					function getColor(x) {
-						return x < 1
-							? '#bd0026'
-							: x < 2
-							? '#f03b20'
-							: x < 3
-							? '#fd8d3c'
-							: x < 4
-							? '#fecc5c'
-							: '#ffffb2';
-					}
-					this.map.removeLayer(this.contoursLayer);
-					this.contoursLayer = window.L.geoJson(contours, {
-						// onEachFeature: function(feature, layer) {
-						// 	layer.bindPopup(feature.properties.obs);
-						// },
-						style: function(feature) {
-							return {
-								interactive: false,
-								fillColor: getColor(
-									parseInt(feature.properties.GICElectricFieldVKM.split('-')[0])
-								),
-								fillOpacity: 0.5,
-								weight: 0.5,
-								color: '#bd0026',
-								opacity: 0
-							};
+						// this.chart.setOption(temp);
+						var t0 = performance.now();
+						let ramdompts_ipl = GeoJSON.parse(this.Substations, {
+							Point: 'value'
+						});
+						var t1 = performance.now();
+						console.log('JSON TO GEOJSON: ' + (t1 - t0));
+						console.log(ramdompts_ipl);
+						// var contours_pts = turf.tin(ramdompts_ipl, 'GICElectricFieldVKM');
+						var contours_pts = window.turf.interpolate(ramdompts_ipl, 4, {
+							gridType: 'points',
+							property: 'GICElectricFieldVKM',
+							units: 'miles'
+						});
+						t1 = performance.now();
+						console.log('JSON TO INTERPOLATION: ' + (t1 - t0));
+						var contours = window.turf.isobands(
+							contours_pts,
+							[0, 1, 2, 3, 4, 5, 10],
+							{
+								zProperty: 'GICElectricFieldVKM'
+							}
+						);
+						t1 = performance.now();
+						console.log('JSON TO ISOBANDS: ' + (t1 - t0));
+						function getColor(x) {
+							return x < 1
+								? '#bd0026'
+								: x < 2
+								? '#f03b20'
+								: x < 3
+								? '#fd8d3c'
+								: x < 4
+								? '#fecc5c'
+								: '#ffffb2';
 						}
-					}).addTo(this.map);
-					t1 = performance.now();
-					console.log('JSON TO CONTOUR IN MAP: ' + (t1 - t0));
+						this.map.removeLayer(this.contoursLayer);
+						this.contoursLayer = window.L.geoJson(contours, {
+							// onEachFeature: function(feature, layer) {
+							// 	layer.bindPopup(feature.properties.obs);
+							// },
+							style: function(feature) {
+								return {
+									interactive: false,
+									fillColor: getColor(
+										parseInt(
+											feature.properties.GICElectricFieldVKM.split('-')[0]
+										)
+									),
+									fillOpacity: 0.5,
+									weight: 0.5,
+									color: '#bd0026',
+									opacity: 0
+								};
+							}
+						}).addTo(this.map);
+						t1 = performance.now();
+						console.log('JSON TO CONTOUR IN MAP: ' + (t1 - t0));
+					}
 				} catch (e) {
 					console.log(e);
 					console.log('The raw data are not ready');
