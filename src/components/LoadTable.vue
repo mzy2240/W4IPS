@@ -132,7 +132,7 @@ export default {
 								'Double.Latitude'
 							]
 						],
-						// key: i,
+						key_cmd: i,
 						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]][
 							'String.Name'
 						]+' '+i.split(',')[1],
@@ -142,7 +142,7 @@ export default {
 						Mvar: 0,
 						Vpu: 1,
 						FreqHz: 60,
-						// id: this.$store.state.areadetail.content.Load[i]['String.ID']
+						id_cmd: this.$store.state.areadetail.content.Load[i]['String.ID']
 					});
 				}
 				count++;
@@ -170,13 +170,13 @@ export default {
 						this.loads[i].Status =
 							temp[this.anchor + 5 + this.loadArray[i] * this.loadDataLength];
 						if (
-							this.$store.state.genAction['Load'][this.loads[i].key] !=
+							this.$store.state.genAction['Load'][this.loads[i].key_cmd] !=
 							undefined
 						) {
 							if (
 								this.$store.state.currentTime >=
 								Math.max(
-									this.$store.state.genAction['Load'][this.loads[i].key]
+									this.$store.state.genAction['Load'][this.loads[i].key_cmd]
 								) +
 									3
 							) {
@@ -202,11 +202,11 @@ export default {
 			}
 			this.$store.commit('setMessage', [
 				'Load',
-				item.key + ',' + item.id,
-				item.key + '#' + item.id,
+				item.key_cmd + ',' + item.id_cmd,
+				item.key_cmd + '#' + item.id_cmd,
 				command
 			]);
-			this.$store.commit('recordAction', ['Load', item.key]);
+			this.$store.commit('recordAction', ['Load', item.key_cmd]);
 			this.$store.commit('setPublish');
 		}
 	},
