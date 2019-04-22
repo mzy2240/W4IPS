@@ -1,98 +1,114 @@
 <template>
-  <div>
-    <v-layout row class="align-center layout px-4 pt-4 app--page-header">
-      <div class="page-header-left">
-        <h3 class="pr-3">Transformer</h3>
-      </div>
-      <v-icon larg>view_carousel</v-icon>
-      <v-spacer></v-spacer>
-      <div class="page-header-right">
-        <h4 class="pr-1">
-          Hi {{ $store.state.username }}
-          <status-indicator :negative="$store.state.alarm" :positive="!$store.state.alarm" pulse></status-indicator>
-        </h4>
-      </div>
-    </v-layout>
-    <v-container grid-list-xl text-xs-center fluid>
-      <v-layout row wrap>
-        <v-flex lg6 sm6 xs12>
-          <!-- <v-widget title="Realtime Data" content-bg="white">
+	<div>
+		<v-layout row class="align-center layout px-4 pt-4 app--page-header">
+			<div class="page-header-left">
+				<h3 class="pr-3">Transformer</h3>
+			</div>
+			<v-icon larg>view_carousel</v-icon>
+			<v-spacer></v-spacer>
+			<div class="page-header-right">
+				<h4 class="pr-1">
+					Hi {{ $store.state.username }}
+					<status-indicator
+						:negative="$store.state.alarm"
+						:positive="!$store.state.alarm"
+						pulse
+					></status-indicator>
+				</h4>
+			</div>
+		</v-layout>
+		<v-container grid-list-xl text-xs-center fluid>
+			<v-layout row wrap>
+				<v-flex lg6 sm6 xs12>
+					<!-- <v-widget title="Realtime Data" content-bg="white">
           <div slot="widget-content">-->
-          <v-card>
-            <v-toolbar card dense color="transparent">
-              <v-toolbar-title>
-                <h4>{{ title }}</h4>
-              </v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>more_vert</v-icon>
-              </v-btn>
-            </v-toolbar>
-            <v-divider></v-divider>
-            <v-card-text class="pa-0">
-              <template>
-                <v-data-table
-                  class="fixed-header"
-                  :headers="headers"
-                  :items="Transformers"
-                  :rows-per-page-items="defaultRowItems"
-                  disable-initial-sort
-                  item-key="name"
-                >
-                  <template v-slot:items="props">
-                    <td class="text-xs-left">{{ props.item.name }}</td>
-                    <td class="text-xs-center">{{ props.item.kv }}</td>
-                    <!-- <td class="text-xs-left">{{ props.item.Phase }}</td>
+					<v-card>
+						<v-toolbar card dense color="transparent">
+							<v-toolbar-title>
+								<h4>{{ title }}</h4>
+							</v-toolbar-title>
+							<v-spacer></v-spacer>
+							<v-btn icon>
+								<v-icon>more_vert</v-icon>
+							</v-btn>
+						</v-toolbar>
+						<v-divider></v-divider>
+						<v-card-text class="pa-0">
+							<template>
+								<v-data-table
+									class="fixed-header"
+									:headers="headers"
+									:items="Transformers"
+									:rows-per-page-items="defaultRowItems"
+									disable-initial-sort
+									item-key="name"
+								>
+									<template v-slot:items="props">
+										<td class="text-xs-left">{{ props.item.name }}</td>
+										<td class="text-xs-center">{{ props.item.kv }}</td>
+										<!-- <td class="text-xs-left">{{ props.item.Phase }}</td>
                     <td class="text-xs-center">{{ props.item.Tap }}</td>-->
-                    <td class="text-xs-center">{{ props.item.Temperature }}</td>
-                    <td class="text-xs-center">{{ props.item.GICNeutralCurrent }}</td>
-                    <td class="text-xs-center">{{ props.item.GICMvarLosses }}</td>
-                    <td class="text-xs-center">{{ props.item.GICIEff }}</td>
-                  </template>
-                </v-data-table>
-              </template>
-              <v-divider></v-divider>
-            </v-card-text>
-          </v-card>
-          <!-- </div>
+										<td class="text-xs-center">{{ props.item.Temperature }}</td>
+										<td class="text-xs-center">
+											{{ props.item.GICNeutralCurrent }}
+										</td>
+										<td class="text-xs-center">
+											{{ props.item.GICMvarLosses }}
+										</td>
+										<td class="text-xs-center">{{ props.item.GICIEff }}</td>
+									</template>
+								</v-data-table>
+							</template>
+							<v-divider></v-divider>
+						</v-card-text>
+					</v-card>
+					<!-- </div>
           </v-widget>-->
-        </v-flex>
-        <v-flex lg6 sm6 xs12>
-          <v-layout row wrap>
-            <v-flex lg12 sm12 xs12>
-              <div id="v-widget">
-                <v-card>
-                  <v-toolbar color="transparent" flat dense card v-if="enableHeader">
-                    <v-toolbar-title>
-                      <h4>{{ transformerChartTitle }}</h4>
-                    </v-toolbar-title>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      outline
-                      small
-                      :disabled="gicEnabled"
-                      color="primary"
-                      @click="enableGIC"
-                    >GICNeutralCurrent</v-btn>
-                    <v-btn
-                      outline
-                      small
-                      :disabled="tempEnabled"
-                      color="primary"
-                      @click="enableTemp"
-                    >Temperature</v-btn>
-                  </v-toolbar>
-                  <v-divider v-if="enableHeader"></v-divider>
-                  <slot name="widget-content"></slot>
-                  <div id="transMap" class="transformerChart"></div>
-                </v-card>
-              </div>
-            </v-flex>
-          </v-layout>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </div>
+				</v-flex>
+				<v-flex lg6 sm6 xs12>
+					<v-layout row wrap>
+						<v-flex lg12 sm12 xs12>
+							<div id="v-widget">
+								<v-card>
+									<v-toolbar
+										color="transparent"
+										flat
+										dense
+										card
+										v-if="enableHeader"
+									>
+										<v-toolbar-title>
+											<h4>{{ transformerChartTitle }}</h4>
+										</v-toolbar-title>
+										<v-spacer></v-spacer>
+										<v-btn
+											outline
+											small
+											:disabled="gicEnabled"
+											color="primary"
+											@click="enableGIC"
+											>GICNeutralCurrent</v-btn
+										>
+										<v-btn
+											outline
+											small
+											:disabled="tempEnabled"
+											color="primary"
+											@click="enableTemp"
+											>Temperature</v-btn
+										>
+									</v-toolbar>
+									<v-divider v-if="enableHeader"></v-divider>
+									<slot name="widget-content"></slot>
+									<div id="transMap" class="transformerChart"></div>
+								</v-card>
+							</div>
+						</v-flex>
+					</v-layout>
+				</v-flex>
+			</v-layout>
+		</v-container>
+	</div>
 </template>
 
 <style scoped>
@@ -209,7 +225,8 @@ export default {
 			},
 			transData: [],
 			count: 0,
-			gicEnabled: true
+			gicEnabled: true,
+			legend: {}
 		};
 	},
 	methods: {
@@ -241,8 +258,8 @@ export default {
 			});
 			const tran_bg = new window.L.tileLayer(url, options);
 			tran_bg.addTo(this.transformerMap);
-			var legend = window.L.control({ position: 'bottomleft' });
-			legend.onAdd = function(map) {
+			this.legend = window.L.control({ position: 'bottomleft' });
+			this.legend.onAdd = function(map) {
 				var div = window.L.DomUtil.create('div', 'legend legend-background');
 				let labels = ['<strong>Categories</strong>'];
 				const categories = [
@@ -262,7 +279,7 @@ export default {
 				// console.log(div)
 				return div;
 			};
-			legend.addTo(this.transformerMap);
+			this.legend.addTo(this.transformerMap);
 			// this.chart = echarts.init(document.getElementById('map'));
 			var echartsOptions = {
 				animation: false,
@@ -270,17 +287,17 @@ export default {
 					show: true,
 					trigger: 'item'
 				},
-				visualMap: {
-					show: false,
-					top: 'top',
-					min: 50,
-					max: 300,
-					seriesIndex: 7,
-					calculable: true,
-					inRange: {
-						color: ['#000080', 'blue', 'green', 'yellow', 'red']
-					}
-				},
+				// visualMap: {
+				// 	show: false,
+				// 	top: 'top',
+				// 	min: 50,
+				// 	max: 300,
+				// 	seriesIndex: 7,
+				// 	calculable: true,
+				// 	inRange: {
+				// 		color: ['#000080', 'blue', 'green', 'yellow', 'red']
+				// 	}
+				// },
 				series: [
 					{
 						id: 'transformer',
@@ -340,9 +357,9 @@ export default {
 									} else if (params.data.attribute.Temperature < 80) {
 										return 'rgba(0, 200, 0, 0.8)';
 									} else if (params.data.attribute.Temperature < 100) {
-										return 'rgba(200,200,0,0.8)'
+										return 'rgba(200,200,0,0.8)';
 									} else {
-										return 'rgba(255, 0, 0, 1)'
+										return 'rgba(255, 0, 0, 1)';
 									}
 								}
 							}
@@ -577,6 +594,29 @@ export default {
 		},
 		enableGIC() {
 			this.gicEnabled = true;
+			this.transformerMap.removeControl(this.legend);
+			this.legend = window.L.control({ position: 'bottomleft' });
+			this.legend.onAdd = function(map) {
+				var div = window.L.DomUtil.create('div', 'legend legend-background');
+				let labels = ['<strong>Categories</strong>'];
+				const categories = [
+					'Positive Neutral Current',
+					'Negative Neutral Current'
+				];
+				const color = ['rgba(0, 200, 0, 0.5)', 'rgba(0, 0, 200, 0.5)'];
+				for (var i = 0; i < categories.length; i++) {
+					div.innerHTML +=
+						'<span class="circle" style="background:' +
+						color[i] +
+						'"></span>' +
+						categories[i] +
+						'<br>';
+				}
+				// div.innerHTML = labels.join('<br>');
+				// console.log(div)
+				return div;
+			};
+			this.legend.addTo(this.transformerMap);
 			let tempOption = {
 				series: [
 					{
@@ -612,6 +652,31 @@ export default {
 		},
 		enableTemp() {
 			this.gicEnabled = false;
+			this.transformerMap.removeControl(this.legend);
+			this.legend = window.L.control({ position: 'bottomleft' });
+			this.legend.onAdd = function(map) {
+				var div = window.L.DomUtil.create('div', 'legend legend-background');
+				let labels = ['<strong>Categories</strong>'];
+				const categories = [
+					'<60',
+					'60~80',
+					'80~100',
+					'>100'
+				];
+				const color = ['rgba(0, 0, 200, 0.8)', 'rgba(0, 200, 0, 0.8)', 'rgba(200, 200, 0, 0.8)', 'rgba(255, 0, 0, 1)'];
+				for (var i = 0; i < categories.length; i++) {
+					div.innerHTML +=
+						'<span class="circle" style="float:left;background:' +
+						color[i] +
+						'"></span>' +
+						categories[i] +
+						'<br>';
+				}
+				// div.innerHTML = labels.join('<br>');
+				// console.log(div)
+				return div;
+			};
+			this.legend.addTo(this.transformerMap);
 			let tempOption = {
 				series: [
 					{

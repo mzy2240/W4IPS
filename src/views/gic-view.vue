@@ -1,45 +1,55 @@
 <template>
-  <div>
-    <v-layout row class="align-center layout px-4 pt-4 app--page-header">
-      <div class="page-header-left">
-        <h3 class="pr-3">GIC</h3>
-      </div>
-      <v-icon larg>wifi_tethering</v-icon>
-      <v-spacer></v-spacer>
-      <div class="page-header-right">
-        <h4 class="pr-1">
-          Hi {{ $store.state.username }}
-          <status-indicator :negative="$store.state.alarm" :positive="!$store.state.alarm" pulse></status-indicator>
-        </h4>
-      </div>
-    </v-layout>
-    <v-container grid-list-xl text-xs-center fluid>
-      <v-layout row wrap>
-        <v-flex lg12 sm12 xs12>
-          <v-layout row wrap>
-            <v-flex lg12 sm12 xs12>
-              <div id="v-widget">
-                <v-card>
-                  <v-toolbar color="transparent" flat dense card v-if="enableHeader">
-                    <v-toolbar-title>
-                      <h4>{{ chartTitle }}</h4>
-                    </v-toolbar-title>
-                    <v-spacer></v-spacer>
-                  </v-toolbar>
-                  <v-divider v-if="enableHeader"></v-divider>
-                  <slot name="widget-content"></slot>
-                  <div id="map" class="gicChart"></div>
-                </v-card>
-              </div>
-            </v-flex>
-            <!-- <v-flex lg12 sm12 xs12>
+	<div>
+		<v-layout row class="align-center layout px-4 pt-4 app--page-header">
+			<div class="page-header-left">
+				<h3 class="pr-3">GIC</h3>
+			</div>
+			<v-icon larg>wifi_tethering</v-icon>
+			<v-spacer></v-spacer>
+			<div class="page-header-right">
+				<h4 class="pr-1">
+					Hi {{ $store.state.username }}
+					<status-indicator
+						:negative="$store.state.alarm"
+						:positive="!$store.state.alarm"
+						pulse
+					></status-indicator>
+				</h4>
+			</div>
+		</v-layout>
+		<v-container grid-list-xl text-xs-center fluid>
+			<v-layout row wrap>
+				<v-flex lg12 sm12 xs12>
+					<v-layout row wrap>
+						<v-flex lg12 sm12 xs12>
+							<div id="v-widget">
+								<v-card>
+									<v-toolbar
+										color="transparent"
+										flat
+										dense
+										card
+										v-if="enableHeader"
+									>
+										<v-toolbar-title>
+											<h4>{{ chartTitle }}</h4>
+										</v-toolbar-title>
+										<v-spacer></v-spacer>
+									</v-toolbar>
+									<v-divider v-if="enableHeader"></v-divider>
+									<slot name="widget-content"></slot>
+									<div id="map" class="gicChart"></div>
+								</v-card>
+							</div>
+						</v-flex>
+						<!-- <v-flex lg12 sm12 xs12>
 							<v-widget title="GMD" content-bg="dark"> </v-widget>
             </v-flex>-->
-          </v-layout>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </div>
+					</v-layout>
+				</v-flex>
+			</v-layout>
+		</v-container>
+	</div>
 </template>
 
 <style scoped>
@@ -188,6 +198,34 @@ export default {
 				zoom: 7
 			});
 			window.L.tileLayer(url, options).addTo(this.map);
+			let legend = window.L.control({ position: 'bottomleft' });
+			legend.onAdd = function(map) {
+				var div = window.L.DomUtil.create('div', 'legend legend-background');
+				let labels = ['<strong>Categories</strong>'];
+				const categories = ['0', '0.1', '0.5', '1', '2', '3', '4', '5'];
+				const color = [
+					'#FFEDA0',
+					'#FED976',
+					'#FEB24C',
+					'#FD8D3C',
+					'#FC4E2A',
+					'#E31A1C',
+					'#BD0026',
+					'#800026'
+				];
+				for (var i = 0; i < categories.length; i++) {
+					div.innerHTML +=
+						'<span class="circle" style="float:left;background:' +
+						color[i] +
+						'"></span>' +
+						categories[i] +
+						'<br>';
+				}
+				// div.innerHTML = labels.join('<br>');
+				// console.log(div)
+				return div;
+			};
+			legend.addTo(this.map);
 			// var legend = window.L.control({ position: 'bottomleft' });
 			// legend.onAdd = function(map) {
 			// 	var div = window.L.DomUtil.create('div', 'legend legend-background');
@@ -280,7 +318,7 @@ export default {
 			console.log('JSON TO INTERPOLATION: ' + (t1 - t0));
 			var contours = window.turf.isobands(
 				contours_pts,
-				[0, 1, 2, 3, 4, 5, 10],
+				[0, 0.1, 0.5, 1, 2, 3, 4, 5],
 				{
 					zProperty: 'GICElectricFieldVKM'
 				}
@@ -288,15 +326,21 @@ export default {
 			t1 = performance.now();
 			console.log('JSON TO ISOBANDS: ' + (t1 - t0));
 			function getColor(x) {
-				return x < 1
-					? '#bd0026'
+				return x < 0.1
+					? '#FFEDA0'
+					: x < 0.5
+					? '#FED976'
+					: x < 1
+					? '#FEB24C'
 					: x < 2
-					? '#f03b20'
+					? '#FD8D3C'
 					: x < 3
-					? '#fd8d3c'
+					? '#FC4E2A'
 					: x < 4
-					? '#fecc5c'
-					: '#ffffb2';
+					? '#E31A1C'
+					: x < 5
+					? '#BD0026'
+					: '#800026';
 			}
 			this.contoursLayer = window.L.geoJson(contours, {
 				// onEachFeature: function(feature, layer) {
@@ -404,40 +448,46 @@ export default {
 								] * 10;
 						}
 						// this.chart.setOption(temp);
-						var t0 = performance.now();
+						// var t0 = performance.now();
 						let ramdompts_ipl = GeoJSON.parse(this.Substations, {
 							Point: 'value'
 						});
-						var t1 = performance.now();
-						console.log('JSON TO GEOJSON: ' + (t1 - t0));
-						console.log(ramdompts_ipl);
+						// var t1 = performance.now();
+						// console.log('JSON TO GEOJSON: ' + (t1 - t0));
+						// console.log(ramdompts_ipl);
 						// var contours_pts = turf.tin(ramdompts_ipl, 'GICElectricFieldVKM');
 						var contours_pts = window.turf.interpolate(ramdompts_ipl, 4, {
 							gridType: 'points',
 							property: 'GICElectricFieldVKM',
 							units: 'miles'
 						});
-						t1 = performance.now();
-						console.log('JSON TO INTERPOLATION: ' + (t1 - t0));
+						// t1 = performance.now();
+						// console.log('JSON TO INTERPOLATION: ' + (t1 - t0));
 						var contours = window.turf.isobands(
 							contours_pts,
-							[0, 1, 2, 3, 4, 5, 10],
+							[0, 0.1, 0.5, 1, 2, 3, 4, 5],
 							{
 								zProperty: 'GICElectricFieldVKM'
 							}
 						);
-						t1 = performance.now();
-						console.log('JSON TO ISOBANDS: ' + (t1 - t0));
+						// t1 = performance.now();
+						// console.log('JSON TO ISOBANDS: ' + (t1 - t0));
 						function getColor(x) {
-							return x < 1
-								? '#bd0026'
+							return x < 0.1
+								? '#FFEDA0'
+								: x < 0.5
+								? '#FED976'
+								: x < 1
+								? '#FEB24C'
 								: x < 2
-								? '#f03b20'
+								? '#FD8D3C'
 								: x < 3
-								? '#fd8d3c'
+								? '#FC4E2A'
 								: x < 4
-								? '#fecc5c'
-								: '#ffffb2';
+								? '#E31A1C'
+								: x < 5
+								? '#BD0026'
+								: '#800026';
 						}
 						this.map.removeLayer(this.contoursLayer);
 						this.contoursLayer = window.L.geoJson(contours, {
@@ -459,8 +509,8 @@ export default {
 								};
 							}
 						}).addTo(this.map);
-						t1 = performance.now();
-						console.log('JSON TO CONTOUR IN MAP: ' + (t1 - t0));
+						// t1 = performance.now();
+						// console.log('JSON TO CONTOUR IN MAP: ' + (t1 - t0));
 					}
 				} catch (e) {
 					console.log(e);
