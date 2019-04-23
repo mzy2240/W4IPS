@@ -2,7 +2,7 @@
 <div>
     <div v-show="$store.state.status==='running'">
         <marquee-text :repeat="30" :duration="10">
-            <span style="background-color: #80e27e; padding-right:30px; box-sizing:border-box;">RUNNING</span>
+            <span style="background-color: #80e27e; padding-right:30px; box-sizing:border-box;">G Index: G5 (Extreme)</span>
         </marquee-text>
     </div>
     <div v-show="$store.state.status==='paused'">
