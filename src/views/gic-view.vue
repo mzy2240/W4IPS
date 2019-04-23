@@ -195,7 +195,7 @@ export default {
 				// crs: L.CRS.EPSG4326,
 				center: this.mapCenter, //this.$store.state.center, //this.mapCenter,
 				maxZoom: 18,
-				zoom: 7
+				zoom: 8
 			});
 			window.L.tileLayer(url, options).addTo(this.map);
 			let legend = window.L.control({ position: 'bottomleft' });
@@ -247,7 +247,7 @@ export default {
 			var echartsOptions = {
 				animation: false,
 				tooltip: {
-					show: true,
+					show: false,
 					trigger: 'item'
 				},
 				visualMap: {
@@ -414,7 +414,7 @@ export default {
 						name: this.$store.state.areadetail.content.Substation[i][
 							'String.Name'
 						],
-						GICElectricFieldVKM: Math.random() * 25 //0
+						GICElectricFieldVKM: 0 //0
 					});
 				}
 			}
@@ -445,7 +445,7 @@ export default {
 									this.anchor +
 										this.substationFieldIndex['GICElectricFieldVKM'] +
 										i * this.substationDataLength
-								] * 10;
+								].toFixed(2);
 						}
 						// this.chart.setOption(temp);
 						// var t0 = performance.now();
@@ -465,7 +465,7 @@ export default {
 						// console.log('JSON TO INTERPOLATION: ' + (t1 - t0));
 						var contours = window.turf.isobands(
 							contours_pts,
-							[0, 0.1, 0.5, 1, 2, 3, 4, 5],
+							[0, 0.1, 0.5, 1, 2, 3, 4, 5, 6],
 							{
 								zProperty: 'GICElectricFieldVKM'
 							}
@@ -487,21 +487,17 @@ export default {
 								? '#E31A1C'
 								: x < 5
 								? '#BD0026'
+								: x < 6
+								? '#800026'
 								: '#800026';
 						}
 						this.map.removeLayer(this.contoursLayer);
 						this.contoursLayer = window.L.geoJson(contours, {
-							// onEachFeature: function(feature, layer) {
-							// 	layer.bindPopup(feature.properties.obs);
-							// },
 							style: function(feature) {
+								// console.log(feature.properties.GICElectricFieldVKM)
 								return {
 									interactive: false,
-									fillColor: getColor(
-										parseInt(
-											feature.properties.GICElectricFieldVKM.split('-')[0]
-										)
-									),
+									fillColor: getColor(parseFloat(feature.properties.GICElectricFieldVKM.split('-')[0])),
 									fillOpacity: 0.5,
 									weight: 0.5,
 									color: '#bd0026',

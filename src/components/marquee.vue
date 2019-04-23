@@ -1,63 +1,58 @@
 <template>
-<div>
-    <div v-show="$store.state.status==='running'">
-        <marquee-text :repeat="30" :duration="10">
-            <span style="background-color: #80e27e; padding-right:30px; box-sizing:border-box;">G Index: G5 (Extreme)</span>
-        </marquee-text>
-    </div>
-    <div v-show="$store.state.status==='paused'">
-        <marquee-text :repeat="30">
-            <span style="background-color: #ffff8b; padding-right:30px; box-sizing:border-box;">PAUSED</span>
-        </marquee-text>
-    </div>
-	<div v-show="$store.state.status==='initialized'">
-        <marquee-text :repeat="30">
-            <span style="background-color: #ffff8b; padding-right:30px; box-sizing:border-box;">INITIALIZED</span>
-        </marquee-text>
-    </div>
-    <div v-show="$store.state.status==='aborted'">
-        <marquee-text :repeat="30">
-            <span style="background-color: #be9c91; padding-right:30px; box-sizing:border-box;">ABORTED</span>
-        </marquee-text>
-    </div>
-	<div v-show="$store.state.status==='finished'">
-        <marquee-text :repeat="30">
-            <span style="background-color: #ff5f52; padding-right:30px; box-sizing:border-box;">FINISHED</span>
-        </marquee-text>
-    </div>
-    <div v-show="$store.state.status==='offline'">
-        <marquee-text :repeat="30" :duration="30">
-            <span style="background-color: #8e8e8e; padding-right:30px; box-sizing:border-box;">DISCONNECTED</span>
-        </marquee-text>
-    </div>
-    <div v-show="$store.state.status==='error'">
-        <marquee-text :repeat="30" :duration="30">
-            <span style="background-color: #ff6f60; padding-right:30px; box-sizing:border-box;">DS needs to be reset manually</span>
-        </marquee-text>
-    </div>
-</div>
-
+	<marquee-text :repeat="30" :duration="10" :key="$store.state.status">
+		<span :style="style">{{ content }}</span>
+	</marquee-text>
 </template>
 
 <script>
-// import { mapGetters } from 'vuex';
-import MarqueeText from 'vue-marquee-text-component'
+import MarqueeText from 'vue-marquee-text-component';
 
 export default {
-    data(){
-        return {
-            content: "offline"
-        }
-    },
-    mounted(){
-    },
-    components: {
-        MarqueeText
-    }
+	data() {
+		return {
+			style: ''
+		};
+	},
+	mounted() {},
+	computed: {
+		content() {
+			if (this.$store.state.status === 'running') {
+				this.style =
+					'background-color: #800026; padding-right:30px; box-sizing:border-box;';
+				return 'G Index: G5 (Extreme)';
+			} else if (this.$store.state.status === 'paused') {
+				this.style =
+					'background-color: #ffff8b; padding-right:30px; box-sizing:border-box;';
+				return 'PAUSED';
+			} else if (this.$store.state.status === 'initialized') {
+				this.style =
+					'background-color: #ffff8b; padding-right:30px; box-sizing:border-box;';
+				return 'INITIALIZED';
+			} else if (this.$store.state.status === 'aborted') {
+				this.style =
+					'background-color: #be9c91; padding-right:30px; box-sizing:border-box;';
+				return 'ABORTED';
+			} else if (this.$store.state.status === 'finished') {
+				this.style =
+					'background-color: #ff5f52; padding-right:30px; box-sizing:border-box;';
+				return 'FINISHED';
+			} else if (this.$store.state.status === 'offline') {
+				this.style =
+					'background-color: #8e8e8e; padding-right:30px; box-sizing:border-box;';
+				return 'OFFLINE';
+			} else if (this.$store.state.status === 'error') {
+				this.style =
+					'background-color: #ff6f60; padding-right:30px; box-sizing:border-box;';
+				return 'DS needs to be reset manually';
+			}
+		}
+	},
+	components: {
+		MarqueeText
+	}
 };
 </script>
 
 <style>
-
 </style>
 

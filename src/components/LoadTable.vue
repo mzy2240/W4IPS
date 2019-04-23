@@ -70,8 +70,8 @@ export default {
 					// sortable: false,
 					value: 'name'
 				},
-				{ text: 'Vpu', value: 'Vpu' },
 				{ text: 'Status', value: 'Status' },
+				{ text: 'Vpu', value: 'Vpu' },
 				{ text: 'MW', value: 'MW' },
 				{ text: 'Mvar', value: 'Mvar' },
 				{ text: 'MVA', value: 'MVA' },
