@@ -138,6 +138,10 @@
 	],
 	"Load": [
 		{
+			"text": "Vpu",
+			"value": "Vpu"
+		},
+		{
 			"text": "Status",
 			"value": "Status"
 		},
@@ -155,6 +159,10 @@
 		}
 	],
 	"Shunt": [
+		{
+			"text": "Vpu",
+			"value": "Vpu"
+		},
 		{
 			"text": "Status",
 			"value": "Status"

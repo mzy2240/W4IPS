@@ -331,6 +331,11 @@ export default {
 						progressive: 100,
 						progressiveThreshold: 200,
 						data: this.transData, //this.$store.state.subData,
+						tooltip: {
+							formatter: params => {
+								return params.data.attribute.GICNeutralCurrent.toString();
+							}
+						},
 						itemStyle: {
 							color: params => {
 								if (params.data.attribute.GICNeutralCurrent) {
@@ -349,6 +354,11 @@ export default {
 						coordinateSystem: 'leaflet',
 						data: this.transData,
 						symbolSize: 0,
+						tooltip: {
+							formatter: params => {
+								return params.data.attribute.Temperature.toString();
+							}
+						},
 						itemStyle: {
 							color: params => {
 								if (params.data.attribute.Temperature) {
@@ -569,18 +579,26 @@ export default {
 						].Temperature;
 					}
 					// this.transformerChart.setOption(temp);
-					this.transformerChart.setOption({
-						series: [
-							{
-								id: 'transformer',
-								data: this.transData
-							},
-							{
-								id: 'temperature',
-								data: this.transData
-							}
-						]
-					});
+					if (this.gicEnabled) {
+						this.transformerChart.setOption({
+							series: [
+								{
+									id: 'transformer',
+									data: this.transData
+								}
+							]
+						});
+					} else {
+						this.transformerChart.setOption({
+							series: [
+								{
+									id: 'temperature',
+									data: this.transData
+								}
+							]
+						});
+					}
+
 					if (this.$store.state.status === 'running') {
 						this.count += 1;
 					} else {
@@ -644,7 +662,8 @@ export default {
 					},
 					{
 						id: 'temperature',
-						symbolSize: 0
+						symbolSize: 0,
+						data: []
 					}
 				]
 			};
@@ -657,13 +676,13 @@ export default {
 			this.legend.onAdd = function(map) {
 				var div = window.L.DomUtil.create('div', 'legend legend-background');
 				let labels = ['<strong>Categories</strong>'];
-				const categories = [
-					'<60',
-					'60~80',
-					'80~100',
-					'>100'
+				const categories = ['<60', '60~80', '80~100', '>100'];
+				const color = [
+					'rgba(0, 0, 200, 0.8)',
+					'rgba(0, 200, 0, 0.8)',
+					'rgba(200, 200, 0, 0.8)',
+					'rgba(255, 0, 0, 1)'
 				];
-				const color = ['rgba(0, 0, 200, 0.8)', 'rgba(0, 200, 0, 0.8)', 'rgba(200, 200, 0, 0.8)', 'rgba(255, 0, 0, 1)'];
 				for (var i = 0; i < categories.length; i++) {
 					div.innerHTML +=
 						'<span class="circle" style="float:left;background:' +
@@ -681,7 +700,8 @@ export default {
 				series: [
 					{
 						id: 'transformer',
-						symbolSize: 0
+						symbolSize: 0,
+						data: []
 					},
 					{
 						id: 'temperature',

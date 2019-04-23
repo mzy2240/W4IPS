@@ -13,13 +13,14 @@
 		<v-card-text class="pa-0">
 			<template>
 				<v-data-table :headers="headers" :items="loads" :rows-per-page-items="defaultRowItems" v-model="selected" select-all disable-initial-sort item-key="name">
-					<template slot="items" slot-scope="props">
-						<tr :active="props.selected">
+					<template v-slot:items="props">
+						<tr :active="props.selected" @click="props.selected = !props.selected">
 							<td>
-								<v-checkbox v-model="props.selected" primary hide-details @click="props.selected = !props.selected"></v-checkbox>
+								<v-checkbox :input-value="props.selected" primary hide-details></v-checkbox>
 							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
 							<td class="text-xs-left">{{ props.item.vStatus }}</td>
+							<td class="text-xs-left">{{ props.item.Vpu }}</td>
 							<td class="text-xs-right">{{ props.item.MW }}</td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
 							<td class="text-xs-right">{{ props.item.MVA }}</td>
@@ -69,6 +70,7 @@ export default {
 					// sortable: false,
 					value: 'name'
 				},
+				{ text: 'Vpu', value: 'Vpu' },
 				{ text: 'Status', value: 'Status' },
 				{ text: 'MW', value: 'MW' },
 				{ text: 'Mvar', value: 'Mvar' },
@@ -89,6 +91,7 @@ export default {
 			],
 			loadArray: [],
 			loadFieldIndex: {
+				"Vpu": this.$store.state.fieldstore['Load'].findIndex(x => x.text ==="Vpu"),
 				"Status": this.$store.state.fieldstore['Load'].findIndex(x => x.text ==="Status"),
 				"MW": this.$store.state.fieldstore['Load'].findIndex(x => x.text ==="MW"),
 				"Mvar": this.$store.state.fieldstore['Load'].findIndex(x => x.text ==="Mvar"),
@@ -136,16 +139,17 @@ export default {
 								'Double.Latitude'
 							]
 						],
-						key: i,
+						key_cmd: i,
 						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]][
 							'String.Name'
 						],
 						Status: 1,
 						vStatus: 1,
+						Vpu: 1,
 						MW: 0,
 						Mvar: 0,
 						MVA: 0,
-						id: this.$store.state.areadetail.content.Load[i]['String.ID']
+						id_cmd: this.$store.state.areadetail.content.Load[i]['String.ID']
 					});
 				}
 				count++;
@@ -162,6 +166,8 @@ export default {
 				try {
 					const temp = this.$store.state.parsedData;
 					for (let i in this.loads) {
+						this.loads[i].Vpu =
+							temp[this.anchor + this.loadFieldIndex['Vpu'] + this.loadArray[i] * this.loadDataLength];
 						this.loads[i].MW =
 							temp[this.anchor + this.loadFieldIndex['MW'] + this.loadArray[i] * this.loadDataLength]; // MW is the 6th in the load data
 						this.loads[i].Mvar =
@@ -171,13 +177,13 @@ export default {
 						this.loads[i].Status =
 							temp[this.anchor + this.loadFieldIndex['Status'] + this.loadArray[i] * this.loadDataLength];
 						if (
-							this.$store.state.genAction['Load'][this.loads[i].key] !=
+							this.$store.state.genAction['Load'][this.loads[i].key_cmd] !=
 							undefined
 						) {
 							if (
 								this.$store.state.currentTime >=
 								Math.max(
-									this.$store.state.genAction['Load'][this.loads[i].key]
+									this.$store.state.genAction['Load'][this.loads[i].key_cmd]
 								) +
 									3
 							) {
@@ -203,11 +209,11 @@ export default {
 			}
 			this.$store.commit('setMessage', [
 				'Load',
-				item.key + ',' + item.id,
-				item.key + '#' + item.id,
+				item.key_cmd + ',' + item.id_cmd,
+				item.key_cmd + '#' + item.id_cmd,
 				command
 			]);
-			this.$store.commit('recordAction', ['Load', item.key]);
+			this.$store.commit('recordAction', ['Load', item.key_cmd]);
 			this.$store.commit('setPublish');
 		}
 	},
