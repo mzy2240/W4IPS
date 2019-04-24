@@ -19,7 +19,7 @@
 								<v-checkbox :input-value="props.selected" primary hide-details></v-checkbox>
 							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
-							<td class="text-xs-left">{{ props.item.vStatus }}</td>
+							<td class="text-xs-left">{{ props.item.Status }}</td>
 							<td class="text-xs-left">{{ props.item.Vpu }}</td>
 							<td class="text-xs-right">{{ props.item.MW }}</td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
@@ -144,7 +144,7 @@ export default {
 							'String.Name'
 						],
 						Status: 1,
-						vStatus: 1,
+						vStatus: true,
 						Vpu: 1,
 						MW: 0,
 						Mvar: 0,
@@ -187,10 +187,10 @@ export default {
 								) +
 									3
 							) {
-								this.loads[i].vStatus = this.loads[i].Status;
+								this.loads[i].vStatus = this.loads[i].Status==1?true:false;
 							}
 						} else {
-							this.loads[i].vStatus = this.loads[i].Status;
+							this.loads[i].vStatus = this.loads[i].Status==1?true:false;
 						}
 					}
 				} catch (e) {
@@ -200,13 +200,19 @@ export default {
 		},
 		toggle(item) {
 			var command;
-			if (item.vStatus) {
-				item.vStatus = 1;
-				command = 'CLOSE';
-			} else {
-				item.vStatus = 0;
+			console.log(item)
+			if (item.Status==1) {
+				// item.vStatus = 1;
 				command = 'OPEN';
+			} else {
+				// item.vStatus = 0;
+				command = 'CLOSE';
 			}
+			// if(item.status==0 && command=='OPEN'){
+			// 	console.log('Work!')
+			// 	command = 'CLOSE'
+			// }
+			console.log('send command')
 			this.$store.commit('setMessage', [
 				'Load',
 				item.key_cmd + ',' + item.id_cmd,
@@ -215,6 +221,7 @@ export default {
 			]);
 			this.$store.commit('recordAction', ['Load', item.key_cmd]);
 			this.$store.commit('setPublish');
+			console.log('command sent')
 		}
 	},
 	created() {

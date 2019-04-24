@@ -184,7 +184,7 @@
 		<AGCBot></AGCBot>
 		<chatpop v-if="dialog" :visible="dialog" @close="dialog=false"></chatpop>
 		<startpop v-if="startDialog" :visible="startDialog" @close="startDialog=false"></startpop>
-		<reportpop v-if="reportDialog" :visible="reportDialog" @close="reportDialog=false"></reportpop>
+		<!-- <reportpop v-if="reportDialog" :visible="reportDialog" @close="reportDialog=false"></reportpop> -->
 	</div>
 </template>
 

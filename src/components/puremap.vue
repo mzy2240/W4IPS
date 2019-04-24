@@ -58,7 +58,7 @@
 							</v-widget>
 						</v-flex> -->
 						<v-flex xs12>
-							<m-widget title="Load Forecast" content-bg="white">
+							<m-widget title="Voltages of the Key Buses" content-bg="white">
 								<div slot="widget-content">
 									<loadForecast></loadForecast>
 								</div>
@@ -121,7 +121,7 @@ import pie from '@/components/pie';
 import branchTable from '@/components/RiskBranchTable';
 import chartStatistic from '@/components/chartStatistic';
 import Material from 'vuetify/es5/util/colors';
-import loadForecast from '@/components/loadForecast';
+import loadForecast from '@/components/dynamicLines';
 import highTopo from '@/components/highTopo';
 // import L from 'leaflet';
 // import {tiledMapLayer} from '@supermap/iclient-leaflet';

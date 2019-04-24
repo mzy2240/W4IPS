@@ -29,7 +29,7 @@
 								<v-checkbox :input-value="props.selected" primary hide-details></v-checkbox>
 							</td>
 							<td class="text-xs-left">{{ props.item.name }}</td>
-							<td class="text-xs-left">{{ props.item.vStatus }}</td>
+							<td class="text-xs-left">{{ props.item.Status }}</td>
 							<td class="text-xs-left">{{ props.item.Vpu }}</td>
 							<td class="text-xs-right">{{ props.item.Mvar }}</td>
 							<!-- <td class="text-xs-right">{{ props.item.MvarNom }}</td> -->
@@ -149,15 +149,15 @@ export default {
 								'Double.Latitude'
 							]
 						],
-						key: i,
+						key_cmd: i,
 						name: this.$store.state.areadetail.content.Bus[i.split(',')[0]]['String.Name'],
 						Status: 1,
-						vStatus: 1,
+						vStatus: true,
 						Mvar: 0,
 						MvarNom: 0,
 						Vpu: 1,
 						FreqHz: 60,
-						id: this.$store.state.areadetail.content.Shunt[i]['String.ID']
+						id_cmd: this.$store.state.areadetail.content.Shunt[i]['String.ID']
 					});
 				}
 				count++;
@@ -183,20 +183,20 @@ export default {
 						this.shunts[i].Status =
 							temp[this.anchor + this.shuntFieldIndex['Status'] + this.shuntArray[i] * this.shuntDataLength];
 						if (
-							this.$store.state.genAction['Shunt'][this.shunts[i].key] !=
+							this.$store.state.genAction['Shunt'][this.shunts[i].key_cmd] !=
 							undefined
 						) {
 							if (
 								this.$store.state.currentTime >=
 								Math.max(
-									this.$store.state.genAction['Shunt'][this.shunts[i].key]
+									this.$store.state.genAction['Shunt'][this.shunts[i].key_cmd]
 								) +
 									3
 							) {
-								this.shunts[i].vStatus = this.shunts[i].Status;
+								this.shunts[i].vStatus = this.shunts[i].Status==1?true:false;
 							}
 						} else {
-							this.shunts[i].vStatus = this.shunts[i].Status;
+							this.shunts[i].vStatus = this.shunts[i].Status==1?true:false;
 						}
 					}
 				} catch (e) {
@@ -206,20 +206,20 @@ export default {
 		},
 		toggle(item) {
 			var command;
-			if (item.vStatus) {
-				item.vStatus = 1;
-				command = 'CLOSE';
-			} else {
-				item.vStatus = 0;
+			if (item.Status==1) {
+				// item.vStatus = 1;
 				command = 'OPEN';
+			} else {
+				// item.vStatus = 0;
+				command = 'CLOSE';
 			}
 			this.$store.commit('setMessage', [
 				'Shunt',
-				item.key + ',' + item.id,
-				item.key + '#' + item.id,
+				item.key_cmd + ',' + item.id_cmd,
+				item.key_cmd + '#' + item.id_cmd,
 				command
 			]);
-			this.$store.commit('recordAction', ['Shunt', item.key]);
+			this.$store.commit('recordAction', ['Shunt', item.key_cmd]);
 			this.$store.commit('setPublish');
 		}
 	},
